@@ -1,11 +1,11 @@
 ---
-title: Rで陰影段彩図03
+title: Rで陰影段彩図04
 date: 2019-09-14
 tags: ["R", "hillShade" , "ETOPO"]
 excerpt: 日本周辺の陰影段彩図
 ---
 
-# Rで陰影段彩図03（陸地＋海洋）
+# Rで陰影段彩図04（陸地＋海洋）
 
 (参考)  
 GMT Tutorial  
