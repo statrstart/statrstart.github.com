@@ -1,6 +1,6 @@
 ---
 title: RでJ-SHIS 活断層
-date: 2019-09-
+date: 2019-09-28
 tags: ["R", "mapdata", "sf" ,"sp"]
 excerpt: R+mapdata+J-SHIS 活断層
 ---
