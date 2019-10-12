@@ -40,7 +40,7 @@ plate_data.tar.gz [331 KB]をダウンロード。解凍。「mapdata」フォ�
 
 ### GMT(Version 5.4.5)で陰影段彩図
 
-```GMT(Version 5.4.5)
+```GMT5.4.5
 #
 ########## GMT - The Generic Mapping Tools, Version 5.4.5 ##########
 #
@@ -204,7 +204,7 @@ gmt psconvert $psfile -Tg -A -E200
 
 ### GMT(Version 5.4.5)で鳥瞰図
 
-```GMT(Version 5.4.5)
+```GMT5.4.5
 #
 ########## GMT - The Generic Mapping Tools, Version 5.4.5 ##########
 #
