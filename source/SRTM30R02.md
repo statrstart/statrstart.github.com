@@ -29,7 +29,7 @@ XYZ データを変換する必要があります。
 ![addtext](images/addtext.png)
 
 ## R「rayshaderパッケージ」でGIFアニメ(SRTM30Plusのデータ)
-### ffmpeg
+### mp4をffmpegでアニメGIFに変換
 ![srtm30](images/srtm30.gif)
 
 ## Rコード
