@@ -2,7 +2,7 @@
 title: Rで台風の経路図
 date: 2019-10-18
 tags: ["R","oce","ocedata","showtext","typhoon"]
-excerpt: 。
+excerpt: 気象庁の台風位置表から年ごとの台風の経路図を作ってみました。
 ---
 
 # Rで台風の経路図
