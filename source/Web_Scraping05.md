@@ -1,11 +1,16 @@
 ---
-title: RでWebスクレイピング05(気象庁 過去の気象データ:８月 2001〜2019)
-date: 2019-10-19
-tags: ["R", "rvest","Tokyo","Sapporo" ]
+title: RでWebスクレイピング05(気象庁 過去の気象データ:８月 2001〜2019)(＋朝5,6,7,8時のデータ)
+date: 2019-10-23
+tags: ["R","rvest","Tokyo","Sapporo"]
 excerpt: 「気象庁 過去の気象データ」を用いて東京と札幌の「８月」の気象の比較
 ---
 
 # 東京と札幌の「８月」の気象の比較
+
+[日の出入り東京(東京都)2019年 8月](https://eco.mtk.nao.ac.jp/koyomi/dni/2019/s1308.html)    
+[日の出入り札幌(北海道)2019年 8月](https://eco.mtk.nao.ac.jp/koyomi/dni/2019/s0008.html)  
+東京：８月１日の日の出　4:48  
+札幌：８月１日の日の出　4:24  
 
 「2001年から2019年まで」の「８月」のデータを「気象庁 過去の気象データ」から取ってきて  
 - 「気温」と「湿度」の「boxplot」を作成します。
@@ -20,17 +25,24 @@ excerpt: 「気象庁 過去の気象データ」を用いて東京と札幌の�
 ### 「不快指数」(Discomfort index)の「barplot」
 ![DI08](images/DI08.png)
 
-
 [東京五輪日程決定　マラソン６時　バスケ午前決勝](https://www.nikkansports.com/sports/news/201904160000322.html)  
 - 男女マラソン、男女20キロ競歩が午前6時、男女50キロ競歩は同5時30分にスタート 
   
 ## 朝6,7,8,9時のデータ
 
 ### 「気温」と「湿度」の「boxplot」(朝6,7,8,9時のデータ)
-![TS20190801](images/TS086789.png)
+![TS086789](images/TS086789.png)
 
 ### 「不快指数」(Discomfort index)の「barplot」(朝6,7,8,9時のデータ)
 ![DI086789](images/DI086789.png)
+
+## 仮に朝５時にスタートする場合(朝5,6,7,8時のデータ)
+
+### 「気温」と「湿度」の「boxplot」(朝6,7,8,9時のデータ)
+![TS085678](images/TS085678.png)
+
+### 「不快指数」(Discomfort index)の「barplot」(朝6,7,8,9時のデータ)
+![DI085678](images/DI085678.png)
 
 ## Rコード
 
@@ -201,10 +213,18 @@ text(x=apply(pos,2,mean),y= -500 ,xpd=T,
 
 ## 朝6,7,8,9時のデータ
 
-
 ```R
 Tokyo2<-Tokyo[Tokyo$time=="6"|Tokyo$time=="7"|Tokyo$time=="8"|Tokyo$time=="9",c("temperature","humidity")]
 Sapporo2<-Sapporo[Sapporo$time=="6"|Sapporo$time=="7"|Sapporo$time=="8"|Sapporo$time=="9",c("temperature","humidity")]
+time<-"朝6,7,8,9時"
+```
+
+## 朝5,6,7,8時のデータ
+
+```R
+Tokyo2<-Tokyo[Tokyo$time=="5"|Tokyo$time=="6"|Tokyo$time=="7"|Tokyo$time=="8",c("temperature","humidity")]
+Sapporo2<-Sapporo[Sapporo$time=="5"|Sapporo$time=="6"|Sapporo$time=="7"|Sapporo$time=="8",c("temperature","humidity")]
+time<-"朝5,6,7,8時"
 ```
 
 ### 「気温」と「湿度」の「boxplot」を作成
@@ -214,10 +234,10 @@ Sapporo2<-Sapporo[Sapporo$time=="6"|Sapporo$time=="7"|Sapporo$time=="8"|Sapporo$
 par(mfrow=c(1,2))
 # 気温
 boxplot(Tokyo2$temperature,Sapporo2$temperature,names=c("Tokyo","Sapporo"),las=1)
-title("気温 8月2010年_2019年")
+title(paste("気温 2010年_2019年8月",time))
 # 湿度
 boxplot(Tokyo2$humidity,Sapporo2$humidity,names=c("Tokyo","Sapporo"),las=1)
-title("湿度 8月6_9時2010年_2019年")
+title(paste("湿度 2010年_2019年8月",time))
 par(mfrow=c(1,1))
 #dev.off()
 ```
@@ -250,7 +270,7 @@ DI_TS<-cbind(Tokyo2=table(DI_T),Sapporo2=table(DI_S))
 #png("DI086789.png",width=800,height=600)
 par(mar=c(6,3,3,1))
 pos=barplot(t(DI_TS),beside=T,las=1,col=rainbow(2,0.5),ylim=c(0,max(DI_TS)*1.1),xaxt="n",legend=T,
-	args.legend=list(x="topleft",inset =c(0.03,0.03),legend=c("Tokyo","Sapporo")),main="不快指数(8月6_9時2001年から2019年)")
+	args.legend=list(x="topleft",inset =c(0.03,0.03),legend=c("Tokyo","Sapporo")),main=paste("不快指数(2001年から2019年8月",time,")" ))
 text(x=apply(pos,2,mean),y= -100 ,xpd=T,
 	labels=c("寒い","肌寒い","何も感じない","快適","暑くない","やや暑い","暑くて\n汗が出る","暑くて\nたまらない"))
 #dev.off()
