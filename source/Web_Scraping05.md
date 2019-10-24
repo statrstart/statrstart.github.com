@@ -71,7 +71,7 @@ library(rvest)
 #
 # colnameをつけた0行のdata.frameを作成
 x <- data.frame(matrix(rep(NA,8),nrow=1))[numeric(0), ]
-names(x)<-c("date","time","pressure","precipitation","temperature","humidity","Wind_direction","wind_speed")
+names(x)<-c("date","time","pressure","precipitation","temperature","humidity","wind_direction","wind_speed")
 #
 year<-as.character(seq(2000,2019,1))
 month<-8
@@ -94,7 +94,7 @@ date<-paste0(i,"/",month,"/",j)
 d1<- data.frame(matrix(rep(date,24),ncol=1))
 data<-cbind(d1,data)
 #列名を変更
-colnames(data)<-c("date","time","pressure","precipitation","temperature","humidity","Wind_direction","wind_speed")
+colnames(data)<-c("date","time","pressure","precipitation","temperature","humidity","wind_direction","wind_speed")
 x<-rbind(x,data)
 	}
 }
@@ -127,7 +127,7 @@ str(x)
  $ precipitation : num  NA NA NA NA NA NA NA NA NA NA ...  
  $ temperature   : num  25.3 24.8 24.2 23.8 23.4 24.3 25.9 28 29.7 31.3 ...  
  $ humidity      : num  83 84 86 87 91 86 80 74 73 68 ...  
- $ Wind_direction: chr  "東北東" "東南東" "東北東" "東南東" ...  
+ $ wind_direction: chr  "東北東" "東南東" "東北東" "東南東" ...  
  $ wind_speed    : num  1 1.5 1.8 2.1 2 2.2 2.3 2.8 3.3 3.3 ...  
 
 ### 何度もアクセスしなくてすむように必ずデータを保存する。
