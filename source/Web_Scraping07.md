@@ -60,7 +60,7 @@ excerpt: Rで風配図(windrose)を作成する。
 
 ### 東京
 
-```P
+```R
 load("Tokyo.Rdata")
 block<-"東京"
 weather<-Tokyo
