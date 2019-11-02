@@ -29,7 +29,7 @@ tail(prec_list,1)
 #
 ##### block_no #####
 #
-kisyo_list <- data.frame(matrix(rep(NA,4),nrow=1))
+kisyo_list <- data.frame(matrix(rep(NA,4),nrow=1))[numeric(0), ]
 names(kisyo_list)<-c("prec_no","prec_name","block_no","block_name")
 #
 for ( num in 1:nrow(prec_list)){
