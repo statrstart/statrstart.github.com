@@ -1,9 +1,11 @@
 ---
-title: RでWebスクレイピング05(気象庁 過去の気象データ:８月 2001〜2019)(＋朝5,6,7,8時のデータ)
-date: 2019-10-23
+title: RでWebスクレイピング05(気象庁 過去の気象データ:８月 2001〜2019)(＋朝5,6,7,8時のデータ)[改]
+date: 2019-11-3
 tags: ["R","rvest","Tokyo","Sapporo"]
 excerpt: 「気象庁 過去の気象データ」を用いて東京と札幌の「８月」の気象の比較
 ---
+
+＊ 気象データにいらない文字が含まれている場合があることに気が付きました。それを取り除く部分を付け加えました。
 
 # 東京と札幌の「８月」の気象の比較
 
@@ -83,9 +85,14 @@ url <- paste0("http://www.data.jma.go.jp/obd/stats/etrn/view/hourly_s1.php?prec_
 html<-read_html(url, encoding = "UTF-8")
 #
 tables <- html_table(html,trim = TRUE, fill = T, dec = ".")
-data <- data.frame(tables[[5]][-1,])
+dat <- data.frame(tables[[5]][-1,])
+# 不要な文字を取り除く
+  dat<-as.data.frame(lapply(dat,function(x){gsub(" ", "",x)}),stringsAsFactors = F)
+  dat<-as.data.frame(lapply(dat,function(x){gsub("×", "",x)}),stringsAsFactors = F)
+  dat<-as.data.frame(lapply(dat,function(x){gsub("]", "",x)}),stringsAsFactors = F)
+  dat<-as.data.frame(lapply(dat,function(x){gsub(")", "",x)}),stringsAsFactors = F)
 #必要な項目だけ取り出す::時 気圧.hPa.  降水量.mm. 気温 湿度 風向 風速
-data<-data[,c(1,2,4,5,8,10,9)]
+data<-dat[,c(1,2,4,5,8,10,9)]
 # "風向"以外をnumeric
 # data[c(1,2,3,4,5,7)]<-lapply(data[c(1,2,3,4,5,7)],as.numeric)
 data[-6]<-lapply(data[-6],as.numeric)
