@@ -1,9 +1,11 @@
 ---
-title: Rで陰影段彩図05
+title: Rで陰影段彩図05[改]
 date: 2019-09-15
 tags: ["R", "hillShade" , "ETOPO"]
 excerpt: 陰影段彩図＋東海・東南海・南海地震の想定震源域
 ---
+
+＊ tranch.datを読み込む箇所のコードをシンプルにしました。
 
 # Rで陰影段彩図05（陸地＋海洋）
 
@@ -43,7 +45,7 @@ plate_data.tar.gz [331 KB]をダウンロード。解凍。「mapdata」フォ�
 - 「tokai.region」
 - 「tonankai.region」
 - 「kanto_eq.dat」
-- 「tokai_asperity.data」。
+- 「tokai_asperity.data」  
 
 
 
@@ -146,22 +148,12 @@ values(s)<-g
 データの書式を直接編集したほうが読み込みは容易になる。
 
 ```R
-#トラフ等データ読み込み（一番面倒）
-lines = readLines("./mapdata/trench.dat")
-head(lines)
-lines=gsub("  *",",",gsub("^ ", "",gsub("  *$", "",lines) ) )
-f = file("out.txt", "w")
-for (line in lines) {
-  cat(line, "\n", sep="", file=f)  # ファイルに書き出す
-}
-trench=read.csv("./out.txt", header=F, col.names=c("latitude","longitude"),stringsAsFactors=F )
-trench<-trench[,c(2,1)]
-#num<-as.numeric(rownames(subset(trench, latitude==">")))
-num<-grep(">", trench$latitude)
-trench1<-trench[1:num[1]-1,]
-trench2<-trench[num[1]+1:num[2]-1,]
-trench3<-trench[num[2]+1:nrow(trench),]
-system("rm ./out.txt")
+#トラフ等データ読み込み
+trench<-readLines("./mapdata/trench.dat")
+fromto<-grep(">",trench)
+trench1<-read.table(text=trench,nrows =fromto[1]-1,col.names=c("latitude","longitude"))
+trench2<-read.table(text=trench,skip=fromto[1],nrows =fromto[2]-(fromto[1]+1),col.names=c("latitude","longitude"))
+trench3<-read.table(text=trench,skip=fromto[2],col.names=c("latitude","longitude"))
 #
 nankai=read.table("./mapdata/nankai.region",h=F)
 names(nankai)<-c("latitude","longitude")

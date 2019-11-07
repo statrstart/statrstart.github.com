@@ -95,7 +95,7 @@ gmt grdimage $grdfile  -I$intfile -R$region -J$proj -C$cptfile -K -O >> $psfile
 gmt pscoast -R$region -J$proj -Dh -Wthinnest,gray40 -K -O >> $psfile
 #gmt psconvert $psfile -Tg -A -E200
 #
-########## 描画２（trebchデータ等の読み込みと描画） ##########
+########## 描画２（trenchデータ等の読み込みと描画） ##########
 #
 trench=./mapdata/trench.dat
 tokai=./mapdata/tokai.region

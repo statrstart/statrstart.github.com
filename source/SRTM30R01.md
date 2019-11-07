@@ -1,9 +1,12 @@
 ---
 title: Rで陰影段彩図06(SRTM30Plusのデータ)
-date: 2019-10-13
+date: 2019-11-07
 tags: ["R", "hillshade","srtm30Plus"]
 excerpt: Rを使って陰影段彩図を描きます。
 ---
+
+＊ 「tranch.dat」を読み込む箇所のコードをシンプルにしました。  
+＊ 「voldata.dat」をlinuxのcutコマンド（windowsの場合、busyboxのcutコマンド）を使って取り込むコードを記事の最後に載せました。  
 
 # Rで陰影段彩図06（陸地＋海洋）
 
@@ -37,8 +40,8 @@ plate_data.tar.gz [331 KB]をダウンロード。解凍。「mapdata」フォ�
 ## Rコード
 
 作業フォルダ名は「srtm30plus」としています。  
-使用するデータのうち「trench.dat」「voldata.dat」はGMTで使うデータを無理やりRに取り込んでいます。  
-awkを使うとかして、あらかじめRで使いやすいデータ形式に変換する方がいいです。  
+使用するデータのうち「voldata.dat」はGMTで使うデータを無理やりRに取り込んでいます。  
+linuxのcutコマンド（windowsの場合はbusyboxのcutコマンド）を使うと簡単に取り込めました。 
 
 ```R
 library(raster)
@@ -150,22 +153,12 @@ points(x=rep(extent(s)[1],length(axes2)),y=axes2,cex=1,pch=3)
 par(xpd=F)
 #dev.off()
 #
-########## トラフ等データ読み込み（一番面倒）########## 
-lines = readLines("./mapdata/trench.dat")
-head(lines)
-lines=gsub("  *",",",gsub("^ ", "",gsub("  *$", "",lines) ) )
-f = file("out.txt", "w")
-for (line in lines) {
-  cat(line, "\n", sep="", file=f)  # ファイルに書き出す
-}
-trench=read.csv("./out.txt", header=F, col.names=c("latitude","longitude"),stringsAsFactors=F )
-trench<-trench[,c(2,1)]
-#num<-as.numeric(rownames(subset(trench, latitude==">")))
-num<-grep(">", trench$latitude)
-trench1<-trench[1:num[1]-1,]
-trench2<-trench[num[1]+1:num[2]-1,]
-trench3<-trench[num[2]+1:nrow(trench),]
-system("rm ./out.txt")
+########## トラフ等データ読み込み########## 
+trench<-readLines("./mapdata/trench.dat")
+fromto<-grep(">",trench)
+trench1<-read.table(text=trench,nrows =fromto[1]-1,col.names=c("latitude","longitude"))
+trench2<-read.table(text=trench,skip=fromto[1],nrows =fromto[2]-(fromto[1]+1),col.names=c("latitude","longitude"))
+trench3<-read.table(text=trench,skip=fromto[2],col.names=c("latitude","longitude"))
 #
 nankai=read.table("./mapdata/nankai.region",h=F)
 names(nankai)<-c("latitude","longitude")
@@ -176,7 +169,7 @@ names(tokai)<-c("latitude","longitude")
 tonankai=read.table("./mapdata/tonankai.region",h=F)
 names(tonankai)<-c("latitude","longitude")
 #
-#火山データ読み込み（面倒）
+#火山データ読み込み（linuxのcutコマンドを使う方法は後述）
 lines <- readLines(con <- file("./mapdata/voldata.dat", encoding = "EUC-JP"))
 close(con)
 lines<-substr(lines,1,16) 
@@ -186,8 +179,9 @@ for (line in lines) {
 }
 vol=read.table("out.txt",h=F)
 names(vol)<-c("latitude","longitude")
-vol=vol[vol$longitude>=Lon.range[1] & vol$longitude<=Lon.range[2] & vol$latitude>=Lat.range[1] & vol$latitude<=Lat.range[2] ,]
 system("rm ./out.txt")
+#
+vol=vol[vol$longitude>=Lon.range[1] & vol$longitude<=Lon.range[2] & vol$latitude>=Lat.range[1] & vol$latitude<=Lat.range[2] ,]
 #
 trough<-data.frame(names=c("駿河トラフ","相模トラフ","南海トラフ","太平洋プレート","フィリピン海プレート","東海","東南海","南海"),
                    longitude=c(138.9,140.2,136.5,145,136.5,138,136.8,134),latitude=c(33.6,34.4,32.5,34,30.5,34.5,34,32.9))
@@ -277,4 +271,55 @@ justfocXY(MEC, x =eq[1], y = eq[2], focsiz= 0.5, fcol ="red",fcolback = "white",
 text(x=eq[1],y=eq[2]+0.5,labels="2011/03/11,14:46",col="blue")
 #dev.off()
 ```
+
+### 備考
+
+「voldata.dat」はGMT用のデータです。文字コードは「EUC-JP」です。  
+３行取り出してみると、  
+44.1308 145.1653 1563,"Shiretoko-Iozan""知床硫黄山"},  
+44.0739 145.1247 1660,"Rausudake""羅臼岳"},  
+43.5697 144.5647  857,"Mashu""摩周"},  
+となっています。  
+linuxのcutコマンドを使って、区切り文字をコンマ、１番目の部分（緯度、経度、高さ）を取り出して、Rのread.tableでRに取り込みます。
+
+```R
+text<-system("cut -d, -f1 ./mapdata/voldata.dat",intern=T)
+vol<-read.table(text=text,col.names=c("latitude","longitude","height"))
+# 9999 -> NA
+vol[vol==9999]<-NA
+```
+
+火山名も取り込みたいときは、linuxのcutコマンドを使って、区切り文字をコンマ、２番目の部分を取り出します。  
+
+linuxの場合は、nkf を使うと簡単(sudo apt nkf)
+
+```R
+# nkf
+volname<-system("cut -d, -f2 ./mapdata/voldata.dat |nkf -w ",intern=T)
+```
+nkfを使わない場合は取り込んだ後、iconvで変換。  
+（注意）linuxとwindowsではEUC-JP等の表記が異なるようです。Rのiconvlist() コマンドで表記を確認してください。
+
+```R
+# iconv
+# 表記を確認
+iconvlist() 
+volname<-system("cut -d, -f2 ./mapdata/voldata.dat",intern=T)
+# linuxの場合(windowsの場合は小文字かも）
+volname<-iconv(volname,from="EUCJP",to="UTF8")
+``` 
+volnameを見やすくしてvolデータにくっつけます。
+
+```R
+# 余分なコンマを削除する等々。
+volname<-gsub('"','',gsub('""',"{",gsub('^"','',volname)))
+# volにくっつける
+vol$volname<-volname
+```
+
+
+
+
+
+
 
