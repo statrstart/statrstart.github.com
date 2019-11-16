@@ -1,6 +1,6 @@
 ---
 title: RでWebスクレイピング09(gtrendsRで「桜を見る会」)
-date: 2019-11-12
+date: 2019-11-16
 tags: ["R", "gtrendsR","xts"]
 excerpt: 「Google トレンド」で「桜を見る会」を調べる。
 ---
@@ -19,6 +19,20 @@ excerpt: 「Google トレンド」で「桜を見る会」を調べる。
 
 >左の各号に掲げる行為をした者は、五年以下の懲役又は禁錮 に処する。  
 >一　財産上の利益を図る目的をもつて公職の候補者又は公職の候補者となろうとする者のため**多数の選挙人又は選挙運動者**に対し前条第一項第一号から第三号まで、第五号又は第六号に掲げる行為をし又はさせたとき。
+
+（追加）日本時間　2019/11/16 午前11時頃にアクセス
+
+### interest_over_time
+
+＊ 今週の検索割合圧倒的に多い。
+
+![sakura06](images/sakura06.png)
+
+### interest_by_region
+
+＊ 今回も山口県ダントツ
+
+![sakura07](images/sakura07.png)
 
 （追加）日本時間　2019/11/12 午後8時頃にアクセス
 
@@ -56,7 +70,7 @@ excerpt: 「Google トレンド」で「桜を見る会」を調べる。
 
 ### Last five years (default)
 
-interest_over_time
+interest_over_time（改）
 
 ```R
 #devtools::install_github("PMassicotte/gtrendsR")
@@ -66,10 +80,13 @@ sakura <- gtrends(c("桜を見る会"), geo ="JP")
 ### interest_over_time
 #簡単にグラフにできる
 #plot(sakura)
+# 今回はデータのhits項目に"<1" （1未満）がみられるので"<"を取り除く
+dat<-sakura[[1]][,c("date", "hits")]
+dat$hits<-as.numeric(gsub("<","",dat$hits))
 #barplot
-#barplot(hits~date,col="red",las=1,data=sakura[[1]])
+#barplot(hits~date,col="red",las=1,data=dat)
 #png("sakura01.png",width=800,height=600)
-plot(hits~date,type="h",lwd=2,lend=1,col="red",yaxs="i",ylim=c(0,max(sakura[[1]]$hits)*1.1),las=1,data=sakura[[1]])
+plot(hits~date,type="h",lwd=2,lend=1,col="red",yaxs="i",ylim=c(0,max(dat$hits)*1.1),las=1,data=dat)
 title("ピーク時を100としたときの検索割合の推移（キーワード：桜を見る会）")
 #dev.off()
 ```
