@@ -169,7 +169,7 @@ pert[6,] <- pert[5,]-pert[3,]
 # すべての「後続作業」の最早開始時刻-最早開始時刻 -4,1,2 絶対値　4,1,2 これの最小値　1
 for ( i in 1:nrow(project)){
 	if (all(project[i,]==0)){   # 後続作業のない作業
-		pert[7,i]<-pert[6,1]
+		pert[7,i]<-pert[6,i]
 		} else {
 		pert[7,i]<- min(abs((project[i,] * pert[2,])-pert[3,i]))
 		}
