@@ -1,5 +1,5 @@
 ---
-title: R : igraphでフローチャート
+title: igraph packageでフローチャート
 date: 2019-12-15
 tags: ["R", "igraph" ,"diagram","ProjectManagement"]
 excerpt: R + igraphでフローチャート
