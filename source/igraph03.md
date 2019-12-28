@@ -285,7 +285,7 @@ draw.ellipse(x=mean(position[4:5,1]), y=position[4,2],
 
 #### データ
 
-```R
+```
 id1	id2
 1	3
 2	5
