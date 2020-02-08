@@ -1,7 +1,7 @@
 ---
-title: Rでグーグルスプレッドシート01 (Coronavirus)
+title: Rでグーグルスプレッドシート01 (Coronavirus)[更新]
 date: 2020-02-08
-tags: ["R", "rvest","lubridate" ,"xts"]
+tags: ["R", "rvest","lubridate" ,"xts","oce","ocedata"]
 excerpt: Rでグーグルスプレッドシート01 (Coronavirus)
 ---
 
@@ -18,11 +18,18 @@ excerpt: Rでグーグルスプレッドシート01 (Coronavirus)
 で、「rvest」パッケージを使ってやってみました。
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
-#### グラフ作成時間(日本時間２０２０年２月８日AM11:38)
+#### グラフ作成時間(日本時間２０２０年２月８日PM01:42)
 
 ![Coronavirus01](images/Coronavirus01.png)
 
 ２月６日から２月７日にかけて跳ね上がりました。
+
+### 新型コロナウイルスの感染状況
+#### グラフ作成時間(日本時間２０２０年２月８日PM01:42)
+
+![Coronavirus02](images/Coronavirus02.png)
+
+![Coronavirus03](images/Coronavirus03.png)
 
 ## Rコード
 
@@ -105,3 +112,79 @@ legend("topleft", legend = colnames(nCoV[,2:4]),col=1:3,lwd=1.5,lty=1:3,pch=16:1
 title("Coronavirus [ Total Confirmed,Total Recovered,Total Death ]")
 # dev.off()
 ```
+
+### 新型コロナウイルスの感染状況(世界)
+
+```R
+library(oce)
+data(coastlineWorldFine, package="ocedata")
+df<- Confirmed[,c(4,5,ncol(Confirmed))]
+# 欠損値を0に置き換える。
+df[is.na(df[,3])] <- 0
+max.size=20
+min.size=2
+size <- ((df[,3]-min(df[,3]))/
+    (max(df[,3])-min(df[,3]))*(max.size-min.size)
+  +min.size)
+# png("Coronavirus02.png",width=1200,height=800)
+# ミラー図法
+par(mar=c(3,3,3,2))
+mapPlot(coastlineWorldFine, projection="+proj=mill", col='lightgray')
+mapPoints(df$Long, df$Lat,pch=21,bg=rgb(1,0,0,alpha=0.5),col="black",cex=size)
+title("新型コロナウイルスの感染状況1")
+# dev.off()
+```
+
+### 新型コロナウイルスの感染状況(アジア：武漢周辺)
+
+```R
+library(oce)
+data(coastlineWorldFine, package="ocedata")
+#
+# stackoverflow : Drawing a Circle with a Radius of a Defined Distance in a Map
+# https://stackoverflow.com/questions/23071026/drawing-a-circle-with-a-radius-of-a-defined-distance-in-a-map
+#
+mapLonLat <- function(LonDec, LatDec, Km) {
+    ER <- 6371 #Mean Earth radius in kilometers. Change this to 3959 and you will have your function working in miles.
+    AngDeg <- seq(1:360) #angles in degrees 
+    Lat1Rad <- LatDec*(pi/180)#Latitude of the center of the circle in radians
+    Lon1Rad <- LonDec*(pi/180)#Longitude of the center of the circle in radians
+    AngRad <- AngDeg*(pi/180)#angles in radians
+    Lat2Rad <-asin(sin(Lat1Rad)*cos(Km/ER)+cos(Lat1Rad)*sin(Km/ER)*cos(AngRad)) #Latitude of each point of the circle rearding to angle in radians
+    Lon2Rad <- Lon1Rad+atan2(sin(AngRad)*sin(Km/ER)*cos(Lat1Rad),cos(Km/ER)-sin(Lat1Rad)*sin(Lat2Rad))#Longitude of each point of the circle rearding to angle in radians
+    Lat2Deg <- Lat2Rad*(180/pi)#Latitude of each point of the circle rearding to angle in degrees (conversion of radians to degrees deg = rad*(180/pi) )
+    Lon2Deg <- Lon2Rad*(180/pi)#Longitude of each point of the circle rearding to angle in degrees (conversion of radians to degrees deg = rad*(180/pi) )
+    return(data.frame(Lon2Deg,Lat2Deg))
+}
+#
+df<- Confirmed[,c(4,5,ncol(Confirmed))]
+# 欠損値を0に置き換える。
+df[is.na(df[,3])] <- 0
+max.size=20
+min.size=2
+size <- ((df[,3]-min(df[,3]))/
+    (max(df[,3])-min(df[,3]))*(max.size-min.size)
+  +min.size)
+#
+lonlat<- c(112.27070, 30.97564) # 武漢
+LonDec<- lonlat[1]
+LatDec<- lonlat[2]
+Km<- 2000 # 範囲2000km
+LonLat<- mapLonLat(LonDec, LatDec, Km)
+par(mar=c(2, 2, 3, 2))
+lonlim <- range(LonLat[,1])
+latlim <- range(LonLat[,2])
+#
+# 正距方位図法  azimuthal equidistant projection
+aeqd_proj <- paste("+proj=aeqd +lon_0=",lonlat[1]," +lat_0=",lonlat[2])
+#
+# png("Coronavirus03.png",width=1200,height=800)
+par(mar=c(3,3,3,2))
+mapPlot(coastlineWorldFine, projection=aeqd_proj ,
+        col="lightgray", longitudelim=lonlim, latitudelim=latlim)
+mapPoints(df$Long, df$Lat,pch=21,bg=rgb(1,0,0,alpha=0.5),col="black",cex=size)
+title("新型コロナウイルスの感染状況2")
+# dev.off()
+```
+
+
