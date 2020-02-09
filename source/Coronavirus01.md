@@ -1,6 +1,6 @@
 ---
 title: Rでグーグルスプレッドシート01 (Coronavirus)[更新]
-date: 2020-02-08
+date: 2020-02-09
 tags: ["R", "rvest","lubridate" ,"xts","oce","ocedata"]
 excerpt: Rでグーグルスプレッドシート01 (Coronavirus)
 ---
@@ -18,18 +18,16 @@ excerpt: Rでグーグルスプレッドシート01 (Coronavirus)
 で、「rvest」パッケージを使ってやってみました。
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
-#### グラフ作成時間(日本時間２０２０年２月８日PM01:42)
+#### グラフ作成時間(日本時間2020年2月9日PM03:02)
 
-![Coronavirus01](images/Coronavirus01.png)
-
-２月６日から２月７日にかけて跳ね上がりました。
+![Coronavirus01_1](images/Coronavirus01_1.png)
 
 ### 新型コロナウイルスの感染状況
-#### グラフ作成時間(日本時間２０２０年２月８日PM01:42)
+#### グラフ作成時間(日本時間2020年2月9日PM03:02)
 
-![Coronavirus02](images/Coronavirus02.png)
+![Coronavirus02](images/Coronavirus02_1.png)
 
-![Coronavirus03](images/Coronavirus03.png)
+![Coronavirus03](images/Coronavirus03_1.png)
 
 ## Rコード
 
@@ -105,12 +103,22 @@ nCoV<-merge(nCoV,data.frame(date=as.Date(index(apply.daily(d.xts,max))),Death=as
 ### 感染者、回復された方、亡くなった方の数の推移（日別）
 
 ```R
-# png("Coronavirus01.png",width=800,height=600)
+# png("Coronavirus01_1.png",width=800,height=600)
 matplot(nCoV[,2:4],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
 axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
 legend("topleft", legend = colnames(nCoV[,2:4]),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
 title("Coronavirus [ Total Confirmed,Total Recovered,Total Death ]")
 # dev.off()
+```
+
+### Cruise Shipの場所が横浜になっていないので、直す。など
+
+```R
+#Cruise Shipの場所が横浜になっていない。139.63800に直す。
+Confirmed[Confirmed$"Province/State"=="Cruise Ship",5]<- 139.638
+# 重なってわかりにくいのでJapanの緯度、経度を変更する。
+Confirmed[Confirmed$"Country/Region"=="Japan",4]<- 35.447227
+Confirmed[Confirmed$"Country/Region"=="Japan",5]<- 136.756165
 ```
 
 ### 新型コロナウイルスの感染状況(世界)
@@ -126,7 +134,7 @@ min.size=2
 size <- ((df[,3]-min(df[,3]))/
     (max(df[,3])-min(df[,3]))*(max.size-min.size)
   +min.size)
-# png("Coronavirus02.png",width=1200,height=800)
+# png("Coronavirus02_1.png",width=1200,height=800)
 # ミラー図法
 par(mar=c(3,3,3,2))
 mapPlot(coastlineWorldFine, projection="+proj=mill", col='lightgray')
@@ -160,16 +168,15 @@ mapLonLat <- function(LonDec, LatDec, Km) {
 df<- Confirmed[,c(4,5,ncol(Confirmed))]
 # 欠損値を0に置き換える。
 df[is.na(df[,3])] <- 0
-max.size=20
-min.size=2
-size <- ((df[,3]-min(df[,3]))/
-    (max(df[,3])-min(df[,3]))*(max.size-min.size)
-  +min.size)
+Number_of_people<-c(0,1,10,50,100,1000,10000,100000)
+size<-c(0,1,2,3,4,8,16)
+# cut関数 なに以上なになに未満となるようにright = F
+size<- as.vector(cut(df[,3], breaks=Number_of_people, labels = size, right = F))
 #
-lonlat<- c(112.27070, 30.97564) # 武漢
+lonlat<- c(112.27070, 30.97564)
 LonDec<- lonlat[1]
 LatDec<- lonlat[2]
-Km<- 2000 # 範囲2000km
+Km<- 2000
 LonLat<- mapLonLat(LonDec, LatDec, Km)
 par(mar=c(2, 2, 3, 2))
 lonlim <- range(LonLat[,1])
@@ -178,12 +185,14 @@ latlim <- range(LonLat[,2])
 # 正距方位図法  azimuthal equidistant projection
 aeqd_proj <- paste("+proj=aeqd +lon_0=",lonlat[1]," +lat_0=",lonlat[2])
 #
-# png("Coronavirus03.png",width=1200,height=800)
+# png("Coronavirus03_1.png",width=1200,height=800)
 par(mar=c(3,3,3,2))
 mapPlot(coastlineWorldFine, projection=aeqd_proj ,
         col="lightgray", longitudelim=lonlim, latitudelim=latlim)
-mapPoints(df$Long, df$Lat,pch=21,bg=rgb(1,0,0,alpha=0.5),col="black",cex=size)
+mapPoints(df$Long, df$Lat,pch=21,bg=rgb(1,0,0,alpha=0.7),col="black",cex=as.numeric(size))
 title("新型コロナウイルスの感染状況2")
+legend("bottomright",legend=c("[1 10)","[10 50)","[50 100)","[100 1000)","[1000 10000)","[10000 100000)"),
+	pch=21,pt.cex =c(1,2,3,4,8,16),col="black",pt.bg="red",inset=c(0.01,0.01),x.intersp=5,y.intersp=4.7,bty="n" )
 # dev.off()
 ```
 
