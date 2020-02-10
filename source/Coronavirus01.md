@@ -1,11 +1,18 @@
 ---
-title: Rでグーグルスプレッドシート01 (Coronavirus)[更新]
-date: 2020-02-09
+title: Rでグーグルスプレッドシート01 (Coronavirus)[注意]
+date: 2020-02-11
 tags: ["R", "rvest","lubridate" ,"xts","oce","ocedata"]
 excerpt: Rでグーグルスプレッドシート01 (Coronavirus)
 ---
 
 # Rでグーグルスプレッドシート01 (Coronavirus)  
+
+# (注意) 公開データの場所がグーグルスプレッドシートからGithubに移動したので以下のＲコードは動きません。
+
+## グーグルスプレッドシートのデータを読み込む方法は応用ができるので記事は残します。
+
+## データの移動先  
+[Novel Coronavirus 2019 Time Series Data:https://github.com/CSSEGISandData/2019-nCoV/tree/master/time_series](https://github.com/CSSEGISandData/2019-nCoV/tree/master/time_series)
 
 ## 新型コロナウイルスの感染状況
 
