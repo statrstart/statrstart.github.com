@@ -1,20 +1,20 @@
 ---
-title: RでGitgub01 (Coronavirus)
+title: RでGitHub01 (Coronavirus)
 date: 2020-02-11
 tags: ["R", "lubridate" ,"xts","oce","ocedata"]
-excerpt: RでGitgub01 (Coronavirus)
+excerpt: RでGitHub01 (Coronavirus)
 ---
 
-# RでGitgub01 (Coronavirus)  
+# RでGitHub01 (Coronavirus)  
 
-公開データの場所がグーグルスプレッドシートからGithubに移動したのでＲコードを書き直しました。
+公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
 
 ## 新型コロナウイルスの感染状況
 
 米ジョンズ・ホプキンス大学の新型コロナウイルスの感染状況をまとめたWebサイト  
 [Coronavirus 2019-nCoV Global Cases by Johns Hopkins CSSE](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
 
-データはGithubから入手できます。  
+データはGitHubから入手できます。  
 [Novel Coronavirus 2019 Time Series Data:https://github.com/CSSEGISandData/2019-nCoV/tree/master/time_series](https://github.com/CSSEGISandData/2019-nCoV/tree/master/time_series)
 
 
@@ -41,7 +41,7 @@ YouTube:[去年4月に田村智子議員が質問した、国立感染症研究�
 
 ## Rコード
 
-### パッケージの読み込み。データをGithubから入手。(read.csvの際には、check.names=Fをつける)
+### パッケージの読み込み。データをGitHubから入手。(read.csvの際には、check.names=Fをつける)
 
 ```R
 library(xts)
