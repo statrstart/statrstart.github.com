@@ -37,6 +37,8 @@ excerpt: RでGitHub01 (Coronavirus)
 ▽チャーター機の10人、  
 ▽それ以外の観光客などが16人の合わせて161人となっています。
 
+![Coronavirus04_2](images/Coronavirus04_2.png)
+
 YouTube:[去年4月に田村智子議員が質問した、国立感染症研究所の人員削減についての質問(公務員削減告発　感染症対策が弱体化)](https://www.youtube.com/watch?v=q9LTMiuq-tQ&feature=youtu.be)  
 
 ## Rコード
@@ -90,6 +92,35 @@ matplot(nCoV[,2:4],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",yla
 axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
 legend("topleft", legend = colnames(nCoV[,2:4]),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
 title("Coronavirus [ Total Confirmed,Total Recovered,Total Deaths ]")
+# dev.off()
+```
+
+### 日本国内で感染が確認された数
+
+```R
+ConfirmedJ<- Confirmed[Confirmed$"Country/Region"=="Japan",5:ncol(Confirmed)]
+t<-mdy_hm(colnames(ConfirmedJ))
+# 欠損値を0に置き換える。
+ConfirmedJ[is.na(ConfirmedJ)] <- 0
+# apply.daily関数を使いたいのでxtsオブジェクトにする。
+d.xts <- read.zoo(data.frame(t,as.numeric(ConfirmedJ)))
+# 元データは１日に何度かデータを更新しているので、それを１日ごとのデータにまとめる。
+nCoVJ<-data.frame(date=as.Date(index(apply.daily(d.xts,max))),ConfirmedJ=as.vector(coredata(apply.daily(d.xts,max))))
+# Diamond Princess cruise ship
+DP<- Confirmed[Confirmed$"Province/State"=="Diamond Princess cruise ship",5:ncol(Confirmed)]
+# 欠損値を0に置き換える。
+DP[is.na(DP)] <- 0
+# apply.daily関数を使いたいのでxtsオブジェクトにする。
+d.xts <- read.zoo(data.frame(t,as.numeric(DP)))
+# 引数 by で，2 つのデータフレームを紐付けする。紐付けする列名（date）
+nCoVJ<- merge(nCoVJ,data.frame(date=as.Date(index(apply.daily(d.xts,max))),DP=as.vector(coredata(apply.daily(d.xts,max)))),by="date")
+# 感染者の推移（日本国内）
+# png("Coronavirus04_2.png",width=800,height=600)
+par(mar=c(3,5,3,2))
+matplot(nCoVJ[,2:3],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
+axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
+legend("topleft", legend = c("Japan","Diamond Princess"),col=1:2,lwd=1.5,lty=1:2,pch=16:17,inset =c(0.02,0.03))
+title("Coronavirus [Confirmed in Japan]")
 # dev.off()
 ```
 
