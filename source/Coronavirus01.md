@@ -1,6 +1,6 @@
 ---
 title: Rでグーグルスプレッドシート01 (Coronavirus)[注意]
-date: 2020-02-11
+date: 2020-02-10
 tags: ["R", "rvest","lubridate" ,"xts","oce","ocedata"]
 excerpt: Rでグーグルスプレッドシート01 (Coronavirus)
 ---
