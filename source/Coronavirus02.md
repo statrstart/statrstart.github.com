@@ -1,7 +1,7 @@
 ---
-title: RでGitHub01 (Coronavirus)
+title: RでGitHub01 (Coronavirus)[更新]
 date: 2020-02-11
-tags: ["R", "lubridate" ,"xts","oce","ocedata"]
+tags: ["R", "lubridate" ,"xts","oce","ocedata","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub01 (Coronavirus)
 ---
 
@@ -19,16 +19,16 @@ excerpt: RでGitHub01 (Coronavirus)
 
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
-#### グラフ作成時間(日本時間2020年2月11日AM10:02)
+#### グラフ作成時間(日本時間2020年2月12日18:41)
 
-![Coronavirus01_2](images/Coronavirus01_2.png)
+![Coronavirus01](images/Coronavirus01_3.png)
 
 ### 新型コロナウイルスの感染状況
-#### グラフ作成時間(日本時間2020年2月11日AM10:02)
+#### グラフ作成時間(日本時間2020年2月12日18:41)
 
-![Coronavirus02_2](images/Coronavirus02_2.png)
+![Coronavirus02](images/Coronavirus02_3.png)
 
-![Coronavirus03_2](images/Coronavirus03_2.png)
+![Coronavirus03](images/Coronavirus03_3.png)
 
 [クルーズ船での新たな感染確認は65人 厚労省 2020年2月10日 23時07分](https://www3.nhk.or.jp/news/html/20200210/k10012279941000.html)  
 このＮＨＫの記事によると  
@@ -37,7 +37,7 @@ excerpt: RでGitHub01 (Coronavirus)
 ▽チャーター機の10人、  
 ▽それ以外の観光客などが16人の合わせて161人となっています。
 
-![Coronavirus04_2](images/Coronavirus04_2.png)
+![Coronavirus04](images/Coronavirus04_3.png)
 
 YouTube:[去年4月に田村智子議員が質問した、国立感染症研究所の人員削減についての質問(公務員削減告発　感染症対策が弱体化)](https://www.youtube.com/watch?v=q9LTMiuq-tQ&feature=youtu.be)  
 
@@ -86,7 +86,7 @@ nCoV<-merge(nCoV,data.frame(date=as.Date(index(apply.daily(d.xts,max))),Deaths=a
 ### 感染者、回復された方、亡くなった方の数の推移（日別）
 
 ```R
-# png("Coronavirus01_2.png",width=800,height=600)
+# png("Coronavirus01_3.png",width=800,height=600)
 par(mar=c(3,5,3,2))
 matplot(nCoV[,2:4],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
 axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
@@ -115,7 +115,7 @@ d.xts <- read.zoo(data.frame(t,as.numeric(DP)))
 # 引数 by で，2 つのデータフレームを紐付けする。紐付けする列名（date）
 nCoVJ<- merge(nCoVJ,data.frame(date=as.Date(index(apply.daily(d.xts,max))),DP=as.vector(coredata(apply.daily(d.xts,max)))),by="date")
 # 感染者の推移（日本国内）
-# png("Coronavirus04_2.png",width=800,height=600)
+# png("Coronavirus04_3.png",width=800,height=600)
 par(mar=c(3,5,3,2))
 matplot(nCoVJ[,2:3],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
 axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
@@ -147,7 +147,7 @@ min.size=2
 size <- ((df[,3]-min(df[,3]))/
     (max(df[,3])-min(df[,3]))*(max.size-min.size)
   +min.size)
-# png("Coronavirus02_2.png",width=1200,height=800)
+# png("Coronavirus02_3.png",width=1200,height=800)
 # ミラー図法
 par(mar=c(3,3,3,2))
 mapPlot(coastlineWorldFine, projection="+proj=mill", col='lightgray')
@@ -198,7 +198,7 @@ latlim <- range(LonLat[,2])
 # 正距方位図法  azimuthal equidistant projection
 aeqd_proj <- paste("+proj=aeqd +lon_0=",lonlat[1]," +lat_0=",lonlat[2])
 #
-# png("Coronavirus03_2.png",width=1200,height=800)
+# png("Coronavirus03_3.png",width=1200,height=800)
 par(mar=c(3,3,3,2))
 mapPlot(coastlineWorldFine, projection=aeqd_proj ,
         col="lightgray", longitudelim=lonlim, latitudelim=latlim)
