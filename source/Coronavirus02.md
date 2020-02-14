@@ -1,7 +1,7 @@
 ---
 title: RでGitHub01 (Coronavirus)[更新]
-date: 2020-02-11
-tags: ["R", "lubridate" ,"xts","oce","ocedata","Coronavirus","Japan","Diamond Princess"]
+date: 2020-02-14
+tags: ["R", "lubridate" ,"xts","pixmap","oce","ocedata","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub01 (Coronavirus)
 ---
 
@@ -19,25 +19,20 @@ excerpt: RでGitHub01 (Coronavirus)
 
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
-#### グラフ作成時間(日本時間2020年2月12日18:41)
+#### グラフ作成時間(日本時間2020年2月14日22:00)
 
-![Coronavirus01](images/Coronavirus01_3.png)
+![Coronavirus01](images/Coronavirus01_4.png)
 
 ### 新型コロナウイルスの感染状況
-#### グラフ作成時間(日本時間2020年2月12日18:41)
+#### グラフ作成時間(日本時間2020年2月14日22:00)
 
-![Coronavirus02](images/Coronavirus02_3.png)
+![Coronavirus02](images/Coronavirus02_4.png)
 
-![Coronavirus03](images/Coronavirus03_3.png)
+![Coronavirus03](images/Coronavirus03_4.png)
 
-[クルーズ船での新たな感染確認は65人 厚労省 2020年2月10日 23時07分](https://www3.nhk.or.jp/news/html/20200210/k10012279941000.html)  
-このＮＨＫの記事によると  
-（日本）国内で感染が確認されたのは
-▽クルーズ船の135人、  
-▽チャーター機の10人、  
-▽それ以外の観光客などが16人の合わせて161人となっています。
+### pixmapパッケージを使って2月6日の[テドロス事務局長のツイート](https://twitter.com/drtedros?lang=ja)を貼り付けました。
 
-![Coronavirus04](images/Coronavirus04_3.png)
+![Coronavirus04](images/Coronavirus04_4.png)
 
 YouTube:[去年4月に田村智子議員が質問した、国立感染症研究所の人員削減についての質問(公務員削減告発　感染症対策が弱体化)](https://www.youtube.com/watch?v=q9LTMiuq-tQ&feature=youtu.be)  
 
@@ -116,11 +111,21 @@ d.xts <- read.zoo(data.frame(t,as.numeric(DP)))
 nCoVJ<- merge(nCoVJ,data.frame(date=as.Date(index(apply.daily(d.xts,max))),DP=as.vector(coredata(apply.daily(d.xts,max)))),by="date")
 # 感染者の推移（日本国内）
 # png("Coronavirus04_3.png",width=800,height=600)
-par(mar=c(3,5,3,2))
-matplot(nCoVJ[,2:3],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
-axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
-legend("topleft", legend = c("Japan","Diamond Princess"),col=1:2,lwd=1.5,lty=1:2,pch=16:17,inset =c(0.02,0.03))
-title("Coronavirus [Confirmed in Japan]")
+#par(mar=c(3,5,3,2))
+#matplot(nCoVJ[,2:3],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
+#axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
+#legend("topleft", legend = c("Japan","Diamond Princess"),col=1:2,lwd=1.5,lty=1:2,pch=16:17,inset =c(0.02,0.03))
+#title("Coronavirus [Confirmed in Japan]")
+# dev.off()
+library(pixmap)
+# use ImageMagick
+# system("convert Screenshot.png WHO.ppm")
+g <- read.pnm("WHO.ppm")
+# png("Coronavirus04_4.png",width=1200,height=800)
+barplot(t(nCoVJ[,2:3]),names.arg=gsub("2020-","",nCoV[,1]),col=c(rgb(0,0,1,0.5),rgb(1,0,0,0.5)),las=1)
+legend("topleft",legend=rev(c("Japan","Diamond Princess")),pch=15,col=rev(c(rgb(0,0,1,0.5),rgb(1,0,0,0.5))),bty="n",inset=0.02)
+title("Number of infected people in Japan")
+addlogo(g,px= c(6, 24), py = c(120,200))
 # dev.off()
 ```
 
