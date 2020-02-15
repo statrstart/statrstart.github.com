@@ -1,11 +1,13 @@
 ---
-title: RでGitHub01 (Coronavirus)[更新]
-date: 2020-02-14
+title: RでGitHub01 (Coronavirus)[注意:アーカイブデータにしか対応していない]
+date: 2020-02-15
 tags: ["R", "lubridate" ,"xts","pixmap","oce","ocedata","Coronavirus","Japan","Diamond Princess"]
-excerpt: RでGitHub01 (Coronavirus)
+excerpt: RでGitHub01 (Coronavirus)[注意:アーカイブデータにしか対応していない]
 ---
 
-# RでGitHub01 (Coronavirus)  
+# RでGitHub01 (Coronavirus)[注意:アーカイブデータにしか対応していない]  
+
+# [注意]データの場所、データに更新頻度の変更がありましたので、以下のＲコードはアーカイブデータにしか対応していません。
 
 公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
 
@@ -14,25 +16,25 @@ excerpt: RでGitHub01 (Coronavirus)
 米ジョンズ・ホプキンス大学の新型コロナウイルスの感染状況をまとめたWebサイト  
 [Coronavirus 2019-nCoV Global Cases by Johns Hopkins CSSE](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
 
-データはGitHubから入手できます。  
-[Novel Coronavirus 2019 Time Series Data:https://github.com/CSSEGISandData/2019-nCoV/tree/master/time_series](https://github.com/CSSEGISandData/2019-nCoV/tree/master/time_series)
+アーカイブデータはGitHubから入手できます。  
+[Novel Coronavirus 2019 Time Series Data:https://github.com/CSSEGISandData/COVID-19/tree/master/archived_data/time_series](https://github.com/CSSEGISandData/COVID-19/tree/master/archived_data/time_series)
 
+#### グラフ作成時間(日本時間2020年2月15日12:00)
+
+### Number of infected people in Japan
+#### pixmapパッケージを使って2月6日の[テドロス事務局長のツイート](https://twitter.com/drtedros?lang=ja)を貼り付けました。
+
+![Coronavirus04](images/Coronavirus04_4.png)
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
-#### グラフ作成時間(日本時間2020年2月14日22:00)
 
 ![Coronavirus01](images/Coronavirus01_4.png)
 
 ### 新型コロナウイルスの感染状況
-#### グラフ作成時間(日本時間2020年2月14日22:00)
 
 ![Coronavirus02](images/Coronavirus02_4.png)
 
 ![Coronavirus03](images/Coronavirus03_4.png)
-
-### pixmapパッケージを使って2月6日の[テドロス事務局長のツイート](https://twitter.com/drtedros?lang=ja)を貼り付けました。
-
-![Coronavirus04](images/Coronavirus04_4.png)
 
 YouTube:[去年4月に田村智子議員が質問した、国立感染症研究所の人員削減についての質問(公務員削減告発　感染症対策が弱体化)](https://www.youtube.com/watch?v=q9LTMiuq-tQ&feature=youtu.be)  
 
@@ -45,11 +47,11 @@ library(xts)
 library(lubridate)
 #
 # read.csvの際には、check.names=Fをつける
-url<- "https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/time_series/time_series_2019-ncov-Confirmed.csv"
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/archived_data/time_series/time_series_2019-ncov-Confirmed.csv"
 Confirmed<- read.csv(url,check.names=F)
-url<- "https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/time_series/time_series_2019-ncov-Recovered.csv"
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/archived_data/time_series/time_series_2019-ncov-Recovered.csv"
 Recovered<- read.csv(url,check.names=F)
-url<- "https://raw.githubusercontent.com/CSSEGISandData/2019-nCoV/master/time_series/time_series_2019-ncov-Deaths.csv"
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/archived_data/time_series/time_series_2019-ncov-Deaths.csv"
 Deaths<- read.csv(url,check.names=F)
 ```
 
@@ -81,7 +83,7 @@ nCoV<-merge(nCoV,data.frame(date=as.Date(index(apply.daily(d.xts,max))),Deaths=a
 ### 感染者、回復された方、亡くなった方の数の推移（日別）
 
 ```R
-# png("Coronavirus01_3.png",width=800,height=600)
+# png("Coronavirus01_4.png",width=800,height=600)
 par(mar=c(3,5,3,2))
 matplot(nCoV[,2:4],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
 axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
@@ -152,7 +154,7 @@ min.size=2
 size <- ((df[,3]-min(df[,3]))/
     (max(df[,3])-min(df[,3]))*(max.size-min.size)
   +min.size)
-# png("Coronavirus02_3.png",width=1200,height=800)
+# png("Coronavirus02_4.png",width=1200,height=800)
 # ミラー図法
 par(mar=c(3,3,3,2))
 mapPlot(coastlineWorldFine, projection="+proj=mill", col='lightgray')
@@ -203,7 +205,7 @@ latlim <- range(LonLat[,2])
 # 正距方位図法  azimuthal equidistant projection
 aeqd_proj <- paste("+proj=aeqd +lon_0=",lonlat[1]," +lat_0=",lonlat[2])
 #
-# png("Coronavirus03_3.png",width=1200,height=800)
+# png("Coronavirus03_4.png",width=1200,height=800)
 par(mar=c(3,3,3,2))
 mapPlot(coastlineWorldFine, projection=aeqd_proj ,
         col="lightgray", longitudelim=lonlim, latitudelim=latlim)
