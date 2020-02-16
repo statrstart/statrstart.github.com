@@ -1,0 +1,219 @@
+---
+title: RでGitHub02 (Coronavirus)
+date: 2020-02-15
+tags: ["R", "lubridate" ,"xts","pixmap","oce","ocedata","Coronavirus","Japan","Diamond Princess"]
+excerpt: RでGitHub02 (Coronavirus)
+---
+
+# RでGitHub02 (Coronavirus)  
+
+公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
+
+## 新型コロナウイルスの感染状況
+
+米ジョンズ・ホプキンス大学の新型コロナウイルスの感染状況をまとめたWebサイト  
+[Coronavirus 2019-nCoV Global Cases by Johns Hopkins CSSE](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
+
+データはGitHubから入手できます。  
+[2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19)  
+
+使用するデータ（日次データになったので更新回数が減ってしまった。）  
+[CSSE COVID-19 Dataset](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data)
+
+過去のデータ(archived_data)は  
+[COVID-19 : archived_data](https://github.com/CSSEGISandData/COVID-19/tree/master/archived_data)
+
+新型コロナウイルス関連の主なサイト  
+[DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
+[BNO News](https://bnonews.com/)   
+
+#### グラフ作成時間(日本時間2020年2月15日13:00)
+
+### Number of infected people in Japan
+#### pixmapパッケージを使って2月6日の[テドロス事務局長のツイート](https://twitter.com/drtedros?lang=ja)を貼り付けました。
+
+![Coronavirus04](images/Coronavirus04_5.png)
+
+### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
+
+![Coronavirus01](images/Coronavirus01_5.png)
+
+### 新型コロナウイルスの感染状況
+
+![Coronavirus02](images/Coronavirus02_5.png)
+
+![Coronavirus03](images/Coronavirus03_5.png)
+
+YouTube:[去年4月に田村智子議員が質問した、国立感染症研究所の人員削減についての質問(公務員削減告発　感染症対策が弱体化)](https://www.youtube.com/watch?v=q9LTMiuq-tQ&feature=youtu.be)  
+
+## Rコード
+
+### パッケージの読み込み。データをGitHubから入手。(read.csvの際には、check.names=Fをつける)
+
+```R
+library(xts)
+library(lubridate)
+#
+# read.csvの際には、check.names=Fをつける
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+Confirmed<- read.csv(url,check.names=F)
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
+Recovered<- read.csv(url,check.names=F)
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
+Deaths<- read.csv(url,check.names=F)
+```
+
+### time_seriesデータは一日に数回更新だったのが、日次データになっていました。
+
+
+```R
+#lubridateパッケージを使うのが便利
+t<-mdy(colnames(Confirmed)[5:ncol(Confirmed)])
+nCoV<-data.frame(date=t,Confirmed=as.vector(colSums(Confirmed[,5:ncol(Confirmed)],na.rm=T)))
+#
+t<-mdy(colnames(Recovered)[5:ncol(Recovered)])
+d<-data.frame(date=t,Recovered=as.vector(colSums(Recovered[,5:ncol(Recovered)],na.rm=T)))
+# merge
+nCoV<-merge(nCoV,d,by="date")
+#
+t<-mdy(colnames(Deaths)[5:ncol(Deaths)])
+d<-data.frame(date=t,Deaths=as.vector(colSums(Deaths[,5:ncol(Deaths)],na.rm=T)))
+nCoV<-merge(nCoV,d,by="date")
+```
+
+### 感染者、回復された方、亡くなった方の数の推移（日別）
+
+```R
+# png("Coronavirus01_5.png",width=800,height=600)
+par(mar=c(3,5,3,2))
+matplot(nCoV[,2:4],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
+axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
+legend("topleft", legend = colnames(nCoV[,2:4]),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
+title("Coronavirus [ Total Confirmed,Total Recovered,Total Deaths ]")
+# dev.off()
+```
+
+### 日本国内で感染が確認された数
+
+```R
+ConfirmedJ<- Confirmed[Confirmed$"Country/Region"=="Japan",5:ncol(Confirmed)]
+t<-mdy(colnames(ConfirmedJ))
+# 欠損値を0に置き換える。
+ConfirmedJ[is.na(ConfirmedJ)] <- 0
+nCoVJ<-data.frame(date=t,ConfirmedJ=as.numeric(ConfirmedJ))
+# Diamond Princess cruise ship
+DP<- Confirmed[Confirmed$"Province/State"=="Diamond Princess cruise ship",5:ncol(Confirmed)]
+# 欠損値を0に置き換える。
+DP[is.na(DP)] <- 0
+# 引数 by で，2 つのデータフレームを紐付けする。紐付けする列名（date）
+nCoVJ<- merge(nCoVJ,data.frame(date=t,DP=as.numeric(DP)),by="date")
+# 感染者の推移（日本国内）
+# png("Coronavirus04_3.png",width=800,height=600)
+#par(mar=c(3,5,3,2))
+#matplot(nCoVJ[,2:3],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
+#axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
+#legend("topleft", legend = c("Japan","Diamond Princess"),col=1:2,lwd=1.5,lty=1:2,pch=16:17,inset =c(0.02,0.03))
+#title("Coronavirus [Confirmed in Japan]")
+# dev.off()
+library(pixmap)
+# use ImageMagick
+# system("convert Screenshot.png WHO.ppm")
+g <- read.pnm("WHO.ppm")
+# png("Coronavirus04_5.png",width=1200,height=800)
+b<-barplot(t(nCoVJ[,2:3]),names.arg=gsub("2020-","",nCoV[,1]),col=c(rgb(0,0,1,0.5),rgb(1,0,0,0.5)),las=1)
+legend("topleft",legend=rev(c("Japan","Diamond Princess")),pch=15,col=rev(c(rgb(0,0,1,0.5),rgb(1,0,0,0.5))),bty="n",inset=0.02)
+title("Number of infected people in Japan")
+addlogo(g,px= c(5.5, 21.5), py = c(110,180))
+num<- 16
+y<- colSums(t(nCoVJ[,2]))
+segments(b[num],y[num]+2, b[num],y[num]+12)
+segments(b[num],y[num]+12,b[num+1],y[num]+12)
+arrows(b[num+1],y[num]+12, b[num+1],y[num+1]+2)
+# dev.off()
+```
+
+### Diamond Princess cruise ship の場所が横浜になっていないので、直す。など
+
+```R
+# Diamond Princess cruise ship の場所が横浜になっていない。139.63800に直す。
+Confirmed[Confirmed$"Province/State"=="Diamond Princess cruise ship",4]<- 139.638
+# 重なってわかりにくいのでJapanの緯度、経度を変更する。
+Confirmed[Confirmed$"Country/Region"=="Japan",3]<- 35.447227
+Confirmed[Confirmed$"Country/Region"=="Japan",4]<- 136.756165
+```
+
+### 新型コロナウイルスの感染状況(世界)
+
+```R
+library(oce)
+data(coastlineWorldFine, package="ocedata")
+df<- Confirmed[,c(3,4,ncol(Confirmed))]
+# 欠損値を0に置き換える。
+df[is.na(df[,3])] <- 0
+max.size=20
+min.size=2
+size <- ((df[,3]-min(df[,3]))/
+    (max(df[,3])-min(df[,3]))*(max.size-min.size)
+  +min.size)
+# png("Coronavirus02_5.png",width=1200,height=800)
+# ミラー図法
+par(mar=c(3,3,3,2))
+mapPlot(coastlineWorldFine, projection="+proj=mill", col='lightgray')
+mapPoints(df$Long, df$Lat,pch=21,bg=rgb(1,0,0,alpha=0.5),col="black",cex=size)
+title("新型コロナウイルスの感染状況1")
+# dev.off()
+```
+
+### 新型コロナウイルスの感染状況(アジア：武漢周辺)
+
+```R
+library(oce)
+data(coastlineWorldFine, package="ocedata")
+#
+# stackoverflow : Drawing a Circle with a Radius of a Defined Distance in a Map
+# https://stackoverflow.com/questions/23071026/drawing-a-circle-with-a-radius-of-a-defined-distance-in-a-map
+#
+mapLonLat <- function(LonDec, LatDec, Km) {
+    ER <- 6371 #Mean Earth radius in kilometers. Change this to 3959 and you will have your function working in miles.
+    AngDeg <- seq(1:360) #angles in degrees 
+    Lat1Rad <- LatDec*(pi/180)#Latitude of the center of the circle in radians
+    Lon1Rad <- LonDec*(pi/180)#Longitude of the center of the circle in radians
+    AngRad <- AngDeg*(pi/180)#angles in radians
+    Lat2Rad <-asin(sin(Lat1Rad)*cos(Km/ER)+cos(Lat1Rad)*sin(Km/ER)*cos(AngRad)) #Latitude of each point of the circle rearding to angle in radians
+    Lon2Rad <- Lon1Rad+atan2(sin(AngRad)*sin(Km/ER)*cos(Lat1Rad),cos(Km/ER)-sin(Lat1Rad)*sin(Lat2Rad))#Longitude of each point of the circle rearding to angle in radians
+    Lat2Deg <- Lat2Rad*(180/pi)#Latitude of each point of the circle rearding to angle in degrees (conversion of radians to degrees deg = rad*(180/pi) )
+    Lon2Deg <- Lon2Rad*(180/pi)#Longitude of each point of the circle rearding to angle in degrees (conversion of radians to degrees deg = rad*(180/pi) )
+    return(data.frame(Lon2Deg,Lat2Deg))
+}
+#
+df<- Confirmed[,c(3,4,ncol(Confirmed))]
+# 欠損値を0に置き換える。
+df[is.na(df[,3])] <- 0
+Number_of_people<-c(0,1,10,50,100,1000,10000,100000)
+size<-c(0,1,2,3,4,8,16)
+# cut関数 なに以上なになに未満となるようにright = F
+size<- as.vector(cut(df[,3], breaks=Number_of_people, labels = size, right = F))
+#
+lonlat<- c(112.27070, 30.97564)
+LonDec<- lonlat[1]
+LatDec<- lonlat[2]
+Km<- 2000
+LonLat<- mapLonLat(LonDec, LatDec, Km)
+par(mar=c(2, 2, 3, 2))
+lonlim <- range(LonLat[,1])
+latlim <- range(LonLat[,2])
+#
+# 正距方位図法  azimuthal equidistant projection
+aeqd_proj <- paste("+proj=aeqd +lon_0=",lonlat[1]," +lat_0=",lonlat[2])
+#
+# png("Coronavirus03_5.png",width=1200,height=800)
+par(mar=c(3,3,3,2))
+mapPlot(coastlineWorldFine, projection=aeqd_proj ,
+        col="lightgray", longitudelim=lonlim, latitudelim=latlim)
+mapPoints(df$Long, df$Lat,pch=21,bg=rgb(1,0,0,alpha=0.7),col="black",cex=as.numeric(size))
+title("新型コロナウイルスの感染状況2")
+legend("bottomright",legend=c("[1 10)","[10 50)","[50 100)","[100 1000)","[1000 10000)","[10000 100000)"),
+	pch=21,pt.cex =c(1,2,3,4,8,16),col="black",pt.bg="red",inset=c(0.01,0.01),x.intersp=5,y.intersp=4.7,bty="n" )
+# dev.off()
+```
+
