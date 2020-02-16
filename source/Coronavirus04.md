@@ -1,6 +1,6 @@
 ---
 title: RでGitHub02 (Coronavirus)
-date: 2020-02-15
+date: 2020-02-16
 tags: ["R", "lubridate" ,"xts","pixmap","oce","ocedata","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub02 (Coronavirus)
 ---
@@ -27,7 +27,7 @@ excerpt: RでGitHub02 (Coronavirus)
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成時間(日本時間2020年2月15日13:00)
+#### グラフ作成時間(日本時間2020年2月16日13:00)
 
 ### Number of infected people in Japan
 #### pixmapパッケージを使って2月6日の[テドロス事務局長のツイート](https://twitter.com/drtedros?lang=ja)を貼り付けました。

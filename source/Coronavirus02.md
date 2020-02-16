@@ -1,6 +1,6 @@
 ---
 title: RでGitHub01 (Coronavirus)[注意:アーカイブデータにしか対応していない]
-date: 2020-02-14
+date: 2020-02-15
 tags: ["R", "lubridate" ,"xts","pixmap","oce","ocedata","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub01 (Coronavirus)[注意:アーカイブデータにしか対応していない]
 ---
