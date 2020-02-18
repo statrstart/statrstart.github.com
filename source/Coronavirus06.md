@@ -45,7 +45,7 @@ excerpt: RでGitHub03 (Coronavirus)
 
 #### 感染者数 50人以上100人未満
 
-![CoronavirusG3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG2.png)
+![CoronavirusG3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG3.png)
 
 #### 感染者数 20人以上50人未満
 
