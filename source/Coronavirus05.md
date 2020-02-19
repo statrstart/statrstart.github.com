@@ -1,27 +1,30 @@
 ---
-title: Rで棒グラフ02 (Coronavirus)
-date: 2020-02-17
+title: Rで棒グラフ02 (Coronavirus)[更新]
+date: 2020-02-19
 tags: ["R","barplot","Coronavirus","Japan","Diamond Princess"]
-excerpt: Rで棒グラフ02 (Coronavirus)
+excerpt: Rで棒グラフ02 (Coronavirus)[更新]
 ---
 
-# Rで棒グラフ02 (Coronavirus)
+# Rで棒グラフ02 (Coronavirus)[更新]
 
 Data : [BNO News(https://bnonews.com/)](https://bnonews.com/)  
 
-## 日本時間　2020.02.17 20:41 現在
+[twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
+[youtube : Diamond Princess is COVID-19 mill. How I got in the ship and was removed from it within one day](https://www.youtube.com/watch?v=vtHYZkLuKcI)
+
+## 日本時間　2020.02.19 21:25 現在
 
 ### Countries,territories or areas with reported confirmed COVID-19cases
 
 #### Japan & Diamond Princess のところのグラフの色を変える
 
-![BNO01](images/BNO01.png)
+![BNO01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/BNO01.png)
 
 ### Countries,territories or areas with reported confirmed COVID-19cases
 
 #### Japan & Diamond Princess のところのグラフの色と文字色を変える
 
-![BNO02](images/BNO02.png)
+![BNO02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/BNO02.png)
 
 ## Rコード
 
@@ -65,12 +68,13 @@ bp<- bp[order(bp[,2],decreasing =F),]
 ### Japan & Diamond Princess のところのグラフの色を変える
 
 ```R
-# png("BNO01.png",width=800,height=600)
 TF<- is.element(bp[,1],c("Japan","Diamond Princess"))
 col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
-par(mar=c(6,10,4,2))
+# png("BNO01.png",width=800,height=600)
+par(mar=c(6,10,4,5))
 b<- barplot(bp[,2],names.arg=bp[,1],las=1,col=col,horiz=T)
 axis(2, at = b,label=NA,tck= -0.008)
+text(x=bp[,2],y=b,labels=bp[,2],pos=4,xpd=T)
 title("Countries,territories or areas with reported confirmed COVID-19cases\n(excluding mainland China)",
 	"Data : BNO News(https://bnonews.com/)")
 # dev.off()
@@ -79,14 +83,15 @@ title("Countries,territories or areas with reported confirmed COVID-19cases\n(ex
 ### Japan & Diamond Princess のところのグラフの色と文字色を変える
 
 ```R
-# png("BNO02.png",width=800,height=600)
 TF<- is.element(bp[,1],c("Japan","Diamond Princess"))
 col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
 col2<- gsub("TRUE","red",gsub("FALSE","black",TF))
-par(mar=c(6,10,4,2))
+# png("BNO02.png",width=800,height=600)
+par(mar=c(6,10,4,5))
 b<- barplot(bp[,2],las=1,col=col,horiz=T)
 axis(2, at = b,label=NA,tck= -0.008)
 text(x=par("usr")[1],y=b, labels = bp[,1], col = col2,pos=2,xpd=T)
+text(x=bp[,2],y=b,labels=bp[,2],pos=4,xpd=T)
 title("Countries,territories or areas with reported confirmed COVID-19cases\n(excluding mainland China)",
 	"Data : BNO News(https://bnonews.com/)")
 # dev.off()
