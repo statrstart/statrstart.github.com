@@ -1,6 +1,6 @@
 ---
 title: RでGitHub03 (Coronavirus)
-date: 2020-02-18
+date: 2020-02-19
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub03 (Coronavirus)
 ---
@@ -27,7 +27,7 @@ excerpt: RでGitHub03 (Coronavirus)
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成時間(日本時間2020年2月18日18:00)
+#### グラフ作成日(日本時間2020年2月19日)
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
 
@@ -42,6 +42,9 @@ excerpt: RでGitHub03 (Coronavirus)
 #### 感染者数 100人以上10000人未満(Others 要するに Diamond Princess)
 
 ![CoronavirusG2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG2.png)
+
+[twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
+[youtube : Diamond Princess is COVID-19 mill. How I got in the ship and was removed from it within one day](https://www.youtube.com/watch?v=vtHYZkLuKcI)
 
 #### 感染者数 50人以上100人未満
 
@@ -58,7 +61,6 @@ excerpt: RでGitHub03 (Coronavirus)
 #### 感染者数 10人未満
 
 ![CoronavirusG6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG6.png)
-
 
 ## Rコード
 
@@ -129,6 +131,8 @@ G4<- timeline[timeline[,ncol(timeline)]>= 20 & timeline[,ncol(timeline)]<50,]
 G5<- timeline[timeline[,ncol(timeline)]>= 10 & timeline[,ncol(timeline)]<20,] 
 # 感染者数 10人未満
 G6<- timeline[timeline[,ncol(timeline)]<10,] 
+#
+# plot
 # G1
 #png("CoronavirusG1.png",width=800,height=600)
 par(mar=c(5,5,4,10))
@@ -150,9 +154,9 @@ title("reported confirmed COVID-19cases (Diamond Princess)")
 G3<-G3[order(G3[,ncol(G3)],decreasing=T),]
 #png("CoronavirusG3.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G3),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:3)
+matplot(t(G3),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G3))
 axis(1,at=1:ncol(G3),labels=gsub("/20","",colnames(G3)))
-text(x=par("usr")[2],y=G3[,ncol(G3)],labels=rownames(G3),pos=4,xpd=T,col=1:3)
+text(x=par("usr")[2],y=G3[,ncol(G3)],labels=rownames(G3),pos=4,xpd=T,col=1:nrow(G3))
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G4
@@ -160,10 +164,11 @@ title("reported confirmed COVID-19cases")
 G4<-G4[order(G4[,ncol(G4)],decreasing=T),]
 #png("CoronavirusG4.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G4),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:4)
+matplot(t(G4),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G4))
 axis(1,at=1:ncol(G4),labels=gsub("/20","",colnames(G4)))
-# text:３番めは上、４番目は下
-text(x=par("usr")[2],y=G4[,ncol(G4)]+c(0,0,1,-1),labels=rownames(G4),pos=4,xpd=T,col=1:4)
+# text:位置調整
+text(x=par("usr")[2],y=G4[,ncol(G4)]+c(0,0,0,1,-1),labels=rownames(G4),pos=4,xpd=T,col=1:nrow(G4))
+#legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G4),pch=16,lwd=2,col=1:nrow(G4),xpd=T,bty="n")
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G5
@@ -171,10 +176,11 @@ title("reported confirmed COVID-19cases")
 G5<-G5[order(G5[,ncol(G5)],decreasing=T),]
 #png("CoronavirusG5.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G5),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:6)
+matplot(t(G5),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G5))
 axis(1,at=1:ncol(G5),labels=gsub("/20","",colnames(G5)))
 # text:位置調整
-text(x=par("usr")[2],y=G5[,ncol(G5)]+c(0.25,-0.25,0.25,-0.25,0,0),labels=rownames(G5),pos=4,xpd=T,col=1:6)
+#text(x=par("usr")[2],y=G5[,ncol(G5)]+c(0.25,-0.25,0.25,-0.25,0,0),labels=rownames(G5),pos=4,xpd=T,col=1:nrow(G5))
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G5),pch=16,lwd=2,col=1:nrow(G5),xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G6
@@ -185,10 +191,7 @@ col<- rainbow(15)
 par(mar=c(5,5,4,10))
 matplot(t(G6),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
 axis(1,at=1:ncol(G6),labels=gsub("/20","",colnames(G6)))
-# 
-text(x=par("usr")[2],y=G6[1:8,ncol(G6)]+c(0.2,-0.2,0,0.25,0,-0.25,0.2,-0.2),labels=rownames(G6)[1:8],pos=4,xpd=T,col=col[1:8])
-#
-text(x=par("usr")[2],y=G6[9:15,ncol(G6)]+c(0.45,0.2,-0.05,-0.3,-0.55,-0.8,-1.05),labels=rownames(G6)[9:15],pos=4,xpd=T,col=col[9:15],cex=0.8)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5,cex=0.8)
 title("reported confirmed COVID-19cases")
 #dev.off()
 ```
