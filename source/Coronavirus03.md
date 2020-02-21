@@ -1,11 +1,11 @@
 ---
-title: Rで棒グラフ01 (Coronavirus in Japan)[更新]
+title: Rで棒グラフ01 (Coronavirus in Japan)
 date: 2020-02-16
 tags: ["R","barplot","Coronavirus","Japan","Diamond Princess"]
-excerpt: Rで棒グラフ01 (Coronavirus in Japan)[更新]
+excerpt: Rで棒グラフ01 (Coronavirus in Japan)
 ---
 
-# Rで棒グラフ01 (Coronavirus in Japan)[更新]
+# Rで棒グラフ01 (Coronavirus in Japan)
 
 厚生労働省 報道発表資料を元に「ダイヤモンド・プリンセス号」の
 - 「乗員・乗客」の総数とコロナウィルスの検査結果が判明した人数

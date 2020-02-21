@@ -1,11 +1,11 @@
 ---
-title: RでGitHub03 (Coronavirus)
+title: RでGitHub03 (Coronavirus)[更新]
 date: 2020-02-21
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
-excerpt: RでGitHub03 (Coronavirus)
+excerpt: RでGitHub03 (Coronavirus)[更新]
 ---
 
-# RでGitHub03 (Coronavirus)  
+# RでGitHub03 (Coronavirus)[更新]  
 
 公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
 
