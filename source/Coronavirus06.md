@@ -1,6 +1,6 @@
 ---
 title: RでGitHub03 (Coronavirus)
-date: 2020-02-19
+date: 2020-02-21
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub03 (Coronavirus)
 ---
@@ -27,7 +27,7 @@ excerpt: RでGitHub03 (Coronavirus)
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成日(日本時間2020年2月19日)
+#### グラフ作成日(日本時間2020年2月21日)
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
 
@@ -144,10 +144,10 @@ title("reported confirmed COVID-19cases (mainland China)")
 # G2
 #png("CoronavirusG2.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-plot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n")
+matplot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n")
 axis(1,at=1:ncol(G2),labels=gsub("/20","",colnames(G2)))
-text(x=par("usr")[2],y=G2[,ncol(G2)],labels="Others\n(Diamond Princess)",pos=4,xpd=T)
-title("reported confirmed COVID-19cases (Diamond Princess)")
+text(x=par("usr")[2],y=G2[,ncol(G2)],labels=rownames(G2),pos=4,xpd=T)
+title("reported confirmed COVID-19cases")
 #dev.off()
 # G3
 # 降順に並べ替え
@@ -167,7 +167,7 @@ par(mar=c(5,5,4,10))
 matplot(t(G4),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G4))
 axis(1,at=1:ncol(G4),labels=gsub("/20","",colnames(G4)))
 # text:位置調整
-text(x=par("usr")[2],y=G4[,ncol(G4)]+c(0,0,0,1,-1),labels=rownames(G4),pos=4,xpd=T,col=1:nrow(G4))
+text(x=par("usr")[2],y=G4[,ncol(G4)],labels=rownames(G4),pos=4,xpd=T,col=1:nrow(G4))
 #legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G4),pch=16,lwd=2,col=1:nrow(G4),xpd=T,bty="n")
 title("reported confirmed COVID-19cases")
 #dev.off()

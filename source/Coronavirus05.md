@@ -1,6 +1,6 @@
 ---
 title: Rで棒グラフ02 (Coronavirus)[更新]
-date: 2020-02-19
+date: 2020-02-21
 tags: ["R","barplot","Coronavirus","Japan","Diamond Princess"]
 excerpt: Rで棒グラフ02 (Coronavirus)[更新]
 ---
@@ -12,7 +12,7 @@ Data : [BNO News(https://bnonews.com/)](https://bnonews.com/)
 [twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
 [youtube : Diamond Princess is COVID-19 mill. How I got in the ship and was removed from it within one day](https://www.youtube.com/watch?v=vtHYZkLuKcI)
 
-## 日本時間　2020.02.19 21:25 現在
+## 日本時間　2020.02.21 20:25 現在
 
 ### Countries,territories or areas with reported confirmed COVID-19cases
 
