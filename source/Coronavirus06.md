@@ -1,6 +1,6 @@
 ---
 title: RでGitHub03 (Coronavirus)[更新]
-date: 2020-02-21
+date: 2020-02-22
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub03 (Coronavirus)[更新]
 ---
@@ -27,7 +27,7 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成日(日本時間2020年2月21日)
+#### グラフ作成日(日本時間2020年2月22日)
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
 
@@ -67,9 +67,6 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 ### パッケージの読み込み。データをGitHubから入手。(read.csvの際には、check.names=Fをつける)
 
 ```R
-library(xts)
-library(lubridate)
-#
 # read.csvの際には、check.names=Fをつける
 url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
 Confirmed<- read.csv(url,check.names=F)
@@ -81,19 +78,13 @@ Deaths<- read.csv(url,check.names=F)
 
 ### time_seriesデータは一日に数回更新だったのが、日次データになっていました。
 
+#### ちゃんと日順になったデータですのでコードをシンプルにしました。
+
 ```R
-#lubridateパッケージを使うのが便利
-t<-mdy(colnames(Confirmed)[5:ncol(Confirmed)])
-nCoV<-data.frame(date=t,Confirmed=as.vector(colSums(Confirmed[,5:ncol(Confirmed)],na.rm=T)))
-#
-t<-mdy(colnames(Recovered)[5:ncol(Recovered)])
-d<-data.frame(date=t,Recovered=as.vector(colSums(Recovered[,5:ncol(Recovered)],na.rm=T)))
-# merge
-nCoV<-merge(nCoV,d,by="date")
-#
-t<-mdy(colnames(Deaths)[5:ncol(Deaths)])
-d<-data.frame(date=t,Deaths=as.vector(colSums(Deaths[,5:ncol(Deaths)],na.rm=T)))
-nCoV<-merge(nCoV,d,by="date")
+nCoV<-colSums(Confirmed[,5:ncol(Confirmed)])
+nCoV<-rbind(nCoV,colSums(Recovered[,5:ncol(Recovered)]))
+nCoV<-rbind(nCoV,colSums(Deaths[,5:ncol(Deaths)]))
+rownames(nCoV)<- c("Confirmed","Recovered","Deaths")
 ```
 
 ### 感染者、回復された方、亡くなった方の数の推移（日別）
@@ -101,9 +92,9 @@ nCoV<-merge(nCoV,d,by="date")
 ```R
 # png("Coronavirus01.png",width=800,height=600)
 par(mar=c(3,5,3,2))
-matplot(nCoV[,2:4],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
-axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
-legend("topleft", legend = colnames(nCoV[,2:4]),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
+matplot(t(nCoV),type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
+axis(1,at=1:ncol(nCoV), labels =gsub("/20","",colnames(nCoV)))
+legend("topleft", legend = rownames(nCoV),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
 title("Coronavirus [ Total Confirmed,Total Recovered,Total Deaths ]")
 # dev.off()
 ```
@@ -167,8 +158,8 @@ par(mar=c(5,5,4,10))
 matplot(t(G4),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G4))
 axis(1,at=1:ncol(G4),labels=gsub("/20","",colnames(G4)))
 # text:位置調整
-text(x=par("usr")[2],y=G4[,ncol(G4)],labels=rownames(G4),pos=4,xpd=T,col=1:nrow(G4))
-#legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G4),pch=16,lwd=2,col=1:nrow(G4),xpd=T,bty="n")
+#text(x=par("usr")[2],y=G4[,ncol(G4)],labels=rownames(G4),pos=4,xpd=T,col=1:nrow(G4))
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G4),pch=16,lwd=2,col=1:nrow(G4),xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G5
@@ -195,3 +186,49 @@ legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,
 title("reported confirmed COVID-19cases")
 #dev.off()
 ```
+
+## 現在は使っていないRコードです。lubridateパッケージの覚書として残しています。
+
+
+```R
+library(xts)
+library(lubridate)
+#
+# read.csvの際には、check.names=Fをつける
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+Confirmed<- read.csv(url,check.names=F)
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
+Recovered<- read.csv(url,check.names=F)
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
+Deaths<- read.csv(url,check.names=F)
+```
+
+### time_seriesデータは一日に数回更新だったのが、日次データになっていました。
+
+```R
+#lubridateパッケージを使うのが便利
+t<-mdy(colnames(Confirmed)[5:ncol(Confirmed)])
+nCoV<-data.frame(date=t,Confirmed=as.vector(colSums(Confirmed[,5:ncol(Confirmed)],na.rm=T)))
+#
+t<-mdy(colnames(Recovered)[5:ncol(Recovered)])
+d<-data.frame(date=t,Recovered=as.vector(colSums(Recovered[,5:ncol(Recovered)],na.rm=T)))
+# merge
+nCoV<-merge(nCoV,d,by="date")
+#
+t<-mdy(colnames(Deaths)[5:ncol(Deaths)])
+d<-data.frame(date=t,Deaths=as.vector(colSums(Deaths[,5:ncol(Deaths)],na.rm=T)))
+nCoV<-merge(nCoV,d,by="date")
+```
+
+### 感染者、回復された方、亡くなった方の数の推移（日別）
+
+```R
+# png("Coronavirus01.png",width=800,height=600)
+par(mar=c(3,5,3,2))
+matplot(nCoV[,2:4],type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
+axis(1,at=1:nrow(nCoV), labels =gsub("2020-","",nCoV[,1] ))
+legend("topleft", legend = colnames(nCoV[,2:4]),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
+title("Coronavirus [ Total Confirmed,Total Recovered,Total Deaths ]")
+# dev.off()
+```
+
