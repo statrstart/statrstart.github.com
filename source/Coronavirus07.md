@@ -6,6 +6,7 @@ excerpt: Rでtimeline (Coronavirus)
 ---
 
 # Rでtimeline (Coronavirus)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus07)
 
 ## 日本時間　2020.02.23 07:35 現在
 
