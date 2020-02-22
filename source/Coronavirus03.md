@@ -6,7 +6,7 @@ excerpt: Rで棒グラフ01 (Coronavirus in Japan)
 ---
 
 # Rで棒グラフ01 (Coronavirus in Japan)
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgithub.com%2Fbrentvollebregt%2Fhit-counter)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus03)
 
 厚生労働省 報道発表資料を元に「ダイヤモンド・プリンセス号」の
 - 「乗員・乗客」の総数とコロナウィルスの検査結果が判明した人数
