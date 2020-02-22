@@ -6,6 +6,7 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 ---
 
 # RでGitHub03 (Coronavirus)[更新]  
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus06)
 
 公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
 

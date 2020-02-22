@@ -6,6 +6,7 @@ excerpt: Rで棒グラフ02 (Coronavirus)[更新]
 ---
 
 # Rで棒グラフ02 (Coronavirus)[更新]
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus05)
 
 Data : [BNO News(https://bnonews.com/)](https://bnonews.com/)  
 
