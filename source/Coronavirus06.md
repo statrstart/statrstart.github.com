@@ -1,6 +1,6 @@
 ---
 title: RでGitHub03 (Coronavirus)[更新]
-date: 2020-02-22
+date: 2020-02-23
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub03 (Coronavirus)[更新]
 ---
@@ -28,7 +28,7 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成日(日本時間2020年2月22日)
+#### グラフ作成日(日本時間2020年2月23日)
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
 
