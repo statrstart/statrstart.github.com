@@ -46,6 +46,15 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 
 #### Diamond Princessや韓国、イタリアの伸び率をみると、日本はそもそも検査している数が少ないのではないかと思われる。
 
+##### 日本
+[新型コロナウイルス感染症について(https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html)](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html)によると、 
+国内の状況について ２月21日12:00現在 
+○PCR検査実施人数  
+- 国内事例（チャーター便帰国者を除く）：693人
+- チャーター便帰国者事例（水際対策で確認）：829人
+- 合計：1522人
+
+##### 韓国
 [新型コロナ検査能力　１日１万３千件に拡大へ＝韓国 2020.02.23 13:23](https://jp.yna.co.kr/view/AJP20200223000700882)  
 
 [twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
