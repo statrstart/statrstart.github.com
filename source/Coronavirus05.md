@@ -1,6 +1,6 @@
 ---
 title: Rで棒グラフ02 (Coronavirus)[更新]
-date: 2020-02-23
+date: 2020-02-24
 tags: ["R","barplot","Coronavirus","Japan","Diamond Princess"]
 excerpt: Rで棒グラフ02 (Coronavirus)[更新]
 ---
@@ -13,7 +13,7 @@ Data : [BNO News(https://bnonews.com/)](https://bnonews.com/)
 [twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
 [youtube : Diamond Princess is COVID-19 mill. How I got in the ship and was removed from it within one day](https://www.youtube.com/watch?v=vtHYZkLuKcI)
 
-## 日本時間　2020.02.23 07:35 現在
+## 日本時間　2020.02.24 10:55 現在
 
 ### Countries,territories or areas with reported confirmed COVID-19cases
 
@@ -82,19 +82,20 @@ title("Countries,territories or areas with reported confirmed COVID-19cases\n(ex
 ```
 
 ### Japan & Diamond Princess のところのグラフの色と文字色を変える
+#### fontも変えてみました。
 
 ```R
 TF<- is.element(bp[,1],c("Japan","Diamond Princess"))
 col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
 col2<- gsub("TRUE","red",gsub("FALSE","black",TF))
 # png("BNO02.png",width=800,height=600)
-par(mar=c(6,10,4,5))
-b<- barplot(bp[,2],las=1,col=col,horiz=T)
+par(mar=c(6,10,4,5),family="serif")
+b<- barplot(bp[,2],las=1,col=col,horiz=T,font=2)
 axis(2, at = b,label=NA,tck= -0.008)
-text(x=par("usr")[1],y=b, labels = bp[,1], col = col2,pos=2,xpd=T)
-text(x=bp[,2],y=b,labels=bp[,2],pos=4,xpd=T)
+text(x=par("usr")[1],y=b, labels = bp[,1], col = col2,pos=2,xpd=T,font=3)
+text(x=bp[,2],y=b,labels=bp[,2],pos=4,xpd=T,font=1)
 title("Countries,territories or areas with reported confirmed COVID-19cases\n(excluding mainland China)",
-	"Data : BNO News(https://bnonews.com/)")
+	"Data : BNO News(https://bnonews.com/)",font=4)
 # dev.off()
 ```
 

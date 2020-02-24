@@ -1,6 +1,6 @@
 ---
 title: RでGitHub03 (Coronavirus)[更新]
-date: 2020-02-23
+date: 2020-02-24
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub03 (Coronavirus)[更新]
 ---
@@ -28,7 +28,7 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成日(日本時間2020年2月23日)
+#### グラフ作成日(日本時間2020年2月24日)
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
 
@@ -40,9 +40,13 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 
 ![CoronavirusG1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG1.png)
 
-#### 感染者数 100人以上10000人未満(Others 要するに Diamond Princess)
+#### 感染者数 100人以上10000人未満(OthersはDiamond Princessのこと)
 
 ![CoronavirusG2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG2.png)
+
+#### Diamond Princessや韓国、イタリアの伸び率をみると、日本はそもそも検査している数が少ないのではないかと思われる。
+
+[新型コロナ検査能力　１日１万３千件に拡大へ＝韓国 2020.02.23 13:23](https://jp.yna.co.kr/view/AJP20200223000700882)  
 
 [twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
 [youtube : Diamond Princess is COVID-19 mill. How I got in the ship and was removed from it within one day](https://www.youtube.com/watch?v=vtHYZkLuKcI)
@@ -134,11 +138,14 @@ text(x=par("usr")[2],y=G1[,ncol(G1)],labels=rownames(G1),pos=4,xpd=T)
 title("reported confirmed COVID-19cases (mainland China)")
 #dev.off()
 # G2
+# 降順に並べ替え
+G2<-G2[order(G2[,ncol(G2)],decreasing=T),]
 #png("CoronavirusG2.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n")
+matplot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G2))
 axis(1,at=1:ncol(G2),labels=gsub("/20","",colnames(G2)))
-text(x=par("usr")[2],y=G2[,ncol(G2)],labels=rownames(G2),pos=4,xpd=T)
+# text:位置調整
+text(x=par("usr")[2],y=G2[,ncol(G2)]+c(0,0,5,-5),labels=rownames(G2),pos=4,xpd=T,col=1:nrow(G2))
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G3
