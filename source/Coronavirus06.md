@@ -48,7 +48,14 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 
 #### 日本のPCR検査実施人数 [報道発表資料　2020年2月](https://www.mhlw.go.jp/stf/houdou/houdou_list_202002.html)より 
 
-![pcr01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr01.png)
+韓国の検査数は  
+[韓国の感染者２０４人に　１日で倍増＝大邱の教会関係者が１４４人 2020.02.21 18:44 ](https://jp.yna.co.kr/view/AJP20200221005500882?section=search)  
+[新型肺炎感染者計３４６人に　大邱・慶尚北道で新たに１３１人＝韓国 2020.02.22 11:29  ](https://jp.yna.co.kr/view/AJP20200222000300882?section=search)  
+[新型肺炎感染者１６９人増え６０２人　死者５人に＝韓国 2020.02.23 18:41 ](https://jp.yna.co.kr/view/AJP20200223001600882?section=search)  
+[新型肺炎感染者数８３３人に増加　死者は８人に＝韓国 2020.02.24 18:46 ](https://jp.yna.co.kr/view/AJP20200224004400882?section=search)  
+[新型コロナ感染者１４４人増え計９７７人　死者１０人＝韓国 2020.02.25 18:58 ](https://jp.yna.co.kr/view/AJP20200225005400882?section=search)  
+
+![pcr02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr02.png)
 
 #### 感染者数 50人以上100人未満
 
@@ -197,20 +204,20 @@ title("reported confirmed COVID-19cases")
 ### 日本のPCR検査実施人数
 
 ```R
-# jpn : 国内事例（チャーター便帰国者を除く）
-# charter : チャーター便帰国者事例（水際対策で確認)
+# 国内事例（チャーター便帰国者を除く）
 date<- seq(as.Date("2020-02-07"), as.Date("2020-02-23"), by = "day")
 jpn<- c(151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532,603,693,778,874)
-charter<- c(566,NA,NA,764,NA,764,764,764,NA,NA,764,764,764,829,829,829,829)
-# 日本のPCR検査実施人数
-dat<- data.frame(charter,jpn)
-rownames(dat)<- date
-# png("pcr01.png",width=800,height=600)
-barplot(t(dat),names.arg=gsub("2020-","",rownames(dat)),las=1,col=c("lightblue","pink"),legend=T,
-	args.legend = list(x="topleft",inset=c(0.03,0.03),
-	legend=c("国内事例（チャーター便帰国者を除く）","チャーター便帰国者事例（水際対策で確認)")))
-title("日本のPCR検査実施人数")
-text(x=0,y=1300,labels="[韓国]\n　感染の有無を調べるために検査を受けた人（感染者除く）は\n　３万５８２３人(2/25)",pos=4,cex=1.4)
+#
+# png("pcr02.png",width=800,height=600)
+barplot(jpn,names.arg=gsub("2020-","",date),las=1,col="pink")
+title("日本のPCR検査実施人数\n国内事例（チャーター便帰国者を除く）")
+text(x=0,y=600,labels="[韓国]\n感染の有無を調べるために検査を受けた人（感染者除く）は
+2/21 １万６１９６人
+2/22 １万９２７５人
+2/23 ２万５５７７人
+　(日本の ２９倍,チャーター便含めても １５倍)
+2/24 ３万１９２３人
+2/25 ３万９３２３人",pos=4,cex=1.4)
 # dev.off()
 ```
 

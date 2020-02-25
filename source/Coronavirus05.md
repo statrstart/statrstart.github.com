@@ -1,6 +1,6 @@
 ---
 title: Rで棒グラフ02 (Coronavirus)[更新]
-date: 2020-02-24
+date: 2020-02-25
 tags: ["R","barplot","Coronavirus","Japan","Diamond Princess"]
 excerpt: Rで棒グラフ02 (Coronavirus)[更新]
 ---
@@ -9,25 +9,23 @@ excerpt: Rで棒グラフ02 (Coronavirus)[更新]
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus05)
 
 Data : [BNO News(https://bnonews.com/)](https://bnonews.com/)  
+Data : PCR検査実施人数	
+[報道発表資料　2020年2月](https://www.mhlw.go.jp/stf/houdou/houdou_list_202002.html)  
+- 国内の状況について
+- 新型コロナウイルス感染症の現在の状況と厚生労働省の対応について
 
-## （注意）検査しないと感染していることがわからない。
-## （さらに、注意）陰性＝感染していないということではない！！感染していないという証明にはならない。
+韓国の検査数は  
+[韓国の感染者２０４人に　１日で倍増＝大邱の教会関係者が１４４人 2020.02.21 18:44 ](https://jp.yna.co.kr/view/AJP20200221005500882?section=search)  
+[新型肺炎感染者計３４６人に　大邱・慶尚北道で新たに１３１人＝韓国 2020.02.22 11:29  ](https://jp.yna.co.kr/view/AJP20200222000300882?section=search)  
+[新型肺炎感染者１６９人増え６０２人　死者５人に＝韓国 2020.02.23 18:41 ](https://jp.yna.co.kr/view/AJP20200223001600882?section=search)  
+[新型肺炎感染者数８３３人に増加　死者は８人に＝韓国 2020.02.24 18:46 ](https://jp.yna.co.kr/view/AJP20200224004400882?section=search)  
+[新型コロナ感染者１４４人増え計９７７人　死者１０人＝韓国 2020.02.25 18:58 ](https://jp.yna.co.kr/view/AJP20200225005400882?section=search)  
 
-##### 日本
-[新型コロナウイルス感染症について(https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html)](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html)によると、 
-国内の状況について ２月21日12:00現在 
-○PCR検査実施人数  
-- 国内事例（チャーター便帰国者を除く）：693人
-- チャーター便帰国者事例（水際対策で確認）：829人
-- 合計：1522人
+### 日本のPCR検査実施人数
 
-##### 韓国   
-[新型コロナ検査能力　１日１万３千件に拡大へ＝韓国 2020.02.23 13:23](https://jp.yna.co.kr/view/AJP20200223000700882)  
+![pcr01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr01.png)
 
-[twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
-[youtube : Diamond Princess is COVID-19 mill. How I got in the ship and was removed from it within one day](https://www.youtube.com/watch?v=vtHYZkLuKcI)
-
-## 日本時間　2020.02.24 10:55 現在
+## 日本時間　2020.02.25 21:41 現在
 
 ### Countries,territories or areas with reported confirmed COVID-19cases
 
@@ -42,6 +40,30 @@ Data : [BNO News(https://bnonews.com/)](https://bnonews.com/)
 ![BNO02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/BNO02.png)
 
 ## Rコード
+
+### 日本のPCR検査実施人数
+
+```R
+# jpn : 国内事例（チャーター便帰国者を除く）
+# charter : チャーター便帰国者事例（水際対策で確認)
+date<- seq(as.Date("2020-02-07"), as.Date("2020-02-23"), by = "day")
+jpn<- c(151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532,603,693,778,874)
+charter<- c(566,NA,NA,764,NA,764,764,764,NA,NA,764,764,764,829,829,829,829)
+# 日本のPCR検査実施人数
+dat<- data.frame(charter,jpn)
+rownames(dat)<- date
+# png("pcr01.png",width=800,height=600)
+barplot(t(dat),names.arg=gsub("2020-","",rownames(dat)),las=1,col=c("lightblue","pink"),legend=T,
+	args.legend = list(x="topleft",inset=c(0.03,0.03),
+	legend=c("国内事例（チャーター便帰国者を除く）","チャーター便帰国者事例（水際対策で確認)")))
+title("日本のPCR検査実施人数")
+text(x=0,y=1150,labels="[韓国]\n感染の有無を調べるために検査を受けた人（感染者除く）は
+2/21 １万６１９６人、2/22 １万９２７５人、
+2/23 ２万５５７７人　
+(日本の ２９倍,チャーター便含めても １５倍)
+2/24 ３万１９２３人、2/25 ３万９３２３人",pos=4,cex=1.4)
+# dev.off()
+```
 
 ### rvest パッケージを使ってデータを入手。データの加工
 
@@ -85,7 +107,7 @@ bp<- bp[order(bp[,2],decreasing =F),]
 ```R
 TF<- is.element(bp[,1],c("Japan","Diamond Princess"))
 col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
-# png("BNO01.png",width=800,height=600)
+# png("BNO01.png",width=800,height=800)
 par(mar=c(6,10,4,5))
 b<- barplot(bp[,2],names.arg=bp[,1],las=1,col=col,horiz=T)
 axis(2, at = b,label=NA,tck= -0.008)
@@ -102,7 +124,7 @@ title("Countries,territories or areas with reported confirmed COVID-19cases\n(ex
 TF<- is.element(bp[,1],c("Japan","Diamond Princess"))
 col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
 col2<- gsub("TRUE","red",gsub("FALSE","black",TF))
-# png("BNO02.png",width=800,height=600)
+# png("BNO02.png",width=800,height=800)
 par(mar=c(6,10,4,5),family="serif")
 b<- barplot(bp[,2],las=1,col=col,horiz=T,font=2)
 axis(2, at = b,label=NA,tck= -0.008)
