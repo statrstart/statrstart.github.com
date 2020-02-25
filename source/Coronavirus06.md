@@ -1,6 +1,6 @@
 ---
 title: RでGitHub03 (Coronavirus)[更新]
-date: 2020-02-24
+date: 2020-02-25
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
 excerpt: RでGitHub03 (Coronavirus)[更新]
 ---
@@ -28,7 +28,7 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成日(日本時間2020年2月24日)
+#### グラフ作成日(日本時間2020年2月25日)
 
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
 
@@ -46,19 +46,9 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 
 #### Diamond Princessや韓国、イタリアの伸び率をみると、日本はそもそも検査している数が少ないのではないかと思われる。
 
-##### 日本
-[新型コロナウイルス感染症について(https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html)](https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000164708_00001.html)によると、 
-国内の状況について ２月21日12:00現在 
-○PCR検査実施人数  
-- 国内事例（チャーター便帰国者を除く）：693人
-- チャーター便帰国者事例（水際対策で確認）：829人
-- 合計：1522人
+#### 日本のPCR検査実施人数 [報道発表資料　2020年2月](https://www.mhlw.go.jp/stf/houdou/houdou_list_202002.html)より 
 
-##### 韓国
-[新型コロナ検査能力　１日１万３千件に拡大へ＝韓国 2020.02.23 13:23](https://jp.yna.co.kr/view/AJP20200223000700882)  
-
-[twitter : Dr. Iwata](https://twitter.com/georgebest1969/status/1229739024669011968)   
-[youtube : Diamond Princess is COVID-19 mill. How I got in the ship and was removed from it within one day](https://www.youtube.com/watch?v=vtHYZkLuKcI)
+![pcr01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr01.png)
 
 #### 感染者数 50人以上100人未満
 
@@ -204,8 +194,27 @@ title("reported confirmed COVID-19cases")
 #dev.off()
 ```
 
-## 現在は使っていないRコードです。lubridateパッケージの覚書として残しています。
+### 日本のPCR検査実施人数
 
+```R
+# jpn : 国内事例（チャーター便帰国者を除く）
+# charter : チャーター便帰国者事例（水際対策で確認)
+date<- seq(as.Date("2020-02-07"), as.Date("2020-02-23"), by = "day")
+jpn<- c(151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532,603,693,778,874)
+charter<- c(566,NA,NA,764,NA,764,764,764,NA,NA,764,764,764,829,829,829,829)
+# 日本のPCR検査実施人数
+dat<- data.frame(charter,jpn)
+rownames(dat)<- date
+# png("pcr01.png",width=800,height=600)
+barplot(t(dat),names.arg=gsub("2020-","",rownames(dat)),las=1,col=c("lightblue","pink"),legend=T,
+	args.legend = list(x="topleft",inset=c(0.03,0.03),
+	legend=c("国内事例（チャーター便帰国者を除く）","チャーター便帰国者事例（水際対策で確認)")))
+title("日本のPCR検査実施人数")
+text(x=0,y=1300,labels="[韓国]\n　感染の有無を調べるために検査を受けた人（感染者除く）は\n　３万５８２３人(2/25)",pos=4,cex=1.4)
+# dev.off()
+```
+
+## 現在は使っていないRコードです。lubridateパッケージの覚書として残しています。
 
 ```R
 library(xts)
