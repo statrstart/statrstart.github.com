@@ -1,11 +1,15 @@
 ---
-title: 韓国のPCR検査実施人数 (新型コロナウイルス：Coronavirus)
+title: 韓国のPCR検査実施人数 (新型コロナウイルス：Coronavirus)[更新]
 date: 2020-02-29
 tags: ["R", "knitr","Coronavirus","新型コロナウイルス"]
 excerpt: 韓国のPCR検査実施人数 (新型コロナウイルス：Coronavirus)
 ---
 
 # 韓国のPCR検査実施人数 (新型コロナウイルス：Coronavirus) 
+
+#### (追加)以下のサイトに直接アクセスした方がいいみたいです。    
+[KCDC : http://www.cdc.go.kr/cdc_eng/](http://www.cdc.go.kr/cdc_eng/) ->「News Room」-> 「Press Release」  
+なお、[Coronavirus Testing: Criteria and Numbers by Country](https://www.worldometers.info/coronavirus/covid-19-testing/)をみると、__イタリアの検査人数__はFeb. 26の時点で __9,462__ testsとありました。  
 
 韓国のPCR検査実施人数等を表とグラフにします。韓国に比べて以下に日本の検査件数が少ないかがわかります。  
 ちなみに、人口は世界の人口 （世銀）直近データ2018年によると  	
@@ -36,6 +40,12 @@ Data : [Yonhap News Agency](https://jp.yna.co.kr/index)
 [新型コロナ感染者　１日で５７１人増え計２３３７人＝韓国 2020.02.28 18:17 ](https://jp.yna.co.kr/view/AJP20200228004300882?section=news)  
 感染の有無を調べるために検査を受けた人（感染者除く）は７万８８３０人で、このうち４万８５９３人は陰性だった。
 残りの３万２３７人は現在検査中だ。
+
+#### 日本のPCR検査実施人数は、厚生労働省の報道発表資料から抜き出した。    
+（注意）「国内事例のPCR検査実施人数は、疑似症報告制度の枠組みの中で報告が上がった数を計上しており、
+各自治体で行った全ての検査結果を反映しているものではない
+（退院時の確認検査や、疑似症報告に該当しない検査などは含まれていない）。」だそうです。
+
 
 ### 上のデータから表を作成
 
@@ -110,10 +120,14 @@ kable(df2)
 ### 新型コロナウイルスのPCR検査実施人数と感染状況(韓国)
 
 ```R
+Jpcr<- c(874,913,1017,1061,1229,1380)+829
 #png("pcr04.png",width=800,height=600)
 b<- barplot(t(df[,c(1,4,5)]),names.arg=gsub("2020-","",rownames(df)),las=1,col=c("red","lightblue","gray80"),
 	ylim= c(0,max(検査を受けた人_感染者含む)*1.1),legend=T,args.legend = list(x="topleft",inset=c(0.03,0.03)))
 text(x=b,y=検査を受けた人_感染者含む,labels= 検査を受けた人_感染者含む,pos=3,col="blue")
+points(x=b,y=Jpcr,pch=16)
+lines(x=b,y=Jpcr,pch=16,lwd=2)
+legend(x="topleft",inset=c(0.03,0.2),bty="n",legend="日本のPCR検査実施人数(データ：厚生労働省HP)",pch=16,lwd=2)
 title("韓国のPCR検査実施人数")
 #dev.off()
 ```
