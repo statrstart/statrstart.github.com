@@ -1,11 +1,11 @@
 ---
-title: RでGitHub03 (Coronavirus)[更新]
-date: 2020-02-25
-tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","Diamond Princess"]
-excerpt: RでGitHub03 (Coronavirus)[更新]
+title: RでGitHub03 (Coronavirus)[2020-03-02更新]
+date: 2020-03-02
+tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
+excerpt: RでGitHub03 (Coronavirus)[2020-03-02更新]
 ---
 
-# RでGitHub03 (Coronavirus)[更新]  
+# RでGitHub03 (Coronavirus)[2020-03-02更新]  
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus06)
 
 公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
@@ -28,8 +28,6 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 [DXY.cn. Pneumonia. 2020](https://ncov.dxy.cn/ncovh5/view/pneumonia)  
 [BNO News](https://bnonews.com/)   
 
-#### グラフ作成日(日本時間2020年2月25日)
-
 ### 新型コロナウイルスに感染された方、回復された方、亡くなった方の数の推移（日別）
 
 ![Coronavirus01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01.png)
@@ -40,22 +38,25 @@ excerpt: RでGitHub03 (Coronavirus)[更新]
 
 ![CoronavirusG1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG1.png)
 
-#### 感染者数 100人以上10000人未満(OthersはDiamond Princessのこと)
+#### 感染者数 1000人以上10000人未満
 
 ![CoronavirusG2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG2.png)
 
+#### 感染者数 100人以上1000人未満(OthersはDiamond Princessのこと)
+
+![CoronavirusG2_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG2_2.png)
+
 #### Diamond Princessや韓国、イタリアの伸び率をみると、日本はそもそも検査している数が少ないのではないかと思われる。
 
-#### 日本のPCR検査実施人数 [報道発表資料　2020年2月](https://www.mhlw.go.jp/stf/houdou/houdou_list_202002.html)より 
+日本のPCR検査実施人数 [報道発表資料　2020年2月](https://www.mhlw.go.jp/stf/houdou/houdou_list_202002.html)より 
 
-韓国の検査数は  
-[韓国の感染者２０４人に　１日で倍増＝大邱の教会関係者が１４４人 2020.02.21 18:44 ](https://jp.yna.co.kr/view/AJP20200221005500882?section=search)  
-[新型肺炎感染者計３４６人に　大邱・慶尚北道で新たに１３１人＝韓国 2020.02.22 11:29  ](https://jp.yna.co.kr/view/AJP20200222000300882?section=search)  
-[新型肺炎感染者１６９人増え６０２人　死者５人に＝韓国 2020.02.23 18:41 ](https://jp.yna.co.kr/view/AJP20200223001600882?section=search)  
-[新型肺炎感染者数８３３人に増加　死者は８人に＝韓国 2020.02.24 18:46 ](https://jp.yna.co.kr/view/AJP20200224004400882?section=search)  
-[新型コロナ感染者１４４人増え計９７７人　死者１０人＝韓国 2020.02.25 18:58 ](https://jp.yna.co.kr/view/AJP20200225005400882?section=search)  
+韓国の検査数は[KCDC「News Room」「Press Release」](https://www.cdc.go.kr/board/board.es?mid=a30402000000&bid=0030)  
+このうち、タイトルに「The Updates of COVID-19」のつくもの。9:00のデータ。
 
-![pcr02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr02.png)
+![pcr04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04.png)
+
+イタリアの２月２９日時点の検査数は[Coronavirus, 1.128 contagi in Italia: ecco i numeri regione per regione](https://www.corriere.it/salute/malattie_infettive/20_febbraio_29/coronavirus-888-contagi-italia-ecco-numeri-regione-regione-1b326950-5afd-11ea-8b1a-b76251361796.shtml)
+によると、18661人です。
 
 #### 感染者数 50人以上100人未満
 
@@ -121,10 +122,10 @@ timeline<- timeline[,-1]
 # 最終データの値でグループ分け
 # 感染者数 10000人以上(Mainland China)
 G1<- timeline[timeline[,ncol(timeline)]>=10000,]  
-# 感染者数 100人以上10000人未満(Others 要するに Diamond Princess)
-Confirmed[Confirmed$"Country/Region"=="Others",1] # 確認
-# [1] Diamond Princess cruise ship
-G2<- timeline[timeline[,ncol(timeline)]>= 100 & timeline[,ncol(timeline)]<10000,] 
+# 感染者数 1000人以上10000人未満
+G2<- timeline[timeline[,ncol(timeline)]>= 1000 & timeline[,ncol(timeline)]<10000,] 
+# 感染者数 100人以上1000人未満
+G2_2<- timeline[timeline[,ncol(timeline)]>= 100 & timeline[,ncol(timeline)]<1000,] 
 # 感染者数 50人以上100人未満
 G3<- timeline[timeline[,ncol(timeline)]>= 50 & timeline[,ncol(timeline)]<100,] 
 # 感染者数 20人以上50人未満
@@ -151,7 +152,18 @@ par(mar=c(5,5,4,10))
 matplot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G2))
 axis(1,at=1:ncol(G2),labels=gsub("/20","",colnames(G2)))
 # text:位置調整
-text(x=par("usr")[2],y=G2[,ncol(G2)]+c(0,0,5,-5),labels=rownames(G2),pos=4,xpd=T,col=1:nrow(G2))
+text(x=par("usr")[2],y=G2[,ncol(G2)],labels=rownames(G2),pos=4,xpd=T,col=1:nrow(G2))
+title("reported confirmed COVID-19cases")
+#dev.off()
+# G2_2
+# 降順に並べ替え
+G2_2<-G2_2[order(G2_2[,ncol(G2_2)],decreasing=T),]
+#png("CoronavirusG2_2.png",width=800,height=600)
+par(mar=c(5,5,4,10))
+matplot(t(G2_2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G2_2))
+axis(1,at=1:ncol(G2_2),labels=gsub("/20","",colnames(G2_2)))
+# text:位置調整
+text(x=par("usr")[2],y=G2_2[,ncol(G2_2)]+c(0,0,0,30,0,-10),labels=rownames(G2_2),pos=4,xpd=T,col=1:nrow(G2_2))
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G3
@@ -167,58 +179,40 @@ title("reported confirmed COVID-19cases")
 # G4
 # 降順に並べ替え
 G4<-G4[order(G4[,ncol(G4)],decreasing=T),]
+col<- rainbow(nrow(G4))
 #png("CoronavirusG4.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G4),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G4))
+matplot(t(G4),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
 axis(1,at=1:ncol(G4),labels=gsub("/20","",colnames(G4)))
 # text:位置調整
-#text(x=par("usr")[2],y=G4[,ncol(G4)],labels=rownames(G4),pos=4,xpd=T,col=1:nrow(G4))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G4),pch=16,lwd=2,col=1:nrow(G4),xpd=T,bty="n",y.intersp = 1.5)
+#text(x=par("usr")[2],y=G4[,ncol(G4)],labels=rownames(G4),pos=4,xpd=T,col=col)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G4),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G5
 # 降順に並べ替え
 G5<-G5[order(G5[,ncol(G5)],decreasing=T),]
+col<- rainbow(nrow(G5))
 #png("CoronavirusG5.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G5),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G5))
+matplot(t(G5),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
 axis(1,at=1:ncol(G5),labels=gsub("/20","",colnames(G5)))
 # text:位置調整
-#text(x=par("usr")[2],y=G5[,ncol(G5)]+c(0.25,-0.25,0.25,-0.25,0,0),labels=rownames(G5),pos=4,xpd=T,col=1:nrow(G5))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G5),pch=16,lwd=2,col=1:nrow(G5),xpd=T,bty="n",y.intersp = 1.5)
+#text(x=par("usr")[2],y=G5[,ncol(G5)]+c(0.25,-0.25,0.25,-0.25,0,0),labels=rownames(G5),pos=4,xpd=T,col=col)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G5),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G6
 # 降順に並べ替え
 G6<-G6[order(G6[,ncol(G6)],decreasing=T),]
-col<- rainbow(15)
+col<- rainbow(nrow(G6))
 #png("CoronavirusG6.png",width=800,height=600)
-par(mar=c(5,5,4,10))
+par(mar=c(5,5,4,15))
 matplot(t(G6),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
 axis(1,at=1:ncol(G6),labels=gsub("/20","",colnames(G6)))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5,cex=0.8)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5,cex=0.8,ncol=2)
 title("reported confirmed COVID-19cases")
 #dev.off()
-```
-
-### 日本のPCR検査実施人数
-
-```R
-# 国内事例（チャーター便帰国者を除く）
-date<- seq(as.Date("2020-02-07"), as.Date("2020-02-23"), by = "day")
-jpn<- c(151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532,603,693,778,874)
-#
-# png("pcr02.png",width=800,height=600)
-barplot(jpn,names.arg=gsub("2020-","",date),las=1,col="pink")
-title("日本のPCR検査実施人数\n国内事例（チャーター便帰国者を除く）")
-text(x=0,y=600,labels="[韓国]\n感染の有無を調べるために検査を受けた人（感染者除く）は
-2/21 １万６１９６人
-2/22 １万９２７５人
-2/23 ２万５５７７人
-　(日本の ２９倍,チャーター便含めても １５倍)
-2/24 ３万１９２３人
-2/25 ３万９３２３人",pos=4,cex=1.4)
-# dev.off()
 ```
 
 ## 現在は使っていないRコードです。lubridateパッケージの覚書として残しています。
