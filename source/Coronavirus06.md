@@ -1,11 +1,11 @@
 ---
-title: RでGitHub03 (Coronavirus)[2020-03-05更新]
-date: 2020-03-05
+title: RでGitHub03 (Coronavirus)[2020-03-06更新]
+date: 2020-03-06
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
-excerpt: RでGitHub03 (Coronavirus)[2020-03-05更新]
+excerpt: RでGitHub03 (Coronavirus)[2020-03-06更新]
 ---
 
-# RでGitHub03 (Coronavirus)[2020-03-05更新]  
+# RでGitHub03 (Coronavirus)[2020-03-06更新]  
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus06)
 
 公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
@@ -158,24 +158,26 @@ title("reported confirmed COVID-19cases")
 # G2_2
 # 降順に並べ替え
 G2_2<-G2_2[order(G2_2[,ncol(G2_2)],decreasing=T),]
+col<- rainbow(nrow(G2_2))
 #png("CoronavirusG2_2.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G2_2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G2_2))
+matplot(t(G2_2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
 axis(1,at=1:ncol(G2_2),labels=gsub("/20","",colnames(G2_2)))
 # text:位置調整
-#text(x=par("usr")[2],y=G2_2[,ncol(G2_2)]+c(0,0,0,30,0,-10),labels=rownames(G2_2),pos=4,xpd=T,col=1:nrow(G2_2))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G2_2),pch=16,lwd=2,col=1:nrow(G2_2),xpd=T,bty="n",y.intersp = 1.5)
+#text(x=par("usr")[2],y=G2_2[,ncol(G2_2)]+c(0,0,0,30,0,-10),labels=rownames(G2_2),pos=4,xpd=T,col=col)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G2_2),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G3
 # 降順に並べ替え
 G3<-G3[order(G3[,ncol(G3)],decreasing=T),]
+col<- rainbow(nrow(G3))
 #png("CoronavirusG3.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G3),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G3))
+matplot(t(G3),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
 axis(1,at=1:ncol(G3),labels=gsub("/20","",colnames(G3)))
-#text(x=par("usr")[2],y=G3[,ncol(G3)],labels=rownames(G3),pos=4,xpd=T,col=1:nrow(G3))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G3),pch=16,lwd=2,col=1:nrow(G3),xpd=T,bty="n",y.intersp = 1.5)
+#text(x=par("usr")[2],y=G3[,ncol(G3)],labels=rownames(G3),pos=4,xpd=T,col=col)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G3),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G4
