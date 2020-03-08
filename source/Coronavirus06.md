@@ -1,11 +1,11 @@
 ---
-title: RでGitHub03 (Coronavirus)[2020-03-06更新]
-date: 2020-03-06
+title: RでGitHub03 (Coronavirus)[2020-03-08更新]
+date: 2020-03-08
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
-excerpt: RでGitHub03 (Coronavirus)[2020-03-06更新]
+excerpt: RでGitHub03 (Coronavirus)
 ---
 
-# RでGitHub03 (Coronavirus)[2020-03-06更新]  
+# RでGitHub03 (Coronavirus) 
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus06)
 
 公開データの場所がグーグルスプレッドシートからGitHubに移動したのでＲコードを書き直しました。
@@ -102,10 +102,14 @@ rownames(nCoV)<- c("Confirmed","Recovered","Deaths")
 ### 感染者、回復された方、亡くなった方の数の推移（日別）
 
 ```R
+# 指数表示を抑制
+options(scipen=2) 
 # png("Coronavirus01.png",width=800,height=600)
-par(mar=c(3,5,3,2))
-matplot(t(nCoV),type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",ylab="")
+par(mar=c(3,6,3,2))
+matplot(t(nCoV),type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",yaxt="n",ylab="")
 axis(1,at=1:ncol(nCoV), labels =gsub("/20","",colnames(nCoV)))
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 legend("topleft", legend = rownames(nCoV),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
 title("Coronavirus [ Total Confirmed,Total Recovered,Total Deaths ]")
 # dev.off()
@@ -119,21 +123,21 @@ timeline<- aggregate(Confirmed[,5:ncol(Confirmed)], sum, by=list(Confirmed$"Coun
 rownames(timeline)<-timeline[,1]
 timeline<- timeline[,-1]
 #
-# 最終データの値でグループ分け
+# データの最大値でグループ分け
 # 感染者数 10000人以上(Mainland China)
-G1<- timeline[timeline[,ncol(timeline)]>=10000,]  
+G1<- timeline[apply(timeline,1,max,na.rm=T)>=10000,] 
 # 感染者数 1000人以上10000人未満
-G2<- timeline[timeline[,ncol(timeline)]>= 1000 & timeline[,ncol(timeline)]<10000,] 
+G2<- timeline[apply(timeline,1,max,na.rm=T)>= 1000 & apply(timeline,1,max,na.rm=T)<10000,] 
 # 感染者数 100人以上1000人未満
-G2_2<- timeline[timeline[,ncol(timeline)]>= 100 & timeline[,ncol(timeline)]<1000,] 
+G2_2<- timeline[apply(timeline,1,max,na.rm=T)>= 100 & apply(timeline,1,max,na.rm=T)<1000,] 
 # 感染者数 50人以上100人未満
-G3<- timeline[timeline[,ncol(timeline)]>= 50 & timeline[,ncol(timeline)]<100,] 
+G3<- timeline[apply(timeline,1,max,na.rm=T)>= 50 & apply(timeline,1,max,na.rm=T)<100,] 
 # 感染者数 20人以上50人未満
-G4<- timeline[timeline[,ncol(timeline)]>= 20 & timeline[,ncol(timeline)]<50,] 
+G4<- timeline[apply(timeline,1,max,na.rm=T)>= 20 & apply(timeline,1,max,na.rm=T)<50,] 
 # 感染者数 10人以上20人未満
-G5<- timeline[timeline[,ncol(timeline)]>= 10 & timeline[,ncol(timeline)]<20,] 
+G5<- timeline[apply(timeline,1,max,na.rm=T)>= 10 & apply(timeline,1,max,na.rm=T)<20,] 
 # 感染者数 10人未満
-G6<- timeline[timeline[,ncol(timeline)]<10,] 
+G6<- timeline[apply(timeline,1,max,na.rm=T)<10,] 
 #
 # plot
 # G1
@@ -146,18 +150,19 @@ title("reported confirmed COVID-19cases (mainland China)")
 #dev.off()
 # G2
 # 降順に並べ替え
-G2<-G2[order(G2[,ncol(G2)],decreasing=T),]
+G2<-G2[order(apply(G2,1,max,na.rm=T),decreasing=T),]
 #png("CoronavirusG2.png",width=800,height=600)
 par(mar=c(5,5,4,10))
 matplot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G2))
 axis(1,at=1:ncol(G2),labels=gsub("/20","",colnames(G2)))
 # text:位置調整
-text(x=par("usr")[2],y=G2[,ncol(G2)],labels=rownames(G2),pos=4,xpd=T,col=1:nrow(G2))
+#text(x=par("usr")[2],y=G2[,ncol(G2)],labels=rownames(G2),pos=4,xpd=T,col=1:nrow(G2))
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G2),pch=16,lwd=2,col=1:nrow(G2),xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G2_2
 # 降順に並べ替え
-G2_2<-G2_2[order(G2_2[,ncol(G2_2)],decreasing=T),]
+G2_2<-G2_2[order(apply(G2_2,1,max,na.rm=T),decreasing=T),]
 col<- rainbow(nrow(G2_2))
 #png("CoronavirusG2_2.png",width=800,height=600)
 par(mar=c(5,5,4,10))
@@ -170,7 +175,7 @@ title("reported confirmed COVID-19cases")
 #dev.off()
 # G3
 # 降順に並べ替え
-G3<-G3[order(G3[,ncol(G3)],decreasing=T),]
+G3<-G3[order(apply(G3,1,max,na.rm=T),decreasing=T),]
 col<- rainbow(nrow(G3))
 #png("CoronavirusG3.png",width=800,height=600)
 par(mar=c(5,5,4,10))
@@ -182,7 +187,7 @@ title("reported confirmed COVID-19cases")
 #dev.off()
 # G4
 # 降順に並べ替え
-G4<-G4[order(G4[,ncol(G4)],decreasing=T),]
+G4<-G4[order(apply(G4,1,max,na.rm=T),decreasing=T),]
 col<- rainbow(nrow(G4))
 #png("CoronavirusG4.png",width=800,height=600)
 par(mar=c(5,5,4,10))
@@ -195,7 +200,7 @@ title("reported confirmed COVID-19cases")
 #dev.off()
 # G5
 # 降順に並べ替え
-G5<-G5[order(G5[,ncol(G5)],decreasing=T),]
+G5<-G5[order(apply(G5,1,max,na.rm=T),decreasing=T),]
 col<- rainbow(nrow(G5))
 #png("CoronavirusG5.png",width=800,height=600)
 par(mar=c(5,5,4,10))
@@ -208,7 +213,7 @@ title("reported confirmed COVID-19cases")
 #dev.off()
 # G6
 # 降順に並べ替え
-G6<-G6[order(G6[,ncol(G6)],decreasing=T),]
+G6<-G6[order(apply(G6,1,max,na.rm=T),decreasing=T),]
 col<- rainbow(nrow(G6))
 #png("CoronavirusG6.png",width=800,height=600)
 par(mar=c(5,5,4,15))
