@@ -1,6 +1,6 @@
 ---
-title: RでGitHub03 (Coronavirus)[2020-03-08更新]
-date: 2020-03-08
+title: RでGitHub03 (Coronavirus)[2020-03-10更新]
+date: 2020-03-10
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: RでGitHub03 (Coronavirus)
 ---
@@ -51,12 +51,19 @@ excerpt: RでGitHub03 (Coronavirus)
 日本のPCR検査実施人数 [報道発表資料　2020年2月](https://www.mhlw.go.jp/stf/houdou/houdou_list_202002.html)より 
 
 韓国の検査数は[KCDC「News Room」「Press Release」](https://www.cdc.go.kr/board/board.es?mid=a30402000000&bid=0030)  
-このうち、タイトルに「The Updates of COVID-19」のつくもの。9:00のデータ。
 
 ![pcr04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04.png)
 
 イタリアの２月２９日時点の検査数は[Coronavirus, 1.128 contagi in Italia: ecco i numeri regione per regione](https://www.corriere.it/salute/malattie_infettive/20_febbraio_29/coronavirus-888-contagi-italia-ecco-numeri-regione-regione-1b326950-5afd-11ea-8b1a-b76251361796.shtml)
 によると、18661人です。
+
+#### ネット上で見つけたグラフをRで作成しました。
+
+##### 報告された感染者が100人を超えた時点を0とした図
+
+![CoronavirusG1_2L](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG1_2L.png)
+
+## 日本の報告された感染者が明らかに少ないのがわかります。
 
 #### 感染者数 50人以上100人未満
 
@@ -223,6 +230,39 @@ legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,
 title("reported confirmed COVID-19cases")
 #dev.off()
 ```
+### 報告された感染者が100人を超えた時点を0とした図
+
+```R
+# 感染者数 300人以上10000人未満
+G1_2<- timeline[apply(timeline,1,max,na.rm=T)>= 300 & apply(timeline,1,max,na.rm=T)<10000,] 
+# Othersを除く
+G1_2<-G1_2[grep("Others",rownames(G1_2),invert =T),]
+G1_2<-G1_2[order(apply(G1_2,1,max,na.rm=T),decreasing=T),]
+col<- rainbow(nrow(G1_2))
+#png("CoronavirusG1_2L.png",width=800,height=600)
+par(mar=c(5,5,4,10))
+# 感染者が100人超えた時点を0とする
+plot(1,1,type="n",xlab="感染者が100人超えた時点を0とする",ylab="感染者(対数表示)",yaxt="n",log="y",ylim=c(1,20000),xlim=c(-22,22))
+abline(v=seq(-20,20,10),col=c("gray","gray","black","gray","gray"),lty=3)
+for (i in 1:length(col)){
+p<- G1_2[i,]
+p1<- length(p[p<100])
+lines(-p1:(length(p)-p1-1),p,lwd=0.8,col=col[i])
+points(-p1:(length(p)-p1-1),p,pch=16,cex=0.8,col=col[i])
+if (i== grep("Japan",rownames(G1_2))){
+	text(x=(length(p)-p1-1),y=p[length(p)],labels="Japan",cex=1.2,col=col[i],pos=4)
+	}
+}
+for(i in 0:5){
+  axis(side=2, at=10^i, labels=bquote(10^.(i)) ,las=1)
+  axis(side=2, at=seq(2,9)*10^i, tck=-0.01,labels=F)
+}
+legend(x=par("usr")[2],y=10^par("usr")[4],legend=rownames(G1_2),pch=16,lwd=1,col=col,xpd=T,bty="n",cex=0.8)
+title("報告された感染者数の推移(感染者数 300人以上:中国は除く)")
+# dev.off()
+```
+
+
 
 ## 現在は使っていないRコードです。lubridateパッケージの覚書として残しています。
 
