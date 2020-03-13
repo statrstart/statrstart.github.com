@@ -59,11 +59,11 @@ excerpt: RでGitHub03 (Coronavirus)
 
 #### ネット上で見つけたグラフをRで作成しました。
 
-##### 報告された感染者が100人を超えた時点を0とした図
+##### 報告された感染者が80人を超えた時点を0とした図
 
 ![CoronavirusG1_2L](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG1_2L.png)
 
-## 日本の報告された感染者が明らかに少ないのがわかります。
+## 日本の報告された感染者の増加が他の国に比べて少ないのがわかります。
 
 #### 感染者数 50人以上100人未満
 
