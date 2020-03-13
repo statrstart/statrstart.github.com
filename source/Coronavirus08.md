@@ -6,6 +6,7 @@ excerpt: 韓国と日本のPCR検査実施人数比較 (新型コロナウイル
 ---
 
 # 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus08)
 
 #### イタリアの２月２９日時点の検査数は[Coronavirus, 1.128 contagi in Italia: ecco i numeri regione per regione](https://www.corriere.it/salute/malattie_infettive/20_febbraio_29/coronavirus-888-contagi-italia-ecco-numeri-regione-regione-1b326950-5afd-11ea-8b1a-b76251361796.shtml)
 によると、18661人です。
