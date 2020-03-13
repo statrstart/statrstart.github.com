@@ -1,6 +1,6 @@
 ---
-title: RでGitHub03 (Coronavirus)[2020-03-10更新]
-date: 2020-03-10
+title: RでGitHub03 (Coronavirus)[2020-03-13更新]
+date: 2020-03-13
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: RでGitHub03 (Coronavirus)
 ---
@@ -160,11 +160,9 @@ title("reported confirmed COVID-19cases (mainland China)")
 G2<-G2[order(apply(G2,1,max,na.rm=T),decreasing=T),]
 #png("CoronavirusG2.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G2))
-axis(1,at=1:ncol(G2),labels=gsub("/20","",colnames(G2)))
-# text:位置調整
-#text(x=par("usr")[2],y=G2[,ncol(G2)],labels=rownames(G2),pos=4,xpd=T,col=1:nrow(G2))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G2),pch=16,lwd=2,col=1:nrow(G2),xpd=T,bty="n",y.intersp = 1.5)
+matplot(t(G1),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G1))
+axis(1,at=1:ncol(G1),labels=gsub("/20","",colnames(G1)))
+text(x=par("usr")[2],y=G1[,ncol(G1)],labels=rownames(G1),pos=4,xpd=T,col=1:nrow(G1))
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G2_2
@@ -230,35 +228,64 @@ legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,
 title("reported confirmed COVID-19cases")
 #dev.off()
 ```
-### 報告された感染者が100人を超えた時点を0とした図
+### 報告された感染者が80人を超えた時点を0とした図
 
 ```R
-# 感染者数 300人以上10000人未満
-G1_2<- timeline[apply(timeline,1,max,na.rm=T)>= 300 & apply(timeline,1,max,na.rm=T)<10000,] 
-# Othersを除く
-G1_2<-G1_2[grep("Others",rownames(G1_2),invert =T),]
+# Country/Regionごとに集計
+timeline<- aggregate(Confirmed[,5:ncol(Confirmed)], sum, by=list(Confirmed$"Country/Region"))
+rownames(timeline)<-timeline[,1]
+timeline<- timeline[,-1]
+#
+# 感染者数 200人以上20000人未満
+min<- 200
+max<- 20000
+G1_2<- timeline[apply(timeline,1,max,na.rm=T)>= min & apply(timeline,1,max,na.rm=T)< max,] 
+# Cruise Shipを除く
+G1_2<-G1_2[grep("Cruise Ship",rownames(G1_2),invert =T),]
 G1_2<-G1_2[order(apply(G1_2,1,max,na.rm=T),decreasing=T),]
 col<- rainbow(nrow(G1_2))
+#
+#Starting point
+Sp<- 80 # Starting pointとする感染者数
+length<- 10 # Starting pointとする感染者数に合わせるための調整
+xlim=c(-22,30) # 範囲
+col<- rainbow(nrow(G1_2))
+pch<- rep(c(0,1,2,4,5,6,15,16,17,18),5)
 #png("CoronavirusG1_2L.png",width=800,height=600)
-par(mar=c(5,5,4,10))
-# 感染者が100人超えた時点を0とする
-plot(1,1,type="n",xlab="感染者が100人超えた時点を0とする",ylab="感染者(対数表示)",yaxt="n",log="y",ylim=c(1,20000),xlim=c(-22,22))
+par(mar=c(5,5,4,2),family="serif")
+# 
+plot(1,1,type="n",xlab=paste0("Days since reported cases reach ",Sp),
+	ylab="Number of reported cases (except China)",yaxt="n",log="y",
+	ylim=c(0.9,20000),xlim=xlim,yaxs="i")
 abline(v=seq(-20,20,10),col=c("gray","gray","black","gray","gray"),lty=3)
+for(i in 0:5){
+  abline(h=seq(1,9)*10^i,col="gray",lty=3)
+}
+box(lwd=2.5)
+#
 for (i in 1:length(col)){
-p<- G1_2[i,]
-p1<- length(p[p<100])
-lines(-p1:(length(p)-p1-1),p,lwd=0.8,col=col[i])
-points(-p1:(length(p)-p1-1),p,pch=16,cex=0.8,col=col[i])
+p0<- as.numeric(G1_2[i,])
+p<-NULL
+for (j in 1:(length(p0)-1)){
+	p<- c(p,seq(p0[j],p0[j+1],length=length))
+}
+p1<- length(p[p<Sp])
+p2<- length(p[p>=Sp])
+lines(seq(-p1/length,(p2/length - 1/length),1/length),p,lwd=0.8,col=col[i])
+points(seq(-p1,p2,length)/length,p0,cex=0.8,col=col[i],pch=pch[i])
 if (i== grep("Japan",rownames(G1_2))){
-	text(x=(length(p)-p1-1),y=p[length(p)],labels="Japan",cex=1.2,col=col[i],pos=4)
+	text(x=p2[length(p2)]/length,y=p0[length(p0)],labels="Japan",cex=1.2,col="black",pos=4)
+	}
+if (i== grep("Korea, South",rownames(G1_2))){
+	text(x=p2[length(p2)]/length,y=p0[length(p0)],labels="South Korea",cex=1.2,col="black",pos=4)
 	}
 }
 for(i in 0:5){
   axis(side=2, at=10^i, labels=bquote(10^.(i)) ,las=1)
   axis(side=2, at=seq(2,9)*10^i, tck=-0.01,labels=F)
 }
-legend(x=par("usr")[2],y=10^par("usr")[4],legend=rownames(G1_2),pch=16,lwd=1,col=col,xpd=T,bty="n",cex=0.8)
-title("報告された感染者数の推移(感染者数 300人以上:中国は除く)")
+legend(x="topleft",inset=c(0.03,0.01),ncol=2,legend=rownames(G1_2),pch=pch,lwd=1,col=col,xpd=T,bty="n",cex=1)
+#legend(x=par("usr")[2],y=10^par("usr")[4],legend=rownames(G1_2),pch=pch,lwd=1,col=col,xpd=T,bty="n",cex=1)
 # dev.off()
 ```
 
