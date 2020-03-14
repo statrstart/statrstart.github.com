@@ -1,6 +1,6 @@
 ---
-title: RでGitHub03 (Coronavirus)[2020-03-13更新]
-date: 2020-03-13
+title: RでGitHub03 (Coronavirus)[2020-03-14更新]
+date: 2020-03-14
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: RでGitHub03 (Coronavirus)
 ---
@@ -54,14 +54,18 @@ excerpt: RでGitHub03 (Coronavirus)
 
 ![pcr04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04.png)
 
-イタリアの２月２９日時点の検査数は[Coronavirus, 1.128 contagi in Italia: ecco i numeri regione per regione](https://www.corriere.it/salute/malattie_infettive/20_febbraio_29/coronavirus-888-contagi-italia-ecco-numeri-regione-regione-1b326950-5afd-11ea-8b1a-b76251361796.shtml)
-によると、18661人です。
+(参考)[Coronavirus Disease (COVID-19) – Research and Statistics](https://ourworldindata.org/coronavirus)  
 
 #### ネット上で見つけたグラフをRで作成しました。
 
 ##### 報告された感染者が80人を超えた時点を0とした図
 
 ![CoronavirusG1_2L](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG1_2L.png)
+
+## シンガポールは、報告された感染者の増加が日本より緩やかですが、
+- 面積：約720平方キロメートル（東京23区と同程度）　
+- 人口：約564万人（うちシンガポール人・永住者は399万人）（2019年1月） 
+[外務省HP:シンガポール共和国（Republic of Singapore）基礎データ](https://www.mofa.go.jp/mofaj/area/singapore/data.html)
 
 ## 日本の報告された感染者の増加が他の国に比べて少ないのがわかります。
 
@@ -111,15 +115,16 @@ rownames(nCoV)<- c("Confirmed","Recovered","Deaths")
 ```R
 # 指数表示を抑制
 options(scipen=2) 
-# png("Coronavirus01.png",width=800,height=600)
-par(mar=c(3,6,3,2))
-matplot(t(nCoV),type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",yaxt="n",ylab="")
+#png("Coronavirus01.png",width=800,height=600)
+par(mar=c(3,6,3,2),family="serif")
+matplot(t(nCoV),type="o",col=1:3,lwd=1.5,lty=1:3,pch=16:18,las=1,xaxt="n",yaxt="n",ylab="",bty="l")
+box(bty="l",lwd=2)
 axis(1,at=1:ncol(nCoV), labels =gsub("/20","",colnames(nCoV)))
 # Add comma separator to axis labels
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 legend("topleft", legend = rownames(nCoV),col=1:3,lwd=1.5,lty=1:3,pch=16:18,inset =c(0.02,0.03))
 title("Coronavirus [ Total Confirmed,Total Recovered,Total Deaths ]")
-# dev.off()
+#dev.off()
 ```
 
 ### 新型コロナウイルスの国、場所別感染者の推移
@@ -279,12 +284,16 @@ if (i== grep("Japan",rownames(G1_2))){
 if (i== grep("Korea, South",rownames(G1_2))){
 	text(x=p2[length(p2)]/length,y=p0[length(p0)],labels="South Korea",cex=1.2,col="black",pos=4)
 	}
+if (i== grep("Singapore",rownames(G1_2))){
+	text(x=p2[length(p2)]/length,y=p0[length(p0)],labels="Singapore",cex=1.2,col="black",pos=4)
+	}
 }
 for(i in 0:5){
   axis(side=2, at=10^i, labels=bquote(10^.(i)) ,las=1)
   axis(side=2, at=seq(2,9)*10^i, tck=-0.01,labels=F)
 }
-legend(x="topleft",inset=c(0.03,0.01),ncol=2,legend=rownames(G1_2),pch=pch,lwd=1,col=col,xpd=T,bty="n",cex=1)
+legend(x="topleft",inset=c(0.03,0.01),ncol=2,legend=rownames(G1_2),pch=pch,lwd=1,col=col,xpd=T,
+	bty="n",x.intersp= 1,y.intersp =1.1,cex=1.2)
 #legend(x=par("usr")[2],y=10^par("usr")[4],legend=rownames(G1_2),pch=pch,lwd=1,col=col,xpd=T,bty="n",cex=1)
 # dev.off()
 ```
