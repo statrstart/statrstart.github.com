@@ -45,6 +45,14 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 - 人口：約564万人（うちシンガポール人・永住者は399万人）（2019年1月） 
 [外務省HP:シンガポール共和国（Republic of Singapore）基礎データ](https://www.mofa.go.jp/mofaj/area/singapore/data.html)
 
+|                  | Population(Thousand persons)|
+|:-----------------|----------------------------:|
+|Japan             |                   126476.458|
+|Republic of Korea |                    51269.183|
+|Singapore         |                     5850.343|
+
+- 大韓民国（英: Republic of Korea）
+
 ### 報告された感染者数が100人以上の国ごとの感染者数の棒グラフ
 
 #### x軸のラベルの数値にコンマ、国ごとの値をグラフ右に表記
@@ -278,4 +286,18 @@ text(x=par("usr")[1],y=b, labels = colnames(t(DR)), col = col2,pos=2,xpd=T,font=
 mtext("Reported deaths / Reported cases (%)",side=1,line=3)
 title("Covid-19 : Death rates by country (%)")
 #dev.off()
+```
+
+### wpp2019パッケージに国別人口データあり
+
+```R
+library(wpp2019)
+data(pop)
+# Population (Thousand persons)
+POP <- pop[grep("(Japan|Republic of Korea|Singapore)",pop$name), c("name", "2020")]
+#POP <- subset(pop, name=="Japan"|name=="Republic of Korea"|name=="Singapore")[, c("name", "2020")]
+rownames(POP)<- POP$name
+POP<- POP[,-1,drop=F]
+colnames(POP)<- "Population(Thousand persons)"
+knitr::kable(POP)
 ```
