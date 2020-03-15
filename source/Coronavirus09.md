@@ -35,9 +35,15 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 
 ### 報告された感染者数が一定数超えた時点を起点とした折れ線グラフ（再掲）
 
-#### 片対数グラフ（Semi-log plot）
+#### 片対数グラフ（Semi-log plot） 
+(参考)[Alessandro Strumia(physicist) Twitter:Days since reported cases reach 200](https://twitter.com/AlessandroStru4/status/1236391718318157830/photo/1)
 
 ![CoronavirusG1_2L](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG1_2L.png)
+
+### シンガポールは、報告された感染者の増加が日本より緩やかですが、人口が日本に比べて非常に少ない。
+- 面積：約720平方キロメートル（東京23区と同程度）　
+- 人口：約564万人（うちシンガポール人・永住者は399万人）（2019年1月） 
+[外務省HP:シンガポール共和国（Republic of Singapore）基礎データ](https://www.mofa.go.jp/mofaj/area/singapore/data.html)
 
 ### 報告された感染者数が100人以上の国ごとの感染者数の棒グラフ
 
@@ -50,7 +56,6 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 #### 日本と韓国のグラフの色、ラベルの色を変えた。
 
 ![Coronavirus01_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_3.png)
-
 
 ## Rコード
 
