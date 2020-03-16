@@ -1,7 +1,7 @@
 ---
-title: Rで折れ線グラフ、棒グラフ (Coronavirus)[2020-03-14更新]
-date: 2020-03-15
-tags: ["R", "Coronavirus","Japan","新型コロナウイルス"]
+title: Rで折れ線グラフ、棒グラフ (Coronavirus)[2020-03-16更新]
+date: 2020-03-16
+tags: ["R","DataComputing", "Coronavirus","Japan","新型コロナウイルス"]
 excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 ---
 
@@ -11,7 +11,6 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 ## ちょっと工夫した折れ線グラフ、棒グラフを作りました。
 
 ## 新型コロナウイルスの感染状況
-
 米ジョンズ・ホプキンス大学の新型コロナウイルスの感染状況をまとめたWebサイト  
 [Coronavirus 2019-nCoV Global Cases by Johns Hopkins CSSE](https://gisanddata.maps.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6)
 
@@ -38,6 +37,7 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 #### 片対数グラフ（Semi-log plot） 
 (参考)[Alessandro Strumia(physicist) Twitter:Days since reported cases reach 200](https://twitter.com/AlessandroStru4/status/1236391718318157830/photo/1)
 
+##### Days since reported cases reach 80(except China)
 ![CoronavirusG1_2L](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG1_2L.png)
 
 ### シンガポールは、報告された感染者の増加が日本より緩やかですが、人口が日本に比べて非常に少ない。
@@ -45,13 +45,8 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 - 人口：約564万人（うちシンガポール人・永住者は399万人）（2019年1月） 
 [外務省HP:シンガポール共和国（Republic of Singapore）基礎データ](https://www.mofa.go.jp/mofaj/area/singapore/data.html)
 
-|                  | Population(Thousand persons)|
-|:-----------------|----------------------------:|
-|Japan             |                   126476.458|
-|Republic of Korea |                    51269.183|
-|Singapore         |                     5850.343|
-
-- 大韓民国（英: Republic of Korea）
+##### Days since reported cases reach 600
+![CoronavirusG600](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG600.png)
 
 ### 報告された感染者数が100人以上の国ごとの感染者数の棒グラフ
 
@@ -64,6 +59,48 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 #### 日本と韓国のグラフの色、ラベルの色を変えた。
 
 ![Coronavirus01_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_3.png)
+
+#### 報告された感染者数 / 人口 * 100 (タイトルにexpression関数を使う)
+
+![Coronavirus01_4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_4.png)
+
+|country        |        pop| population_density| Confirmed| Confirmed_per_Pop|
+|:--------------|----------:|------------------:|---------:|-----------------:|
+|Japan          |  127103388|             336.33|       839|          0.000660|
+|Canada         |   34834841|               3.49|       252|          0.000723|
+|US             |  318892103|              32.45|      3499|          0.001097|
+|Australia      |   22507617|               2.91|       297|          0.001320|
+|Malaysia       |   30073353|              91.17|       428|          0.001423|
+|United Kingdom |   63742977|             261.66|      1144|          0.001795|
+|Portugal       |   10813834|             117.43|       245|          0.002266|
+|Czechia        |   10627448|             134.75|       253|          0.002381|
+|Greece         |   10775557|              81.66|       331|          0.003072|
+|Israel         |    7821850|             376.59|       251|          0.003209|
+|Singapore      |    5567301|            7987.52|       226|          0.004059|
+|Finland        |    5268799|              15.58|       244|          0.004631|
+|China          | 1355692576|             141.26|     81003|          0.005975|
+|Netherlands    |   16877351|             406.26|      1135|          0.006725|
+|France         |   66259012|             102.92|      4513|          0.006811|
+|Germany        |   80996685|             226.87|      5795|          0.007155|
+|Belgium        |   10449361|             342.29|       886|          0.008479|
+|Austria        |    8223062|              98.04|       860|          0.010458|
+|Sweden         |    9723809|              21.59|      1022|          0.010510|
+|Slovenia       |    1988292|              98.08|       219|          0.011014|
+|Denmark        |    5569077|             129.23|       875|          0.015712|
+|Bahrain        |    1314089|            1729.06|       214|          0.016285|
+|Spain          |   47737941|              94.46|      7798|          0.016335|
+|Korea, South   |   49039986|             491.78|      8162|          0.016644|
+|Iran           |   80840713|              49.05|     13938|          0.017241|
+|Qatar          |    2123160|             183.25|       401|          0.018887|
+|Norway         |    5147792|              15.90|      1221|          0.023719|
+|Switzerland    |    8061516|             195.30|      2200|          0.027290|
+|Italy          |   61680122|             204.69|     24747|          0.040122|
+
+## 日本の人口あたり（報告された！！）感染者が少ないのは検査しないから。
+
+R code : [韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus08)  
+
+![pcr04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04.png)
 
 ## Rコード
 
@@ -288,16 +325,59 @@ title("Covid-19 : Death rates by country (%)")
 #dev.off()
 ```
 
-### wpp2019パッケージに国別人口データあり
+### githubで見つけたDataComputingパッケージの CountryDataデータ
+[CountryData: Many variables on countries from the CIA factbook, 2014.](https://rdrr.io/github/DataComputing/DataComputing/man/CountryData.html)  
 
 ```R
-library(wpp2019)
-data(pop)
-# Population (Thousand persons)
-POP <- pop[grep("(Japan|Republic of Korea|Singapore)",pop$name), c("name", "2020")]
-#POP <- subset(pop, name=="Japan"|name=="Republic of Korea"|name=="Singapore")[, c("name", "2020")]
-rownames(POP)<- POP$name
-POP<- POP[,-1,drop=F]
-colnames(POP)<- "Population(Thousand persons)"
-knitr::kable(POP)
+#install.packages("remotes")
+#remotes::install_github("DataComputing/DataComputing")
+library(DataComputing)
+data("CountryData")
+#country: Name of the country.
+#area: area (sq km), 2147
+#pop: number of people
+#
+# 報告された感染者数 200人以上の国
+min<- 200
+G200<- timeline[apply(timeline,1,max,na.rm=T)>= min ,] 
+# Cruise Shipを除く
+G200<-G200[grep("Cruise Ship",rownames(G200),invert =T),]
+G200<-G200[order(apply(G200,1,max,na.rm=T),decreasing=T),]
+#cdata<- CountryData[is.element(CountryData$country,rownames(G200)),1:3]
+#nrow(G200) ; nrow(cdata) が等しくない
+rownames(G200)[!is.element(rownames(G200),cdata$country)]
+#[1] "US"      "Czechia"
+#CountryData$country
+# アメリカのnameがCountryDataは"United States" ジョンズ・ホプキンス大学のデータは"US"
+# チェコ共和国のnameがCountryDataは"Czech Republic"ジョンズ・ホプキンス大学のデータは"Czechia"
+( cdata<- CountryData[is.element(CountryData$country,c("Czech Republic","United States",rownames(G200))),1:3] )
+# 確認(同数か否か)
+nrow(G200) ;nrow(cdata)
+#
+# cdataのUnited StatesをUSに変更(ジョンズ・ホプキンス大学のデータに合わせる)
+cdata$country<- sub("United States","US",cdata$country)
+cdata$country<- sub("Czech Republic","Czechia",cdata$country)
+# 人口密度(population density)
+cdata$population_density<- round(cdata[,3]/cdata[,2],2)
+# 最新の報告された感染者のみ取り出し、merge
+dat<- G200[,ncol(G200),drop=F]
+dat$country<- rownames(dat)
+cdata<- merge(cdata,dat,by="country")
+colnames(cdata)[5]<- "Confirmed"
+# 報告された感染者 / 人口 *100
+cdata$Confirmed_per_Pop<- round(cdata$Confirmed/cdata$pop*100,6)
+# 報告された感染者 / 人口 *100 の昇順に並べ替え
+cdata<- cdata[order(cdata$Confirmed_per_Pop,decreasing=F),]
+knitr::kable(cdata[,c(1,3:6)],row.names=F)
+```
+
+#### barplot
+
+```R
+#png("Coronavirus01_4.png",width=800,height=800)
+par(mar=c(5,8,4,2),family="serif")
+barplot(cdata$Confirmed_per_Pop,names=cdata$country,las=1,horiz=T,col="lightblue")
+#title("Reported confirmed / number of people *100 (Reported confirmed>=200)")
+title(expression(paste("Reported confirmed / number of people *100 (Reported ", confirmed>=200,")")))
+#dev.off()
 ```

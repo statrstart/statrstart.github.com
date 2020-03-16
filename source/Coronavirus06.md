@@ -1,6 +1,6 @@
 ---
-title: RでGitHub03 (Coronavirus)[2020-03-14更新]
-date: 2020-03-14
+title: RでGitHub03 (Coronavirus)[2020-03-16更新]
+date: 2020-03-16
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: RでGitHub03 (Coronavirus)
 ---
@@ -57,6 +57,7 @@ excerpt: RでGitHub03 (Coronavirus)
 (参考)[Coronavirus Disease (COVID-19) – Research and Statistics](https://ourworldindata.org/coronavirus)  
 
 #### ネット上で見つけたグラフをRで作成しました。
+[Alessandro Strumia(physicist) Twitter:](https://twitter.com/AlessandroStru4/status/1236391718318157830/photo/1)
 
 ##### 報告された感染者が80人を超えた時点を0とした図
 
@@ -67,7 +68,7 @@ excerpt: RでGitHub03 (Coronavirus)
 - 人口：約564万人（うちシンガポール人・永住者は399万人）（2019年1月） 
 [外務省HP:シンガポール共和国（Republic of Singapore）基礎データ](https://www.mofa.go.jp/mofaj/area/singapore/data.html)
 
-## 日本の報告された感染者の増加が他の国に比べて少ないのがわかります。
+## 日本の報告された感染者の増加が他の国に比べて緩やかなのがわかります。
 
 #### 感染者数 50人以上100人未満
 
@@ -229,7 +230,8 @@ col<- rainbow(nrow(G6))
 par(mar=c(5,5,4,15))
 matplot(t(G6),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
 axis(1,at=1:ncol(G6),labels=sub("/20","",colnames(G6)))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5,cex=0.8,ncol=2)
+#legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G6),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1,cex=0.8,ncol=2)
+legend(x="topleft",legend=rownames(G6),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1,cex=0.9,ncol=2)
 title("reported confirmed COVID-19cases")
 #dev.off()
 ```
