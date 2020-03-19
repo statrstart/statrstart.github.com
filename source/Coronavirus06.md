@@ -1,6 +1,6 @@
 ---
-title: RでGitHub03 (Coronavirus)[2020-03-16更新]
-date: 2020-03-16
+title: RでGitHub03 (Coronavirus)[2020-03-19更新]
+date: 2020-03-19
 tags: ["R", "lubridate" ,"xts","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: RでGitHub03 (Coronavirus)
 ---
@@ -164,11 +164,14 @@ title("reported confirmed COVID-19cases (mainland China)")
 # G2
 # 降順に並べ替え
 G2<-G2[order(apply(G2,1,max,na.rm=T),decreasing=T),]
+col<- rainbow(nrow(G2))
 #png("CoronavirusG2.png",width=800,height=600)
 par(mar=c(5,5,4,10))
-matplot(t(G1),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=1:nrow(G1))
-axis(1,at=1:ncol(G1),labels=sub("/20","",colnames(G1)))
-text(x=par("usr")[2],y=G1[,ncol(G1)],labels=rownames(G1),pos=4,xpd=T,col=1:nrow(G1))
+matplot(t(G2),type="o",pch=16,lwd=2,las=1,xlab="",ylab="",xaxt="n",col=col)
+axis(1,at=1:ncol(G2),labels=sub("/20","",colnames(G2)))
+# text:位置調整
+#text(x=par("usr")[2],y=G2[,ncol(G2)],labels=rownames(G2),pos=4,xpd=T,col=col)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(G2),pch=16,lwd=2,col=col,xpd=T,bty="n",y.intersp = 1.5)
 title("reported confirmed COVID-19cases")
 #dev.off()
 # G2_2
