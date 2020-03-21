@@ -1,11 +1,12 @@
 ---
-title: Rで塗り分け地図（コロプレス図） (Coronavirus)
+title: Rで塗り分け地図（コロプレス図）(Coronavirus)
 date: 2020-03-21
 tags: ["R","pdftools","sf","NipponMap", "Coronavirus","Japan","新型コロナウイルス"]
-excerpt: Rで塗り分け地図（コロプレス図） (Coronavirus)
+excerpt: Rで塗り分け地図（コロプレス図）(Coronavirus)
 ---
 
-# Rで塗り分け地図（コロプレス図） (Coronavirus) 
+# Rで塗り分け地図（コロプレス図）(Coronavirus) 
+
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus10)  
 
 [韓国と日本のPCR検査実施人数比較](https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus08)をみると日本のPCR検査実施人数は
@@ -81,6 +82,10 @@ excerpt: Rで塗り分け地図（コロプレス図） (Coronavirus)
 ### 散布図
 
 ![covidP01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covidP01.png)
+
+#### (上のグラフでは見づらい)感染者１０人以下、人口１万人あたりのPCR検査実施人数 ２人以下の都道府県のみプロット
+
+![covidP01_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covidP01_1.png)
 
 ## Rコード
 
@@ -312,4 +317,13 @@ text(x=covid$陽性者数,y=covid$人口１万人あたりのPCR検査実施人�
 # dev.off()
 ```
 
+#### 感染者１０人以下、人口１万人あたりのPCR検査実施人数 ２人以下の都道府県のみプロット
+
+```R
+# png("covidP01_1.png",width=800,height=800)
+plot(人口１万人あたりのPCR検査実施人数~陽性者数,type="n",pch=16,bty="l",las=1,xlim=c(0,10),ylim=c(0,2),data=covid)
+box(bty="l",lwd=2)
+text(x=covid$陽性者数,y=covid$人口１万人あたりのPCR検査実施人数,labels=covid$都道府県名)
+# dev.off()
+```
 
