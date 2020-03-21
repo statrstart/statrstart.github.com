@@ -6,15 +6,17 @@ excerpt: Rで塗り分け地図（コロプレス図） (Coronavirus)
 ---
 
 # Rで塗り分け地図（コロプレス図） (Coronavirus) 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus10)
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus10)  
 
-(参考)[5. Plotting Simple Features](https://r-spatial.github.io/sf/articles/sf5.html)  
+[韓国と日本のPCR検査実施人数比較](https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus08)をみると日本のPCR検査実施人数は
+韓国より著しく少ないことがわかります。では、都道府県別にみるとどうなのか、コロプレス図をRで作ってみました。  
+
+(参考:コロプレス図作成)[5. Plotting Simple Features](https://r-spatial.github.io/sf/articles/sf5.html)  
 
 使用するデータ(厚生労働省：pdfファイル)  
 [新型コロナウイルス陽性者数(チャーター便帰国者を除く)とPCR検査実施人数（都道府県別）【1/15～3/19】](https://www.mhlw.go.jp/content/10906000/000610653.pdf)  
 
 (準備)上記のpdfファイルを保存。ここでは、作業フォルダ上のcovid19フォルダ内。
-
 
 #### 陽性者数
 
@@ -24,7 +26,61 @@ excerpt: Rで塗り分け地図（コロプレス図） (Coronavirus)
 
 ![covmap02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covmap02.png)
 
-陽性者数が多い都道府県５つの内、比較的「人口１万人あたりのPCR検査実施人数」が多いのは北海道くらい。  
+#### 表  
+
+|都道府県名 | 陽性者数| 検査人数| 人口１万人あたりのPCR検査実施人数|
+|:----------|--------:|--------:|---------------------------------:|
+|北海道     |      157|     1652|                            3.0001|
+|青森県     |        0|       79|                            0.5752|
+|岩手県     |        0|       29|                            0.2180|
+|宮城県     |        1|      144|                            0.6132|
+|秋田県     |        2|      114|                            1.0497|
+|山形県     |        0|      133|                            1.1378|
+|福島県     |        2|      132|                            0.6505|
+|茨城県     |        3|      464|                            1.5624|
+|栃木県     |        3|      263|                            1.3100|
+|群馬県     |       10|      173|                            0.8615|
+|埼玉県     |       38|      684|                            0.9507|
+|千葉県     |       36|     1686|                            2.7122|
+|東京都     |      124|     1848|                            1.4043|
+|神奈川県   |       64|     2591|                            2.8635|
+|新潟県     |       21|      647|                            2.7248|
+|富山県     |        0|       54|                            0.4939|
+|石川県     |        7|      171|                            1.4618|
+|福井県     |        1|       92|                            1.1410|
+|山梨県     |        2|      335|                            3.8815|
+|長野県     |        4|      306|                            1.4216|
+|岐阜県     |        3|      272|                            1.3072|
+|静岡県     |        3|      526|                            1.3971|
+|愛知県     |      134|     1333|                            1.7987|
+|三重県     |        9|      318|                            1.7145|
+|滋賀県     |        4|      144|                            1.0207|
+|京都府     |       20|      800|                            3.0348|
+|大阪府     |      119|     2011|                            2.2684|
+|兵庫県     |       91|     1108|                            1.9828|
+|奈良県     |        8|      176|                            1.2565|
+|和歌山県   |       16|     1102|                           10.9958|
+|鳥取県     |        0|      115|                            1.9536|
+|島根県     |        0|       91|                            1.2685|
+|岡山県     |        0|      181|                            0.9305|
+|広島県     |        1|      552|                            1.9296|
+|山口県     |        3|      164|                            1.1300|
+|徳島県     |        1|       83|                            1.0567|
+|香川県     |        1|      128|                            1.2853|
+|愛媛県     |        3|      181|                            1.2644|
+|高知県     |       12|      270|                            3.5319|
+|福岡県     |        5|      626|                            1.2342|
+|佐賀県     |        1|      100|                            1.1768|
+|長崎県     |        1|      213|                            1.4929|
+|熊本県     |        7|      467|                            2.5696|
+|大分県     |        3|      167|                            1.3957|
+|宮崎県     |        3|      170|                            1.4975|
+|鹿児島県   |        0|      171|                            1.0022|
+|沖縄県     |        3|      238|                            1.7088|
+
+### 散布図
+
+![covidP01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covidP01.png)
 
 ## Rコード
 
@@ -236,6 +292,23 @@ lines(x = c(0.9*par("usr")[1]+0.1*par("usr")[2],0.74*par("usr")[1]+0.26*par("usr
 	y = c(0.5*par("usr")[3]+0.5*par("usr")[4],0.5*par("usr")[3]+0.5*par("usr")[4],0.36*par("usr")[3]+0.64*par("usr")[4],0.14*par("usr")[3]+0.86*par("usr")[4]))
 text(x=0.9*par("usr")[1]+0.1*par("usr")[2],y=0.1*par("usr")[3]+0.9*par("usr")[4],
 	labels="人口１万人あたりのPCR検査実施人数(都道府県別:3/19時点)",pos=4,cex=1.1)
+# dev.off()
+```
+
+### 表
+
+```R
+covid$人口１万人あたりのPCR検査実施人数<- m$TestedPerPop
+kable(covid)
+```
+
+### 散布図
+
+```R
+# png("covidP01.png",width=800,height=800)
+plot(人口１万人あたりのPCR検査実施人数~陽性者数,pch=16,bty="l",las=1,data=covid)
+box(bty="l",lwd=2)
+text(x=covid$陽性者数,y=covid$人口１万人あたりのPCR検査実施人数,labels=covid$都道府県名,pos=3)
 # dev.off()
 ```
 
