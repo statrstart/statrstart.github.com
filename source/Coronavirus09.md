@@ -5,7 +5,7 @@ tags: ["R","DataComputing", "Coronavirus","Japan","新型コロナウイルス"]
 excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 ---
 
-# RでRで折れ線グラフ、棒グラフ (Coronavirus) 
+# Rで折れ線グラフ、棒グラフ (Coronavirus) 
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus09)
 
 ## ちょっと工夫した折れ線グラフ、棒グラフを作りました。

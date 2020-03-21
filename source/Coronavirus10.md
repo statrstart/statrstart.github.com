@@ -1,7 +1,7 @@
 ---
 title: Rで塗り分け地図（コロプレス図） (Coronavirus)
 date: 2020-03-21
-tags: ["R","pdftools","sf","NipponMap" "Coronavirus","Japan","新型コロナウイルス"]
+tags: ["R","pdftools","sf","NipponMap", "Coronavirus","Japan","新型コロナウイルス"]
 excerpt: Rで塗り分け地図（コロプレス図） (Coronavirus)
 ---
 
