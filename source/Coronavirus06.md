@@ -18,9 +18,6 @@ excerpt: RでGitHub03 (Coronavirus)
 データはGitHubから入手できます。  
 [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19)  
 
-使用するデータ（日次データになったので更新回数が減ってしまった。）  
-[CSSE COVID-19 Dataset](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data)
-
 過去のデータ(archived_data)は  
 [COVID-19 : archived_data](https://github.com/CSSEGISandData/COVID-19/tree/master/archived_data)
 
@@ -92,12 +89,13 @@ excerpt: RでGitHub03 (Coronavirus)
 
 ```R
 # read.csvの際には、check.names=Fをつける
-url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv"
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 Confirmed<- read.csv(url,check.names=F)
-url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv"
-Recovered<- read.csv(url,check.names=F)
-url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv"
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 Deaths<- read.csv(url,check.names=F)
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
+Recovered<- read.csv(url,check.names=F)
+#save(Confirmed,file="Confirmed.Rdata") ; save(Recovered,file="Recovered.Rdata") ; save(Deaths,file="Deaths.Rdata") 
 ```
 
 ### time_seriesデータは一日に数回更新だったのが、日次データになっていました。
@@ -105,10 +103,18 @@ Deaths<- read.csv(url,check.names=F)
 #### ちゃんと日順になったデータですのでコードをシンプルにしました。
 
 ```R
-nCoV<-colSums(Confirmed[,5:ncol(Confirmed)])
-nCoV<-rbind(nCoV,colSums(Recovered[,5:ncol(Recovered)]))
-nCoV<-rbind(nCoV,colSums(Deaths[,5:ncol(Deaths)]))
-rownames(nCoV)<- c("Confirmed","Recovered","Deaths")
+# Confirmed , Deaths, Recoveredのデータ数が違うことがある。
+# rbindを使うと不具合あり。もしくはエラーとなる。
+nCoV1<-colSums(Confirmed[,5:ncol(Confirmed)])
+nCoV2<-colSums(Deaths[,5:ncol(Deaths)])
+nCoV3<-colSums(Recovered[,5:ncol(Recovered)])
+lenmax<- max(c(length(nCoV1),length(nCoV2),length(nCoV3)))
+nCoV<-matrix(NA,nrow=3,ncol=lenmax)
+nCoV[1,1:length(nCoV1)]<- nCoV1
+nCoV[2,1:length(nCoV2)]<- nCoV2
+nCoV[3,1:length(nCoV3)]<- nCoV3
+rownames(nCoV)<- c("Confirmed","Deaths","Recovered")
+colnames(nCoV)<- names(nCoV1)
 ```
 
 ### 感染者、回復された方、亡くなった方の数の推移（日別）
