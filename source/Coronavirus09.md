@@ -51,6 +51,10 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 
 ![Coronavirus01_1_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_1.png)
 
+### 指定した国の致死率を計算、プロット(日本と韓国)
+
+![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
+
 ### 報告された感染者数が一定数超えた時点を起点とした折れ線グラフ（再掲）
 
 #### 片対数グラフ（Semi-log plot） 
@@ -270,6 +274,36 @@ matplot(t(DpC)[40:ncol(DpC),],type="o",lwd=2,pch=pch,las=1,col=col,ylab="Reporte
 axis(1,at=1:nrow(t(DpC)[40:ncol(DpC),]),labels=sub("/20","",rownames(t(DpC)[40:ncol(DpC),])))
 legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(DpC),pch=pch,lwd=2,col=col,bty="n",title="Country/Region",xpd=T)
 title(bquote("Reported Deaths / Reported Confirmed (%) ( Reported"~Deaths>=.(min)~")"))
+#dev.off()
+```
+
+### 指定した国の致死率を計算、プロット
+
+```R
+dat<-Dtl[grep("(Japan|Korea, South)",rownames(Dtl)),] 
+#
+dat<- dat[order(dat[,ncol(dat)],decreasing=T),]
+#knitr::kable(dat[,ncol(dat),drop=F])
+#
+# 致死率(%)計算
+#DpC<- matrix(NA,nrow=nrow(dat),ncol=ncol(dat))
+DpC<- NULL
+for (i in rownames(dat)){
+	temp<- round(dat[rownames(dat)== i,] / Ctl[rownames(Ctl)== i,]*100,2)
+	DpC<- rbind(DpC,temp)
+}
+#
+DpC<- DpC[order(DpC[,ncol(DpC)],decreasing=T),]
+n<-nrow(DpC)
+col<- rainbow(n)
+pch<-rep(c(0,1,2,4,5,6,15,16,17,18),3)
+#png("Coronavirus01_1_2.png",width=800,height=600)
+par(mar=c(3,5,4,10),family="serif")
+#40日めから
+matplot(t(DpC)[40:ncol(DpC),],type="o",lwd=2,pch=pch,las=1,col=col,ylab="Reported Deaths/Reported Confirmed(%)",xaxt="n")	
+axis(1,at=1:nrow(t(DpC)[40:ncol(DpC),]),labels=sub("/20","",rownames(t(DpC)[40:ncol(DpC),])))
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(DpC),pch=pch,lwd=2,col=col,bty="n",title="Country/Region",xpd=T)
+title("Reported Deaths / Reported Confirmed (%) ")
 #dev.off()
 ```
 
