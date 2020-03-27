@@ -162,6 +162,12 @@ Data : [KCDC「News Room」「Press Release」](https://www.cdc.go.kr/board/boar
 
 ![pcr06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr06.png)
 
+### 日本と韓国のPCR検査の暫定致死率(%)
+#### 米ジョンズ・ホプキンス大学のデータを使った。Rコードは省略。
+（参考）[Rで折れ線グラフ、棒グラフ (新型コロナウイルス：Coronavirus)](https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus09)
+
+![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
+
 ## Rコード
 
 ### データから表を作成
