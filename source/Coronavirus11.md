@@ -1,6 +1,6 @@
 ---
 title: COVID-19 testing(Coronavirus)でbarplot
-date: 2020-03-26
+date: 2020-03-27
 tags: ["R","rvest","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: COVID-19 testing(Coronavirus)でbarplot
 ---
@@ -59,12 +59,12 @@ library("rvest")
 # "COVID-19 testing"のデータ取得
 html <- read_html("https://en.wikipedia.org/wiki/COVID-19_testing")
 tbl<- html_table(html,fill = T)
-covid<- tbl[[2]][,1:6]
+Wtest<- tbl[[2]][,1:6]
 #
 for (i in c(2,3,5)){
-	covid[,i]<- as.numeric(gsub(",","",covid[,i]))
+	Wtest[,i]<- as.numeric(gsub(",","",Wtest[,i]))
 }
-str(covid)
+str(Wtest)
 ```
 
 ### Positive>=500とPositive<500に分けてプロットします。
@@ -76,10 +76,10 @@ str(covid)
 
 ```R
 min<- 500
-dat<- covid[!is.na(covid[,3]),]
+dat<- Wtest[!is.na(Wtest[,3]),]
 dat<- dat[dat[,3]>=min,]
 #
-lim<-max(covid[,2],na.rm=T)
+lim<-max(Wtest[,2],na.rm=T)
 # 日本の値をjnumへ
 jnum<- dat[dat[,1]=="Japan",2]
 # Testsで並べ替え
@@ -103,7 +103,7 @@ abline(v=jnum,lty=2,col="red")
 
 ```R
 max<- 500
-dat<- covid[!is.na(covid[,3]),]
+dat<- Wtest[!is.na(Wtest[,3]),]
 dat<- dat[dat[,3]<max,]
 #
 # Testsで並べ替え
@@ -129,10 +129,10 @@ abline(v=jnum,lty=2,col="red")
 
 ```R
 min<- 500
-dat<- covid[!is.na(covid[,3]),]
+dat<- Wtest[!is.na(Wtest[,3]),]
 dat<- dat[dat[,3]>=min,]
 #
-lim<-max(covid[,5],na.rm=T)
+lim<-max(Wtest[,5],na.rm=T)
 jnum<- dat[dat[,1]=="Japan",5]
 #
 # Tests /millionで並べ替え
@@ -156,7 +156,7 @@ abline(v=jnum,lty=2,col="red")
 
 ```R
 max<- 500
-dat<- covid[!is.na(covid[,3]),]
+dat<- Wtest[!is.na(Wtest[,3]),]
 dat<- dat[dat[,3]<max,]
 #
 # Tests /millionで並べ替え
