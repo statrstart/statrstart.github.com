@@ -1,5 +1,5 @@
 ---
-title: 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)[3月25日時点]
+title: 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)
 date: 2020-03-27
 tags: ["R", "knitr","Coronavirus","新型コロナウイルス","South Korea"]
 excerpt: 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)

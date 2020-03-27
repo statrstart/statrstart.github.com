@@ -1,6 +1,6 @@
 ---
-title: Rで折れ線グラフ、棒グラフ (Coronavirus)[2020-03-26更新]
-date: 2020-03-2
+title: Rで折れ線グラフ、棒グラフ (Coronavirus)
+date: 2020-03-27
 tags: ["R","DataComputing", "Coronavirus","Japan","新型コロナウイルス"]
 excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 ---
