@@ -1,6 +1,6 @@
 ---
-title: COVID-19 testing(Coronavirus)でbarplot
-date: 2020-03-27
+title: COVID-19 testing(新型コロナウイルス：Coronavirus)でbarplot
+date: 2020-03-28
 tags: ["R","rvest","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: COVID-19 testing(Coronavirus)でbarplot
 ---
