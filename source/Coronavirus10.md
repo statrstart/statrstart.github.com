@@ -1,6 +1,6 @@
 ---
-title: Rで塗り分け地図（コロプレス図）(Coronavirus)
-date: 2020-03-27
+title: Rで塗り分け地図（コロプレス図）(新型コロナウイルス：Coronavirus)
+date: 2020-03-29
 tags: ["R","pdftools","sf","NipponMap", "BAMMtools","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: Rで塗り分け地図（コロプレス図）(Coronavirus)
 ---
@@ -175,7 +175,7 @@ dat<- Jtest$陽性者数
 # legendのタイトル
 ltitle<- "陽性者数"
 # グラフのタイトル
-title<- "PCR検査 陽性者数(都道府県別:3/24時点)"
+title<- "PCR検査 陽性者数(都道府県別)"
 #
 ##### ここ以降のRコードは共通 #####
 #
@@ -209,7 +209,7 @@ dat<- round((10000*Jtest$検査人数)/m$population,3)
 # legendのタイトル
 ltitle<- ""
 # グラフのタイトル
-title<- "人口１万人あたりのPCR検査実施人数(都道府県別:3/24時点)"
+title<- "人口１万人あたりのPCR検査実施人数(都道府県別)"
 #
 ##### ここ以降のRコードは共通 #####
 #
