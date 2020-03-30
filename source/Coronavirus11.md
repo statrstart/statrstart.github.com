@@ -1,6 +1,6 @@
 ---
 title: COVID-19 testing(新型コロナウイルス：Coronavirus)でbarplot
-date: 2020-03-28
+date: 2020-03-30
 tags: ["R","rvest","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: COVID-19 testing(Coronavirus)でbarplot
 ---
@@ -16,6 +16,8 @@ excerpt: COVID-19 testing(Coronavirus)でbarplot
 
 # 国別で比較することで日本がいかに検査していないかがわかると思います。
 
+## Japan : Tokyoのデータも入りました。
+
 (参考)  
 [データのじかん: データでみる世界各国の新型コロナウイルスの検査状況！](https://data.wingarc.com/covid-19-tests-25207)  
 [How many tests for COVID-19 are being performed around the world?](https://ourworldindata.org/covid-testing#note-2)  
@@ -23,28 +25,31 @@ excerpt: COVID-19 testing(Coronavirus)でbarplot
 [CDC:Testing in U.S.](https://www.cdc.gov/coronavirus/2019-ncov/cases-updates/testing-in-us.html)  
 [CORONAVIRUS DATA: Tracking COVID-19 testing across the U.S.](https://www.clickondetroit.com/health/2020/03/13/coronavirus-data-tracking-covid-19-testing-across-the-us/)
 
+## 日本と東京は赤、日本以外のG7の国（G7の地域も含む）は青にしました。
+
+## 韓国、シンガポール、台湾は緑にしました。
 
 #### Total Tests
 
-#### Positive>=500
+#### 国を抽出
 
 ![covtested01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested01.png)
 
-#### Positive<500
+#### 都市を抽出
 
 ![covtested02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested02.png)
 
 ### 日本の値に赤い破線を引きました。レンジは揃えています。
 
-#### 人口を加味（人口 100万人あたりの検査数）
+#### 人口を考慮にいれる。（人口 100万人あたり）
 
-# 日本、驚くほど検査していない。
+# 日本(東京も)、驚くほど検査していない。
 
-#### Positive>=500
+#### 国を抽出
 
 ![covtested03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested03.png)
 
-#### Positive<500
+#### 都市を抽出
 
 ![covtested04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested04.png)
 
@@ -67,112 +72,141 @@ for (i in c(2,3,5)){
 str(Wtest)
 ```
 
-### Positive>=500とPositive<500に分けてプロットします。
+### 国と都市(Country or region)に分けてプロットします。
 #### rangeは同じにします。
 
 ### Total Test
 
-#### Positive>=500だけを抽出
+#### 国を抽出
+
+##### 国と都市(Country or region)の区別　: がつくか否か
 
 ```R
-min<- 500
-dat<- Wtest[!is.na(Wtest[,3]),]
-dat<- dat[dat[,3]>=min,]
-#
+# 国と都市(Country or region)の区別　: がつくか否か
+dat<- Wtest[grep(":",Wtest[,1],invert=T),]
+dat<- dat[!is.na(dat[,3]),]
 lim<-max(Wtest[,2],na.rm=T)
-# 日本の値をjnumへ
-jnum<- dat[dat[,1]=="Japan",2]
+# 日本の値
+jnum<- Wtest[Wtest[,1]=="Japan",2]
 # Testsで並べ替え
 dat<- dat[order(dat[,2]),]
 color<- is.element(dat[,1],"Japan")
 col<- gsub("FALSE","lightblue",gsub("TRUE","red",color))
 col2<- gsub("FALSE","black",gsub("TRUE","red",color))
-# png("covtested01.png",width=800,height=800)
-par(mar=c(3,12,3,3),family="serif")
+# G7
+g7<- grep("(United States|Italy|France|United Kingdom|Germany|Canada)",dat[,1])
+col[g7]<- "blue"
+col2[g7]<- "blue"
+# アジア先進国
+asia<- grep("(South Korea|Singapore|Taiwan)",dat[,1])
+col[asia]<- "darkgreen"
+col2[asia]<- "darkgreen"
+# png("covtested01.png",width=800,height=1200)
+par(mar=c(3,14,3,2),family="serif")
 b<- barplot(dat[,2],horiz=T,col=col,xaxt="n",xlim=c(0,lim))
 axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
 axis(2,at=b,labels=NA,col=col2,tck=-0.01)
 text(x=par("usr")[1],y=b, labels = dat[,1], col = col2,pos=2,xpd=T)
+#text(x=dat[,2],y=b, labels = dat[,4], col ="black",pos=4,xpd=T)
 # bquote
-title(bquote("Total Tests for COVID-19("~Positive>=.(min)~")"))
+title("Total Tests for COVID-19(Country)")
 abline(v=jnum,lty=2,col="red")
 # dev.off()
 ```
 
-#### Positive<500だけを抽出
+#### 都市を抽出
 
 ```R
-max<- 500
-dat<- Wtest[!is.na(Wtest[,3]),]
-dat<- dat[dat[,3]<max,]
-#
+dat<- Wtest[grep(":",Wtest[,1],invert=F),]
+dat<- dat[!is.na(dat[,3]),]
+lim<-max(Wtest[,2],na.rm=T)
+jnum<- Wtest[Wtest[,1]=="Japan",2]
 # Testsで並べ替え
 dat<- dat[order(dat[,2]),]
-color<- is.element(dat[,1],"Japan")
-col<- gsub("FALSE","lightblue",gsub("TRUE","red",color))
-col2<- gsub("FALSE","black",gsub("TRUE","red",color))
+col<- rep("lightblue",nrow(dat))
+col2<- rep("black",nrow(dat))
+Jpos<- grep("Japan",dat[,1])
+col[Jpos]<- "red"
+col2[Jpos]<- "red"
+# G7
+g7<- grep("(United States|Italy|France|United Kingdom|Germany|Canada)",dat[,1])
+col[g7]<- "blue"
+col2[g7]<- "blue"
 # png("covtested02.png",width=800,height=800)
-par(mar=c(3,12,3,3),family="serif")
+par(mar=c(3,14,3,2),family="serif")
 b<- barplot(dat[,2],horiz=T,col=col,xaxt="n",xlim=c(0,lim))
 axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
 axis(2,at=b,labels=NA,col=col2,tck=-0.01)
 text(x=par("usr")[1],y=b, labels = dat[,1], col = col2,pos=2,xpd=T)
+#text(x=dat[,2],y=b, labels = dat[,4], col ="black",pos=4,xpd=T)
 # bquote
-title(bquote("Total Tests for COVID-19("~Positive<.(max)~")"))
+title("Total Tests for COVID-19(Region)")
 abline(v=jnum,lty=2,col="red")
 # dev.off()
 ```
 
 ### 人口100万人あたり
 
-#### Positive>=500だけを抽出
+#### 国を抽出
 
 ```R
-min<- 500
-dat<- Wtest[!is.na(Wtest[,3]),]
-dat<- dat[dat[,3]>=min,]
-#
+dat<- Wtest[grep(":",Wtest[,1],invert=T),]
+dat<- dat[!is.na(dat[,3]),]
 lim<-max(Wtest[,5],na.rm=T)
-jnum<- dat[dat[,1]=="Japan",5]
-#
+jnum<- Wtest[Wtest[,1]=="Japan",5]
 # Tests /millionで並べ替え
 dat<- dat[order(dat[,5]),]
 color<- is.element(dat[,1],"Japan")
 col<- gsub("FALSE","lightblue",gsub("TRUE","red",color))
 col2<- gsub("FALSE","black",gsub("TRUE","red",color))
-# png("covtested03.png",width=800,height=800)
-par(mar=c(3,12,3,3),family="serif")
+# G7
+g7<- grep("(United States|Italy|France|United Kingdom|Germany|Canada)",dat[,1])
+col[g7]<- "blue"
+col2[g7]<- "blue"
+# アジア先進国
+asia<- grep("(South Korea|Singapore|Taiwan)",dat[,1])
+col[asia]<- "darkgreen"
+col2[asia]<- "darkgreen"
+# png("covtested03.png",width=800,height=1200)
+par(mar=c(3,14,3,2),family="serif")
 b<- barplot(dat[,5],horiz=T,col=col,xaxt="n",xlim=c(0,lim))
 axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
 axis(2,at=b,labels=NA,col=col2,tck=-0.01)
 text(x=par("usr")[1],y=b, labels = dat[,1], col = col2,pos=2,xpd=T)
+#text(x=dat[,2],y=b, labels = dat[,4], col ="black",pos=4,xpd=T)
 # bquote
-title(bquote("Tests /million for COVID-19("~Positive>=.(min)~")"))
+title("Tests /million for COVID-19(Country)")
 abline(v=jnum,lty=2,col="red")
 # dev.off()
 ```
 
-#### Positive<500だけを抽出
+#### 都市を抽出
 
 ```R
-max<- 500
-dat<- Wtest[!is.na(Wtest[,3]),]
-dat<- dat[dat[,3]<max,]
-#
+dat<- Wtest[grep(":",Wtest[,1],invert=F),]
+dat<- dat[!is.na(dat[,3]),]
+lim<-max(Wtest[,5],na.rm=T)
+jnum<- Wtest[Wtest[,1]=="Japan",5]
 # Tests /millionで並べ替え
 dat<- dat[order(dat[,5]),]
-color<- is.element(dat[,1],"Japan")
-col<- gsub("FALSE","lightblue",gsub("TRUE","red",color))
-col2<- gsub("FALSE","black",gsub("TRUE","red",color))
+col<- rep("lightblue",nrow(dat))
+col2<- rep("black",nrow(dat))
+Jpos<- grep("Japan",dat[,1])
+col[Jpos]<- "red"
+col2[Jpos]<- "red"
+# G7
+g7<- grep("(United States|Italy|France|United Kingdom|Germany|Canada)",dat[,1])
+col[g7]<- "blue"
+col2[g7]<- "blue"
 # png("covtested04.png",width=800,height=800)
-par(mar=c(3,12,3,3),family="serif")
+par(mar=c(3,14,3,2),family="serif")
 b<- barplot(dat[,5],horiz=T,col=col,xaxt="n",xlim=c(0,lim))
 axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
 axis(2,at=b,labels=NA,col=col2,tck=-0.01)
 text(x=par("usr")[1],y=b, labels = dat[,1], col = col2,pos=2,xpd=T)
+#text(x=dat[,2],y=b, labels = dat[,4], col ="black",pos=4,xpd=T)
 # bquote
-title(bquote("Tests /million for COVID-19("~Positive<.(max)~")"))
+title("Tests /million for COVID-19(Region)")
 abline(v=jnum,lty=2,col="red")
 # dev.off()
 ```
-
