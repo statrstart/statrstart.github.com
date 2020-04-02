@@ -1,8 +1,8 @@
 ---
 title: COVID-19 testing(新型コロナウイルス：Coronavirus)でbarplot
-date: 2020-03-30
+date: 2020-04-02
 tags: ["R","rvest","Coronavirus","Japan","新型コロナウイルス"]
-excerpt: COVID-19 testing(Coronavirus)でbarplot
+excerpt: 日本(東京も)がいかに検査をしていないか。
 ---
 
 # COVID-19 testing(Coronavirus)でbarplot
@@ -35,7 +35,7 @@ excerpt: COVID-19 testing(Coronavirus)でbarplot
 
 ![covtested01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested01.png)
 
-#### 都市を抽出
+#### 地域を抽出
 
 ![covtested02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested02.png)
 
@@ -49,7 +49,7 @@ excerpt: COVID-19 testing(Coronavirus)でbarplot
 
 ![covtested03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested03.png)
 
-#### 都市を抽出
+#### 地域を抽出
 
 ![covtested04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covtested04.png)
 
@@ -58,13 +58,15 @@ excerpt: COVID-19 testing(Coronavirus)でbarplot
 ## Rコード
 
 ### rvestパッケージを用いてデータの取り込み。加工。
+#### ターゲットのテーブルが２番めから４番目に変更になりました。
 
 ```R
 library("rvest")
 # "COVID-19 testing"のデータ取得
 html <- read_html("https://en.wikipedia.org/wiki/COVID-19_testing")
 tbl<- html_table(html,fill = T)
-Wtest<- tbl[[2]][,1:6]
+# tbl[[2]]->tbl[[4]]
+Wtest<- tbl[[4]][,1:6]
 #
 for (i in c(2,3,5)){
 	Wtest[,i]<- as.numeric(gsub(",","",Wtest[,i]))
@@ -72,17 +74,17 @@ for (i in c(2,3,5)){
 str(Wtest)
 ```
 
-### 国と都市(Country or region)に分けてプロットします。
+### 国と地域(Country or region)に分けてプロットします。
 #### rangeは同じにします。
 
 ### Total Test
 
 #### 国を抽出
 
-##### 国と都市(Country or region)の区別　: がつくか否か
+##### 国と地域(Country or region)の区別　: がつくか否か
 
 ```R
-# 国と都市(Country or region)の区別　: がつくか否か
+# 国と地域(Country or region)の区別　: がつくか否か
 dat<- Wtest[grep(":",Wtest[,1],invert=T),]
 dat<- dat[!is.na(dat[,3]),]
 lim<-max(Wtest[,2],na.rm=T)
@@ -114,7 +116,7 @@ abline(v=jnum,lty=2,col="red")
 # dev.off()
 ```
 
-#### 都市を抽出
+#### 地域を抽出
 
 ```R
 dat<- Wtest[grep(":",Wtest[,1],invert=F),]
@@ -180,7 +182,7 @@ abline(v=jnum,lty=2,col="red")
 # dev.off()
 ```
 
-#### 都市を抽出
+#### 地域を抽出
 
 ```R
 dat<- Wtest[grep(":",Wtest[,1],invert=F),]
