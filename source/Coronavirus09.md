@@ -530,7 +530,7 @@ colnames(df2)<- colnames(df3)
 df2<- rbind(df3,df2)
 #
 lim<-max(Wtest[,5],na.rm=T)*1.1
-min<- 600
+min<- 1000
 df<- Wtest[!is.na(Wtest[,3]),]
 df<- df[df[,3]>=min,]
 jnum<- df[df[,1]=="Japan",5]
@@ -552,7 +552,7 @@ text(x=par("usr")[1],y=b, labels = df[,1], col = col2,pos=2,xpd=T)
 # bquote
 title(bquote("Tests /million for COVID-19("~Positive>=.(min)~")"))
 abline(v=jnum,lty=2,col="red")
-arrows(x0=df[df[,1]=="Japan",5]*4, y0=grep("TRUE",color)+0.5, x1=9000, y1=25,col="red", lty=1, lwd=5)
+arrows(x0=df[df[,1]=="Japan",5]*4, y0=grep("TRUE",color)+0.5, x1=15000, y1=25,col="red", lty=1, lwd=5)
 #par(mar=c(10,16,10,2.5),family="serif",new=T)
 #右上
 #par(fig=c(0.5,1,0.5,1),family="serif",new=T)
