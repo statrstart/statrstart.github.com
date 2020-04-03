@@ -69,13 +69,13 @@ excerpt: Rで折れ線グラフ、棒グラフ (Coronavirus)
 ##### Days since reported cases reach 600
 ![CoronavirusG600](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG600.png)
 
-### 報告された感染者数が100人以上の国ごとの感染者数の棒グラフ
+### 報告された感染者数が1000人以上の国ごとの感染者数の棒グラフ
 
 #### x軸のラベルの数値にコンマ、国ごとの値をグラフ右に表記
 
 ![Coronavirus01_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_2.png)
 
-### 報告された感染者数が100人以上の国ごとの致死率の棒グラフ 
+### 報告された感染者数が1000人以上の国ごとの致死率の棒グラフ 
 
 #### 日本と韓国のグラフの色、ラベルの色を変えた。
 
