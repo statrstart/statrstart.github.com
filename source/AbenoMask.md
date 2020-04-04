@@ -1,6 +1,6 @@
 ---
 title: gtrendsRでAbenoMask (新型コロナウイルス：Coronavirus)
-date: 2020-04-03
+date: 2020-04-04
 tags: ["R","gtrendsR", "Coronavirus","Japan","新型コロナウイルス"]
 excerpt: AbenoMask !
 ---
