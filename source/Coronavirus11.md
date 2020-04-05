@@ -1,6 +1,6 @@
 ---
 title: COVID-19 testing(新型コロナウイルス：Coronavirus)でbarplot
-date: 2020-04-03
+date: 2020-04-05
 tags: ["R","rvest","Coronavirus","Japan","新型コロナウイルス"]
 excerpt: 日本(東京も)がいかに検査をしていないか。
 ---
