@@ -1,6 +1,6 @@
 ---
 title: 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)
-date: 2020-04-08
+date: 2020-04-09
 tags: ["R", "knitr","Coronavirus","新型コロナウイルス","South Korea"]
 excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発表資料で作成
 ---
@@ -29,7 +29,57 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 #### 日本のPCR検査実施人数は、厚生労働省の[報道発表資料](https://www.mhlw.go.jp/stf/houdou/index.html)から抜き出した。    
 
-### 上のデータから表を作成(韓国のPCR検査実施人数とその結果)
+
+### 新型コロナウイルスのPCR検査実施人数と感染状況(韓国)
+
+![pcr04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04.png)
+
+### 韓国のPCR検査の陽性率(%)
+
+![pcr05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr05.png)
+
+### 韓国のPCR検査の暫定致死率(%)
+
+![pcr06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr06.png)
+
+### 韓国の陽性者数（日別）
+
+![pcr07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr07.png)
+
+### 韓国のPCR検査の結果（日別）
+
+![pcr08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr08.png)
+
+### 日本、韓国、台湾、シンガポールの面積、人口、人口密度
+
+|   country    |    area|         pop| Population.density|
+|:------------:|-------:|-----------:|------------------:|
+|    Japan     | 377,915| 127,103,388|                336|
+| Korea, South |  99,720|  49,039,986|                492|
+|  Singapore   |     697|   5,567,301|              7,988|
+|    Taiwan    |  35,980|  23,359,928|                649|
+
+### 日本、韓国、台湾、シンガポールのPCR検査の暫定致死率(%)
+#### 米ジョンズ・ホプキンス大学のデータを使った。Rコードは省略。
+（参考）[Rで折れ線グラフ、棒グラフ (新型コロナウイルス：Coronavirus)](https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus09)
+
+![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
+
+#### 日本、韓国、台湾、シンガポールのTotal Tests for COVID-19
+
+![pcr09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr09.png)
+
+#### 日本、韓国、台湾、シンガポールのTests /million people for COVID-19
+
+![pcr10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr10.png)
+
+#### 日本、韓国、台湾、シンガポールのReported Confirmed
+
+### 検査の数、１００万人あたりの検査人数をふまえたうえで、報告された感染者数をみると、
+
+![pcr11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr11.png)
+
+### データから表を作成(韓国のPCR検査実施人数とその結果)
 
 |           | 検査を受けた人| 感染者数| 死者|   陰性| 検査中|
 |:----------|--------------:|--------:|----:|------:|------:|
@@ -101,6 +151,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 |2020-04-06 |         466804|    10284|  186| 437225|  19295|
 |2020-04-07 |         477304|    10331|  192| 446323|  20650|
 |2020-04-08 |         486003|    10384|  200| 457761|  17858|
+|2020-04-09 |         494711|    10423|  204| 468779|  15509|
 
 ### 陽性率、暫定致死率を計算し、表を作成(韓国）
 
@@ -174,41 +225,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 |2020-04-06 |   447509|    10284| 437225|      2.30|  186|         1.809|
 |2020-04-07 |   456654|    10331| 446323|      2.26|  192|         1.858|
 |2020-04-08 |   468145|    10384| 457761|      2.22|  200|         1.926|
-
-### 新型コロナウイルスのPCR検査実施人数と感染状況(韓国)
-
-![pcr04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04.png)
-
-### 韓国のPCR検査の陽性率(%)
-
-![pcr05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr05.png)
-
-### 韓国のPCR検査の暫定致死率(%)
-
-![pcr06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr06.png)
-
-### 韓国の陽性者数（日別）
-
-![pcr07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr07.png)
-
-### 韓国のPCR検査の結果（日別）
-
-![pcr08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr08.png)
-
-### 日本、韓国、台湾、シンガポールのPCR検査の暫定致死率(%)
-#### 米ジョンズ・ホプキンス大学のデータを使った。Rコードは省略。
-（参考）[Rで折れ線グラフ、棒グラフ (新型コロナウイルス：Coronavirus)](https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus09)
-
-![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
-
-### 日本、韓国、台湾、シンガポールの面積、人口、人口密度
-
-|   country    |    area|         pop| Population.density|
-|:------------:|-------:|-----------:|------------------:|
-|    Japan     | 377,915| 127,103,388|                336|
-| Korea, South |  99,720|  49,039,986|                492|
-|  Singapore   |     697|   5,567,301|              7,988|
-|    Taiwan    |  35,980|  23,359,928|                649|
+|2020-04-09 |   479202|    10423| 468779|      2.18|  204|         1.957|
 
 ## Rコード
 
@@ -216,24 +233,24 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ```R
 library(knitr)
-date<- seq(as.Date("2020-02-01"), as.Date("2020-04-08"), by = "day")
+date<- seq(as.Date("2020-02-01"), as.Date("2020-04-09"), by = "day")
 検査を受けた人<- c(371,429,429,607,714,885,1130, 1701, 2340, 2776, 3629, 5074, 5797, 6854, 7519, 7919, 8171, 
 	9265, 10411, 12161, 14816, 19621, 22633, 28615, 36716, 46127, 57990, 70940, 
 	85693, 96985, 109591, 125851, 136707, 146541, 164740,178189,188518,196618,210144,222395,234998,
 	248647,261335,268212,274504,286716,295647,307024,316664,327509,331780,338036,348582,357896,364942,376961,
-	387925,394141,395194,410564,421547,431743,443273,455032,461233,466804,477304,486003)
+	387925,394141,395194,410564,421547,431743,443273,455032,461233,466804,477304,486003,494711)
 感染者数<- c(12,15,15,16,18,23,24, 24, 25, 27, 28, 28, 28, 28, 28, 29, 30, 31, 46, 82, 156, 346, 556, 
 	763, 893, 1146, 1595, 2022, 2931, 3526, 4212, 4812, 5328, 5766, 6284,6767,7134,7382,7513,7755,
 	7869,7979,8086,8162,8236,8320,8413,8565,8652,8799,8897,8961,9037,9137,9241,9332,9478,9583,9661,9786,9887,9976,10062,
-	10156,10237,10284,10331,10384)
+	10156,10237,10284,10331,10384,10423)
 死者<- c(0,0,0,0,0,0,0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 4, 7, 8,11,12,13,16,17,
 	22,28,32,35,42,44,50,51,54,60,66,67,72,75,75,81,84,91,94,102,104,111,120,126,131,139,144,152,158,162,165,169,174,177,
-	183,186,192,200)
+	183,186,192,200,204)
 陰性<- c(289,327,414,462,522,693,842, 1057, 1355, 1940, 2736, 4054, 5099, 6134, 6853, 7313, 7733, 8277, 
 	9335, 10446, 11953, 13794, 16038, 19127, 22550, 28247, 35298, 44167, 
 	53608, 61037, 71580, 85484, 102965, 118965, 136624,151802,162008,171778,184179,196100,209402,
 	222728,235615,243778,251297,261105,270888,282555,292487,303006,308343,315447,324105,334481,341332,352410,
-	361883,369530,372002,383886,395075,403882,414303,424732,431425,437225,446323,457761)
+	361883,369530,372002,383886,395075,403882,414303,424732,431425,437225,446323,457761,468779)
 検査中<- 検査を受けた人- (陰性+感染者数)
 #df<- data.frame(date,感染者数,死者,検査を受けた人_感染者除く,陰性,検査中)
 #kable(df,row.names=F)
@@ -264,7 +281,8 @@ Jpcr1<- c(rep(NA,5),16,151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532)+c(rep(NA,
 # 3/19 : PCR検査実施人数が減少したのは、千葉県が人数でなく件数でカウントしていたことが判明したため、千葉県の件数を引いたことによる
 Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,6647,7200,7347,7457,8771,9195,9376,11231,
 	12090,12197,12239,14322,14525,14072,18015,18134,18226+1173,18322+1189,22184+1417,21266+1426,22858+1484,24663+1513,
-	26105+1530,26401+1530,26607+1530,30088+1580,32002+1677,32002+1679,36687+1930,39992+2061,40263+3547,40481+4862,48357+6125,NA)+829
+	26105+1530,26401+1530,26607+1530,30088+1580,32002+1677,32002+1679,36687+1930,39992+2061,40263+3547,40481+4862,48357+6125,
+	52901+7768,54284+9274)+829
 Jpcr<- c(Jpcr1,Jpcr2)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),1),"倍")
 # 指数表示を抑制
@@ -336,7 +354,6 @@ title("韓国のPCR検査の結果（日別）")
 #dev.off()
 ```
 
-
 ### 日本、韓国、台湾、シンガポールの面積、人口、人口密度
 
 ```R
@@ -348,4 +365,79 @@ adata<- CountryData[grep("(Japan|Korea, South|Taiwan|Singapore)",CountryData$cou
 adata$"Population density"<- round(adata$pop/adata$area,0)
 kable(data.frame(lapply(adata,function(x)formatC(x, format="f", big.mark=",",digits=0))),
 	row.names=F,align=c("c",rep("r",3)))
+```
+
+### 日本、韓国、台湾、シンガポールのTotal Tests for COVID-19
+
+```R
+library("rvest")
+# "COVID-19 testing"のデータ取得
+html <- read_html("https://en.wikipedia.org/wiki/COVID-19_testing")
+tbl<- html_table(html,fill = T)
+# tbl[[2]]->tbl[[4]]->tbl[[2]]
+Wtest<- tbl[[2]][,1:6]
+str(Wtest)
+#
+for (i in c(2,3,5)){
+	Wtest[,i]<- as.numeric(gsub(",","",Wtest[,i]))
+}
+str(Wtest)
+save("Wtest",file="Wtest.Rdata")
+#load("Wtest.Rdata")
+asia4<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan)",Wtest[,1]),]
+```
+
+#### 日本、韓国、台湾、シンガポールのTotal Tests for COVID-19
+
+```R
+# Testsで並べ替え
+dat<- asia4[order(asia4[,2]),]
+#png("pcr09.png",width=800,height=600)
+par(mar=c(7,14,3,2),family="serif")
+b<- barplot(dat[,2],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,2])*1.2),las=1)
+axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
+text(x=dat[,2],y=b,labels= paste("As of",dat[,4]),pos=4)
+title("Total Tests for COVID-19(Japan,South Korea,Singapore,Taiwan)",
+	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
+#dev.off()
+```
+
+#### 日本、韓国、台湾、シンガポールのTests /million people for COVID-19
+
+```R
+# 人口100万人あたり
+# Tests /millionpeopleで並べ替え
+dat<- asia4[order(asia4[,5]),]
+#png("pcr10.png",width=800,height=600)
+par(mar=c(7,14,3,2),family="serif")
+b<- barplot(dat[,5],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,5])*1.2),las=1)
+axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
+text(x=dat[,5],y=b,labels= paste("As of",dat[,4]),pos=4)
+title("Tests /million people for COVID-19(Japan,South Korea,Singapore,Taiwan)",
+	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
+#dev.off()
+```
+
+#### 日本、韓国、台湾、シンガポールのReported Confirmed(報告された感染者)を計算、プロット
+
+```R
+# read.csvの際には、check.names=Fをつける
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+Confirmed<- read.csv(url,check.names=F)
+# Country/Regionごとに集計
+#Confirmed
+Ctl<- aggregate(Confirmed[,5:ncol(Confirmed)], sum, by=list(Confirmed$"Country/Region"))
+rownames(Ctl)<-Ctl[,1]
+Ctl<- Ctl[,-1]
+#
+dat<-Ctl[grep("(Japan|Korea, South|Taiwan*|Singapore)",rownames(Ctl)),] 
+#png("pcr11.png",width=800,height=600)
+par(mar=c(3,5,4,8),family="serif")
+matplot(t(dat),type="l",lty=1,lwd=3,xaxt="n",yaxt="n",bty="n",ylab="",xaxs="i")
+box(bty="l",lwd=2)
+axis(1,at=1:ncol(dat),labels=sub("/20","",colnames(dat)))
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x=par("usr")[2],y=dat[,ncol(dat)],labels=paste0(rownames(dat),"\n ",formatC(dat[,ncol(dat)], format="d", big.mark=',')),pos=4,xpd=T)
+title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore")
+#dev.off()
 ```
