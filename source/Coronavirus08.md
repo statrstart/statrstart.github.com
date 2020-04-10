@@ -376,11 +376,11 @@ library("rvest")
 # "COVID-19 testing"のデータ取得
 html <- read_html("https://en.wikipedia.org/wiki/COVID-19_testing")
 tbl<- html_table(html,fill = T)
-# tbl[[2]]->tbl[[4]]->tbl[[2]]
-Wtest<- tbl[[2]][,1:6]
+# tbl[[2]]->tbl[[4]]->tbl[[3]]
+Wtest<- tbl[[3]][,1:6]
 str(Wtest)
 #
-for (i in c(2,3,5)){
+for (i in c(2,3,5,6)){
 	Wtest[,i]<- as.numeric(gsub(",","",Wtest[,i]))
 }
 str(Wtest)
