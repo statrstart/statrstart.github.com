@@ -299,7 +299,7 @@ Jpcr1<- c(rep(NA,5),16,151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532)+c(rep(NA,
 Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,6647,7200,7347,7457,8771,9195,9376,11231,
 	12090,12197,12239,14322,14525,14072,18015,18134,18226+1173,18322+1189,22184+1417,21266+1426,22858+1484,24663+1513,
 	26105+1530,26401+1530,26607+1530,30088+1580,32002+1677,32002+1679,36687+1930,39992+2061,40263+3547,40481+4862,48357+6125,
-	52901+7768,54284+9274,57125+10817,61991+12071,63132+13420,63132+14741,NA)+829
+	52901+7768,54284+9274,57125+10817,61991+12071,63132+13420,63132+14741,72801+15921)+829
 Jpcr<- c(Jpcr1,Jpcr2)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),1),"倍")
 # 指数表示を抑制
@@ -475,5 +475,43 @@ axis(1,at=1:ncol(dat),labels=sub("/20","",colnames(dat)))
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x=par("usr")[2],y=dat[,ncol(dat)],labels=paste0(rownames(dat),"\n ",formatC(dat[,ncol(dat)], format="d", big.mark=',')),pos=4,xpd=T)
 title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore")
+#dev.off()
+```
+
+#### 日本、韓国、台湾、シンガポールのの致死率を計算、プロット
+
+```R
+url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
+Deaths<- read.csv(url,check.names=F)
+#Deaths
+Dtl<- aggregate(Deaths[,5:ncol(Deaths)], sum, by=list(Deaths$"Country/Region"))
+rownames(Dtl)<-Dtl[,1]
+Dtl<- Dtl[,-1]
+#
+dat<-Dtl[grep("(Japan|Korea, South|Taiwan*|Singapore)",rownames(Dtl)),] 
+#
+dat<- dat[order(dat[,ncol(dat)],decreasing=T),]
+knitr::kable(dat[,ncol(dat),drop=F])
+#
+# 致死率(%)計算
+#DpC<- matrix(NA,nrow=nrow(dat),ncol=ncol(dat))
+DpC<- NULL
+for (i in rownames(dat)){
+	temp<- round(dat[rownames(dat)== i,] / Ctl[rownames(Ctl)== i,]*100,2)
+	DpC<- rbind(DpC,temp)
+}
+#
+DpC<- DpC[order(DpC[,ncol(DpC)],decreasing=T),]
+n<-nrow(DpC)
+col<- rainbow(n)
+pch<-rep(c(0,1,2,4,5,6,15,16,17,18),3)
+#png("Coronavirus01_1_2.png",width=800,height=600)
+par(mar=c(3,5,4,10),family="serif")
+#40日めから
+matplot(t(DpC)[40:ncol(DpC),],type="o",lwd=2,pch=pch,las=1,col=col,ylab="Reported Deaths/Reported Confirmed(%)",xaxt="n",bty="n")
+box(bty="l",lwd=2)
+axis(1,at=1:nrow(t(DpC)[40:ncol(DpC),]),labels=sub("/20","",rownames(t(DpC)[40:ncol(DpC),])))
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(DpC),pch=pch,lwd=2,col=col,bty="n",title="Country/Region",xpd=T)
+title("Reported Deaths / Reported Confirmed (%) ")
 #dev.off()
 ```
