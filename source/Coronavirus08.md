@@ -1,6 +1,6 @@
 ---
 title: 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)
-date: 2020-04-14
+date: 2020-04-16
 tags: ["R", "knitr","Coronavirus","新型コロナウイルス","South Korea"]
 excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発表資料で作成
 ---
@@ -22,7 +22,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 ちなみに、人口は世界の人口 （世銀）直近データ2018年によると  	
 日本：126,529,000、韓国：51,635,000、日本の約４１％です。
 
-さらに、日本、韓国、台湾、シンガポールの新型コロナウイルスのデータで棒グラフ、折れ線グラフを作成しました。  
+さらに、日本、韓国、台湾、シンガポール、香港の新型コロナウイルスのデータで棒グラフ、折れ線グラフを作成しました。  
 
 関連した記事：[COVID-19 testing(新型コロナウイルス：Coronavirus)でbarplot](https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus11)  	
 	
@@ -50,40 +50,49 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ![pcr08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr08.png)
 
-### 日本、韓国、台湾、シンガポールの面積、人口、人口密度
+### 日本、韓国、台湾、シンガポール、香港の面積、人口、人口密度
 
 |   country    |    area|         pop| Population.density|
 |:------------:|-------:|-----------:|------------------:|
 |    Japan     | 377,915| 127,103,388|                336|
 | Korea, South |  99,720|  49,039,986|                492|
-|  Singapore   |     697|   5,567,301|              7,988|
 |    Taiwan    |  35,980|  23,359,928|                649|
+|  Hong Kong   |   1,104|   7,112,688|              6,443|
+|  Singapore   |     697|   5,567,301|              7,988|
 
-### 日本、韓国、台湾、シンガポールのPCR検査の暫定致死率(%)
-#### 米ジョンズ・ホプキンス大学のデータを使った。Rコードは省略。
-（参考）[Rで折れ線グラフ、棒グラフ (新型コロナウイルス：Coronavirus)](https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus09)
+#### Confirmed、 Deaths、Deaths/Confirmed (%)の表（米ジョンズ・ホプキンス大学のデータを使った。）
 
-![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
+|             | Confirmed| Deaths| Deaths/Confirmed (%)|
+|:------------|---------:|------:|--------------------:|
+|Korea, South |    10,591|    225|                 2.12|
+|Japan        |     8,100|    146|                 1.80|
+|Singapore    |     3,699|     10|                 0.27|
+|Hong Kong    |     1,017|      4|                 0.39|
+|Taiwan*      |       395|      6|                 1.52|
 
-#### 日本、韓国、台湾、シンガポールのTotal Tests for COVID-19
+#### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
 
 ![pcr09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr09.png)
 
-#### 日本、韓国、台湾、シンガポールの陽性率(%) Positive/Tests*100
+#### 日本、韓国、台湾、シンガポール、香港の陽性率(%) Positive/Tests*100
 
 ![pcr12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr12.png)
 
-# 日本の陽性率が非常に大きく、台湾は小さい。
+# 日本の陽性率が非常に大きく、台湾、香港は小さい。
 
-#### 日本、韓国、台湾、シンガポールのTests /million people for COVID-19
+#### 日本、韓国、台湾、シンガポール、香港のTests /million people for COVID-19
 
 ![pcr10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr10.png)
 
-#### 日本、韓国、台湾、シンガポールのReported Confirmed
+#### 日本、韓国、台湾、シンガポール、香港のReported Confirmed
 
 ### 検査の数、１００万人あたりの検査人数をふまえたうえで、報告された感染者数をみると、
 
 ![pcr11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr11.png)
+
+### 日本、韓国、台湾、シンガポール、香港のPCR検査の暫定致死率(%)
+
+![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
 
 ### データから表を作成(韓国のPCR検査実施人数とその結果)
 
@@ -163,6 +172,8 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 |2020-04-12 |         514621|    10512|  214| 490321|  13788|
 |2020-04-13 |         518743|    10537|  217| 494815|  13391|
 |2020-04-14 |         527438|    10564|  222| 502223|  14651|
+|2020-04-15 |         534552|    10591|  225| 508935|  15026|
+|2020-04-16 |         538775|    10613|  229| 513894|  14268|
 
 ### 陽性率、暫定致死率を計算し、表を作成(韓国）
 
@@ -242,6 +253,8 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 |2020-04-12 |   500833|    10512| 490321|      2.10|  214|         2.036|
 |2020-04-13 |   505352|    10537| 494815|      2.09|  217|         2.059|
 |2020-04-14 |   512787|    10564| 502223|      2.06|  222|         2.101|
+|2020-04-15 |   519526|    10591| 508935|      2.04|  225|         2.124|
+|2020-04-16 |   524507|    10613| 513894|      2.02|  229|         2.158|
 
 ## Rコード
 
@@ -249,25 +262,26 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ```R
 library(knitr)
-date<- seq(as.Date("2020-02-01"), as.Date("2020-04-14"), by = "day")
+date<- seq(as.Date("2020-02-01"), as.Date("2020-04-16"), by = "day")
 検査を受けた人<-c(371,429,429,607,714,885,1130,1701,2340,2776,3629,5074,5797,6854,7519,7919,8171,
 	9265,10411,12161,14816,19621,22633,28615,36716,46127,57990,70940,85693,96985,109591,125851,
 	136707,146541,164740,178189,188518,196618,210144,222395,234998,	248647,261335,268212,274504,
 	286716,295647,307024,316664,327509,331780,338036,348582,357896,364942,376961,387925,394141,
 	395194,410564,421547,431743,443273,455032,461233,466804,477304,486003,494711,503051,510479,
-	514621,518743,527438)
+	514621,518743,527438,534552,538775)
 感染者数<-c(12,15,15,16,18,23,24,24,25,27,28,28,28,28,28,29,30,31,46,82,156,346,556,763,893,1146,
 	1595,2022,2931,3526,4212,4812,5328,5766,6284,6767,7134,7382,7513,7755,7869,7979,8086,8162,
 	8236,8320,8413,8565,8652,8799,8897,8961,9037,9137,9241,9332,9478,9583,9661,9786,9887,9976,
-	10062,10156,10237,10284,10331,10384,10423,10450,10480,10512,10537,10564)
+	10062,10156,10237,10284,10331,10384,10423,10450,10480,10512,10537,10564,10591,10613)
 死者<-c(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,4,7,8,11,12,13,16,17,22,28,32,35,42,44,50,51,
 	54,60,66,67,72,75,75,81,84,91,94,102,104,111,120,126,131,139,144,152,158,162,165,169,174,
-	177,183,186,192,200,204,208,211,214,217,222)
+	177,183,186,192,200,204,208,211,214,217,222,225,229)
 陰性<-c(289,327,414,462,522,693,842,1057,1355,1940,2736,4054,5099,6134,6853,7313,7733,8277,9335,10446,
 	11953,13794,16038,19127,22550,28247,35298,44167,53608,61037,71580,85484,102965,118965,136624,
 	151802,162008,171778,184179,196100,209402,222728,235615,243778,251297,261105,270888,282555,
 	292487,303006,308343,315447,324105,334481,341332,352410,361883,369530,372002,383886,395075,
-	403882,414303,424732,431425,437225,446323,457761,468779,477303,485929,490321,494815,502223)
+	403882,414303,424732,431425,437225,446323,457761,468779,477303,485929,490321,494815,502223,
+	508935,513894)
 検査中<- 検査を受けた人- (陰性+感染者数)
 #df<- data.frame(date,感染者数,死者,検査を受けた人_感染者除く,陰性,検査中)
 #kable(df,row.names=F)
@@ -299,7 +313,7 @@ Jpcr1<- c(rep(NA,5),16,151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532)+c(rep(NA,
 Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,6647,7200,7347,7457,8771,9195,9376,11231,
 	12090,12197,12239,14322,14525,14072,18015,18134,18226+1173,18322+1189,22184+1417,21266+1426,22858+1484,24663+1513,
 	26105+1530,26401+1530,26607+1530,30088+1580,32002+1677,32002+1679,36687+1930,39992+2061,40263+3547,40481+4862,48357+6125,
-	52901+7768,54284+9274,57125+10817,61991+12071,63132+13420,63132+14741,72801+15921)+829
+	52901+7768,54284+9274,57125+10817,61991+12071,63132+13420,63132+14741,72801+15921,76425+16982,NA)+829
 Jpcr<- c(Jpcr1,Jpcr2)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),1),"倍")
 # 指数表示を抑制
@@ -377,9 +391,11 @@ title("韓国のPCR検査の結果（日別）")
 library(DataComputing)
 library(knitr)
 data("CountryData")
-adata<- CountryData[grep("(Japan|Korea, South|Taiwan|Singapore)",CountryData$country),1:3]
+adata<- CountryData[grep("(Japan|Korea, South|Taiwan|Singapore|Hong Kong)",CountryData$country),1:3]
 # 人口密度計算
 adata$"Population density"<- round(adata$pop/adata$area,0)
+#人口で並べ替える(降順)
+adata<- adata[order(adata$pop,decreasing=T),]
 kable(data.frame(lapply(adata,function(x)formatC(x, format="f", big.mark=",",digits=0))),
 	row.names=F,align=c("c",rep("r",3)))
 ```
@@ -394,7 +410,7 @@ tbl<- html_table(html,fill = T)
 # "covid19-testing"のtableが何番目か見つける
 nodes<- html_nodes(html, "table")
 class<-html_attr(nodes,"class")
-num<-grep("covid19-testing",class)
+num<-grep("plainrowheaders",class)
 #
 Wtest<- tbl[[num]][,1:7]
 str(Wtest)
@@ -405,14 +421,14 @@ for (i in c(3,4,5,6,7)){
 str(Wtest)
 save("Wtest",file="Wtest.Rdata")
 #load("Wtest.Rdata")
-asia4<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan)",Wtest[,1]),]
+asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan|Hong Kong)",Wtest[,1]),]
 ```
 
-#### 日本、韓国、台湾、シンガポールのTotal Tests for COVID-19
+#### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
 
 ```R
 # Testsで並べ替え
-dat<- asia4[order(asia4[,"Tests"]),]
+dat<- asia5[order(asia5[,"Tests"]),]
 #png("pcr09.png",width=800,height=600)
 par(mar=c(7,7,3,2),family="serif")
 b<- barplot(dat[,"Tests"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tests"])*1.2),las=1)
@@ -423,11 +439,11 @@ title("Total Tests for COVID-19(Japan,South Korea,Singapore,Taiwan)",
 #dev.off()
 ```
 
-#### 日本、韓国、台湾、シンガポールの陽性率(%) Positive/Tests*100
+#### 日本、韓国、台湾、シンガポール、香港の陽性率(%) Positive/Tests*100
 
 ```R
 # %で並べ替え
-dat<- asia4[order(asia4[,"%"]),]
+dat<- asia5[order(asia5[,"%"]),]
 #png("pcr12.png",width=800,height=600)
 par(mar=c(7,7,3,2),family="serif")
 b<- barplot(dat[,"%"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"%"])*1.2),las=1)
@@ -438,12 +454,12 @@ title("Positive/Tests*100 for COVID-19(Japan,South Korea,Singapore,Taiwan)",
 #dev.off()
 ```
 
-#### 日本、韓国、台湾、シンガポールのTests /million people for COVID-19
+#### 日本、韓国、台湾、シンガポール、香港のTests /million people for COVID-19
 
 ```R
 # 人口100万人あたり
 # Tests /millionpeopleで並べ替え
-dat<- asia4[order(asia4[,"Tests /millionpeople"]),]
+dat<- asia5[order(asia5[,"Tests /millionpeople"]),]
 #png("pcr10.png",width=800,height=600)
 par(mar=c(7,7,3,2),family="serif")
 b<- barplot(dat[,"Tests /millionpeople"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tests /millionpeople"])*1.2),las=1)
@@ -454,7 +470,7 @@ title("Tests /million people for COVID-19(Japan,South Korea,Singapore,Taiwan)"
 #dev.off()
 ```
 
-#### 日本、韓国、台湾、シンガポールのReported Confirmed(報告された感染者)を計算、プロット
+#### 日本、韓国、台湾、シンガポール、香港のReported Confirmed(報告された感染者)を計算、プロット
 
 ```R
 # read.csvの際には、check.names=Fをつける
@@ -465,20 +481,24 @@ Confirmed<- read.csv(url,check.names=F)
 Ctl<- aggregate(Confirmed[,5:ncol(Confirmed)], sum, by=list(Confirmed$"Country/Region"))
 rownames(Ctl)<-Ctl[,1]
 Ctl<- Ctl[,-1]
-#
-dat<-Ctl[grep("(Japan|Korea, South|Taiwan*|Singapore)",rownames(Ctl)),] 
+#Japan,South Korea,Taiwan,Singapore
+datC<-Ctl[grep("(Japan|Korea, South|Taiwan*|Singapore)",rownames(Ctl)),] 
+#Hong Kong
+HK<- Confirmed[Confirmed$"Province/State"=="Hong Kong",5:ncol(Confirmed)]
+rownames(HK)<- "Hong Kong"
+datC<- rbind(datC,HK)
 #png("pcr11.png",width=800,height=600)
 par(mar=c(3,5,4,8),family="serif")
-matplot(t(dat),type="l",lty=1,lwd=3,xaxt="n",yaxt="n",bty="n",ylab="",xaxs="i")
+matplot(t(datC),type="l",lty=1,lwd=3,xaxt="n",yaxt="n",bty="n",ylab="",xaxs="i")
 box(bty="l",lwd=2)
-axis(1,at=1:ncol(dat),labels=sub("/20","",colnames(dat)))
+axis(1,at=1:ncol(datC),labels=sub("/20","",colnames(datC)))
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
-text(x=par("usr")[2],y=dat[,ncol(dat)],labels=paste0(rownames(dat),"\n ",formatC(dat[,ncol(dat)], format="d", big.mark=',')),pos=4,xpd=T)
-title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore")
+text(x=par("usr")[2],y=datC[,ncol(datC)],labels=paste0(rownames(datC),"\n ",formatC(datC[,ncol(datC)], format="d", big.mark=',')),pos=4,xpd=T)
+title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore , Hong Kong")
 #dev.off()
 ```
 
-#### 日本、韓国、台湾、シンガポールのの致死率を計算、プロット
+#### 日本、韓国、台湾、シンガポール、香港の致死率を計算、プロット
 
 ```R
 url<- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
@@ -488,16 +508,21 @@ Dtl<- aggregate(Deaths[,5:ncol(Deaths)], sum, by=list(Deaths$"Country/Region"))
 rownames(Dtl)<-Dtl[,1]
 Dtl<- Dtl[,-1]
 #
-dat<-Dtl[grep("(Japan|Korea, South|Taiwan*|Singapore)",rownames(Dtl)),] 
-#
-dat<- dat[order(dat[,ncol(dat)],decreasing=T),]
-knitr::kable(dat[,ncol(dat),drop=F])
+datD<-Dtl[grep("(Japan|Korea, South|Taiwan*|Singapore)",rownames(Dtl)),] 
+
+#Hong Kong
+HK<- Deaths[Deaths$"Province/State"=="Hong Kong",5:ncol(Deaths)]
+rownames(HK)<- "Hong Kong"
+datD<- rbind(datD,HK)
+datD<- datD[order(datD[,ncol(datD)],decreasing=T),]
+# 亡くなった人の数
+knitr::kable(datD[,ncol(datD),drop=F])
 #
 # 致死率(%)計算
-#DpC<- matrix(NA,nrow=nrow(dat),ncol=ncol(dat))
+#DpC<- matrix(NA,nrow=nrow(datD),ncol=ncol(datD))
 DpC<- NULL
-for (i in rownames(dat)){
-	temp<- round(dat[rownames(dat)== i,] / Ctl[rownames(Ctl)== i,]*100,2)
+for (i in rownames(datD)){
+	temp<- round(datD[rownames(datD)== i,] / datC[rownames(datC)== i,]*100,2)
 	DpC<- rbind(DpC,temp)
 }
 #
@@ -514,4 +539,21 @@ axis(1,at=1:nrow(t(DpC)[40:ncol(DpC),]),labels=sub("/20","",rownames(t(DpC)[40:n
 legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(DpC),pch=pch,lwd=2,col=col,bty="n",title="Country/Region",xpd=T)
 title("Reported Deaths / Reported Confirmed (%) ")
 #dev.off()
+```
+#### 表
+
+```R
+x<- datC[,ncol(datC),drop=F]
+colnames(x)<- "Confirmed"
+y<- datD[,ncol(datD),drop=F]
+colnames(y)<- "Deaths"
+x<- merge(x,y,by =0)
+rownames(x)<- x[,1]
+x<- x[,-1]
+y<- DpC[,ncol(DpC),drop=F]
+colnames(y)<- "Deaths/Confirmed (%)"
+x<-merge(x,y,by =0)
+x<- x[order(x$Confirmed,decreasing=T),]
+kable(data.frame(Confirmed=formatC(x[,2], format="f", big.mark=",",digits=0),x[,3:4],check.names=F,row.names=x[,1]),
+	row.names=T,align=rep("r",3))
 ```
