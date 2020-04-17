@@ -64,11 +64,16 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 |             | Confirmed| Deaths| Deaths/Confirmed (%)|
 |:------------|---------:|------:|--------------------:|
-|Korea, South |    10,591|    225|                 2.12|
-|Japan        |     8,100|    146|                 1.80|
-|Singapore    |     3,699|     10|                 0.27|
-|Hong Kong    |     1,017|      4|                 0.39|
+|Japan        |     8,626|    178|                 2.06|
+|Korea, South |    10,613|    229|                 2.16|
 |Taiwan*      |       395|      6|                 1.52|
+|Hong Kong    |     1,017|      4|                 0.39|
+|Singapore    |     4,427|     10|                 0.23|
+
+# 台湾の感染者の数は圧倒的に少ない。
+
+(関連ニュース)  
+[台湾、コロナ封じ込め成功　新規感染者ゼロも引き締め2020年04月16日07時07分](https://www.jiji.com/jc/article?k=2020041500944&g=int)  
 
 #### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
 
@@ -313,13 +318,13 @@ Jpcr1<- c(rep(NA,5),16,151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532)+c(rep(NA,
 Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,6647,7200,7347,7457,8771,9195,9376,11231,
 	12090,12197,12239,14322,14525,14072,18015,18134,18226+1173,18322+1189,22184+1417,21266+1426,22858+1484,24663+1513,
 	26105+1530,26401+1530,26607+1530,30088+1580,32002+1677,32002+1679,36687+1930,39992+2061,40263+3547,40481+4862,48357+6125,
-	52901+7768,54284+9274,57125+10817,61991+12071,63132+13420,63132+14741,72801+15921,76425+16982,NA)+829
+	52901+7768,54284+9274,57125+10817,61991+12071,63132+13420,63132+14741,72801+15921,76425+16982,81825+18049)+829
 Jpcr<- c(Jpcr1,Jpcr2)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),1),"倍")
 # 指数表示を抑制
 options(scipen=2) 
 #png("pcr04.png",width=800,height=600)
-par(mar=c(4,6,4,2))
+par(mar=c(4,6,4,2),family="serif")
 b<- barplot(t(df[,c(2,4,5)]),names.arg=gsub("2020-","",rownames(df)),col=c("red","lightblue","gray80"),
 	ylim= c(0,max(検査を受けた人)*1.1),yaxt ="n",
 	legend=T,args.legend = list(x="topleft",inset=c(0.03,0.03)))
@@ -329,13 +334,13 @@ axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=',')
 points(x=b,y=Jpcr,pch=16)
 lines(x=b,y=Jpcr,pch=16,lwd=2)
 legend(x="topleft",inset=c(0.03,0.2),bty="n",legend="日本のPCR検査実施人数(データ：厚生労働省HP)",pch=16,lwd=2)
-legend(x="topleft",inset=c(0.03,0.25),bty="n",legend="* 韓国の人口は日本の約４１％",cex=1.5)
-legend(x="topleft",inset=c(0.03,0.3),bty="n",legend=paste("* PCR検査で結果判明した数は日本の",kj),cex=1.5)
-legend(x="topleft",inset=c(0.03,0.35),bty="n",legend="（日本：チャーター便帰国者も含む）",cex=1.5)
+legend(x="topleft",inset=c(0.01,0.25),bty="n",legend="* 韓国の人口は日本の約４１％",cex=1.5)
+legend(x="topleft",inset=c(0.01,0.3),bty="n",legend=paste("* PCR検査で結果判明した数は日本の",kj),cex=1.5)
+legend(x="topleft",inset=c(0.01,0.35),bty="n",legend="（日本：チャーター便帰国者及び空港検疫も含む）",cex=1.5)
 #text(x=0,y=120000,labels="* 韓国の人口は日本の約４１％",pos=4,cex=1.5)
 #text(x=0,y=110000,labels=paste("* PCR検査で結果判明した数は日本の",kj),pos=4,cex=1.5)
-#text(x=0,y=100000,labels="（日本：チャーター便帰国者も含む）",pos=4,cex=1.5)
-title("韓国と日本のPCR検査実施人数の推移")
+#text(x=0,y=100000,labels="（日本：チャーター便帰国者及び空港検疫も含む）",pos=4,cex=1.5)
+title("韓国と日本のPCR検査実施人数の推移",cex.main=2)
 #dev.off()
 ```
 
@@ -410,7 +415,8 @@ tbl<- html_table(html,fill = T)
 # "covid19-testing"のtableが何番目か見つける
 nodes<- html_nodes(html, "table")
 class<-html_attr(nodes,"class")
-num<-grep("plainrowheaders",class)
+#num<-grep("plainrowheaders",class)
+num<- 3
 #
 Wtest<- tbl[[num]][,1:7]
 str(Wtest)
@@ -421,7 +427,27 @@ for (i in c(3,4,5,6,7)){
 str(Wtest)
 save("Wtest",file="Wtest.Rdata")
 #load("Wtest.Rdata")
-asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan|Hong Kong)",Wtest[,1]),]
+#asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan|Hong Kong)",Wtest[,1]),]
+```
+## (注)国と地域の表が別になっていた
+
+```R
+num<- 4
+#
+Wtest2<- tbl[[num]][,1:7]
+str(Wtest2)
+#
+for (i in c(3,4,5,6,7)){
+	Wtest2[,i]<- as.numeric(gsub(",","",Wtest2[,i]))
+}
+str(Wtest2)
+save("Wtest2",file="Wtest2.Rdata")
+asia5<- Wtest[grep("(Japan|South Korea|Singapore)",Wtest[,1]),]
+colnames(asia5)[1]<- "Country or Subdivision"
+temp<- Wtest2[grep("(Taiwan|Hong Kong)",Wtest2[,1]),]
+temp <- temp[!is.na(temp[,3]),]
+colnames(temp)[1]<- "Country or Subdivision"
+asia5<- rbind(asia5,temp)
 ```
 
 #### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
@@ -553,7 +579,10 @@ x<- x[,-1]
 y<- DpC[,ncol(DpC),drop=F]
 colnames(y)<- "Deaths/Confirmed (%)"
 x<-merge(x,y,by =0)
-x<- x[order(x$Confirmed,decreasing=T),]
+x[,1]<-factor(x[,1],levels=c("Japan","Korea, South","Taiwan*" ,"Hong Kong", "Singapore"))
+x<- x[order(x[,1],decreasing=F),]
 kable(data.frame(Confirmed=formatC(x[,2], format="f", big.mark=",",digits=0),x[,3:4],check.names=F,row.names=x[,1]),
 	row.names=T,align=rep("r",3))
 ```
+
+
