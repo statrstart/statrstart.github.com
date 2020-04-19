@@ -64,11 +64,11 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 |             | Confirmed| Deaths| Deaths/Confirmed (%)|
 |:------------|---------:|------:|--------------------:|
-|Japan        |     9,787|    190|                 1.94|
-|Korea, South |    10,635|    230|                 2.16|
-|Taiwan*      |       395|      6|                 1.52|
-|Hong Kong    |     1,021|      4|                 0.39|
-|Singapore    |     5,050|     11|                 0.22|
+|Japan        |    10,296|    222|                 2.16|
+|Korea, South |    10,653|    232|                 2.18|
+|Taiwan*      |       398|      6|                 1.51|
+|Hong Kong    |     1,024|      4|                 0.39|
+|Singapore    |     5,992|     11|                 0.18|
 
 # 台湾の感染者の数は圧倒的に少ない。
 
@@ -453,6 +453,7 @@ str(Wtest2)
 save("Wtest2",file="Wtest2.Rdata")
 asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan)",Wtest[,1]),]
 colnames(asia5)[1]<- "Country or Subdivision"
+colnames(asia5)[2]<- "Date"
 asia5 <- asia5[!is.na(asia5[,4]),]
 temp<- Wtest2[grep("(Taiwan|Hong Kong)",Wtest2[,"Subdivision"]),]
 temp <- temp[!is.na(temp[,4]),2:8]
@@ -469,7 +470,7 @@ dat<- asia5[order(asia5[,"Tests"]),]
 par(mar=c(7,7,3,2),family="serif")
 b<- barplot(dat[,"Tests"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tests"])*1.2),las=1)
 axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
-text(x=dat[,"Tests"],y=b,labels= paste("As of",dat[,"Date"]),pos=4)
+text(x=dat[,"Tests"],y=b,labels= paste("As of",dat[,"Date"],"\n",formatC(dat[,"Tests"],format="d",big.mark=',')),pos=4)
 title("Total Tests for COVID-19(Japan,South Korea,Singapore,Taiwan)",
 	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
 #dev.off()
@@ -483,8 +484,8 @@ dat<- asia5[order(asia5[,"%"]),]
 #png("pcr12.png",width=800,height=600)
 par(mar=c(7,7,3,2),family="serif")
 b<- barplot(dat[,"%"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"%"])*1.2),las=1)
-axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
-text(x=dat[,"%"],y=b,labels= paste("As of",dat[,"Date"]),pos=4)
+axis(side=1, at=axTicks(1), labels=axTicks(1))
+text(x=dat[,"%"],y=b,labels= paste("As of",dat[,"Date"],"\n",dat[,"%"],"%"),pos=4)
 title("Positive/Tests*100 for COVID-19(Japan,South Korea,Singapore,Taiwan)",
 	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
 #dev.off()
@@ -500,7 +501,7 @@ dat<- asia5[order(asia5[,"Tests /millionpeople"]),]
 par(mar=c(7,7,3,2),family="serif")
 b<- barplot(dat[,"Tests /millionpeople"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tests /millionpeople"])*1.2),las=1)
 axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
-text(x=dat[,"Tests /millionpeople"],y=b,labels= paste("As of",dat[,"Date"]),pos=4)
+text(x=dat[,"Tests /millionpeople"],y=b,labels= paste("As of",dat[,"Date"],"\n",formatC(dat[,"Tests /millionpeople"],format="d",big.mark=',')),pos=4)
 title("Tests /million people for COVID-19(Japan,South Korea,Singapore,Taiwan)",
 	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
 #dev.off()
@@ -524,12 +525,12 @@ HK<- Confirmed[Confirmed$"Province/State"=="Hong Kong",5:ncol(Confirmed)]
 rownames(HK)<- "Hong Kong"
 datC<- rbind(datC,HK)
 #png("pcr11.png",width=800,height=600)
-par(mar=c(3,5,4,8),family="serif")
+par(mar=c(3,5,4,10),family="serif")
 matplot(t(datC),type="l",lty=1,lwd=3,xaxt="n",yaxt="n",bty="n",ylab="",xaxs="i")
 box(bty="l",lwd=2)
 axis(1,at=1:ncol(datC),labels=sub("/20","",colnames(datC)))
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
-text(x=par("usr")[2],y=datC[,ncol(datC)],labels=paste0(rownames(datC),"\n ",formatC(datC[,ncol(datC)], format="d", big.mark=',')),pos=4,xpd=T)
+text(x=par("usr")[2],y=datC[,ncol(datC)],labels=paste(rownames(datC),":",formatC(datC[,ncol(datC)], format="d", big.mark=',')),pos=4,xpd=T)
 title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore , Hong Kong")
 #dev.off()
 ```
@@ -564,14 +565,14 @@ for (i in rownames(datD)){
 DpC<- DpC[order(DpC[,ncol(DpC)],decreasing=T),]
 n<-nrow(DpC)
 col<- rainbow(n)
-pch<-rep(c(0,1,2,4,5,6,15,16,17,18),3)
+#pch<-rep(c(0,1,2,4,5,6,15,16,17,18),3)
 #png("Coronavirus01_1_2.png",width=800,height=600)
 par(mar=c(3,5,4,10),family="serif")
 #40日めから
-matplot(t(DpC)[40:ncol(DpC),],type="o",lwd=2,pch=pch,las=1,col=col,ylab="Reported Deaths/Reported Confirmed(%)",xaxt="n",bty="n")
+matplot(t(DpC)[40:ncol(DpC),],type="l",lty=1,lwd=3,las=1,col=col,ylab="Reported Deaths/Reported Confirmed(%)",xaxt="n",bty="n")
 box(bty="l",lwd=2)
 axis(1,at=1:nrow(t(DpC)[40:ncol(DpC),]),labels=sub("/20","",rownames(t(DpC)[40:ncol(DpC),])))
-legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(DpC),pch=pch,lwd=2,col=col,bty="n",title="Country/Region",xpd=T)
+legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(DpC),lty=1,lwd=3,col=col,bty="n",title="Country/Region",xpd=T)
 title("Reported Deaths / Reported Confirmed (%) ")
 #dev.off()
 ```
