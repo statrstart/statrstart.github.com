@@ -64,13 +64,15 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 |             | Confirmed| Deaths| Deaths/Confirmed (%)|
 |:------------|---------:|------:|--------------------:|
-|Japan        |    10,296|    222|                 2.16|
-|Korea, South |    10,653|    232|                 2.18|
-|Taiwan*      |       398|      6|                 1.51|
-|Hong Kong    |     1,024|      4|                 0.39|
-|Singapore    |     5,992|     11|                 0.18|
+|Japan        |    10,797|    236|                 2.19|
+|Korea, South |    10,661|    234|                 2.19|
+|Taiwan*      |       420|      6|                 1.43|
+|Hong Kong    |     1,025|      4|                 0.39|
+|Singapore    |     6,588|     11|                 0.17|
 
-# 台湾の感染者の数は圧倒的に少ない。
+### 日本：（報告された）感染者数及び（報告された）死亡者数で韓国を追い抜いた。
+
+### 台湾の感染者の数は圧倒的に少ない。
 
 (関連ニュース)  
 [台湾、コロナ封じ込め成功　新規感染者ゼロも引き締め2020年04月16日07時07分](https://www.jiji.com/jc/article?k=2020041500944&g=int)  
@@ -532,7 +534,7 @@ matplot(t(datC),type="l",lty=1,lwd=3,xaxt="n",yaxt="n",bty="n",ylab="",xaxs="i")
 box(bty="l",lwd=2)
 axis(1,at=1:ncol(datC),labels=sub("/20","",colnames(datC)))
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
-text(x=par("usr")[2],y=datC[,ncol(datC)],labels=paste(rownames(datC),":",formatC(datC[,ncol(datC)], format="d", big.mark=',')),pos=4,xpd=T)
+text(x=par("usr")[2],y=datC[,ncol(datC)]+c(100,0,0,0,0),labels=paste(rownames(datC),":",formatC(datC[,ncol(datC)], format="d", big.mark=',')),pos=4,xpd=T)
 title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore , Hong Kong")
 #dev.off()
 ```
@@ -581,6 +583,7 @@ title("Reported Deaths / Reported Confirmed (%) ")
 #### 表
 
 ```R
+library(knitr)
 x<- datC[,ncol(datC),drop=F]
 colnames(x)<- "Confirmed"
 y<- datD[,ncol(datD),drop=F]
