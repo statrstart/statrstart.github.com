@@ -1,26 +1,90 @@
 ---
-title: gtrendsRでAbenoMask (新型コロナウイルス：Coronavirus)
-date: 2020-04-04
+title: gtrendsRでアベノマスク (新型コロナウイルス：Coronavirus)
+date: 2020-04-21
 tags: ["R","gtrendsR", "Coronavirus","Japan","新型コロナウイルス"]
-excerpt: AbenoMask !
+excerpt: アベノマスク !
 ---
 
-# gtrendsRでAbenoMask (新型コロナウイルス：Coronavirus) 
+# gtrendsRでアベノマスク (新型コロナウイルス：Coronavirus) 
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FAbenoMask)
 
 (関連ニュース)  
+[アベノマスク出典: フリー百科事典『ウィキペディア（Wikipedia）』](https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%99%E3%83%8E%E3%83%9E%E3%82%B9%E3%82%AF)  
+[政府、アベノマスク製造元の公表を頑なに拒否。衛生用品としての品質を疑う声も 2020年4月20日](https://www.mag2.com/p/money/912777)   
+[政府の妊婦向け布マスクに「変色」「髪の毛混入」など不良品の報告相次ぐ 4/18(土) 22:25配信 ](https://headlines.yahoo.co.jp/hl?a=20200418-00050263-yom-soci)
+
+##### 2020-04-04
 [Bloomberg:From Abenomics to Abenomask: Japan Mask Plan Meets With Derision](https://www.bloomberg.com/news/articles/2020-04-02/from-abenomics-to-abenomask-japan-mask-plan-meets-with-derision)  
 [The Japan Times:Abenomask? Prime minister's 'two masks per household' policy spawns memes on social media](https://www.japantimes.co.jp/news/2020/04/02/national/abe-two-masks-social-media/#.XoZ5FelUvZs)  
 [Nikkei Asian Review:Abe faces calls for decisive action after 'Abenomask' blunder(Emergency declaration gives government limited power compared with other nations)](https://asia.nikkei.com/Spotlight/Coronavirus/Abe-faces-calls-for-decisive-action-after-Abenomask-blunder)  
 [CNN:Anger as Japanese Prime Minister offers two cloth masks per family while refusing to declare coronavirus emergency](https://edition.cnn.com/2020/04/02/asia/japan-coronavirus-shinzo-abe-masks-hnk-intl/index.html)  
 [FOCUS: Citizens mock Abe's plan to provide cloth face masks to fight virus](https://english.kyodonews.net/news/2020/04/e9ac1302215a-focus-citizens-mock-abes-plan-to-provide-cloth-face-masks-to-fight-virus.html)    
 
-### 時系列トレンドをプロット（xtsパッケージを使った。）
+### 2020-04-01 2020-04-18 時系列トレンドをプロット 
+
+![AbenoMask02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/AbenoMask02.png)
+
+### 2020-04-04 : 時系列トレンドをプロット（xtsパッケージを使った。）
 
 ![AbenoMask01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/AbenoMask01.png)
 
 ## Rコード
 
+### 2020-04-01 2020-04-18
+
+```R
+#devtools::install_github("PMassicotte/gtrendsR")
+library(gtrendsR)
+library(knitr)
+AbenoMask <- gtrends(c("アベノマスク"), time="2020-04-01 2020-04-18",geo="JP")
+dat<-AbenoMask[[1]][,c("date", "hits")]
+dat$hits<-as.numeric(gsub("<","",dat$hits))
+#png("AbenoMask02.png",width=800,height=600)
+date<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",dat$date))))
+barplot(dat$hits,names=date,col="pink",ylim=c(0,max(dat$hits)*1.05),las=1,
+	main="ピーク時を100としたときの検索割合の推移（キーワード：アベノマスク）")
+#dev.off()
+```
+
+```R
+kable(head(AbenoMask$related_topics,6),row.names=T)
+```
+
+|   |subject |related_topics |value         |geo |keyword      | category|
+|:--|:-------|:--------------|:-------------|:---|:------------|--------:|
+|1  |100     |top            |Naoki Urasawa |JP  |アベノマスク |        0|
+|2  |59      |top            |Abeno Ward    |JP  |アベノマスク |        0|
+|3  |39      |top            |Shinzō Abe   |JP  |アベノマスク |        0|
+|4  |30      |top            |Sazae-san     |JP  |アベノマスク |        0|
+|5  |23      |top            |Abenomics     |JP  |アベノマスク |        0|
+|6  |13      |top            |Donation      |JP  |アベノマスク |        0|
+
+
+```R
+kable(head(AbenoMask$related_queries,17),row.names=T)
+```
+
+|   |subject |related_queries |value                         |geo |keyword      | category|
+|:--|:-------|:---------------|:-----------------------------|:---|:------------|--------:|
+|1  |100     |top             |アベノマスク 浦沢             |JP  |アベノマスク |        0|
+|2  |88      |top             |アベノマスク 製造元           |JP  |アベノマスク |        0|
+|3  |79      |top             |浦沢 直樹 アベノマスク        |JP  |アベノマスク |        0|
+|4  |74      |top             |浦沢 直樹                     |JP  |アベノマスク |        0|
+|5  |61      |top             |アベノマスク 小さい           |JP  |アベノマスク |        0|
+|6  |57      |top             |アベノマスク twitter          |JP  |アベノマスク |        0|
+|7  |39      |top             |アベノマスク 届い た          |JP  |アベノマスク |        0|
+|8  |27      |top             |アベノマスク サザエ さん      |JP  |アベノマスク |        0|
+|9  |22      |top             |アベノマスク 寄付             |JP  |アベノマスク |        0|
+|10 |22      |top             |アベノマスク 費用             |JP  |アベノマスク |        0|
+|11 |22      |top             |アベノマスク urasawa          |JP  |アベノマスク |        0|
+|12 |17      |top             |アベノマスク 山口 県          |JP  |アベノマスク |        0|
+|13 |13      |top             |アベノマスク いつ             |JP  |アベノマスク |        0|
+|14 |13      |top             |アベノマスク いつから         |JP  |アベノマスク |        0|
+|15 |9       |top             |阿部 の マスク                |JP  |アベノマスク |        0|
+|16 |4       |top             |アベノマスク twitter イラスト |JP  |アベノマスク |        0|
+|17 |4       |top             |浦沢 直樹 氏 アベノマスク     |JP  |アベノマスク |        0|
+
+### 2020-04-04
 ### Googleトレンドデータを入手。直近７日
 
 ```R
@@ -36,14 +100,9 @@ names(AbenoMask)
 #[7] "related_queries" 
 ```
 
-
 ### 時系列トレンドをプロット（xtsパッケージを使った。）
 
 ```R
-# png("AbenoMask01.png",width=800,height=600)
-#plot(AbenoMask)
-# dev.off()
-#
 dat<-AbenoMask[[1]][,c("date", "hits")]
 dat$hits<-as.numeric(gsub("<","",dat$hits))
 #
@@ -71,7 +130,6 @@ kable(head(AbenoMask$interest_by_country,5),row.names=T)
 |3  |South Korea    |   17|AbenoMask |world |web   |
 |4  |United States  |    2|AbenoMask |world |web   |
 |5  |United Kingdom |    2|AbenoMask |world |web   |
-
 
 ```R
 kable(head(AbenoMask$interest_by_city,11),row.names=T)
@@ -112,7 +170,6 @@ kable(head(AbenoMask$related_topics,15),row.names=T)
 |13 |12      |top            |Abeno Ward         |AbenoMask |        0|
 |14 |11      |top            |Sazae-san          |AbenoMask |        0|
 |15 |9       |top            |The Japan Times    |AbenoMask |        0|
-
 
 ```R
 kable(head(AbenoMask$related_queries,24),row.names=T)
