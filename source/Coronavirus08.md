@@ -42,7 +42,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ![pcr06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr06.png)
 
-### 韓国の陽性者数（日別）
+### 日本と韓国の陽性者数（日別）
 
 ![pcr07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr07.png)
 
