@@ -71,11 +71,11 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 |             | Confirmed| Deaths| Deaths/Confirmed (%)|
 |:------------|---------:|------:|--------------------:|
-|Japan        |    10,797|    236|                 2.19|
-|Korea, South |    10,661|    234|                 2.19|
-|Taiwan*      |       420|      6|                 1.43|
-|Hong Kong    |     1,025|      4|                 0.39|
-|Singapore    |     6,588|     11|                 0.17|
+|Japan        |    11,135|    263|                 2.36|
+|Korea, South |    10,683|    237|                 2.22|
+|Taiwan*      |       425|      6|                 1.41|
+|Hong Kong    |     1,029|      4|                 0.39|
+|Singapore    |     9,125|     11|                 0.12|
 
 ### 日本：（報告された）感染者数及び（報告された）死亡者数で韓国を追い抜いた。
 
@@ -337,15 +337,21 @@ kable(df2)
 ### 新型コロナウイルスのPCR検査実施人数と感染状況(韓国)
 
 ```R
-#日本のPCR検査実施人数（結果判明した数）
-Jpcr1<- c(rep(NA,5),16,151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532)+c(rep(NA,5),9,566,NA,NA,764,NA,764,764,764,NA,NA,764,764,764)
+#日本のPCR検査実施人数と結果（結果判明した数）
+Jpcr1<- c(rep(NA,6),151,NA,NA,174,NA,190,200,214,NA,NA,487,523,532)+c(rep(NA,6),566,NA,NA,764,NA,764,764,764,NA,NA,764,764,764)
 # 3/19 : PCR検査実施人数が減少したのは、千葉県が人数でなく件数でカウントしていたことが判明したため、千葉県の件数を引いたことによる
 Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,6647,7200,7347,7457,8771,9195,9376,11231,
 	12090,12197,12239,14322,14525,14072,18015,18134,18226+1173,18322+1189,22184+1417,21266+1426,22858+1484,24663+1513,
 	26105+1530,26401+1530,26607+1530,30088+1580,32002+1677,32002+1679,36687+1930,39992+2061,40263+3547,40481+4862,48357+6125,
 	52901+7768,54284+9274,57125+10817,61991+12071,63132+13420,63132+14741,72801+15921,76425+16982,81825+18049,86800+18743,
-	91050+19446,91695+20292,94826+21070,NA)+829
+	91050+19446,91695+20292,94826+21070,101818+21903)+829
 Jpcr<- c(Jpcr1,Jpcr2)
+Confirmed<- c(rep(NA,6),25,NA,NA,26,NA,28,29,33,NA,NA,59,66,73,84,93,105,132,144,156,164,186,210,230,239,254,268,284,317,348,
+	407,454,487,513,567,619,674,714,777,809,824,868,907,943,996,1046,1089,1128,1193,1291,1387,1499,1693,1866,1953,2178,
+	2381,2617,2935,3271,3654,3906,4257,4768,5347,6005,6748,7255,7645,8100,8582,9167,9795,10361,10751,11119)
+Deaths<- c(rep(NA,6),0,NA,NA,0,NA,0,0,1,NA,NA,1,1,1,1,1,1,1,1,1,1,3,4,5,5,6,6,6,6,6,6,6,7,9,12,15,19,21,22,24,28,29,31,33,35,36,
+	41,42,43,45,46,49,52,54,56,57,60,63,69,70,73,80,81,85,88,94,98,102,109,119,136,148,154,161,171,186)
+Jdf<- data.frame(Tested=Jpcr,Confirmed,Deaths)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),1),"倍")
 # 指数表示を抑制
 options(scipen=2) 
@@ -392,13 +398,17 @@ title("韓国の暫定致死率(%)の推移")
 #dev.off()
 ```
 
-### 韓国の陽性者数（日別）
+### 日本と韓国の陽性者数（日別）
 
 ```R
+date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
+ylim<- max(max(diff(Jdf$Confirmed),na.rm=T),max(diff(df$感染者数),na.rm=T))*1.2
 #png("pcr07.png",width=800,height=600)
-par(mar=c(4,6,4,2))
-barplot(diff(df2$感染者数),names=gsub("2020-","",rownames(df2[-1,])),col="pink",las=1)
-title("韓国の陽性者数（日別）")
+par(mar=c(4,6,4,2),family="serif")
+barplot(diff(Jdf$Confirmed),col=rgb(1,0,0,alpha=0.5),axes=F,ylim=c(0,ylim))
+barplot(diff(df$感染者数),names=date2,col=rgb(0,1,0,alpha=0.5),las=1,add=T,ylim=c(0,ylim))
+legend("topleft",inset=c(0.03,0.08),pch=15,col=c(rgb(1,0,0,alpha=0.5),rgb(0,1,0,alpha=0.5)),legend=c("日本","韓国"),bty="n",cex=1.5)
+title("日本と韓国の陽性者数（日別）",cex.main=1.5)
 #dev.off()
 ```
 
@@ -437,7 +447,7 @@ title("韓国の(報告された)感染者数 対数表示（日別）",cex.main
 #dev.off()
 ```
 
-### 日本、韓国、台湾、シンガポールの面積、人口、人口密度
+### 日本、韓国、台湾、シンガポール、香港の面積、人口、人口密度
 
 ```R
 library(DataComputing)
@@ -452,7 +462,7 @@ kable(data.frame(lapply(adata,function(x)formatC(x, format="f", big.mark=",",dig
 	row.names=F,align=c("c",rep("r",3)))
 ```
 
-### 日本、韓国、台湾、シンガポールのTotal Tests for COVID-19
+### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
 
 ```R
 library("rvest")
@@ -574,7 +584,7 @@ matplot(t(datC),type="l",lty=1,lwd=3,xaxt="n",yaxt="n",bty="n",ylab="",xaxs="i")
 box(bty="l",lwd=2)
 axis(1,at=1:ncol(datC),labels=sub("/20","",colnames(datC)))
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
-text(x=par("usr")[2],y=datC[,ncol(datC)]+c(100,0,0,0,0),labels=paste(rownames(datC),":",formatC(datC[,ncol(datC)], format="d", big.mark=',')),pos=4,xpd=T)
+text(x=par("usr")[2],y=datC[,ncol(datC)],labels=paste(rownames(datC),":",formatC(datC[,ncol(datC)], format="d", big.mark=',')),pos=4,xpd=T)
 title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore , Hong Kong")
 #dev.off()
 ```
