@@ -72,6 +72,12 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ## 最近では結果判明した４千人〜１万人に対して陽性者数がひと桁の日が出始めたのがわかります。
 
+### 日本の(報告された)感染者数 対数表示（日別）
+
+![pcr08_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr08_3.png)
+
+### データの信頼性(データのとり方の一貫性)が劣るのでおかしな箇所が見受けられます。
+
 ### 日本、韓国、台湾、シンガポール、香港の面積、人口、人口密度
 
 |   country    |    area|         pop| Population.density|
@@ -456,21 +462,46 @@ title("韓国のPCR検査の結果（日別）")
 ### 韓国の(報告された)感染者数 対数表示（日別）
 
 ```R
+date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
 dat<- diff(df2$感染者数)
 dat[dat==0]<- NA
 dat2<- diff(df2$結果判明)
+ylim<- c(0.9,max(dat2,na.rm=T)*1.2)
 #png("pcr08_2.png",width=800,height=600)
 par(mar=c(4,5,4,3),family="serif")
-b<- barplot(rep(NA,length(dat)),names=gsub("2020-","",rownames(df[-1,])),las=1,log="y",ylim=c(0.9,max(dat2)*1.2))
+b<- barplot(rep(NA,length(dat)),names=date2,las=1,log="y",ylim=ylim)
 abline(h=10^(0:4),col="darkgray",lwd=1.2,lty=3)
 for (i in 1:9){
 	abline(h=i*10^(0:4),col="darkgray",lwd=0.8,lty=3)
 }
-barplot(dat,col="red",las=1,log="y",ylim=c(0.9,max(dat2)*2),axes=F,add=T)
+barplot(dat,col="red",las=1,log="y",ylim=ylim,axes=F,add=T)
 lines(x=b,y=dat2,lwd=2,col="darkgreen")
 points(x=b,y=dat2,pch=16,col="darkgreen")
 text(x=par("usr")[2],y=dat2[length(dat2)],labels="結果判明",col="darkgreen",xpd=T)
 title("韓国の(報告された)感染者数 対数表示（日別）",cex.main=1.5)
+#dev.off()
+```
+### 日本の(報告された)感染者数 対数表示（日別）
+
+```R
+date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
+dat<- diff(Jdf$Confirmed)
+dat[dat==0]<- NA
+dat2<- diff(Jdf$Tested)
+# 韓国のグラフにyの範囲を揃える
+ylim<- c(0.9,max(diff(df2$結果判明),na.rm=T)*1.2)
+#png("pcr08_3.png",width=800,height=600)
+par(mar=c(4,5,4,3),family="serif")
+b<- barplot(rep(NA,length(dat)),names=date2,las=1,log="y",ylim=ylim)
+abline(h=10^(0:4),col="darkgray",lwd=1.2,lty=3)
+for (i in 1:9){
+	abline(h=i*10^(0:4),col="darkgray",lwd=0.8,lty=3)
+}
+barplot(dat,col="red",las=1,log="y",ylim=ylim,axes=F,add=T)
+lines(x=b,y=dat2,lwd=2,col="darkgreen")
+points(x=b,y=dat2,pch=16,col="darkgreen")
+legend("topleft",inset=0.03,bty="n",legend="PCR検査実施人数",lwd=2,lty=1,pch=16,col="darkgreen")
+title("日本の(報告された)感染者数 対数表示（日別）",cex.main=1.5)
 #dev.off()
 ```
 
