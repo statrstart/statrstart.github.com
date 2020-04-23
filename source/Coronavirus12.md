@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-04-20
+date: 2020-04-23
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -40,19 +40,19 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-03-31 |吹田市 |20代 |女性 |○   |
 |2020-04-01 |吹田市 |40代 |男性 |     |
 |2020-04-02 |吹田市 |20代 |男性 |     |
-|2020-04-03 |吹田市 |20代 |男性 |○   |
+|2020-04-03 |吹田市 |20代 |男性 |     |
 |2020-04-04 |吹田市 |50代 |男性 |○   |
 |2020-04-04 |吹田市 |40代 |男性 |     |
 |2020-04-06 |吹田市 |50代 |男性 |     |
 |2020-04-06 |吹田市 |50代 |男性 |     |
 |2020-04-07 |吹田市 |30代 |男性 |     |
-|2020-04-07 |吹田市 |30代 |男性 |     |
+|2020-04-07 |吹田市 |30代 |男性 |○   |
 |2020-04-07 |吹田市 |50代 |女性 |     |
 |2020-04-09 |吹田市 |80代 |女性 |     |
 |2020-04-09 |吹田市 |10代 |女性 |     |
 |2020-04-09 |吹田市 |40代 |女性 |     |
 |2020-04-10 |吹田市 |20代 |男性 |     |
-|2020-04-11 |吹田市 |80代 |男性 |     |
+|2020-04-11 |吹田市 |80代 |男性 |○   |
 |2020-04-11 |吹田市 |20代 |男性 |     |
 |2020-04-11 |吹田市 |50代 |男性 |     |
 |2020-04-12 |吹田市 |20代 |男性 |     |
@@ -68,6 +68,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-04-16 |吹田市 |20代 |女性 |     |
 |2020-04-16 |吹田市 |20代 |男性 |     |
 |2020-04-17 |吹田市 |30代 |男性 |     |
+|2020-04-19 |吹田市 |50代 |男性 |     |
+|2020-04-20 |吹田市 |40代 |男性 |     |
+|2020-04-20 |吹田市 |30代 |女性 |     |
+|2020-04-20 |吹田市 |50代 |女性 |     |
 
 #### 時系列
 
@@ -85,6 +89,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka04.png)
 
+#### 検査結果
+
+![covOsaka05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka05.png)
+
 ### Rコード
 
 #### (json形式)データを読み込み、「陽性者の属性」の部分を取り出す。
@@ -96,6 +104,15 @@ library(jsonlite)
 library(knitr)
 url<- "https://raw.githubusercontent.com/codeforosaka/covid19/development/data/data.json"
 js<- fromJSON(url)
+names(js)
+#[1] "patients"                   "patients_summary"          
+#[3] "inspections_summary"        
+#    "contacts1_summary"  府民向け相談窓口への相談件数   
+#[5] "contacts2_summary" 新型コロナ受診相談センターへの相談件数          
+#    "transmission_route_summary" 感染経路不明者（リンク不明者） 
+#[7] "treated_summary" 陰性確認済（退院者累計）           "lastUpdate"                
+#[9] "main_summary" 
+# "patients"「陽性者の属性」の部分を取り出す。
 dat<- js[[1]][[2]][,c(8,4:7)]
 # 居住地の「大阪府」は消し、「大阪府外」だけはもとに戻す。
 dat$居住地<- gsub("大阪府","",dat$居住地)
@@ -163,3 +180,23 @@ text(x=tbl,y=b,labels=tbl,pos=4)
 title("陽性者の属性:性別(大阪府)",cex.main=1.5)
 #dev.off()
 ```
+
+#### "patients_summary" "inspections_summary" 
+
+```R
+dat<- js[[2]][[2]]
+dat<- merge(dat,js[[3]][[2]],by=1)
+rownames(dat)<- sub("-","/",sub("-0","-",sub("^0","",substring(dat[,1],6,10))))
+dat<- dat[,-1]
+dat[,3]<- dat[,2]-dat[,1]
+colnames(dat)<- c("陽性者数","検査実施件数","陰性者数")
+ritsu<- paste("陽性者数 / 検査実施件数",round((sum(dat[,"陽性者数"])/sum(dat[,"検査実施件数"]))*100,2),"%")
+# png("covOsaka05.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+barplot(t(dat[,c(1,3)]),names=date,las=1,col=c("red","lightblue"))
+legend("topleft",inset=0.03,bty="n",pch=15,col=c("red","lightblue","white","white"),cex=1.5,
+	legend=c("陽性者数","検査実施件数-陽性者数","",ritsu))
+title("検査結果(大阪府)")
+#dev.off()
+```
+
