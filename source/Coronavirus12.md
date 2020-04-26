@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-04-24
+date: 2020-04-26
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -72,7 +72,8 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-04-20 |吹田市 |40代 |男性 |     |
 |2020-04-20 |吹田市 |30代 |女性 |     |
 |2020-04-20 |吹田市 |50代 |女性 |     |
-|2020-04-22 |吹田市 |60代 |男   |     |
+|2020-04-22 |吹田市 |60代 |男性 |     |
+|2020-04-24 |吹田市 |20代 |男性 |     |
 
 #### 時系列
 
@@ -201,5 +202,49 @@ legend("topleft",inset=0.03,bty="n",pch=15,col=c("red","lightblue","white","whit
 	legend=c("陽性者数","検査実施件数-陽性者数","",ritsu))
 title("検査結果(大阪府)")
 #dev.off()
+```
+
+#### main_summary
+
+```R
+#検査実施人数
+js[[9]]$value
+unlist(js[[9]]$children)
+#                    attr                    value           children.attr1 
+#            "陽性患者数"                   "1446"       "入院／入院調整中" 
+#          children.attr2           children.attr3          children.value1 
+#                  "退院"                   "死亡"                   "1071" 
+#         children.value2          children.value3  children.children.attr1 
+#                   "349"                     "26"           "軽症・中等症" 
+# children.children.attr2 children.children.value1 children.children.value2 
+#                  "重症"                   "1012"                     "59"
+#陽性患者数
+js[[9]]$children$value 
+js[[9]]$children[2] # これでも同じ
+#入院／入院調整中
+#unlist(js[[9]]$children)[3]
+unlist(js[[9]]$children)[6]
+#入院／入院調整中の内訳:軽症・中等症 or 重症
+#unlist(js[[9]]$children)[9:10]
+unlist(js[[9]]$children)[11:12]
+#
+#退院
+#unlist(js[[9]]$children)[4]
+unlist(js[[9]]$children)[7]
+#死亡
+#unlist(js[[9]]$children)[5]
+unlist(js[[9]]$children)[8]
+#
+#各項目の関係は以下のようになっている。
+#陽性患者数=入院／入院調整中+退院+死亡
+as.numeric(js[[9]]$children$value)
+as.numeric(unlist(js[[9]]$children)[6])+as.numeric(unlist(js[[9]]$children)[7])+as.numeric(unlist(js[[9]]$children)[8])
+#
+#入院／入院調整中=軽症・中等症+重症
+as.numeric(unlist(js[[9]]$children)[6])
+as.numeric(unlist(js[[9]]$children)[11])+as.numeric(unlist(js[[9]]$children)[12])
+#
+#致死率=死亡/陽性患者数*100を計算するには、
+as.numeric(unlist(js[[9]]$children)[8])/as.numeric(unlist(js[[9]]$children)[2])*100
 ```
 
