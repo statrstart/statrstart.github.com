@@ -54,6 +54,10 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ![pcr04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04.png)
 
+### 日本と韓国の新型コロナウイルスによる死亡者数推移(累計で計算)
+
+![pcr04_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04_2.png)
+
 ### 日本と韓国のPCR検査の陽性率(%)「累計」
 
 ![pcr05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr05.png)
@@ -461,6 +465,32 @@ legend(x="topleft",inset=c(0.01,0.35),bty="n",legend="（日本：チャータ�
 #text(x=0,y=110000,labels=paste("* PCR検査で結果判明した数は日本の",kj),pos=4,cex=1.5)
 #text(x=0,y=100000,labels="（日本：チャーター便帰国者及び空港検疫も含む）",pos=4,cex=1.5)
 title("韓国と日本のPCR検査実施人数の推移",cex.main=2)
+#dev.off()
+```
+
+### 日本と韓国の新型コロナウイルスによる死亡者数推移(累計で計算)
+
+```R
+date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date))))
+Jpos <- Deaths
+ylim<- c(0,max(c(Jpos,死者),na.rm=T)*1.1)
+#png("pcr04_2.png",width=800,height=600)
+par(mar=c(5,6,4,2),family="serif")
+plot(死者,type="o",pch=16,col="blue",lwd=2,xaxt="n",xlab="",ylab="死亡者数(人)",las=1,ylim=ylim,bty="n")
+box(bty="l",lwd=2)
+lines(Jpos,col="red",lwd=2)
+points(Jpos,col="red",pch=16)
+#表示するx軸ラベルを指定
+axis(1,at=1:length(date2),labels =NA,tck= -0.01)
+labels<- date2
+labelpos<- paste0(rep(1:12,each=3),"/",c(1,10,20))
+axis(1,at=1,labels =labels[1],tick=F)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+legend("topleft",inset=0.03,pch=16,lwd=2,cex=1.5,col=c("red","blue"),legend=c("日本","韓国"),bty="n")
+title("日本と韓国の新型コロナウイルスによる死亡者数推移","Data : 日本(厚生労働省の報道発表資料) 韓国(KCDC)",cex.main=2)
 #dev.off()
 ```
 
