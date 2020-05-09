@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-05-03
+date: 2020-05-09
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -68,15 +68,15 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-04-16 |吹田市 |20代 |女性 |○   |
 |2020-04-16 |吹田市 |20代 |男性 |○   |
 |2020-04-17 |吹田市 |30代 |男性 |     |
-|2020-04-19 |吹田市 |50代 |男性 |     |
+|2020-04-19 |吹田市 |50代 |男性 |○   |
 |2020-04-20 |吹田市 |40代 |男性 |     |
-|2020-04-20 |吹田市 |30代 |女性 |     |
+|2020-04-20 |吹田市 |30代 |女性 |○   |
 |2020-04-20 |吹田市 |50代 |女性 |     |
 |2020-04-22 |吹田市 |60代 |男性 |○   |
-|2020-04-24 |吹田市 |20代 |男性 |     |
+|2020-04-24 |吹田市 |20代 |男性 |○   |
 |2020-04-27 |吹田市 |40代 |男性 |     |
 |2020-05-01 |吹田市 |30代 |男性 |     |
-|2020-05-02 |吹田市 |10代 |女性 |     |
+|2020-05-02 |吹田市 |10代 |女性 |○   |
 
 #### 時系列
 
@@ -188,47 +188,29 @@ title("陽性者の属性:性別(大阪府)",cex.main=1.5)
 #dev.off()
 ```
 
-#### "patients_summary" "inspections_summary" 
+#### "patients_summary" "inspections_summary" "lastUpdate" "main_summary"
 
 ```R
+# 検査陽性率(%): 陽性患者数/検査実施人数*100
+Pos<- round(js[[9]][[3]]$value/js[[9]][[2]]*100,2)
+# 致死率(%): 亡くなった人の数/陽性患者数*100
+Dth<- round(js[[9]][[3]][[3]][[1]][grep("死亡",js[[9]][[3]][[3]][[1]]$attr),2]/js[[9]][[3]]$value*100,2)
+#
 dat<- js[[2]][[2]]
 dat<- merge(dat,js[[3]][[2]],by=1)
 rownames(dat)<- sub("-","/",sub("-0","-",sub("^0","",substring(dat[,1],6,10))))
 dat<- dat[,-1]
 dat[,3]<- dat[,2]-dat[,1]
-colnames(dat)<- c("陽性者数","検査実施件数","陰性者数")
-ritsu<- paste("陽性者数 / 検査実施件数",round((sum(dat[,"陽性者数"])/sum(dat[,"検査実施件数"]))*100,2),"%")
-# png("covOsaka05.png",width=800,height=600)
+colnames(dat)<- c("陽性者数","検査実施人数","陰性者数")
+ritsu1<- paste("・検査陽性率(%) :",Pos,"%")
+ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
+ png("covOsaka05.png",width=800,height=600)
 par(mar=c(3,7,4,2),family="serif")
 barplot(t(dat[,c(1,3)]),names=rownames(dat),las=1,col=c("red","lightblue"))
-legend("topleft",inset=0.03,bty="n",pch=15,col=c("red","lightblue","white","white"),cex=1.5,
-	legend=c("陽性者数","検査実施件数-陽性者数","",ritsu))
-title("検査結果(大阪府)")
-#dev.off()
-```
-
-#### main_summary
-
-```R
-#検査実施人数
-js[[9]]$value
-unlist(js[[9]]$children)
-#                    attr                    value           children.attr1 
-#            "陽性患者数"                   "1656"       "入院／入院調整中" 
-#          children.attr2           children.attr3           children.attr4 
-#                  "退院"                   "死亡"               "自宅療養" 
-#          children.attr5           children.attr6           children.attr7 
-#              "宿泊療養"           "療養等調整中"             "入院調整中" 
-#         children.value1          children.value2          children.value3 
-#                   "432"                    "716"                     "46" 
-#         children.value4          children.value5          children.value6 
-#                   "193"                    "208"                      "3" 
-#         children.value7  children.children.attr1  children.children.attr2 
-#                    "58"           "軽症・中等症"                   "重症" 
-#children.children.value1 children.children.value2 
-#                   "824"                     "60" 
-#致死率=死亡/陽性患者数*100を計算するには、
-#unlist(js[[9]]$children)$children.value3
-round(as.numeric(unlist(js[[9]]$children)[12])/as.numeric(unlist(js[[9]]$children)[2])*100,2)
+legend("topleft",inset=0.03,bty="n",pch=15,col=c("red","lightblue"),cex=1.5,
+	legend=c("陽性者数","検査実施人数-陽性者数"))
+legend("topleft",inset=c(0,0.15),bty="n",cex=1.5,legend=c(paste0(js[[8]],"現在"),ritsu1,ritsu2))
+title("検査結果(大阪府)",cex.main=1.5)
+dev.off()
 ```
 
