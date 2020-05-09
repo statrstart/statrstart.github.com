@@ -204,13 +204,13 @@ dat[,3]<- dat[,2]-dat[,1]
 colnames(dat)<- c("陽性者数","検査実施人数","陰性者数")
 ritsu1<- paste("・検査陽性率(%) :",Pos,"%")
 ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
- png("covOsaka05.png",width=800,height=600)
+#png("covOsaka05.png",width=800,height=600)
 par(mar=c(3,7,4,2),family="serif")
 barplot(t(dat[,c(1,3)]),names=rownames(dat),las=1,col=c("red","lightblue"))
 legend("topleft",inset=0.03,bty="n",pch=15,col=c("red","lightblue"),cex=1.5,
 	legend=c("陽性者数","検査実施人数-陽性者数"))
 legend("topleft",inset=c(0,0.15),bty="n",cex=1.5,legend=c(paste0(js[[8]],"現在"),ritsu1,ritsu2))
 title("検査結果(大阪府)",cex.main=1.5)
-dev.off()
+#dev.off()
 ```
 

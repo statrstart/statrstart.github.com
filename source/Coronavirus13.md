@@ -1,0 +1,142 @@
+---
+title: 東京都陽性者の属性(新型コロナウイルス：Coronavirus)
+date: 2020-05-09
+tags: ["R","jsonlite","Coronavirus","東京都","新型コロナウイルス"]
+excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
+---
+
+# 東京都陽性者の属性(新型コロナウイルス：Coronavirus)
+
+![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus13)  
+
+[東京都 新型コロナウイルス感染症対策サイトにあるデータ](https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/data.json)を使います。
+
+#### 時系列
+
+![covTokyo01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo01.png)
+
+#### 検査陽性者率（%）推移（累計した数で計算)
+
+![covTokyo02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02.png)
+
+#### 年代
+
+![covTokyo03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo03.png)
+
+#### 性別
+
+![covTokyo04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo04.png)
+
+### Rコード
+
+#### (json形式)データ読み込み
+
+```R
+#install.packages("jsonlite")
+#install.packages("curl")
+library(jsonlite)
+library(knitr)
+url<- "https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/data.json"
+js<- fromJSON(url)
+names(js)
+# [1] "contacts"                  "querents"  # 相談者               
+# [3] "patients"                  "patients_summary"         
+# [5] "discharges_summary"        "inspections_summary"      
+# [7] "inspection_persons"        "inspection_status_summary"
+# [9] "lastUpdate"                "main_summary" 
+```
+
+#### 時系列
+
+```R
+# patients_summary
+# 検査陽性率(%): 陽性患者数/検査実施人数*100
+Pos<- round(js[[10]][[3]]$value/js[[10]][[2]]*100,2)
+# 致死率(%): 亡くなった人の数/陽性患者数*100
+Dth<- round(js[[10]][[3]][[4]][[1]][grep("死亡",js[[10]][[3]][[4]][[1]]$attr),2]/js[[10]][[3]]$value*100,2)
+#
+# 検査陽性者数
+patients<- js[[4]]$data
+patients[,1]<- substring(patients[,1],6,10)
+colnames(patients)<- c("date","patients")
+# 検査実施人数
+inspection<- data.frame(date=substring(js[[7]][[2]],6,10),
+	                inspection_persons= js[[7]][[3]]$data[[1]])
+dat<- merge(patients,inspection,by="date")
+# 日付を例えば、01-01を1/1 のように書き直す。
+dat[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat[,1])))
+ritsu1<- paste("・検査陽性率(%) :",Pos,"%")
+ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
+#png("covTokyo01.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"inspection_persons"],na.rm=T)))
+lines(x=b,y=dat[,"inspection_persons"],lwd=1.2)
+points(x=b,y=dat[,"inspection_persons"],pch=16,cex=0.8)
+legend(x="topleft",inset=c(0.03,0.1),bty="n",legend="検査実施人数",pch=16,lwd=1.2,cex=1.5)
+legend("topleft",inset=c(0,0.2),bty="n",cex=1.5,legend=c(paste0(js[[9]],"現在"),ritsu1,ritsu2))
+title("陽性者の人数：時系列(東京都)",cex.main=1.5)
+#dev.off()
+```
+
+### 検査陽性者率（%）（累計した数で計算)
+
+```R
+patients<- js[[4]]$data
+patients[,1]<- substring(patients[,1],6,10)
+# 累計を計算
+patients[,2]<- cumsum(patients[,2])
+colnames(patients)<- c("date","patients")
+# 検査実施人数は累計を計算
+inspection<- data.frame(date=substring(js[[7]][[2]],6,10),
+	                inspection_persons= cumsum(js[[7]][[3]]$data[[1]]))
+dat<- merge(patients,inspection,by="date")
+df<- data.frame(date=dat[,1],検査陽性率=round((dat[,2]/dat[,3])*100,2))
+#png("covTokyo02.png",width=800,height=600)
+par(mar=c(3,6,4,7),family="serif")
+# プロットする範囲は0%から60%とした
+plot(df[,2],type="o",pch=16,lwd=2,ylim=c(0,60),las=1,xaxt="n",xlab="",ylab="",bty="n")
+box(bty="l",lwd=2)
+# 日付を例えば、01-01を1/1 のように書き直す。
+df[,1]<- sub("-","/",sub("-0","-",sub("^0","",df[,1])))
+#表示するx軸ラベルを指定
+axis(1,at=1:length(df[,1]),labels =NA,tck= -0.01)
+labels<- df[,1]
+labelpos<- paste0(rep(1:12,each=3),"/",c(1,10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+text(x=par("usr")[2],y=df[,2][nrow(df)],labels= paste0(df[,1][nrow(df)],"現在\n",df[,2][nrow(df)],"%"),xpd=T,cex=1.2,col="red",pos=4)
+title("東京都のPCR検査陽性率(%)の推移(累計した数で計算)",cex.main=2)
+#dev.off()
+```
+
+### 陽性者の属性
+#### 年代
+
+```R
+dat<- js[[3]]$data[,c(6,2:4)]
+tbl<- table(dat$年代)
+tbl<- tbl[order(tbl)]
+#png("covTokyo03.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:年代(東京都)",cex.main=1.5)
+#dev.off()
+```
+
+#### 性別
+
+```R
+dat<- js[[3]]$data[,c(6,2:4)]
+tbl<- table(dat$性別)
+tbl<- tbl[order(tbl)]
+#png("covTokyo04.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:性別(東京都)",cex.main=1.5)
+#dev.off()
+```
+
