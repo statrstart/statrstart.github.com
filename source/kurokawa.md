@@ -1,5 +1,5 @@
 ---
-title: gtrendsRで黒○○務(様)と南海トラフ、黒○○務(様) VS アベノマスク
+title: gtrendsRで黒○○務(様)と南海トラフ、黒○○務(様) VS アベノマスク、黒○○務(様) VS アベノミクス
 date: 2020-05-13
 tags: ["R","gtrendsR"]
 excerpt: 三権分立
@@ -31,6 +31,15 @@ excerpt: 三権分立
 ![kuromask](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/kuromask.png)
 
 - 黒○○務(様)がアベノマスクに勝ったのは１時間。
+
+### 黒○○務(様) VS アベノミクス
+#### 直近７日
+
+![kuromics](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/kuromics.png)
+
+- 黒○○務(様)はアベノミクスには圧勝。アベノマスク>>黒○○務(様)>>>>>アベノミクス
+- アベノミクスってもうほとんど死語
+- いまや安○(様)といえば、アベノマスク！
 
 ## Rコード
 
@@ -84,3 +93,11 @@ plot(kuromask)
 #dev.off()
 ```
 
+### 黒○○務(様) VS アベノミクス
+
+```R
+kuromics <- gtrends(c("黒川弘務","アベノミクス"),time="now 7-d",geo="JP")
+#png("kuromics.png",width=800,height=600)
+plot(kuromics)
+#dev.off()
+```
