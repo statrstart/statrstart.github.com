@@ -1,15 +1,18 @@
 ---
-title: gtrendsRで黒○○務(様)と南海トラフ
-date: 2020-05-12
+title: gtrendsRで黒○○務(様)と南海トラフ、黒○○務(様) VS アベノマスク
+date: 2020-05-13
 tags: ["R","gtrendsR"]
 excerpt: 三権分立
 ---
 
-# gtrendsRで黒○○務(様)と南海トラフ
+# gtrendsRで黒○○務(様)と南海トラフ、黒○○務(様) VS アベノマスク
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2Fkurokawa)
 
 (関連ニュース)  
 [定年延長”黒川弘務検事長に直撃取材　検察庁法改正で「安倍政権ベッタリ」の検事総長が誕生する広がり続ける「#検察庁法改正案に抗議します」](https://bunshun.jp/articles/-/37732)  
+[若狭勝氏、同期の黒川氏は「自ら辞めるのでは…」[2020年5月13日18時39分] ](https://www.nikkansports.com/general/nikkan/news/202005130000510.html)
+- 「『公正らしさ』が求められる検察に対する信頼が得られなくなるのが一番怖い。」って、検察を信頼している人ってどれくらいいるのかなあ？
+
 [関東周辺で相次ぐ地震の発生。ネット上で「南海トラフ」が上位に2020/05/11 17:15](https://news.goo.ne.jp/article/mag2/nation/mag2-451231.html)  
 
 ### 黒○○務(様)
@@ -21,6 +24,13 @@ excerpt: 三権分立
 #### 直近７日
 
 ![nankaigtrend](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nankaigtrend.png)
+
+### 黒○○務(様) VS アベノマスク
+#### 直近７日
+
+![kuromask](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/kuromask.png)
+
+- 黒○○務(様)がアベノマスクに勝ったのは１時間。
 
 ## Rコード
 
@@ -48,7 +58,6 @@ plot.xts(dat.xts,type="h",lend=1,lwd=5,col="red",ylim=c(-5,max(dat.xts$hits)*1.0
 
 ### 南海トラフ
 
-
 ```R
 nankai <- gtrends("南海トラフ",time="now 7-d",geo="JP")
 #plot(nankai)
@@ -63,6 +72,15 @@ colnames(dat.xts)<-"hits"
 #png("nankaigtrend.png",width=800,height=600)
 plot.xts(dat.xts,type="h",lend=1,lwd=5,col="red",ylim=c(-5,max(dat.xts$hits)*1.05),
 	main="ピーク時を100としたときの検索割合の推移（キーワード：南海トラフ）")
+#dev.off()
+```
+
+### 黒○○務(様) VS アベノマスク
+
+```R
+kuromask <- gtrends(c("黒川弘務","アベノマスク"),time="now 7-d",geo="JP")
+#png("kuromask.png",width=800,height=600)
+plot(kuromask)
 #dev.off()
 ```
 
