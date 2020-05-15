@@ -1,7 +1,7 @@
 ---
 title: 東京都陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-05-12
-tags: ["R","jsonlite","Coronavirus","東京都","新型コロナウイルス"]
+date: 2020-05-15
+tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
 
@@ -18,6 +18,10 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 #### 検査陽性者率（%）推移（累計した数で計算)
 
 ![covTokyo02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02.png)
+
+#### 直近の状況を見るには移動平均の方が累計より適しているので 検査陽性率(%)を1週間(7日)の幅で移動平均
+
+![covTokyo02_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02_2.png)
 
 #### 年代
 
@@ -108,6 +112,45 @@ for (i in labelpos){
 	}
 text(x=par("usr")[2],y=df[,2][nrow(df)],labels= paste0(df[,1][nrow(df)],"現在\n",df[,2][nrow(df)],"%"),xpd=T,cex=1.2,col="red",pos=4)
 title("東京都のPCR検査陽性率(%)の推移(累計した数で計算)",cex.main=2)
+#dev.off()
+```
+
+### 直近の状況を見るには移動平均の方が累計より適しているので
+#### 検査陽性率(%)を1週間(7日)の幅で移動平均
+
+```R
+library(TTR)
+# 検査陽性者数
+patients<- js[[4]]$data
+patients[,1]<- substring(patients[,1],6,10)
+colnames(patients)<- c("date","patients")
+# 検査実施人数
+inspection<- data.frame(date=substring(js[[7]][[2]],6,10),
+	                inspection_persons= js[[7]][[3]]$data[[1]])
+dat<- merge(patients,inspection,by="date")
+# 1週間の幅で移動平均
+dat2<- data.frame(date=dat[,1],patients=SMA(dat[,2],n=7),inspection_persons=SMA(dat[,3],n=7))
+dat2<- na.omit(dat2)
+#検査陽性率(%)= 検査陽性者数/検査実施人数*100
+dat2[,4]<- round(dat2[,2]/dat2[,3]*100,2)
+#
+#png("covTokyo02_2.png",width=800,height=600)
+par(mar=c(3,6,4,7),family="serif")
+# プロットする範囲は0%から60%とした
+plot(dat2[,4],type="o",pch=16,lwd=2,las=1,xaxt="n",xlab="",ylab="",bty="n")
+box(bty="l",lwd=2)
+# 日付を例えば、01-01を1/1 のように書き直す。
+dat2[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat2[,1])))
+#表示するx軸ラベルを指定
+axis(1,at=1:length(dat2[,1]),labels =NA,tck= -0.01)
+labels<- dat2[,1]
+labelpos<- paste0(rep(1:12,each=3),"/",c(1,10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+text(x=par("usr")[2],y=dat2[,4][nrow(dat2)],labels= paste0(dat2[,1][nrow(dat2)],"現在\n",dat2[,4][nrow(dat2)],"%"),xpd=T,cex=1.2,col="red",pos=4)
+title("東京都のPCR検査陽性率(%)の推移(1週間(7日)の幅で移動平均)",cex.main=2)
 #dev.off()
 ```
 
