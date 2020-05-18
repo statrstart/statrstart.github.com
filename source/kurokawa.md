@@ -1,6 +1,6 @@
 ---
 title: gtrendsRで黒○○務(様)と南海トラフ、黒○○務(様) VS アベノマスク、黒○○務(様) VS アベノミクス
-date: 2020-05-17
+date: 2020-05-18
 tags: ["R","gtrendsR"]
 excerpt: 三権分立
 ---
@@ -14,6 +14,9 @@ excerpt: 三権分立
 [定年延長”黒川弘務検事長に直撃取材　検察庁法改正で「安倍政権ベッタリ」の検事総長が誕生する広がり続ける「#検察庁法改正案に抗議します」](https://bunshun.jp/articles/-/37732)  
 [若狭勝氏、同期の黒川氏は「自ら辞めるのでは…」[2020年5月13日18時39分] ](https://www.nikkansports.com/general/nikkan/news/202005130000510.html)
 [アクセスジャーナル](https://access-journal.jp/47424) <- これほんと？！  
+[「黒川弘務検事総長」に安倍首相が期待する2つの汚職つぶし「森友再捜査」「河井夫婦逮捕」](https://www.j-cast.com/tv/2020/05/14385966.html)  
+[検察庁法改正】“元凶”黒川は林と共倒れか　検察内部で「第3の男」が浮上](https://www.jiji.com/jc/bunshun?id=37881)  
+[元特捜部長ら「再考」求める　有志グループ、元総長に続き―検察定年延長、深く憂慮](https://www.jiji.com/jc/article?k=2020051800308&g=soc)  
 
 [関東周辺で相次ぐ地震の発生。ネット上で「南海トラフ」が上位に2020/05/11 17:15](https://news.goo.ne.jp/article/mag2/nation/mag2-451231.html)  
 
@@ -45,6 +48,11 @@ excerpt: 三権分立
 - 黒○○務(様)はアベノミクスには圧勝。アベノマスク>>黒○○務(様)>>>>>アベノミクス
 - アベノミクスってもうほとんど死語
 - いまや安○(様)といえば、アベノマスク！
+
+### アベノマスク VS アベノミクス
+#### 最近　3ヶ月
+
+![abeno](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/abeno.png)
 
 ## Rコード
 
@@ -167,4 +175,32 @@ barplot(dat_wide[,3],col=rgb(0,1,0,0.5),ylim=c(0,max(dat_wide[,2:3])*1.05),xaxt=
 box(bty="l",lwd=2)
 legend("topleft",inset=0.02,legend=colnames(dat_wide[,2:3]),pch=15,col=c(rgb(1,0,0,0.8),rgb(0,1,0,0.5)),cex=1.2,bty="n")
 #dev.off()
+```
+
+### アベノマスク VS アベノミクス
+#### 最近　3ヶ月
+
+```R
+abeno<- gtrends(c("アベノマスク","アベノミクス"),time="today 3-m",geo="JP")
+dat<-abeno[[1]][,c("date", "hits","keyword")]
+dat$hits<-as.numeric(gsub("<","",dat$hits))
+library(reshape2)
+dat_wide <- dcast(dat,date ~ keyword, value.var="hits")
+date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",dat_wide$date))))
+png("abeno.png",width=800,height=600)
+par(mar=c(4,5,4,2),family="serif")
+b<- barplot(dat_wide[,2],col=rgb(1,0,0,0.8),ylim=c(0,max(dat_wide[,2:3])*1.05),xaxt="n",las=1,width=1,space=0,
+	main="ピーク時を100としたときの検索割合の推移（キーワード：アベノマスク VS アベノミクス）",border=rgb(1,0,0,0.8))
+#表示するx軸ラベルを指定
+axis(1,at=b[1:length(date2)],labels =NA,tck= -0.01)
+labels<- date2
+labelpos<- paste0(rep(1:12,each=3),"/",c(1,10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=b[at],labels = i,tck= -0.02)}
+	}
+barplot(dat_wide[,3],col=rgb(0,1,0,0.5),ylim=c(0,max(dat_wide[,2:3])*1.05),xaxt="n",yaxt="n",border=rgb(0,1,0,0.5),width=1,space=0,add=T)
+box(bty="l",lwd=2)
+legend("topleft",inset=0.02,legend=colnames(dat_wide[,2:3]),pch=15,col=c(rgb(1,0,0,0.8),rgb(0,1,0,0.5)),cex=1.2,bty="n")
+dev.off()
 ```
