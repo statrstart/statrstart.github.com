@@ -1,6 +1,6 @@
 ---
 title: Rで折れ線グラフ、棒グラフ (新型コロナウイルス：Coronavirus)
-date: 2020-04-28
+date: 2020-05-21
 tags: ["R","DataComputing", "Coronavirus","Japan","新型コロナウイルス"]
 excerpt: 米ジョンズ・ホプキンス大学のデータ使用
 ---
@@ -32,43 +32,47 @@ excerpt: 米ジョンズ・ホプキンス大学のデータ使用
 
 ![Coronavirus01_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1.png)
 
-##### 死亡者数300人以上の国の死亡者数(表)
+##### 死亡者数500人以上の国の死亡者数(表)
 
-|               | 4/27/20|
+|               | 5/20/20|
 |:--------------|-------:|
-|US             |   56259|
-|Italy          |   26977|
-|Spain          |   23521|
-|France         |   23327|
-|United Kingdom |   21157|
-|Belgium        |    7207|
-|Germany        |    6126|
-|Iran           |    5806|
-|China          |    4637|
-|Brazil         |    4603|
-|Netherlands    |    4534|
-|Turkey         |    2900|
-|Canada         |    2841|
-|Sweden         |    2274|
-|Switzerland    |    1665|
-|Mexico         |    1434|
-|Ireland        |    1102|
-|India          |     939|
-|Portugal       |     928|
-|Russia         |     794|
-|Peru           |     782|
-|Indonesia      |     765|
-|Ecuador        |     663|
-|Romania        |     641|
-|Poland         |     562|
-|Austria        |     549|
-|Philippines    |     511|
-|Algeria        |     432|
-|Denmark        |     427|
-|Japan          |     385|
-|Egypt          |     337|
+|US             |   93439|
+|United Kingdom |   35786|
+|Italy          |   32330|
+|France         |   28135|
+|Spain          |   27888|
+|Brazil         |   18859|
+|Belgium        |    9150|
+|Germany        |    8144|
+|Iran           |    7183|
+|Canada         |    6150|
+|Mexico         |    6090|
+|Netherlands    |    5767|
+|China          |    4638|
+|Turkey         |    4222|
+|Sweden         |    3831|
+|India          |    3434|
+|Peru           |    3024|
+|Russia         |    2972|
+|Ecuador        |    2888|
+|Switzerland    |    1892|
+|Ireland        |    1571|
+|Portugal       |    1263|
+|Indonesia      |    1242|
+|Romania        |    1147|
+|Pakistan       |     985|
+|Poland         |     962|
+|Philippines    |     842|
+|Japan          |     768|
+|Egypt          |     680|
+|Austria        |     633|
+|Colombia       |     630|
+|Algeria        |     568|
+|Ukraine        |     564|
+|Denmark        |     554|
+|Chile          |     544|
 
-#### 死亡者数300人以上の国の致死率(%):Deaths/Confirmed の推移
+#### 死亡者数500人以上の国の致死率(%):Deaths/Confirmed の推移
 
 ![Coronavirus01_1_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_1.png)
 
@@ -80,13 +84,13 @@ excerpt: 米ジョンズ・ホプキンス大学のデータ使用
 ##### Days since reported cases reach 600
 ![CoronavirusG600](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CoronavirusG600.png)
 
-### 報告された感染者数が2000人以上の国ごとの感染者数の棒グラフ
+### 報告された感染者数が10000人以上の国ごとの感染者数の棒グラフ
 
 #### x軸のラベルの数値にコンマ、国ごとの値をグラフ右に表記
 
 ![Coronavirus01_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_2.png)
 
-### 報告された感染者数が2000人以上の国ごとの致死率の棒グラフ 
+### 報告された感染者数が10000人以上の国ごとの致死率の棒グラフ 
 
 #### 日本と韓国のグラフの色、ラベルの色を変えた。
 
@@ -98,70 +102,52 @@ excerpt: 米ジョンズ・ホプキンス大学のデータ使用
 
 |country              |        pop| population_density| Confirmed| Confirmed_per_Pop|
 |:--------------------|----------:|------------------:|---------:|-----------------:|
-|India                | 1236344631|             376.10|     29451|          0.002382|
-|Bangladesh           |  166280712|            1154.74|      5913|          0.003556|
-|Indonesia            |  253609643|             133.16|      9096|          0.003587|
-|Thailand             |   67741401|             132.02|      2931|          0.004327|
-|Egypt                |   86895099|              86.77|      4782|          0.005503|
-|China                | 1355692576|             141.26|     83918|          0.006190|
-|Pakistan             |  196174380|             246.42|     13915|          0.007093|
-|Philippines          |  107668231|             358.89|      7777|          0.007223|
-|Algeria              |   38813722|              16.30|      3517|          0.009061|
-|Argentina            |   43024374|              15.47|      4003|          0.009304|
-|South Africa         |   48375645|              39.68|      4793|          0.009908|
-|Japan                |  127103388|             336.33|     14153|          0.011135|
-|Colombia             |   46245297|              40.60|      5597|          0.012103|
-|Morocco              |   32987206|              73.87|      4120|          0.012490|
-|Mexico               |  120286655|              61.23|     15529|          0.012910|
-|Kazakhstan           |   17948816|               6.59|      2835|          0.015795|
-|Malaysia             |   30073353|              91.17|      5820|          0.019353|
-|Ukraine              |   44291413|              73.38|      9009|          0.020340|
-|Korea, South         |   49039986|             491.78|     10752|          0.021925|
-|Greece               |   10775557|              81.66|      2534|          0.023516|
-|Hungary              |    9919128|             106.63|      2583|          0.026041|
-|Australia            |   22507617|               2.91|      6721|          0.029861|
-|Poland               |   38346279|             122.64|     11902|          0.031038|
-|Brazil               |  202656788|              23.80|     67446|          0.033281|
-|Croatia              |    4470534|              78.99|      2039|          0.045610|
-|Romania              |   21729871|              91.15|     11339|          0.052182|
-|Dominican Republic   |   10349741|             212.65|      6293|          0.060803|
-|Russia               |  142470272|               8.33|     87147|          0.061169|
-|Oman                 |    3219775|              10.40|      2049|          0.063638|
-|Saudi Arabia         |   27345986|              12.72|     18811|          0.068789|
-|Czechia              |   10627448|             134.75|      7445|          0.070054|
-|Chile                |   17363894|              22.97|     13813|          0.079550|
-|Finland              |    5268799|              15.58|      4695|          0.089109|
-|Serbia               |    7209764|              93.06|      6630|          0.091959|
-|Peru                 |   30147935|              23.46|     28699|          0.095194|
-|Moldova              |    3583288|             105.85|      3481|          0.097145|
-|Iran                 |   80840713|              49.05|     91472|          0.113151|
-|Belarus              |    9608058|              46.28|     11289|          0.117495|
-|Kuwait               |    2742711|             153.93|      3288|          0.119881|
-|Turkey               |   81619392|             104.16|    112261|          0.137542|
-|Canada               |   34834841|               3.49|     49616|          0.142432|
-|Norway               |    5147792|              15.90|      7599|          0.147617|
-|Ecuador              |   15654411|              55.21|     23240|          0.148457|
-|Denmark              |    5569077|             129.23|      8896|          0.159739|
-|Panama               |    3608431|              47.84|      6021|          0.166859|
-|Austria              |    8223062|              98.04|     15274|          0.185746|
-|United Arab Emirates |    5628805|              67.33|     10839|          0.192563|
-|Sweden               |    9723809|              21.59|     18926|          0.194636|
-|Germany              |   80996685|             226.87|    158758|          0.196006|
-|Israel               |    7821850|             376.59|     15555|          0.198866|
-|Bahrain              |    1314089|            1729.06|      2723|          0.207216|
-|Portugal             |   10813834|             117.43|     24027|          0.222188|
-|Netherlands          |   16877351|             406.26|     38440|          0.227761|
-|United Kingdom       |   63742977|             261.66|    158348|          0.248416|
-|France               |   66259012|             102.92|    165963|          0.250476|
-|Singapore            |    5567301|            7987.52|     14423|          0.259066|
-|US                   |  318892103|              32.45|    988197|          0.309884|
-|Italy                |   61680122|             204.69|    199414|          0.323304|
-|Switzerland          |    8061516|             195.30|     29164|          0.361768|
-|Ireland              |    4832765|              68.77|     19648|          0.406558|
-|Belgium              |   10449361|             342.29|     46687|          0.446793|
-|Spain                |   47737941|              94.46|    229422|          0.480586|
-|Qatar                |    2123160|             183.25|     11244|          0.529588|
-|Luxembourg           |     520672|             201.34|      3729|          0.716190|
+|China                | 1355692576|             141.26|     84063|          0.006201|
+|Indonesia            |  253609643|             133.16|     19189|          0.007566|
+|India                | 1236344631|             376.10|    112028|          0.009061|
+|Philippines          |  107668231|             358.89|     13221|          0.012279|
+|Japan                |  127103388|             336.33|     16367|          0.012877|
+|Bangladesh           |  166280712|            1154.74|     26738|          0.016080|
+|Egypt                |   86895099|              86.77|     14229|          0.016375|
+|Korea, South         |   49039986|             491.78|     11122|          0.022679|
+|Pakistan             |  196174380|             246.42|     45898|          0.023397|
+|South Africa         |   48375645|              39.68|     18003|          0.037215|
+|Colombia             |   46245297|              40.60|     17687|          0.038246|
+|Ukraine              |   44291413|              73.38|     19230|          0.043417|
+|Mexico               |  120286655|              61.23|     56594|          0.047049|
+|Poland               |   38346279|             122.64|     19739|          0.051476|
+|Romania              |   21729871|              91.15|     17387|          0.080014|
+|Dominican Republic   |   10349741|             212.65|     13477|          0.130216|
+|Brazil               |  202656788|              23.80|    291579|          0.143878|
+|Serbia               |    7209764|              93.06|     10833|          0.150255|
+|Iran                 |   80840713|              49.05|    126949|          0.157036|
+|Turkey               |   81619392|             104.16|    152587|          0.186949|
+|Austria              |    8223062|              98.04|     16353|          0.198868|
+|Denmark              |    5569077|             129.23|     11315|          0.203175|
+|Israel               |    7821850|             376.59|     16667|          0.213083|
+|Russia               |  142470272|               8.33|    308705|          0.216680|
+|Germany              |   80996685|             226.87|    178473|          0.220346|
+|Ecuador              |   15654411|              55.21|     34854|          0.222647|
+|Saudi Arabia         |   27345986|              12.72|     62545|          0.228717|
+|Canada               |   34834841|               3.49|     81575|          0.234176|
+|Netherlands          |   16877351|             406.26|     44647|          0.264538|
+|France               |   66259012|             102.92|    181700|          0.274227|
+|Portugal             |   10813834|             117.43|     29660|          0.274278|
+|Chile                |   17363894|              22.97|     53617|          0.308784|
+|Sweden               |    9723809|              21.59|     31523|          0.324184|
+|Belarus              |    9608058|              46.28|     32426|          0.337488|
+|Peru                 |   30147935|              23.46|    104020|          0.345032|
+|Italy                |   61680122|             204.69|    227364|          0.368618|
+|Switzerland          |    8061516|             195.30|     30658|          0.380301|
+|United Kingdom       |   63742977|             261.66|    249619|          0.391602|
+|United Arab Emirates |    5628805|              67.33|     26004|          0.461981|
+|US                   |  318892103|              32.45|   1551853|          0.486639|
+|Spain                |   47737941|              94.46|    232555|          0.487149|
+|Ireland              |    4832765|              68.77|     24315|          0.503128|
+|Singapore            |    5567301|            7987.52|     29364|          0.527437|
+|Belgium              |   10449361|             342.29|     55983|          0.535755|
+|Kuwait               |    2742711|             153.93|     17568|          0.640534|
+|Qatar                |    2123160|             183.25|     37097|          1.747254|
 
 ## 日本の人口あたり（報告された！！）感染者が少ないのは検査しないから。
 
@@ -263,7 +249,7 @@ title("Covid-19 : Death rates")
 #dev.off()
 ```
 
-#### 死亡者数　300人以上の国の致死率(%):Deaths/Confirmed の推移
+#### 死亡者数　500人以上の国の致死率(%):Deaths/Confirmed の推移
 
 ```R
 # Country/Regionごとに集計
@@ -276,9 +262,9 @@ Dtl<- aggregate(Deaths[,5:ncol(Deaths)], sum, by=list(Deaths$"Country/Region"))
 rownames(Dtl)<-Dtl[,1]
 Dtl<- Dtl[,-1]
 #
-# 死亡者数　300人以上の国 
+# 死亡者数　500人以上の国 
 #
-min<- 300
+min<- 500
 max<- Inf
 dat<-Dtl[apply(Dtl,1,max,na.rm=T)>=min & apply(Dtl,1,max,na.rm=T)< max,] 
 # "Diamond Princess"を除く
@@ -311,7 +297,7 @@ title(bquote("Reported Deaths / Reported Confirmed (%) ( Reported"~Deaths>=.(min
 
 ### 報告された感染者数が一定数超えた時点を起点とした折れ線グラフ
 
-#### 片対数グラフ（Semi-log plot）ここでは、報告された感染者数 2000人以上
+#### 片対数グラフ（Semi-log plot）ここでは、報告された感染者数 10000人以上
 
 - min,max : 報告された感染者数 min 人以上、max 未満
 - Sp : Starting pointとする感染者数
@@ -319,7 +305,7 @@ title(bquote("Reported Deaths / Reported Confirmed (%) ( Reported"~Deaths>=.(min
 - xlim : x軸の範囲
 
 ```R
-min<- 2000
+min<- 10000
 max<- +Inf
 G600<- Ctl[apply(Ctl,1,max,na.rm=T)>= min & apply(Ctl,1,max,na.rm=T)< max,] 
 # Diamond Princessを除く
@@ -390,16 +376,16 @@ colnames(DRbyC)<- c("Confirmed","Deaths")
 DRbyC$Death.rate<- round(DRbyC$Deaths/DRbyC$Confirmed *100,4)
 ```
 
-### 報告された感染者数 2000人以上の国だけをとりだす。
+### 報告された感染者数 10000人以上の国だけをとりだす。
 
 ```R
-min<- 2000
+min<- 10000
 DR<- DRbyC[DRbyC$Confirmed >= min ,] 
 # Diamond Princessを除く
 DR<- DR[grep("Diamond Princess",rownames(DR),invert =T),]
 ```
 
-### 報告された感染者数が2000人以上の国ごとの感染者数の棒グラフ
+### 報告された感染者数が10000人以上の国ごとの感染者数の棒グラフ
 
 ```R
 # Confirmedの昇順に並べ替え
@@ -413,7 +399,7 @@ title(bquote("Reported confirmed COVID-19 cases (Country/Region : "~Positive>=.(
 #dev.off()
 ```
 
-### 報告された感染者数が2000人以上の国ごとの致死率の棒グラフ 
+### 報告された感染者数が10000人以上の国ごとの致死率の棒グラフ 
 
 ```R
 # Death.rateの昇順に並べ替え
@@ -448,22 +434,22 @@ data("CountryData")
 #area: area (sq km), 2147
 #pop: number of people
 #
-# 報告された感染者数 2000人以上の国
-min<- 2000
-G2000<- Ctl[apply(Ctl,1,max,na.rm=T)>= min ,] 
+# 報告された感染者数 10000人以上の国
+min<- 10000
+G10000<- Ctl[apply(Ctl,1,max,na.rm=T)>= min ,] 
 # Diamond Princessを除く
-G2000<-G2000[grep("Diamond Princess",rownames(G2000),invert =T),]
-G2000<-G2000[order(apply(G2000,1,max,na.rm=T),decreasing=T),]
-cdata<- CountryData[is.element(CountryData$country,rownames(G2000)),1:3]
-#nrow(G2000) ; nrow(cdata) が等しくない
-rownames(G2000)[!is.element(rownames(G2000),cdata$country)]
+G10000<-G10000[grep("Diamond Princess",rownames(G10000),invert =T),]
+G10000<-G10000[order(apply(G10000,1,max,na.rm=T),decreasing=T),]
+cdata<- CountryData[is.element(CountryData$country,rownames(G10000)),1:3]
+#nrow(G10000) ; nrow(cdata) が等しくない
+rownames(G10000)[!is.element(rownames(G10000),cdata$country)]
 #[1] "US"      "Czechia"
 #CountryData$country
 # アメリカのnameがCountryDataは"United States" ジョンズ・ホプキンス大学のデータは"US"
 # チェコ共和国のnameがCountryDataは"Czech Republic"ジョンズ・ホプキンス大学のデータは"Czechia"
-( cdata<- CountryData[is.element(CountryData$country,c("Czech Republic","United States",rownames(G2000))),1:3] )
+( cdata<- CountryData[is.element(CountryData$country,c("Czech Republic","United States",rownames(G10000))),1:3] )
 # 確認(同数か否か)
-nrow(G2000) ;nrow(cdata)
+nrow(G10000) ;nrow(cdata)
 #
 # cdataのUnited StatesをUSに変更(ジョンズ・ホプキンス大学のデータに合わせる)
 cdata$country<- sub("United States","US",cdata$country)
@@ -471,7 +457,7 @@ cdata$country<- sub("Czech Republic","Czechia",cdata$country)
 # 人口密度(population density)
 cdata$population_density<- round(cdata[,3]/cdata[,2],2)
 # 最新の報告された感染者のみ取り出し、merge
-dat<- G2000[,ncol(G2000),drop=F]
+dat<- G10000[,ncol(G10000),drop=F]
 dat$country<- rownames(dat)
 cdata<- merge(cdata,dat,by="country")
 colnames(cdata)[5]<- "Confirmed"
@@ -511,7 +497,7 @@ colnames(df2)<- colnames(df3)
 df2<- rbind(df3,df2)
 #
 lim<-max(Wtest[,"Tests /millionpeople"],na.rm=T)*1.1
-min<- 2000
+min<- 10000
 df<- Wtest[!is.na(Wtest[,"Positive"]),]
 df<- df[df[,"Positive"]>=min,]
 jnum<- df[df[,1]=="Japan","Tests /millionpeople"]
