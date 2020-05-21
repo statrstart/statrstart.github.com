@@ -1,6 +1,6 @@
 ---
 title: gtrendsRで黒○○務(様)と南海トラフ、黒○○務(様) VS アベノマスク、黒○○務(様) VS アベノミクス
-date: 2020-05-18
+date: 2020-05-21
 tags: ["R","gtrendsR"]
 excerpt: 三権分立
 ---
@@ -11,6 +11,9 @@ excerpt: 三権分立
 ### 時系列の棒グラフをいろんな方法で作成
 
 (関連ニュース)  
+[黒川弘務東京高検検事長　ステイホーム週間中に記者宅で“3密”「接待賭けマージャン」](https://bunshun.jp/articles/-/37926)  
+[黒川氏「訓告」に批判の声殺到「国民をなめた処分」](https://www.nikkansports.com/general/nikkan/news/202005210000523.html)  
+
 [定年延長”黒川弘務検事長に直撃取材　検察庁法改正で「安倍政権ベッタリ」の検事総長が誕生する広がり続ける「#検察庁法改正案に抗議します」](https://bunshun.jp/articles/-/37732)  
 [若狭勝氏、同期の黒川氏は「自ら辞めるのでは…」[2020年5月13日18時39分] ](https://www.nikkansports.com/general/nikkan/news/202005130000510.html)
 [アクセスジャーナル](https://access-journal.jp/47424) <- これほんと？！  
@@ -25,7 +28,7 @@ excerpt: 三権分立
 
 ![kurokawa](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/kurokawa.png)
 
-- この黒○○務とかいうお方、そんなに検事総長になりたいのでしょうか？
+- この黒○○務とかいうお方、そんなに検事総長になりたいのでしょうか？<- 結局、辞任。退職金は払われるの？？？
 
 ### 南海トラフ
 #### 直近７日
@@ -36,6 +39,8 @@ excerpt: 三権分立
 #### 直近７日
 
 ![kuromask](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/kuromask.png)
+
+- 「接待賭けマージャン」でピーク時にはアベノマスクの２倍以上の検索数！
 
 ### 黒○○務(様) VS アベノミクス
 #### 直近７日
