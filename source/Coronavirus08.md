@@ -188,6 +188,26 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
 
+### 新型コロナウイルスによる死者数 in アジア
+
+![CdeathsA01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CdeathsA01.png)
+
+### 新型コロナウイルスによる人口100万人あたりの死者数 in アジア
+
+![CdeathsA02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CdeathsA02.png)
+
+### 「人口あたりの死者数」で評価した「日本モデル」より優秀なモデル in アジア
+
+ [1] "Bhutan Model"       "Cambodia Model"     "Laos Model"          
+ [4] "Mongolia Model"     "Timor-Leste Model"  "Vietnam Model"       
+ [7] "Nepal Model"        "Taiwan Model"       "Syria Model"         
+[10] "Sri Lanka Model"    "Uzbekistan Model"   "Thailand Model"      
+[13] "Jordan Model"       "Georgia Model"      "Kazakhstan Model"    
+[16] "China Model"        "Kyrgyzstan Model"   "Yemen Model"         
+[19] "Malaysia Model"     "Singapore Model"    "Bangladesh Model"    
+[22] "Lebanon Model"      "Brunei Model"       "India Model"         
+[25] "Korea, South Model" "Tajikistan Model"   "Indonesia Model" 
+
 ### 陽性率、暫定致死率を計算し、表を作成(韓国のPCR検査実施人数とその結果）
 
 |Row.names  | 検査を受けた人| 感染者数| 死者|   陰性| 検査中| 結果判明| 陽性率(%)| 暫定致死率(%)|
@@ -908,3 +928,83 @@ text(x=dat[,"Deaths/millionpeople"],y=b,labels= dat[,"Deaths/millionpeople"],pos
 title("日本、韓国、台湾、シンガポール、香港の人口100万人あたりの新型コロナウイルスによる死者数")
 #dev.off()
 ```
+
+### 新型コロナウイルスによる死者数 in アジア
+
+```R
+asia<- c("China","India","Indonesia","Pakistan","Bangladesh","Japan","Philippines","Vietnam","Turkey","Iran","Thailand",
+"Myanmar","Korea, South","Iraq","Afghanistan","Saudi Arabia","Uzbekistan","Malaysia","Yemen","Nepal","North Korea",
+"Sri Lanka","Kazakhstan","Syria","Cambodia","Jordan","Azerbaijan","United Arab Emirates","Tajikistan","Israel",
+"Laos","Lebanon","Kyrgyzstan","Turkmenistan","Singapore","Oman","State of Palestine","Kuwait","Georgia","Mongolia",
+"Armenia","Qatar","Bahrain","Timor-Leste","Cyprus","Bhutan","Maldives","Brunei",
+"Taiwan")
+#
+dat<-Dtl[is.element(rownames(Dtl),asia),] 
+#
+dat<- dat[order(dat[,ncol(dat)],decreasing=F),]
+df<- dat[,ncol(dat),drop=F]
+names(df)<- "Deaths"
+knitr::kable(df)
+#
+#png("CdeathsA01.png",width=800,height=800)
+#par(mar=c(3,10,3,2),family="serif")
+#barplot(t(df),las=1,horiz=T,col="pink")
+#title("新型コロナウイルスによる死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)")
+#dev.off()
+#
+# Japan の色を赤
+TF<- is.element(colnames(t(df)),c("Japan"))
+col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
+col2<- gsub("TRUE","red",gsub("FALSE","black",TF))
+# 韓国、中国、台湾、シンガポールの色を青
+col[grep("Korea, South|China|Taiwan|Singapore",rownames(df))]<- "blue"
+col2[grep("Korea, South|China|Taiwan|Singapore",rownames(df))]<- "blue"
+#png("CdeathsA01.png",width=800,height=800)
+par(mar=c(3,10,4,2),family="serif")
+b<- barplot(df$Deaths,las=1,col=col,horiz=T,names=NA)
+axis(2, at = b,labels=NA,tck= -0.008)
+text(x=par("usr")[1],y=b, labels = colnames(t(df)), col = col2,pos=2,xpd=T,font=3)
+title("新型コロナウイルスによる死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)",
+	cex.main=1.5)
+#dev.off()
+```
+
+### 新型コロナウイルスによる人口100万人あたりの死者数 in アジア
+
+```R
+y<- CountryData[,c("country","pop")]
+df<- merge(df,y,by.x= 0,by.y="country")
+df$DpP <- round(1000000*df$Deaths/df$pop,2)
+df<- df[order(df[,"DpP"],decreasing=F),]
+#
+#par(mar=c(3,10,3,2),family="serif")
+#barplot(df$DpP,names=df$Row.names,las=1,horiz=T,col="pink")
+#title("新型コロナウイルスによる人口100万人あたりの死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)")
+#
+# Japan の色を赤
+TF<- is.element(df$Row.names,c("Japan"))
+col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
+col2<- gsub("TRUE","red",gsub("FALSE","black",TF))
+# 韓国、中国、台湾、シンガポールの色を青
+col[grep("Korea, South|China|Taiwan|Singapore",df$Row.names)]<- "blue"
+col2[grep("Korea, South|China|Taiwan|Singapore",df$Row.names)]<- "blue"
+#png("CdeathsA02.png",width=800,height=800)
+par(mar=c(3,10,4,2),family="serif")
+b<- barplot(df$DpP,las=1,col=col,horiz=T,names=NA)
+axis(2, at = b,labels=NA,tck= -0.008)
+text(x=par("usr")[1],y=b, labels = df$Row.names, col = col2,pos=2,xpd=T,font=3)
+title("新型コロナウイルスによる人口100万人あたりの死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)",
+	cex.main=1.5)
+#dev.off()
+```
+
+### 「人口あたりの死者数」で評価した「日本モデル」より優秀なモデル in アジア
+
+```R
+jdeath<- df$DpP[is.element(df$Row.names,c("Japan"))]
+paste(df$Row.names[df$DpP< jdeath],"Model")
+```
+
+
+
+
