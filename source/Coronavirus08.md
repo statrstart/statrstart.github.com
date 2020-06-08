@@ -1,6 +1,6 @@
 ---
 title: 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)
-date: 2020-06-07
+date: 2020-06-08
 tags: ["R", "knitr","Coronavirus","新型コロナウイルス","South Korea"]
 excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発表資料で作成
 ---
@@ -141,11 +141,11 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 |             | Confirmed| Deaths| Deaths/Confirmed (%)| Deaths/millionpeople|
 |:------------|---------:|------:|--------------------:|--------------------:|
-|Japan        |    17,000|    915|                 5.38|                 7.20|
-|Korea, South |    11,776|    273|                 2.32|                 5.57|
+|Japan        |    17,039|    917|                 5.38|                 7.21|
+|Korea, South |    11,814|    273|                 2.31|                 5.57|
 |Taiwan       |       443|      7|                 1.58|                 0.30|
-|Hong Kong    |     1,105|      4|                 0.36|                 0.56|
-|Singapore    |    37,527|     25|                 0.07|                 4.49|
+|Hong Kong    |     1,106|      4|                 0.36|                 0.56|
+|Singapore    |    37,910|     25|                 0.07|                 4.49|
 
 - 日本の致死率５％を超えた。
 - 日本の100万人あたりの死亡者数もこの中（アジア先進国、地域）では一番多い。
@@ -189,6 +189,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 ![Coronavirus01_1_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1_2.png)
 
 ### 新型コロナウイルスによる死者数 in アジア
+（注意）日本語名は手打ちしているのでもしかしたら間違いがあるかもしれません。
 
 ![CdeathsA01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CdeathsA01.png)
 
@@ -198,15 +199,15 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ### 「人口あたりの死者数」で評価した「日本モデル」より優秀なモデル in アジア
 
- [1] "Bhutan Model"       "Cambodia Model"     "Laos Model"        
- [4] "Mongolia Model"     "Timor-Leste Model"  "Vietnam Model"     
- [7] "Taiwan Model"       "Syria Model"        "Nepal Model"       
-[10] "Sri Lanka Model"    "Uzbekistan Model"   "Thailand Model"    
-[13] "Jordan Model"       "Georgia Model"      "Kazakhstan Model"  
-[16] "China Model"        "Malaysia Model"     "Kyrgyzstan Model"  
-[19] "Yemen Model"        "Singapore Model"    "Brunei Model"      
-[22] "Lebanon Model"      "Bangladesh Model"   "India Model"       
-[25] "Korea, South Model" "Tajikistan Model"   "Indonesia Model"   
+ [1] "ブータン モデル"       "カンボジア モデル"     "ラオス モデル"        
+ [4] "モンゴル モデル"       "東ティモール モデル"   "ベトナム モデル"      
+ [7] "台湾 モデル"           "シリア モデル"         "ネパール モデル"      
+[10] "スリランカ モデル"     "ウズベキスタン モデル" "タイ モデル"          
+[13] "ヨルダン モデル"       "カザクスタン モデル"   "中国 モデル"          
+[16] "グルジア モデル"       "キルギスタン モデル"   "マレーシア モデル"    
+[19] "イエメン モデル"       "シンガポール モデル"   "レバノン モデル"      
+[22] "ブルネイ モデル"       "タジキスタン モデル"   "インド モデル"        
+[25] "韓国 モデル"           "バングラデシュ モデル" "インドネシア モデル"
 
 ### 陽性率、暫定致死率を計算し、表を作成(韓国のPCR検査実施人数とその結果）
 
@@ -340,6 +341,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 |2020-06-05 |         990960|    11668|  273| 950526|  28766|   962194|      1.21|         2.340|
 |2020-06-06 |        1005305|    11719|  273| 965632|  27954|   977351|      1.20|         2.330|
 |2020-06-07 |        1012769|    11776|  273| 974512|  26481|   986288|      1.19|         2.318|
+|2020-06-08 |        1018214|    11814|  273| 982026|  24374|   993840|      1.19|         2.311|
 
 ## Rコード
 
@@ -347,7 +349,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ```R
 library(knitr)
-date<- seq(as.Date("2020-02-01"), as.Date("2020-06-07"), by = "day")
+date<- seq(as.Date("2020-02-01"), as.Date("2020-06-08"), by = "day")
 検査を受けた人<-c(371,429,429,607,714,885,1130,1701,2340,2776,3629,5074,5797,6854,7519,7919,8171,
 	9265,10411,12161,14816,19621,22633,28615,36716,46127,57990,70940,85693,96985,109591,125851,
 	136707,146541,164740,178189,188518,196618,210144,222395,234998,	248647,261335,268212,274504,
@@ -357,7 +359,7 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-06-07"), by = "day")
 	595161,598285,601660,608514,614197,619881,623069,627562,630973,633921,640237,643095,649388,
 	654863,660030,663886,668492,680890,695920,711484,726747,740645,747653,753211,765574,776433,
 	788684,802418,814420,820289,826437,839475,852876,868666,885120,902901,910822,921391,939851,
-	956852,973858,990960,1005305,1012769)
+	956852,973858,990960,1005305,1012769,1018214)
 感染者数<-c(12,15,15,16,18,23,24,24,25,27,28,28,28,28,28,29,30,31,46,82,156,346,556,763,893,1146,
 	1595,2022,2931,3526,4212,4812,5328,5766,6284,6767,7134,7382,7513,7755,7869,7979,8086,8162,
 	8236,8320,8413,8565,8652,8799,8897,8961,9037,9137,9241,9332,9478,9583,9661,9786,9887,9976,
@@ -365,12 +367,12 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-06-07"), by = "day")
 	10653,10661,10674,10683,10694,10702,10708,10718,10728,10738,10752,10761,10765,10774,10780,
 	10793,10801,10804,10806,10810,10822,10840,10874,10909,10936,10962,10991,11018,11037,11050,
 	11065,11078,11110,11122,11142,11165,11190,11206,11225,11265,11344,11402,11441,11468,11503,
-	11541,11590,11629,11668,11719,11776)
+	11541,11590,11629,11668,11719,11776,11814)
 死者<-c(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,4,7,8,11,12,13,16,17,22,28,32,35,42,44,50,51,
 	54,60,66,67,72,75,75,81,84,91,94,102,104,111,120,126,131,139,144,152,158,162,165,169,174,
 	177,183,186,192,200,204,208,211,214,217,222,225,229,230,232,234,236,237,238,240,240,240,242,
 	243,244,246,247,248,250,250,252,254,255,256,256,256,256,256,258,259,260,260,262,262,263,263,
-	263,264,264,266,266,267,269,269,269,269,269,270,271,272,273,273,273,273,273)
+	263,264,264,266,266,267,269,269,269,269,269,270,271,272,273,273,273,273,273,273)
 陰性<-c(289,327,414,462,522,693,842,1057,1355,1940,2736,4054,5099,6134,6853,7313,7733,8277,9335,10446,
 	11953,13794,16038,19127,22550,28247,35298,44167,53608,61037,71580,85484,102965,118965,136624,
 	151802,162008,171778,184179,196100,209402,222728,235615,243778,251297,261105,270888,282555,
@@ -380,7 +382,7 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-06-07"), by = "day")
 	588559,595129,600482,603610,608286,611592,614944,620575,624280,630149,635174,640037,642884,
 	646661,653624,665379,679771,695854,711265,718943,726053,737571,748972,759473,770990,781686,
 	788766,796142,806206,820550,834952,849161,865162,876060,885830,899388,917397,934030,950526,
-	965632,974512)
+	965632,974512,982026)
 検査中<- 検査を受けた人- (陰性+感染者数)
 #df<- data.frame(date,感染者数,死者,検査を受けた人_感染者除く,陰性,検査中)
 #kable(df,row.names=F)
@@ -437,18 +439,18 @@ Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,
 	157563+31638,169546+31638,179043+32125,180478+32949,183845+33530,188646+34174,188031+34807,196816+35499,194323+35730,
 	203284+36255,206790+36833,211832+37490,216624+38222,218744+38704,221397+39346,224972+39701,227445+40203,229669+40703,
 	230562+41297,233399+41942,235422+42391,237367+43097,240334+43600,242734+44191,244824+44783,246100+45640,248662+46892,
-	251808+47640,254229+48575,257330+49303,260551+50067,262642+51012)+829
+	251808+47640,254229+48575,257330+49303,260551+50067,262642+51012,263962+52057)+829
 Jpcr<- c(Jpcr1,Jpcr2)
 Confirmed<- c(rep(NA,6),25,NA,NA,26,NA,28,29,33,NA,NA,59,66,73,84,93,105,132,144,156,164,186,210,230,239,254,268,284,317,348,
 	407,454,487,513,567,619,674,714,777,809,824,868,907,943,996,1046,1089,1128,1193,1291,1387,1499,1693,1866,1953,2178,
 	2381,2617,2935,3271,3654,3906,4257,4768,5347,6005,6748,7255,7645,8100,8582,9167,9795,10361,10751,11119,11496,11919,
 	12388,12829,13182,13385,13576,13852,14088,14281,NA,14839,15057,15231,15354,15463,15547,15649,15747,15798,15874,16024,
 	16079,16193,16237,16285,16305,16365,16385,16424,16513,16536,16550,16581,16623,16651,16683,16719,16804,16851,16884,16930,
-	16986,17018,17064,17103,17141)
+	16986,17018,17064,17103,17141,17174)
 Deaths<- c(rep(NA,6),0,NA,NA,0,NA,0,0,1,NA,NA,1,1,1,1,1,1,1,1,1,1,3,4,5,5,6,6,6,6,6,6,6,7,9,12,15,19,21,22,24,28,29,31,33,35,36,
 	41,42,43,45,46,49,52,54,56,57,60,63,69,70,73,80,81,85,88,94,98,102,109,119,136,148,154,161,171,186,277,287,317,334,348,
 	351,376,389,415,432,NA,492,510,521,543,551,557,600,613,621,643,668,687,710,725,744,749,763,771,777,796,808,820,830,846,
-	858,867,874,886,891,892,894,900,903,907,914,916)
+	858,867,874,886,891,892,894,900,903,907,914,916,916)
 Jdf<- data.frame(Tested=Jpcr,Confirmed,Deaths)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),1),"倍")
 # 指数表示を抑制
@@ -934,71 +936,120 @@ title("日本、韓国、台湾、シンガポール、香港の人口100万人�
 
 ### 新型コロナウイルスによる死者数 in アジア
 
+アジアの国のデータ：[How many Countries in Asia?:https://www.worldometers.info/geography/how-many-countries-in-asia/](https://www.worldometers.info/geography/how-many-countries-in-asia/)
+に台湾のデータを加えた。  
+（注意）日本語名は手打ちしているのでもしかしたら間違いがあるかもしれません。
+
 ```R
-asia<- c("China","India","Indonesia","Pakistan","Bangladesh","Japan","Philippines","Vietnam","Turkey","Iran","Thailand",
-"Myanmar","Korea, South","Iraq","Afghanistan","Saudi Arabia","Uzbekistan","Malaysia","Yemen","Nepal","North Korea",
-"Sri Lanka","Kazakhstan","Syria","Cambodia","Jordan","Azerbaijan","United Arab Emirates","Tajikistan","Israel",
-"Laos","Lebanon","Kyrgyzstan","Turkmenistan","Singapore","Oman","State of Palestine","Kuwait","Georgia","Mongolia",
-"Armenia","Qatar","Bahrain","Timor-Leste","Cyprus","Bhutan","Maldives","Brunei",
-"Taiwan")
+text<- "country,Population(2020),Subregion,Jname
+Turkey,84339067,Western Asia,トルコ
+Iraq,40222493,Western Asia,イラク
+Saudi Arabia,34813871,Western Asia,サウジアラビア
+Yemen,29825964,Western Asia,イエメン
+Syria,17500658,Western Asia,シリア
+Jordan,10203134,Western Asia,ヨルダン
+Azerbaijan,10139177,Western Asia,アゼルバイジャン
+United Arab Emirates,9890402,Western Asia,アラブ首長国連邦
+Israel,8655535,Western Asia,イスラエル
+Lebanon,6825445,Western Asia,レバノン
+Oman,5106626,Western Asia,オマーン
+State of Palestine,5101414,Western Asia,パレスチナ
+Kuwait,4270571,Western Asia,クエート
+Georgia,3989167,Western Asia,グルジア
+Armenia,2963243,Western Asia,アルメニア
+Qatar,2881053,Western Asia,カタール
+Bahrain,1701575,Western Asia,バーレーン
+Cyprus,1207359,Western Asia,キプロス
+India,1380004385,Southern Asia,インド
+Pakistan,220892340,Southern Asia,パキスタン
+Bangladesh,164689383,Southern Asia,バングラデシュ
+Iran,83992949,Southern Asia,イラン
+Afghanistan,38928346,Southern Asia,アフガニスタン
+Nepal,29136808,Southern Asia,ネパール
+Sri Lanka,21413249,Southern Asia,スリランカ
+Bhutan,771608,Southern Asia,ブータン
+Maldives,540544,Southern Asia,モルジブ
+Indonesia,273523615,South-Eastern Asia,インドネシア
+Philippines,109581078,South-Eastern Asia,フィリピン
+Vietnam,97338579,South-Eastern Asia,ベトナム
+Thailand,69799978,South-Eastern Asia,タイ
+Myanmar,54409800,South-Eastern Asia,ミャンマー
+Malaysia,32365999,South-Eastern Asia,マレーシア
+Cambodia,16718965,South-Eastern Asia,カンボジア
+Laos,7275560,South-Eastern Asia,ラオス
+Singapore,5850342,South-Eastern Asia,シンガポール
+Timor-Leste,1318445,South-Eastern Asia,東ティモール
+Brunei,437479,South-Eastern Asia,ブルネイ
+China,1439323776,Eastern Asia,中国
+Japan,126476461,Eastern Asia,日本
+South Korea,51269185,Eastern Asia,韓国
+North Korea,25778816,Eastern Asia,北朝鮮
+Mongolia,3278290,Eastern Asia,モンゴル
+Uzbekistan,33469203,Central Asia,ウズベキスタン
+Kazakhstan,18776707,Central Asia,カザクスタン
+Tajikistan,9537645,Central Asia,タジキスタン
+Kyrgyzstan,6524195,Central Asia,キルギスタン
+Turkmenistan,6031200,Central Asia,トルクメニスタン
+Taiwan,23816775,Eastern Asia,台湾"
 #
+asia<- read.csv(text=text,check.names=F)
+# 米ジョンズ・ホプキンス大学のデータは、「Taiwan*」 , 「Korea, South」となっているので上のデータと一致させる。
 rownames(Dtl)<- gsub("\\*","",rownames(Dtl))
-dat<-Dtl[is.element(rownames(Dtl),asia),] 
+rownames(Dtl)<- gsub("Korea, South","South Korea",rownames(Dtl))
+asia$country[!is.element(asia$country,rownames(Dtl))]
+#[1] State of Palestine Myanmar            North Korea        Turkmenistan
 #
-dat<- dat[order(dat[,ncol(dat)],decreasing=F),]
+dat<-Dtl[is.element(rownames(Dtl),asia$country),] 
+#
+# 一番新しい日のデータのみ取り出す。
 df<- dat[,ncol(dat),drop=F]
 names(df)<- "Deaths"
-knitr::kable(df)
-#
+nrow(df)
+df<- merge(df,asia,by.x=0,by.y="country")
+nrow(df)
+df<- df[order(df$Deaths,decreasing=F),]
+knitr::kable(df,row.names=F)
+df$Subregion<- factor(df$Subregion,
+	levels=c("Central Asia","Eastern Asia","South-Eastern Asia","Southern Asia","Western Asia"))
+```
+
+### 新型コロナウイルスによる死者数 in アジア
+
+```R
+# 東アジアの国の名前を赤
+TF<- is.element(df$Subregion,c("Eastern Asia"))
+col<- gsub("TRUE","red",gsub("FALSE","black",TF))
 #png("CdeathsA01.png",width=800,height=800)
-#par(mar=c(3,10,3,2),family="serif")
-#barplot(t(df),las=1,horiz=T,col="pink")
-#title("新型コロナウイルスによる死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)")
-#dev.off()
-#
-# Japan の色を赤
-TF<- is.element(colnames(t(df)),c("Japan"))
-col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
-col2<- gsub("TRUE","red",gsub("FALSE","black",TF))
-# 韓国、中国、台湾、シンガポールの色を青
-col[grep("Korea, South|China|Taiwan|Singapore",rownames(df))]<- "blue"
-col2[grep("Korea, South|China|Taiwan|Singapore",rownames(df))]<- "blue"
-#png("CdeathsA01.png",width=800,height=800)
-par(mar=c(3,10,4,2),family="serif")
-b<- barplot(df$Deaths,las=1,col=col,horiz=T,names=NA)
+par(mar=c(3,8,4,2),family="serif")
+b<- barplot(df$Deaths,las=1,col=as.numeric(unclass(df$Subregion)),horiz=T,xlim=c(0,max(df$Deaths,na.rm=T)*1.2),xaxt="n")
+axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
 axis(2, at = b,labels=NA,tck= -0.008)
-text(x=par("usr")[1],y=b, labels = colnames(t(df)), col = col2,pos=2,xpd=T,font=3)
+text(x=par("usr")[1],y=b, labels = df$Jname, col=col,pos=2,xpd=T,font=3)
 title("新型コロナウイルスによる死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)",
 	cex.main=1.5)
+legend("bottomright",inset=c(0.15,0.05),legend=c("Central Asia","Eastern Asia","South-Eastern Asia","Southern Asia","Western Asia"),
+	pch=15,col=1:5,cex=1.5,bty="n",title="Subregion")
 #dev.off()
 ```
 
 ### 新型コロナウイルスによる人口100万人あたりの死者数 in アジア
 
 ```R
-y<- CountryData[,c("country","pop")]
-df<- merge(df,y,by.x= 0,by.y="country")
-df$DpP <- round(1000000*df$Deaths/df$pop,2)
-df<- df[order(df[,"DpP"],decreasing=F),]
+df$DpP <- round(1000000*df$Deaths/df$"Population(2020)",2)
+df<- df[order(df$DpP,decreasing=F),]
 #
-#par(mar=c(3,10,3,2),family="serif")
-#barplot(df$DpP,names=df$Row.names,las=1,horiz=T,col="pink")
-#title("新型コロナウイルスによる人口100万人あたりの死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)")
-#
-# Japan の色を赤
-TF<- is.element(df$Row.names,c("Japan"))
-col<- gsub("TRUE","red",gsub("FALSE","lightblue",TF))
-col2<- gsub("TRUE","red",gsub("FALSE","black",TF))
-# 韓国、中国、台湾、シンガポールの色を青
-col[grep("Korea, South|China|Taiwan|Singapore",df$Row.names)]<- "blue"
-col2[grep("Korea, South|China|Taiwan|Singapore",df$Row.names)]<- "blue"
+# 東アジアの国の名前を赤
+TF<- is.element(df$Subregion,c("Eastern Asia"))
+col<- gsub("TRUE","red",gsub("FALSE","black",TF))
 #png("CdeathsA02.png",width=800,height=800)
-par(mar=c(3,10,4,2),family="serif")
-b<- barplot(df$DpP,las=1,col=col,horiz=T,names=NA)
+par(mar=c(3,8,4,2),family="serif")
+b<- barplot(df$DpP,las=1,col=as.numeric(unclass(df$Subregion)),horiz=T,xlim=c(0,max(df$DpP,na.rm=T)*1.2))
 axis(2, at = b,labels=NA,tck= -0.008)
-text(x=par("usr")[1],y=b, labels = df$Row.names, col = col2,pos=2,xpd=T,font=3)
+text(x=par("usr")[1],y=b,labels = df$Jname,col=col,pos=2,xpd=T,font=3)
 title("新型コロナウイルスによる人口100万人あたりの死者数 in アジア\n(データのない国 : Myanmar,North Korea,Turkmenistan,State of Palestine)",
 	cex.main=1.5)
+legend("bottomright",inset=c(0.15,0.05),legend=c("Central Asia","Eastern Asia","South-Eastern Asia","Southern Asia","Western Asia"),
+	pch=15,col=1:5,cex=1.5,bty="n",title="Subregion")
 #dev.off()
 ```
 
@@ -1006,9 +1057,6 @@ title("新型コロナウイルスによる人口100万人あたりの死者数 
 
 ```R
 jdeath<- df$DpP[is.element(df$Row.names,c("Japan"))]
-paste(df$Row.names[df$DpP< jdeath],"Model")
+paste(df$Jname[df$DpP< jdeath],"モデル")
 ```
-
-
-
 
