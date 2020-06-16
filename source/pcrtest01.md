@@ -1,6 +1,6 @@
 ---
 title: PCR検査者数の比較（ourworldindata）
-date: 2020-06-11
+date: 2020-06-16
 tags: ["R","PCR"]
 excerpt: 日本がいかに検査をしていないか
 ---
@@ -21,20 +21,20 @@ ourworldindata.org のデータを使います。
 
 ![pcrtest02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest02.png)
 
-- シンガポール（２８位）、香港（３５位）
+- シンガポール（２９位）、香港（３５位）
 
 #### 41位〜60位
 
 ![pcrtest03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest03.png)
 
-- 韓国（４４位）人口1000人あたり約20人
+- 韓国（４５位）人口1000人あたり21.567人
 
 #### 61位〜84位
 
 ![pcrtest04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest04.png)
 
-- 台湾（７１位）初期対応が完璧だったので少ない。
-- 日本（７４位）人口1000人あたり2.5人
+- 台湾（７３位）初期対応が完璧だったので少ない。
+- 日本（７７位）人口1000人あたり2.678人
 
 ### Rコード
 
