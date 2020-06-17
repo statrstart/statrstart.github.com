@@ -1,6 +1,6 @@
 ---
 title: 超過死亡(東京都のデータとインフルエンザ関連死亡迅速把握システム)
-date: 2020-06-15
+date: 2020-06-17
 tags: ["R","超過死亡"]
 excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握システム
 ---
@@ -41,6 +41,12 @@ excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握�
 ![TKtyouka02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKtyouka02.png)
 
 ![TKtyouka03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKtyouka03.png)
+
+#### 塗り分け地図(Rコードは省略)
+
+![TKmap01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKmap01.png)
+
+![TKmap02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKmap02.png)
 
 #### グラフ(インフルエンザ関連死亡迅速把握システムのデータ)
 
