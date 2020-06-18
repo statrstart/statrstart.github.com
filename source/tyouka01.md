@@ -48,6 +48,10 @@ excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握�
 
 ![TKmap02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKmap02.png)
 
+##### 島嶼部を除く全体。区市町村名の表示なし
+
+![TKmap03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKmap03.png)
+
 #### 東京都 １〜４月の死者数（２０１１年〜２０２０年）
 ２０１１年からのデータがまだネット上にあったので作ってみました。  
 ２０２０年４月の値が上に乖離しているのがより鮮明になりました。
@@ -109,7 +113,7 @@ text<-"2011,2012,2013,2014,2015,2016,2017,2018,2019,2020
 tokyo<- read.csv(text=text,check.names=F)
 # png("TKtyouka01_2.png",width=800,height=600)
 par(mar=c(4,6,4,5),family="serif")
-matplot(tokyo[,-ncol(tokyo)],type="o",pch=15,lty=1,lwd=1,col=rainbow(ncol(tokyo)-1,alpha=0.6),
+matplot(tokyo[,-ncol(tokyo)],type="o",pch=15,lty=1,lwd=1,col=rainbow(ncol(tokyo)-1,alpha=0.8),
 	las=1,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
 lines(tokyo[,ncol(tokyo)],col="black",lwd=2)
 points(tokyo[,ncol(tokyo)],col="black",pch=16)
