@@ -1,6 +1,6 @@
 ---
 title: 超過死亡(東京都のデータとインフルエンザ関連死亡迅速把握システム)
-date: 2020-06-17
+date: 2020-06-18
 tags: ["R","超過死亡"]
 excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握システム
 ---
@@ -48,6 +48,12 @@ excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握�
 
 ![TKmap02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKmap02.png)
 
+#### 東京都 １〜４月の死者数（２０１１年〜２０２０年）
+２０１１年からのデータがまだネット上にあったので作ってみました。  
+２０２０年４月の値が上に乖離しているのがより鮮明になりました。
+
+![TKtyouka01_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKtyouka01_2.png)
+
 #### グラフ(インフルエンザ関連死亡迅速把握システムのデータ)
 
 ![cdeath01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/cdeath01.png)
@@ -57,6 +63,7 @@ excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握�
 #### データをダウンロード
 
 ```R
+#year<- seq(2011,2020)
 year<- seq(2015,2020)
 month<- 2:5
 for (i in year){
@@ -87,6 +94,30 @@ axis(1,at=1:nrow(tokyo),labels= rownames(tokyo))
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x=nrow(tokyo),y=tokyo[4,],labels=colnames(tokyo),pos=4,xpd=T)
 title("東京都 １〜４月の死者数（２０１５年〜２０２０年 : データ 東京都）",cex.main=1.5)
+# dev.off()
+```
+
+#### 東京都 １〜４月の死者数（２０１１年〜２０２０年 : データ 東京都）
+
+```R
+text<-"2011,2012,2013,2014,2015,2016,2017,2018,2019,2020
+1月,11007,11319,12208,12123,13116,10964,12418,12696,12995,12697
+2月,8850,9967,9823,9519,9679,10318,10207,10960,10924,9715
+3月,9490,9582,9290,9642,9879,10277,10400,10535,10266,10694
+4月,8370,8431,9310,9404,9040,8779,9118,8891,9418,10107"
+#
+tokyo<- read.csv(text=text,check.names=F)
+# png("TKtyouka01_2.png",width=800,height=600)
+par(mar=c(4,6,4,5),family="serif")
+matplot(tokyo[,-ncol(tokyo)],type="o",pch=15,lty=1,lwd=1,col=rainbow(ncol(tokyo)-1,alpha=0.6),
+	las=1,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
+lines(tokyo[,ncol(tokyo)],col="black",lwd=2)
+points(tokyo[,ncol(tokyo)],col="black",pch=16)
+box(bty="l",lwd=2.5)
+axis(1,at=1:nrow(tokyo),labels= rownames(tokyo))
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x=nrow(tokyo),y=tokyo[4,],labels=colnames(tokyo),pos=4,xpd=T)
+title("東京都 １〜４月の死者数（２０１１年〜２０２０年 : データ 東京都）",cex.main=1.5)
 # dev.off()
 ```
 
