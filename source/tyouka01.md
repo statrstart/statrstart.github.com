@@ -1,6 +1,6 @@
 ---
-title: 超過死亡(東京都のデータとインフルエンザ関連死亡迅速把握システム)
-date: 2020-06-20
+title: 東京都の超過死亡(東京都のデータとインフルエンザ関連死亡迅速把握システム)
+date: 2020-06-22
 tags: ["R","超過死亡"]
 excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握システム
 ---
@@ -59,6 +59,10 @@ excerpt: 東京都のデータとインフルエンザ関連死亡迅速把握�
 ２０２０年４月の値が上に乖離しているのがより鮮明になりました。
 
 ![TKtyouka01_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKtyouka01_2.png)
+
+#### 東京都 年別４月の超過死亡数(過去５年平均と比較して)（２０１６年〜２０２０年 : データ 東京都）
+
+![TKtyouka01_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TKtyouka01_3.png)
 
 #### グラフ(インフルエンザ関連死亡迅速把握システムのデータ)
 
@@ -124,6 +128,28 @@ axis(1,at=1:nrow(tokyo),labels= rownames(tokyo))
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x=nrow(tokyo),y=tokyo[4,],labels=colnames(tokyo),pos=4,xpd=T)
 title("東京都 １〜４月の死者数（２０１１年〜２０２０年 : データ 東京都）",cex.main=1.5)
+# dev.off()
+```
+
+#### 東京都 年別４月の超過死亡数(過去５年平均と比較して)（２０１６年〜２０２０年 : データ 東京都）
+
+```R
+month<- 4
+df<- NULL
+for (i in 6:10){
+	df<- c(df,round(tokyo[month,i]-mean(as.numeric(tokyo[month,(i-5):(i-1)]),0)))
+}
+names(df)<- seq(2016,2020)
+col<- ifelse(df>=0,"pink","lightblue")
+pos<- ifelse(df>=0,3,1)
+min<- ifelse(min(df)<0,min(df)*1.2,0)
+# png("TKtyouka01_3.png",width=800,height=600)
+par(mar=c(4,6,4,5),family="serif")
+b<- barplot(df,las=1,yaxt="n",ylim=c(min,max(df)*1.2),col=col)
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+abline(h=0,lwd=1)
+text(x=b,y=df,labels=df,pos=pos)
+title(paste0("東京都 ",month,"月の超過死亡数(過去５年平均と比較して)（２０１６年〜２０２０年）"),cex.main=1.5)
 # dev.off()
 ```
 
