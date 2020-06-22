@@ -1,6 +1,6 @@
 ---
 title: 東京都陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-06-12
+date: 2020-06-22
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -11,19 +11,11 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 
 [東京都 新型コロナウイルス感染症対策サイトにあるデータ](https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/data.json)を使います。
 
+6/12以降、検査実施件数のデータの公開はなされていますが、検査実施人数のデータ公開はなくなりました。  
+
 #### 時系列
 
 ![covTokyo01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo01.png)
-
-- 最近特に検査をしていないですね。
-
-#### 検査陽性者率（%）推移（累計した数で計算)
-
-![covTokyo02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02.png)
-
-#### 直近の状況を見るには移動平均の方が累計より適しているので 検査陽性率(%)を1週間(7日)の幅で移動平均
-
-![covTokyo02_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02_2.png)
 
 #### 年代
 
@@ -32,6 +24,16 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 #### 性別
 
 ![covTokyo04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo04.png)
+
+#### 検査陽性者率（%）推移（累計した数で計算)
+6/11までのグラフです。
+
+![covTokyo02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02.png)
+
+#### 直近の状況を見るには移動平均の方が累計より適しているので 検査陽性率(%)を1週間(7日)の幅で移動平均
+6/11までのグラフです。
+
+![covTokyo02_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02_2.png)
 
 ### Rコード
 
@@ -55,6 +57,7 @@ names(js)
 #### 時系列
 
 ```R
+#### 時系列
 # patients_summary
 # 検査陽性率(%): 陽性患者数/検査実施人数*100
 Pos<- round(js[[10]][[3]]$value/js[[10]][[2]]*100,2)
@@ -68,18 +71,18 @@ colnames(patients)<- c("date","patients")
 # 検査実施人数
 inspection<- data.frame(date=substring(js[[7]][[2]],6,10),
 	                inspection_persons= js[[7]][[3]]$data[[1]])
-dat<- merge(patients,inspection,by="date")
+dat<- merge(patients,inspection,by="date",all=T)
 # 日付を例えば、01-01を1/1 のように書き直す。
 dat[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat[,1])))
-ritsu1<- paste("・検査陽性率(%) :",Pos,"%")
+#ritsu1<- paste("・検査陽性者率(%) :",Pos,"%")
 ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
 #png("covTokyo01.png",width=800,height=600)
 par(mar=c(3,7,4,2),family="serif")
 b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"inspection_persons"],na.rm=T)))
 lines(x=b,y=dat[,"inspection_persons"],lwd=1.2)
 points(x=b,y=dat[,"inspection_persons"],pch=16,cex=0.8)
-legend(x="topleft",inset=c(0.03,0.1),bty="n",legend="検査実施人数",pch=16,lwd=1.2,cex=1.5)
-legend("topleft",inset=c(0,0.2),bty="n",cex=1.5,legend=c(paste0(js[[9]],"現在"),ritsu1,ritsu2))
+legend(x="topleft",inset=c(0.03,0.1),bty="n",legend="検査実施人数\n6/12以降日別のデータ公開なし",pch=16,lwd=1.2,cex=1.5)
+legend("topleft",inset=c(0,0.2),bty="n",cex=1.5,legend=c(paste0(js[[9]],"現在"),ritsu2))
 title("陽性者の人数：時系列(東京都)",cex.main=1.5)
 #dev.off()
 ```
