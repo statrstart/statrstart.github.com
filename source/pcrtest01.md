@@ -1,6 +1,6 @@
 ---
 title: PCR検査者数の比較（ourworldindata）
-date: 2020-06-16
+date: 2020-06-27
 tags: ["R","PCR"]
 excerpt: 日本がいかに検査をしていないか
 ---
@@ -15,26 +15,17 @@ ourworldindata.org のデータを使います。
 
 ![pcrtest01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest01.png)
 
-- 第１位のバーレーンは人口1000人あたり222人以上検査しています。
-
 #### 21位〜40位
 
 ![pcrtest02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest02.png)
-
-- シンガポール（２９位）、香港（３５位）
 
 #### 41位〜60位
 
 ![pcrtest03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest03.png)
 
-- 韓国（４５位）人口1000人あたり21.567人
-
-#### 61位〜84位
+#### 61位〜85位
 
 ![pcrtest04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest04.png)
-
-- 台湾（７３位）初期対応が完璧だったので少ない。
-- 日本（７７位）人口1000人あたり2.678人
 
 ### Rコード
 
@@ -67,24 +58,26 @@ text(x=dat01$total_tests_per_thousand,y=b,labels=dat01$total_tests_per_thousand,
 title("人口1000人あたりの検査者数（第1位から20位）")
 #dev.off()
 # 21〜40
+col<- ifelse(is.element(dat02$location,c("Singapore","Hong Kong")),"darkgreen","lightblue")
 #png("pcrtest02.png",width=800,height=600)
 par(mar=c(3,8,4,2),family="serif")
-b<- barplot(dat02$total_tests_per_thousand,names=dat02$location,col="lightblue",las=1,horiz=T,
+b<- barplot(dat02$total_tests_per_thousand,names=dat02$location,col=col,las=1,horiz=T,
 	xlim=c(0,max(dat02$total_tests_per_thousand)*1.2))
 text(x=dat02$total_tests_per_thousand,y=b,labels=dat02$total_tests_per_thousand,col="red",pos=4)
 title("人口1000人あたりの検査者数（第21位から40位）")
 #dev.off()
 # 41〜60
+col<- ifelse(is.element(dat03$location,"South Korea"),"darkgreen","lightblue")
 #png("pcrtest03.png",width=800,height=600)
 par(mar=c(3,8,4,2),family="serif")
-b<- barplot(dat03$total_tests_per_thousand,names=dat03$location,col="lightblue",las=1,horiz=T,
+b<- barplot(dat03$total_tests_per_thousand,names=dat03$location,col=col,las=1,horiz=T,
 	xlim=c(0,max(dat03$total_tests_per_thousand)*1.2))
 text(x=dat03$total_tests_per_thousand,y=b,labels=dat03$total_tests_per_thousand,col="red",pos=4)
 title("人口1000人あたりの検査者数（第41位から60位）")
 #dev.off()
-# 61〜84
-jpos<- is.element(dat04$location,"Japan")
-col<- gsub("TRUE","red",gsub("FALSE","lightblue",jpos))
+# 61〜85
+col<- ifelse(is.element(dat04$location,"Japan"),"red","lightblue")
+col[grep("Taiwan",dat04$location)]<- "darkgreen"
 #png("pcrtest04.png",width=800,height=600)
 par(mar=c(3,8,4,2),family="serif")
 b<- barplot(dat04$total_tests_per_thousand,names=dat04$location,col=col,las=1,horiz=T,
