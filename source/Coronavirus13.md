@@ -1,5 +1,5 @@
 ---
-title: 東京都陽性者の属性(新型コロナウイルス：Coronavirus)
+title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
 date: 2020-07-01
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
@@ -16,6 +16,12 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 #### 時系列
 
 ![covTokyo01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo01.png)
+
+#### 時系列(y軸対数表示)
+- 折れ線は現時点でも公開されている「検査実施件数」です。
+- y軸は対数表示です。
+
+![covTokyo01_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo01_1.png)
 
 #### 年代
 
@@ -84,6 +90,38 @@ points(x=b,y=dat[,"inspection_persons"],pch=16,cex=0.8)
 legend(x="topleft",inset=c(0.03,0.1),bty="n",legend="検査実施人数\n6/12以降日別のデータ公開なし",pch=16,lwd=1.2,cex=1.5)
 legend("topleft",inset=c(0,0.2),bty="n",cex=1.5,legend=c(paste0(js[[9]],"現在"),ritsu2))
 title("陽性者の人数：時系列(東京都)",cex.main=1.5)
+#dev.off()
+```
+
+#### 時系列(対数表示)
+
+```R
+# 検査陽性者数
+patients<- js[[4]]$data
+patients[,1]<- substring(patients[,1],6,10)
+colnames(patients)<- c("date","patients")
+patients$date<- sub("-","/",sub("-0","-",sub("^0","",patients$date)))
+#検査実施件数
+df<- data.frame(js[[6]]$data)
+rownames(df)<- js[[6]]$label
+inspection<- data.frame(date=js[[6]]$label,inspection_persons=rowSums(df))
+dat<- merge(patients,inspection,by="date",all=T,sort=F)
+dat$patients[dat$patients==0]<- NA
+dat$inspection_persons[dat$inspection_persons==0]<- NA
+#
+ylim<- c(0.9,max(dat[,"inspection_persons"],na.rm=T))
+#png("covTokyo01_1.png",width=800,height=600)
+par(mar=c(4,5,4,3),family="serif")
+b<- barplot(dat[,"patients"],names=dat[,1],las=1,log="y",ylim=ylim)
+abline(h=10^(0:3),col="darkgray",lwd=1.2,lty=3)
+for (i in 1:9){
+	abline(h=i*10^(0:3),col="darkgray",lwd=0.8,lty=3)
+}
+barplot(dat[,"patients"],names=NA,col="red",log="y",las=1,axes=F,ylim=ylim,add=T)
+lines(x=b,y=dat[,"inspection_persons"],lwd=1.2,col="darkgreen")
+points(x=b,y=dat[,"inspection_persons"],pch=16,cex=0.8,col="darkgreen")
+legend("topleft",inset=0.03,bty="n",legend="PCR検査実施件数",lwd=2,lty=1,pch=16,col="darkgreen")
+title("東京都の検査陽性者数 対数表示（日別）",cex.main=1.5)
 #dev.off()
 ```
 
