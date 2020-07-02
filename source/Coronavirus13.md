@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-01
+date: 2020-07-02
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -23,11 +23,17 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 
 ![covTokyo01_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo01_1.png)
 
-#### 年代
+#### 年代（月別）
+- 「不明」「-」は	のせていません。
+- 「８０代」「９０代」「１００歳以上」は「８０歳以上」にまとめました。
+
+![covTokyo03_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo03_2.png)
+
+#### 年代(累計)
 
 ![covTokyo03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo03.png)
 
-#### 性別
+#### 性別(累計)
 
 ![covTokyo04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo04.png)
 
@@ -122,6 +128,23 @@ lines(x=b,y=dat[,"inspection_persons"],lwd=1.2,col="darkgreen")
 points(x=b,y=dat[,"inspection_persons"],pch=16,cex=0.8,col="darkgreen")
 legend("topleft",inset=0.03,bty="n",legend="PCR検査実施件数",lwd=2,lty=1,pch=16,col="darkgreen")
 title("東京都の検査陽性者数 対数表示（日別）",cex.main=1.5)
+#dev.off()
+```
+
+#### 年代（月別）
+
+```R
+date<- sub("2020-","",js[[3]]$data$date)
+month<- substring(date,1,2)
+tab<- table(month,js[[3]]$data$年代)
+tab<- cbind(tab,rowSums(tab[,c("80代","90代","100歳以上")]))
+colnames(tab)[ncol(tab)]<- "80歳以上"
+tab2<- tab[,c("10歳未満","10代","20代","30代","40代","50代","60代","70代","80歳以上")]
+#png("covTokyo03_2.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+barplot(t(tab2),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2)),"月"),
+	args.legend = list(x = "topleft",inset= 0.03))
+title("月別の陽性者の属性:年代(東京都)",cex.main=1.5)
 #dev.off()
 ```
 
