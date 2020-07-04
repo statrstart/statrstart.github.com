@@ -1,6 +1,6 @@
 ---
 title: PCR検査者数の比較（ourworldindata）
-date: 2020-06-27
+date: 2020-07-04
 tags: ["R","PCR"]
 excerpt: 日本がいかに検査をしていないか
 ---
@@ -23,7 +23,7 @@ ourworldindata.org のデータを使います。
 
 ![pcrtest03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest03.png)
 
-#### 61位〜85位
+#### 61位〜87位(日本はここ！)
 
 ![pcrtest04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcrtest04.png)
 
