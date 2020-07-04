@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-03
+date: 2020-07-04
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -24,7 +24,7 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 ![covTokyo01_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo01_1.png)
 
 #### 年代（月別）
-- 「不明」「-」は	のせていません。
+- 「不明」「-」はのせていません。
 - 「８０代」「９０代」「１００歳以上」は「８０歳以上」にまとめました。
 
 ![covTokyo03_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo03_2.png)
