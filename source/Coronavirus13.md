@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-08
+date: 2020-07-09
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -41,6 +41,11 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 #### 性別(累計)
 
 ![covTokyo04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo04.png)
+
+#### 検査件数陽性者率（%）推移（1週間(7日)の幅で移動平均した数で計算)
+分母は「検査人数」ではなく、公表されている「検査件数」です。
+
+![covTokyo02_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02_3.png)
 
 #### 検査陽性者率（%）推移（累計した数で計算)
 6/11までのグラフです。
@@ -150,6 +155,63 @@ par(mar=c(3,7,4,2),family="serif")
 barplot(t(tab2),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2)),"月"),
 	args.legend = list(x = "topleft",inset= 0.03))
 title("月別の陽性者の属性:年代(東京都)",cex.main=1.5)
+#dev.off()
+```
+
+#### 年代（月別）+ 推定
+
+```R
+num<- as.numeric(substring(date[length(date)],4,5))
+prediction<- (tab2[nrow(tab2),]/num)*31
+tab3<- rbind(tab2,prediction)
+#png("covTokyo03_3.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(t(tab3),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=c(paste0(sub("^0","",rownames(tab2)),"月"),"7月推定"),
+	args.legend = list(x = "topleft",inset= 0.03))
+title("月別の陽性者の属性:年代(東京都) + ７月推定(現在の感染者数/経過日数)×31",cex.main=1.2)
+abline(v=(b[9,7]+b[1,8])/2,col="red",lty=2,lwd=1.5)
+#dev.off()
+```
+
+#### 検査件数陽性率(%)を1週間(7日)の幅で移動平均
+
+```R
+library(TTR)
+# 検査陽性者数
+patients<- js[[4]]$data
+patients[,1]<- sub("-","/",sub("-0","-",sub("^0","",substring(patients[,1],6,10))))
+colnames(patients)<- c("date","patients")
+#検査実施件数
+df<- data.frame(js[[6]]$data)
+rownames(df)<- js[[6]]$label
+inspection<- data.frame(date=js[[6]]$label,inspection=rowSums(df))
+dat<- merge(patients,inspection,by="date",all=T,sort=F)
+# 1週間の幅で移動平均
+dat<- na.omit(dat)
+dat2<- data.frame(date=dat[,1],patients=SMA(dat[,2],n=7),inspection=SMA(dat[,3],n=7))
+#dat2<- na.omit(dat2)
+dat2<- dat2[7:nrow(dat2),]
+#検査陽性率(%)= 検査陽性者数/検査実施件数*100
+dat2[,4]<- round(dat2[,2]/dat2[,3]*100,2)
+#
+#png("covTokyo02_3.png",width=800,height=600)
+par(mar=c(3,6,4,7),family="serif")
+# プロットする範囲は0%から20%とした
+plot(dat2[,4],type="o",pch=16,lwd=2,las=1,xaxt="n",xlab="",ylab="",bty="n",ylim=c(0,20))
+box(bty="l",lwd=2)
+# 日付を例えば、01-01を1/1 のように書き直す。
+#dat2[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat2[,1])))
+#表示するx軸ラベルを指定
+axis(1,at=1:length(dat2[,1]),labels =NA,tck= -0.01)
+labels<- dat2[,1]
+labelpos<- paste0(rep(1:12,each=3),"/",c(1,10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+text(x=par("usr")[2],y=dat2[,4][nrow(dat2)],labels= paste0(dat2[,1][nrow(dat2)],"現在\n",dat2[,4][nrow(dat2)],"%"),
+	xpd=T,cex=1.2,col="red",pos=4)
+title("東京都のPCR検査件数陽性率(%)の推移(1週間(7日)の幅で移動平均)",cex.main=1.5)
 #dev.off()
 ```
 
