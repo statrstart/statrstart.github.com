@@ -1,6 +1,6 @@
 ---
 title: 韓国と日本のPCR検査実施人数比較 (新型コロナウイルス：Coronavirus)
-date: 2020-07-11
+date: 2020-07-12
 tags: ["R", "knitr","Coronavirus","新型コロナウイルス","South Korea"]
 excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発表資料で作成
 ---
@@ -146,11 +146,11 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 |             | Confirmed| Deaths| Deaths/Confirmed (%)| Deaths/millionpeople|
 |:------------|---------:|------:|--------------------:|--------------------:|
-|Japan        |    21,044|    982|                 4.67|                 7.73|
-|Korea, South |    13,373|    288|                 2.15|                 5.87|
-|Taiwan       |       449|      7|                 1.56|                 0.30|
-|Hong Kong    |     1,365|      7|                 0.51|                 0.98|
-|Singapore    |    45,614|     26|                 0.06|                 4.67|
+|Japan        |    21,430|    982|                 4.58|                 7.73|
+|Korea, South |    13,417|    289|                 2.15|                 5.89|
+|Taiwan       |       451|      7|                 1.55|                 0.30|
+|Hong Kong    |     1,431|      7|                 0.49|                 0.98|
+|Singapore    |    45,783|     26|                 0.06|                 4.67|
 
 - 日本の100万人あたりの死亡者数もこの中（アジア先進国、地域）では一番多い。
 - 日本：検査陽性者数及び（報告された）死亡者数で韓国を追い抜いた。
@@ -164,25 +164,6 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 ### 日本、韓国、台湾、シンガポール、香港の人口100万人あたりの新型コロナウイルスによる死者数
 
 ![DperMil01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/DperMil01.png)
-
-#### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
-
-![pcr09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr09.png)
-
-#### 日本、韓国、台湾、シンガポール、香港の検査陽性率(%) Positive/Tests*100
-
-![pcr12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr12.png)
-
-シンガポールの検査陽性率が非常に大きく、日本がそれについで大きい。台湾、香港は小さい。
-
-(関連ニュース)  
-[シンガポールの新型コロナ感染者、1日で2割増 2020/4/17](https://www.nikkei.com/article/DGXMZO58164630X10C20A4EAF000/)  
-
-#### 日本、韓国、台湾、シンガポール、香港のTests /million people for COVID-19
-
-![pcr10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr10.png)
-
-人口を考慮に入れると、日本の検査数が少ないのがわかります。
 
 #### 日本、韓国、台湾、シンガポール、香港のReported Confirmed
 
@@ -207,8 +188,8 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
  [4] "モンゴル モデル"       "東ティモール モデル"   "ベトナム モデル"      
  [7] "台湾 モデル"           "スリランカ モデル"     "タイ モデル"          
 [10] "シリア モデル"         "ヨルダン モデル"       "ネパール モデル"      
-[13] "ウズベキスタン モデル" "中国 モデル"           "マレーシア モデル"    
-[16] "グルジア モデル"       "シンガポール モデル"   "レバノン モデル"      
+[13] "ウズベキスタン モデル" "中国 モデル"           "グルジア モデル"      
+[16] "マレーシア モデル"     "シンガポール モデル"   "レバノン モデル"      
 [19] "韓国 モデル"           "タジキスタン モデル"   "ブルネイ モデル"    
 
 ### 陽性率、暫定致死率を計算し、表を作成(韓国のPCR検査実施人数とその結果）
@@ -377,6 +358,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 |2020-07-09 |        1371771|    13293|  287| 1334566|  23912|  1347859|      0.99|         2.159|
 |2020-07-10 |        1384890|    13338|  288| 1348025|  23527|  1361363|      0.98|         2.159|
 |2020-07-11 |        1396941|    13373|  288| 1360618|  22950|  1373991|      0.97|         2.154|
+|2020-07-12 |        1402144|    13417|  289| 1366897|  21830|  1380314|      0.97|         2.154|
 
 ## Rコード
 
@@ -384,7 +366,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ```R
 library(knitr)
-date<- seq(as.Date("2020-02-01"), as.Date("2020-07-11"), by = "day")
+date<- seq(as.Date("2020-02-01"), as.Date("2020-07-12"), by = "day")
 検査を受けた人<-c(371,429,429,607,714,885,1130,1701,2340,2776,3629,5074,5797,6854,7519,7919,8171,
 	9265,10411,12161,14816,19621,22633,28615,36716,46127,57990,70940,85693,96985,109591,125851,
 	136707,146541,164740,178189,188518,196618,210144,222395,234998,	248647,261335,268212,274504,
@@ -397,7 +379,7 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-07-11"), by = "day")
 	956852,973858,990960,1005305,1012769,1018214,1035997,1051972,1066888,1081486,1094704,1100327,
 	1105719,1119767,1132823,1145712,1158063,1170901,1176463,1182066,1196012,1208597,1220478,1232315,
 	1243780,1251695,1259954,1273766,1285231,1295962,1307761,1319523,1326055,1331796,1346194,1359735,
-	1371771,1384890,1396941)
+	1371771,1384890,1396941,1402144)
 感染者数<-c(12,15,15,16,18,23,24,24,25,27,28,28,28,28,28,29,30,31,46,82,156,346,556,763,893,1146,
 	1595,2022,2931,3526,4212,4812,5328,5766,6284,6767,7134,7382,7513,7755,7869,7979,8086,8162,
 	8236,8320,8413,8565,8652,8799,8897,8961,9037,9137,9241,9332,9478,9583,9661,9786,9887,9976,
@@ -407,14 +389,14 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-07-11"), by = "day")
 	11065,11078,11110,11122,11142,11165,11190,11206,11225,11265,11344,11402,11441,11468,11503,
 	11541,11590,11629,11668,11719,11776,11814,11852,11902,11947,12002,12051,12084,12121,12155,
 	12198,12257,12306,12373,12421,12438,12484,12535,12563,12602,12653,12715,12757,12799,12850,
-	12904,12967,13030,13089,13137,13181,13243,13293,13338,13373)
+	12904,12967,13030,13089,13137,13181,13243,13293,13338,13373,13417)
 死者<-c(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,4,7,8,11,12,13,16,17,22,28,32,35,42,44,50,51,
 	54,60,66,67,72,75,75,81,84,91,94,102,104,111,120,126,131,139,144,152,158,162,165,169,174,
 	177,183,186,192,200,204,208,211,214,217,222,225,229,230,232,234,236,237,238,240,240,240,242,
 	243,244,246,247,248,250,250,252,254,255,256,256,256,256,256,258,259,260,260,262,262,263,263,
 	263,264,264,266,266,267,269,269,269,269,269,270,271,272,273,273,273,273,273,273,274,276,276,
 	277,277,277,277,278,279,280,280,280,280,280,281,281,282,282,282,282,282,282,282,282,282,283,
-	283,284,285,285,287,288,288)
+	283,284,285,285,287,288,288,289)
 陰性<-c(289,327,414,462,522,693,842,1057,1355,1940,2736,4054,5099,6134,6853,7313,7733,8277,9335,10446,
 	11953,13794,16038,19127,22550,28247,35298,44167,53608,61037,71580,85484,102965,118965,136624,
 	151802,162008,171778,184179,196100,209402,222728,235615,243778,251297,261105,270888,282555,
@@ -426,7 +408,8 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-07-11"), by = "day")
 	788766,796142,806206,820550,834952,849161,865162,876060,885830,899388,917397,934030,950526,
 	965632,974512,982026,996686,1013847,1029447,1045240,1059301,1066887,1072805,1084980,1099136,
 	1111741,1124567,1137058,1143971,1150225,1161250,1175817,1189015,1200885,1211261,1219975,1228698,
-	1240157,1252855,1263276,1273234,1284172,1291315,1297367,1309338,1322479,1334566,1348025,1360618)
+	1240157,1252855,1263276,1273234,1284172,1291315,1297367,1309338,1322479,1334566,1348025,1360618,
+	1366897)
 検査中<- 検査を受けた人- (陰性+感染者数)
 #df<- data.frame(date,感染者数,死者,検査を受けた人_感染者除く,陰性,検査中)
 #kable(df,row.names=F)
@@ -485,7 +468,7 @@ Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,
 	276032+55346,279184+56148,280720+57209,281697+58392,284092+59605,286739+60483,334250+61354,340426+62125,345249+62944,
 	347723+64117,351850+65272,357226+66712,360948+67704,365927+68739,370382+69528,375140+70620,378673+72270,380186+73594,
 	385696+74921,390347+76268,396911+77568,402371+78677,408968+80490,412102+82233,414720+84349,422948+86216,430047+87334,
-	438166+88551,449671+89911,459538+91291)+829
+	438166+88551,449671+89911,459538+91291,464900+92893)+829
 Jpcr<- c(Jpcr1,Jpcr2)
 Confirmed<- c(rep(NA,6),25,NA,NA,26,NA,28,29,33,NA,NA,59,66,73,84,93,105,132,144,156,164,186,210,230,239,254,268,284,317,348,
 	407,454,487,513,567,619,674,714,777,809,824,868,907,943,996,1046,1089,1128,1193,1291,1387,1499,1693,1866,1953,2178,
@@ -493,12 +476,12 @@ Confirmed<- c(rep(NA,6),25,NA,NA,26,NA,28,29,33,NA,NA,59,66,73,84,93,105,132,144
 	12388,12829,13182,13385,13576,13852,14088,14281,NA,14839,15057,15231,15354,15463,15547,15649,15747,15798,15874,16024,
 	16079,16193,16237,16285,16305,16365,16385,16424,16513,16536,16550,16581,16623,16651,16683,16719,16804,16851,16884,16930,
 	16986,17018,17064,17103,17141,17174,17210,17251,17292,17332,17382,17429,17502,17587,17628,17668,17740,17799,17864,17916,
-	17968,18024,18110,18197,18297,18390,18476,18593,18723,18874,19068,19282,19522,19775,19981,20174,20371,20719,21129)
+	17968,18024,18110,18197,18297,18390,18476,18593,18723,18874,19068,19282,19522,19775,19981,20174,20371,20719,21129,21502)
 Deaths<- c(rep(NA,6),0,NA,NA,0,NA,0,0,1,NA,NA,1,1,1,1,1,1,1,1,1,1,3,4,5,5,6,6,6,6,6,6,6,7,9,12,15,19,21,22,24,28,29,31,33,35,36,
 	41,42,43,45,46,49,52,54,56,57,60,63,69,70,73,80,81,85,88,94,98,102,109,119,136,148,154,161,171,186,277,287,317,334,348,
 	351,376,389,415,432,NA,492,510,521,543,551,557,600,613,621,643,668,687,710,725,744,749,763,771,777,796,808,820,830,846,
 	858,867,874,886,891,892,894,900,903,907,914,916,916,916,919,920,922,924,925,925,927,931,935,935,952,953,953,955,963,968,
-	969,971,971,972,972,974,975,976,977,977,977,978,980,981,982,982)
+	969,971,971,972,972,974,975,976,977,977,977,978,980,981,982,982,982)
 Jdf<- data.frame(Tested=Jpcr,Confirmed,Deaths)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),1),"倍")
 # 指数表示を抑制
@@ -748,102 +731,6 @@ lines(x=b,y=dat2,lwd=2,col="darkgreen")
 points(x=b,y=dat2,pch=16,col="darkgreen")
 legend("topleft",inset=0.03,bty="n",legend="PCR検査実施人数",lwd=2,lty=1,pch=16,col="darkgreen")
 title("日本の検査陽性者数 対数表示（日別）",cex.main=1.5)
-#dev.off()
-```
-
-### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
-
-```R
-library("rvest")
-# "COVID-19 testing"のデータ取得
-html <- read_html("https://en.wikipedia.org/wiki/COVID-19_testing")
-tbl<- html_table(html,fill = T)
-# "covid19-testing"のtableが何番目か見つける
-nodes<- html_nodes(html, "table")
-class<-html_attr(nodes,"class")
-#num<-grep("plainrowheaders",class)
-num<- 4
-#
-Wtest<- tbl[[num]][,c(1:3,5:8)]
-str(Wtest)
-#
-for (i in c(3:7)){
-	Wtest[,i]<- as.numeric(gsub(",","",Wtest[,i]))
-}
-str(Wtest)
-save("Wtest",file="Wtest.Rdata")
-#load("Wtest.Rdata")
-#asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan|Hong Kong)",Wtest[,1]),]
-```
-## (注)国と地域の表が別になっていた
-
-```R
-num<- 5
-#
-Wtest2<- tbl[[num]][,1:8]
-str(Wtest2)
-#
-for (i in 4:8){
-	Wtest2[,i]<- as.numeric(gsub(",","",Wtest2[,i]))
-}
-str(Wtest2)
-save("Wtest2",file="Wtest2.Rdata")
-(asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan)",Wtest[,1]),])
-colnames(asia5)[1]<- "Country or Subdivision"
-colnames(asia5)[2]<- "Date"
-colnames(asia5)[3]<- "Tested"
-colnames(asia5)[6]<- "Tested /millionpeople"
-(asia5 <- asia5[!is.na(asia5[,4]),])
-temp<- Wtest2[grep("(Taiwan|Hong Kong)",Wtest2[,"Subdivision"]),]
-(temp <- temp[!is.na(temp[,4]),2:8])
-colnames(temp)[1]<- "Country or Subdivision"
-colnames(temp)[2]<- "Date"
-( asia5<- rbind(asia5,temp) )
-```
-
-#### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
-
-```R
-# Testedで並べ替え
-dat<- asia5[order(asia5[,"Tested"]),]
-#png("pcr09.png",width=800,height=600)
-par(mar=c(7,7,3,2),family="serif")
-b<- barplot(dat[,"Tested"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tested"])*1.2),las=1)
-axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
-text(x=dat[,"Tested"],y=b,labels= paste("As of",dat[,"Date"],"\n",formatC(dat[,"Tested"],format="d",big.mark=',')),pos=4)
-title("Total Tests for COVID-19(Japan,South Korea,Singapore,Taiwan,Hong Kong)",
-	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
-#dev.off()
-```
-
-#### 日本、韓国、台湾、シンガポール、香港の検査陽性率(%) Positive/Tests*100
-
-```R
-# %で並べ替え
-dat<- asia5[order(asia5[,"%"]),]
-#png("pcr12.png",width=800,height=600)
-par(mar=c(7,7,3,2),family="serif")
-b<- barplot(dat[,"%"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"%"])*1.2),las=1)
-axis(side=1, at=axTicks(1), labels=axTicks(1))
-text(x=dat[,"%"],y=b,labels= paste("As of",dat[,"Date"],"\n",dat[,"%"],"%"),pos=4)
-title("Positive/Tests*100 for COVID-19(Japan,South Korea,Singapore,Taiwan,Hong Kong)",
-	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
-#dev.off()
-```
-
-#### 日本、韓国、台湾、シンガポール、香港のTests /million people for COVID-19
-
-```R
-# 人口100万人あたり
-# Tested /millionpeopleで並べ替え
-dat<- asia5[order(asia5[,"Tested /millionpeople"]),]
-#png("pcr10.png",width=800,height=600)
-par(mar=c(7,7,3,2),family="serif")
-b<- barplot(dat[,"Tested /millionpeople"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tested /millionpeople"])*1.2),las=1)
-axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
-text(x=dat[,"Tested /millionpeople"],y=b,labels= paste("As of",dat[,"Date"],"\n",formatC(dat[,"Tested /millionpeople"],format="d",big.mark=',')),pos=4)
-title("Tested /million people for COVID-19(Japan,South Korea,Singapore,Taiwan,Hong Kong)",
-	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
 #dev.off()
 ```
 
@@ -1111,3 +998,98 @@ jdeath<- df$DpP[is.element(df$Row.names,c("Japan"))]
 paste(df$Jname[df$DpP< jdeath],"モデル")
 ```
 
+### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
+
+```R
+library("rvest")
+# "COVID-19 testing"のデータ取得
+html <- read_html("https://en.wikipedia.org/wiki/COVID-19_testing")
+tbl<- html_table(html,fill = T)
+# "covid19-testing"のtableが何番目か見つける
+nodes<- html_nodes(html, "table")
+class<-html_attr(nodes,"class")
+#num<-grep("plainrowheaders",class)
+num<- 3
+#
+Wtest<- tbl[[num]][,c(1:3,5:8)]
+str(Wtest)
+#
+for (i in c(3:7)){
+	Wtest[,i]<- as.numeric(gsub(",","",Wtest[,i]))
+}
+str(Wtest)
+save("Wtest",file="Wtest.Rdata")
+#load("Wtest.Rdata")
+#asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan|Hong Kong)",Wtest[,1]),]
+```
+## (注)国と地域の表が別になっていた
+
+```R
+num<- 5
+#
+Wtest2<- tbl[[num]][,1:8]
+str(Wtest2)
+#
+for (i in 4:8){
+	Wtest2[,i]<- as.numeric(gsub(",","",Wtest2[,i]))
+}
+str(Wtest2)
+save("Wtest2",file="Wtest2.Rdata")
+(asia5<- Wtest[grep("(Japan|South Korea|Singapore|Taiwan)",Wtest[,1]),])
+colnames(asia5)[1]<- "Country or Subdivision"
+colnames(asia5)[2]<- "Date"
+colnames(asia5)[3]<- "Tested"
+colnames(asia5)[6]<- "Tested /millionpeople"
+(asia5 <- asia5[!is.na(asia5[,4]),])
+temp<- Wtest2[grep("(Taiwan|Hong Kong)",Wtest2[,"Subdivision"]),]
+(temp <- temp[!is.na(temp[,4]),2:8])
+colnames(temp)[1]<- "Country or Subdivision"
+colnames(temp)[2]<- "Date"
+( asia5<- rbind(asia5,temp) )
+```
+
+#### 日本、韓国、台湾、シンガポール、香港のTotal Tests for COVID-19
+
+```R
+# Testedで並べ替え
+dat<- asia5[order(asia5[,"Tested"]),]
+#png("pcr09.png",width=800,height=600)
+par(mar=c(7,7,3,2),family="serif")
+b<- barplot(dat[,"Tested"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tested"])*1.2),las=1)
+axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
+text(x=dat[,"Tested"],y=b,labels= paste("As of",dat[,"Date"],"\n",formatC(dat[,"Tested"],format="d",big.mark=',')),pos=4)
+title("Total Tests for COVID-19(Japan,South Korea,Singapore,Taiwan,Hong Kong)",
+	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
+#dev.off()
+```
+
+#### 日本、韓国、台湾、シンガポール、香港の検査陽性率(%) Positive/Tests*100
+
+```R
+# %で並べ替え
+dat<- asia5[order(asia5[,"%"]),]
+#png("pcr12.png",width=800,height=600)
+par(mar=c(7,7,3,2),family="serif")
+b<- barplot(dat[,"%"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"%"])*1.2),las=1)
+axis(side=1, at=axTicks(1), labels=axTicks(1))
+text(x=dat[,"%"],y=b,labels= paste("As of",dat[,"Date"],"\n",dat[,"%"],"%"),pos=4)
+title("Positive/Tests*100 for COVID-19(Japan,South Korea,Singapore,Taiwan,Hong Kong)",
+	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
+#dev.off()
+```
+
+#### 日本、韓国、台湾、シンガポール、香港のTests /million people for COVID-19
+
+```R
+# 人口100万人あたり
+# Tested /millionpeopleで並べ替え
+dat<- asia5[order(asia5[,"Tested /millionpeople"]),]
+#png("pcr10.png",width=800,height=600)
+par(mar=c(7,7,3,2),family="serif")
+b<- barplot(dat[,"Tested /millionpeople"],horiz=T,col="pink",xaxt="n",names=dat[,1],xlim=c(0,max(dat[,"Tested /millionpeople"])*1.2),las=1)
+axis(side=1, at=axTicks(1), labels=formatC(axTicks(1), format="d", big.mark=','))
+text(x=dat[,"Tested /millionpeople"],y=b,labels= paste("As of",dat[,"Date"],"\n",formatC(dat[,"Tested /millionpeople"],format="d",big.mark=',')),pos=4)
+title("Tested /million people for COVID-19(Japan,South Korea,Singapore,Taiwan,Hong Kong)",
+	"Data : [Wikipedia:COVID-19 testing](https://en.wikipedia.org/wiki/COVID-19_testing)")
+#dev.off()
+```
