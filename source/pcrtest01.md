@@ -1,6 +1,6 @@
 ---
 title: PCR検査者数の比較（ourworldindata）
-date: 2020-07-09
+date: 2020-07-13
 tags: ["R","PCR"]
 excerpt: 日本がいかに検査をしていないか
 ---
