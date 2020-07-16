@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-15
+date: 2020-07-16
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -46,6 +46,10 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 分母は「検査人数」ではなく、公表されている「検査件数」です。
 
 ![covTokyo02_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo02_3.png)
+
+#### 週単位の陽性者増加比
+
+![covTokyo05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo05.png)
 
 #### 検査陽性者率（%）推移（累計した数で計算)
 6/11までのグラフです。
@@ -212,6 +216,52 @@ for (i in labelpos){
 text(x=par("usr")[2],y=dat2[,4][nrow(dat2)],labels= paste0(dat2[,1][nrow(dat2)],"現在\n",dat2[,4][nrow(dat2)],"%"),
 	xpd=T,cex=1.2,col="red",pos=4)
 title("東京都のPCR検査件数陽性率(%)の推移(1週間(7日)の幅で移動平均)",cex.main=1.5)
+#dev.off()
+```
+
+### 週単位の陽性者増加比
+
+```R
+library(TTR)
+# 検査陽性者数
+patients<- js[[4]]$data
+patients[,1]<- sub("-","/",sub("-0","-",sub("^0","",substring(patients[,1],6,10))))
+colnames(patients)<- c("date","patients")
+#
+x<- patients[,2]
+e7<- runSum(x,n=7)
+b7<- runSum(x,n=14) - e7
+df<- round(e7/b7,2)
+# InfにNAを入れる
+df[df==Inf]<- NA
+dat<- data.frame(date=patients$date,zougen= df)
+dat<- dat[28:nrow(dat),]
+#
+#png("covTokyo05.png",width=800,height=600)
+par(mar=c(4,6,4,7),family="serif")
+plot(dat[,2],type="l",lwd=2,las=1,ylim=c(0,6),xlab="",ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2.5)
+#axis(1,at=1:nrow(dat),labels=dat[,1])
+labels<- dat[,1]
+labels<-gsub("^.*/","",labels)
+pos<-gsub("/.*$","",sub("/20","",dat[,1]))
+for (i in c("1","10","20")){
+	at<- grep("TRUE",is.element(labels,i))
+	axis(1,at=at,labels = rep(i,length(at)))
+	}
+Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
+mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
+# 月の中央
+#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
+# 月のはじめ
+mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+abline(h=1,col="red",lty=2)
+text(x=par("usr")[2],y=dat[,2][nrow(dat)],labels= paste0(dat[,1][nrow(dat)],"現在\n",dat[,2][nrow(dat)]),xpd=T,cex=1.2,col="red")
+arrows(par("usr")[2]*1.08, 1.1,par("usr")[2]*1.08,1.68,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=1.9,labels="増加\n傾向",xpd=T)
+arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=0.1,labels="減少\n傾向",xpd=T)
+title("週単位の陽性者増加比(東京都)",cex.main=1.5)
 #dev.off()
 ```
 
