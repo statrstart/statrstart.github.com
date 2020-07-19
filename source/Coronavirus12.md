@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-18
+date: 2020-07-19
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -103,9 +103,17 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
 
+#### 検査結果
+
+![covOsaka05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka05.png)
+
 #### 居住地
 
 ![covOsaka02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka02.png)
+
+#### 月別の陽性者の属性:年代(大阪府)
+
+![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
 
 #### 年代
 
@@ -115,9 +123,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka04.png)
 
-#### 検査結果
-
-![covOsaka05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka05.png)
 
 ### Rコード
 
@@ -235,3 +240,23 @@ title("検査結果(大阪府)",cex.main=1.5)
 #dev.off()
 ```
 
+#### 月別の陽性者の属性:年代(大阪府)
+
+```R
+month<- substring(js[[1]]$data$date,6,7)
+tab<- table(month,js[[1]]$data$年代)
+#"80代","90代","100代" -> "80歳以上"
+tab<- cbind(tab,rowSums(tab[,c("80代","90代","100代")]))
+colnames(tab)[ncol(tab)]<- "80歳以上"
+#"未就学児","就学児"-> "10歳未満"
+tab<- cbind(tab,rowSums(tab[,c("未就学児","就学児")]))
+colnames(tab)[ncol(tab)]<- "10歳未満"
+tab2<- tab[,c("10歳未満","10代","20代","30代","40代","50代","60代","70代","80歳以上")]
+#
+#png("covOsaka06.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+barplot(t(tab2),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2)),"月"),
+	args.legend = list(x = "topleft",inset= 0.03))
+title("月別の陽性者の属性:年代(大阪府)",cex.main=1.5)
+#dev.off()
+```
