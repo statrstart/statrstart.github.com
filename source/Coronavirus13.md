@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-18
+date: 2020-07-19
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -123,13 +123,15 @@ colnames(patients)<- c("date","patients")
 patients$date<- sub("-","/",sub("-0","-",sub("^0","",patients$date)))
 #検査実施件数
 df<- data.frame(js[[6]]$data)
-rownames(df)<- js[[6]]$label
-inspection<- data.frame(date=js[[6]]$label,inspection_persons=rowSums(df))
-dat<- merge(patients,inspection,by="date",all=T,sort=F)
+inspection<- data.frame(date=js[[6]]$label,inspection=rowSums(df))
+#sort=Fにしているのに順序が入れ替わる箇所がある。（バグ？）
+#dat<- merge(patients,inspection,by="date",all=T,sort=F)
+#plyrパッケージのjoin関数を使う。
+dat<- plyr::join(patients,inspection)
 dat$patients[dat$patients==0]<- NA
-dat$inspection_persons[dat$inspection_persons==0]<- NA
+dat$inspection[dat$inspection==0]<- NA
 #
-ylim<- c(0.9,max(dat[,"inspection_persons"],na.rm=T))
+ylim<- c(0.9,max(dat[,"inspection"],na.rm=T))
 #png("covTokyo01_1.png",width=800,height=600)
 par(mar=c(4,5,4,3),family="serif")
 b<- barplot(dat[,"patients"],names=dat[,1],las=1,log="y",ylim=ylim)
@@ -138,8 +140,8 @@ for (i in 1:9){
 	abline(h=i*10^(0:3),col="darkgray",lwd=0.8,lty=3)
 }
 barplot(dat[,"patients"],names=NA,col="red",log="y",las=1,axes=F,ylim=ylim,add=T)
-lines(x=b,y=dat[,"inspection_persons"],lwd=1.2,col="darkgreen")
-points(x=b,y=dat[,"inspection_persons"],pch=16,cex=0.8,col="darkgreen")
+lines(x=b,y=dat[,"inspection"],lwd=1.2,col="darkgreen")
+points(x=b,y=dat[,"inspection"],pch=16,cex=0.8,col="darkgreen")
 legend("topleft",inset=0.03,bty="n",legend="PCR検査実施件数",lwd=2,lty=1,pch=16,col="darkgreen")
 title("東京都の検査陽性者数 対数表示（日別）",cex.main=1.5)
 #dev.off()
@@ -189,7 +191,7 @@ colnames(patients)<- c("date","patients")
 df<- data.frame(js[[6]]$data)
 rownames(df)<- js[[6]]$label
 inspection<- data.frame(date=js[[6]]$label,inspection=rowSums(df))
-dat<- merge(patients,inspection,by="date",all=T,sort=F)
+dat<- plyr::join(patients,inspection)
 # 1週間の幅で移動平均
 dat<- na.omit(dat)
 dat2<- data.frame(date=dat[,1],patients=SMA(dat[,2],n=7),inspection=SMA(dat[,3],n=7))
