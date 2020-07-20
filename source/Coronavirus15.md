@@ -1,6 +1,6 @@
 ---
 title: 東アジアの感染者の状況(新型コロナウイルス：Coronavirus)
-date: 2020-07-18
+date: 2020-07-20
 tags: ["R","TTR","Coronavirus","新型コロナウイルス"]
 excerpt: 隔離中、死亡、回復
 ---
@@ -23,6 +23,10 @@ excerpt: 隔離中、死亡、回復
 #### 世界：致死率(%):Deaths/Confirmed の推移
 
 ![Coronavirus01_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Coronavirus01_1.png)
+
+#### 世界 : 週単位の陽性者増加比
+
+![zoukaworld01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/zoukaworld01.png)
 
 ### 東アジアの感染者の状況
 
@@ -173,6 +177,47 @@ mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,l
 text(x=par("usr")[1],y=par("usr")[4],labels="(%)",pos=2,xpd=T,font=2)
 text(x=par("usr")[2],y=MR[length(MR)],labels=paste(MR[length(MR)],"%"),xpd=T)
 title("Covid-19 : Death rates(致死率)")
+#dev.off()
+```
+
+#### 世界 : 週単位の陽性者増加比
+
+```R
+library(TTR)
+diffC<- diff(t(nCoV["Confirmed",,drop=F]))
+rownames(diffC)<- sub("/20","",rownames(diffC))
+fun<- function(x){round(runSum(x,n=7)/(runSum(x,n=14) -runSum(x,n=7)),2)}
+diffC2<- data.frame(fun(diffC))
+rownames(diffC2)<- rownames(diffC)
+colnames(diffC2)<- "Confirmed"
+diffC2<- diffC2[!is.na(diffC2),,drop=F]
+#png("zoukaworld01.png",width=800,height=600)
+par(mar=c(5,6,4,7),family="serif")
+plot(diffC2$Confirmed,type="l",lwd=2,las=1,xlab="",ylab="",bty="n",xaxt="n",ylim=c(0,4))
+box(bty="l",lwd=2.5)
+abline(h=1,lwd=1.5,col="red",lty=2)
+labels<-gsub("^.*/","",rownames(diffC2))
+pos<-gsub("/.*$","",rownames(diffC2))
+axis(1,at=1:nrow(diffC2),labels =NA)
+#月の区切り
+#axis(1,at=cumsum(as.vector(table(pos)))+0.5, labels =NA,tck=-0.1,lty=2 ,lwd=1)
+for (i in c("1","10","20")){
+	at<- grep("TRUE",is.element(labels,i))
+	axis(1,at=at,labels = rep(i,length(at)))
+	}
+Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
+mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
+# 月の中央
+#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
+# 月のはじめ
+mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+text(x=par("usr")[2],y=diffC2[nrow(diffC2),],labels=diffC2[nrow(diffC2),],xpd=T)
+arrows(par("usr")[2]*1.08, 1.1,par("usr")[2]*1.08,1.68,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=1.9,labels="増加\n傾向",xpd=T)
+arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=0.1,labels="減少\n傾向",xpd=T)
+title("週単位の陽性者増加比(世界)",cex.main=1.5)
+title(sub="Data : CSSE at Johns Hopkins University(Confirmed)",line=3.5)
 #dev.off()
 ```
 
