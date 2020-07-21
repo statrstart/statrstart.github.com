@@ -119,6 +119,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka07.png)
 
+#### 週単位の陽性者増加比
+
+![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
+
 #### 居住地
 
 ![covOsaka02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka02.png)
@@ -283,14 +287,57 @@ dat<- merge(dat,js[[3]][[2]],by=1)
 rownames(dat)<- sub("-","/",sub("-0","-",sub("^0","",substring(dat[,1],6,10))))
 dat<- dat[,-1]
 colnames(dat)<- c("陽性者数","検査実施件数")
-# 検査陽性率(%)
-dat$検査陽性率<- round(dat$陽性者数/dat$検査実施件数*100,2)
-sma<- round(SMA(dat$検査陽性率[20:length(dat$検査陽性率)],7),2)
+# 検査陽性率(%)7日移動平均
+sma<- round(runSum(dat$陽性者数,7)/runSum(dat$検査実施件数,7)*100,2)
 #png("covOsaka07.png",width=800,height=600)
 par(mar=c(3,7,4,2),family="serif")
 plot(sma,type="l",lwd=2.5,las=1,xlab="",ylab="",xaxt="n",bty="n")
 box(bty="l",lwd=2.5)
-axis(1,at=1:length(sma),labels=rownames(dat)[20:nrow(dat)])
+axis(1,at=1:length(sma),labels=rownames(dat))
 title("検査陽性率（％）７日移動平均（大阪府）",cex.main=1.5)
+#dev.off()
+```
+
+#### 週単位の陽性者増加比
+
+```R
+library(TTR)
+dat<- js[[2]][[2]]
+rownames(dat)<- sub("-","/",sub("-0","-",sub("^0","",substring(dat[,1],6,10))))
+dat<- dat[,-1,drop=F]
+#
+e7<- runSum(dat,n=7)
+b7<- runSum(dat,n=14) - e7
+df<- round(e7/b7,2)
+# InfにNAを入れる
+df[df==Inf]<- NA
+df<- data.frame(date=rownames(dat),zougen= df)
+df<- df[40:nrow(df),]
+#
+#png("covOsaka08.png",width=800,height=600)
+par(mar=c(4,6,4,7),family="serif")
+plot(df[,2],type="l",lwd=2,las=1,ylim=c(0,11),xlab="",ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2.5)
+#axis(1,at=1:nrow(df),labels=df[,1])
+labels<- df[,1]
+labels<-gsub("^.*/","",labels)
+pos<-gsub("/.*$","",sub("/20","",df[,1]))
+for (i in c("1","10","20")){
+	at<- grep("TRUE",is.element(labels,i))
+	axis(1,at=at,labels = rep(i,length(at)))
+	}
+Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
+mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
+# 月の中央
+#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
+# 月のはじめ
+mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+abline(h=1,col="red",lty=2)
+text(x=par("usr")[2],y=df[,2][nrow(df)],labels= paste0(df[,1][nrow(df)],"現在\n",df[,2][nrow(df)]),xpd=T,cex=1.2,col="red")
+arrows(par("usr")[2]*1.08, 1.1,par("usr")[2]*1.08,1.68,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=2,labels="増加\n傾向",xpd=T)
+arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=0,labels="減少\n傾向",xpd=T)
+title("週単位の陽性者増加比(大阪府)",cex.main=1.5)
 #dev.off()
 ```
