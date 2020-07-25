@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-22
+date: 2020-07-25
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -290,10 +290,11 @@ colnames(dat)<- c("陽性者数","検査実施件数")
 # 検査陽性率(%)7日移動平均
 sma<- round(runSum(dat$陽性者数,7)/runSum(dat$検査実施件数,7)*100,2)
 #png("covOsaka07.png",width=800,height=600)
-par(mar=c(3,7,4,2),family="serif")
+par(mar=c(3,7,4,3),family="serif")
 plot(sma,type="l",lwd=2.5,las=1,xlab="",ylab="",xaxt="n",bty="n")
 box(bty="l",lwd=2.5)
 axis(1,at=1:length(sma),labels=rownames(dat))
+text(x=par("usr")[2],y=sma[length(sma)],labels=sma[length(sma)],xpd=T,cex=1.2)
 title("検査陽性率（％）７日移動平均（大阪府）",cex.main=1.5)
 #dev.off()
 ```
