@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-27
+date: 2020-07-28
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -12,6 +12,38 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 (参考)[大阪府の最新感染動向](https://covid19-osaka.info/)  
 
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。
+
+#### 時系列
+
+![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
+
+#### 検査結果
+
+![covOsaka05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka05.png)
+
+#### 検査陽性率（％）７日移動平均（大阪府）
+
+![covOsaka07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka07.png)
+
+#### 週単位の陽性者増加比
+
+![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
+
+#### 居住地
+
+![covOsaka02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka02.png)
+
+#### 月別の陽性者の属性:年代(大阪府)
+
+![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
+
+#### 年代
+
+![covOsaka03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka03.png)
+
+#### 性別
+
+![covOsaka04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka04.png)
 
 #### 例えば、吹田市の一覧表
 ##### ※退院とは新型コロナウイルス感染症が治癒した者
@@ -164,39 +196,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-07-26 |吹田市 |0代    |女性 |     |
 |2020-07-26 |吹田市 |0代    |男性 |     |
 |2020-07-26 |吹田市 |20代   |男性 |     |
-
-#### 時系列
-
-![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
-
-#### 検査結果
-
-![covOsaka05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka05.png)
-
-#### 検査陽性率（％）７日移動平均（大阪府）
-
-![covOsaka07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka07.png)
-
-#### 週単位の陽性者増加比
-
-![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
-
-#### 居住地
-
-![covOsaka02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka02.png)
-
-#### 月別の陽性者の属性:年代(大阪府)
-
-![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
-
-#### 年代
-
-![covOsaka03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka03.png)
-
-#### 性別
-
-![covOsaka04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka04.png)
-
 
 ### Rコード
 
