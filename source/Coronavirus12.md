@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-07-29
+date: 2020-07-30
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -11,7 +11,9 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 (参考)[大阪府の最新感染動向](https://covid19-osaka.info/)  
 
-[大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。
+[大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
+地図の元データ：[国土数値情報 行政区域データ](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!)  
+市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
 
 #### 時系列
 
@@ -32,6 +34,14 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 #### 居住地
 
 ![covOsaka02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka02.png)
+
+#### 塗り分け地図：PCR検査 陽性者数(大阪府市町村別)
+
+![osakaCmap01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap01.png)
+
+#### 塗り分け地図：人口１万人あたりの検査陽性者数(大阪府市町村別)
+
+![osakaCmap02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap02.png)
 
 #### 月別の陽性者の属性:年代(大阪府)
 
@@ -171,10 +181,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-07-24 |吹田市 |20代     |女性 |     |
 |2020-07-24 |吹田市 |20代     |男性 |     |
 |2020-07-24 |吹田市 |30代     |女性 |     |
-|2020-07-24 |吹田市 |40代     |男性 |     |
+|2020-07-24 |吹田市 |40代     |男性 |○   |
 |2020-07-24 |吹田市 |40代     |男性 |     |
 |2020-07-24 |吹田市 |80代     |男性 |     |
-|2020-07-24 |吹田市 |20代     |男性 |     |
+|2020-07-24 |吹田市 |20代     |男性 |○   |
 |2020-07-25 |吹田市 |10代     |男性 |○   |
 |2020-07-25 |吹田市 |30代     |男性 |○   |
 |2020-07-25 |吹田市 |30代     |男性 |     |
@@ -209,6 +219,13 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-07-28 |吹田市 |30代     |男性 |     |
 |2020-07-28 |吹田市 |20代     |女性 |     |
 |2020-07-28 |吹田市 |40代     |女性 |     |
+|2020-07-29 |吹田市 |50代     |男性 |     |
+|2020-07-29 |吹田市 |20代     |男性 |     |
+|2020-07-29 |吹田市 |30代     |男性 |     |
+|2020-07-29 |吹田市 |70代     |女性 |     |
+|2020-07-29 |吹田市 |20代     |男性 |     |
+|2020-07-29 |吹田市 |50代     |女性 |     |
+|2020-07-29 |吹田市 |50代     |男性 |     |
 
 ### Rコード
 
@@ -411,4 +428,131 @@ arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=
 text(x=par("usr")[2]*1.08,y=0,labels="減少\n傾向",xpd=T)
 title("週単位の陽性者増加比(大阪府)",cex.main=1.5)
 #dev.off()
+```
+
+#### 塗り分け地図
+
+```R
+library(sf)
+library(BAMMtools)
+osaka<- st_read("https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/osaka.geojson", 
+	stringsAsFactors=FALSE)
+map<- aggregate(osaka[,c("code2","sityo")], list(osaka$code2), unique)
+dat<- js[[1]][[2]][,c(8,4:7)]
+#is.element(dat$居住地,as.vector(map$sityo))
+unique(dat$居住地[!is.element(dat$居住地,as.vector(map$sityo))])
+#検査陽性者のいない市町村
+map$sityo[!is.element(map$sityo,dat$居住地)]
+#ないものの数を0としてカウント:factorを使ってtable
+#"大阪府外" "調査中"は除く
+tbl<- table(factor(dat$居住地, levels=map$sityo))
+#knitr::kable(tbl)
+```
+
+##### PCR検査 陽性者数(大阪府市町村別)
+
+```R
+# 並び順が一致しているか確認
+all(names(tbl)== map$sityo)
+#
+df<- as.vector(tbl)
+# legendのタイトル
+ltitle<- "検査陽性者数"
+# グラフのタイトル
+title<- "PCR検査 陽性者数(大阪府市町村別)"
+#
+##### ここ以降のRコードは共通 #####
+#
+# Jenksの自然分類法で分ける最大
+i <- length(df)
+brk <- getJenksBreaks(df,k=i+1)
+while (length(unique(brk)) != length(brk)) { 
+	brk <- getJenksBreaks(df,k=i+1)
+	i=i-1
+}
+# legendのlabelを作成
+labels<- as.vector(cut(brk[1:length(brk)-1],breaks=brk,include.lowest=T,right =F, dig.lab=5))
+# 塗りつぶしに使うカラーパレット：rev関数で　白->赤
+color<- rev(heat.colors(length(brk)-1))
+cols<-as.vector(cut(df, breaks=brk,labels =color,include.lowest=T,right =F))
+# png("osakaCmap01.png",width=800,height=800)
+par(mar=c(0,0,4,0),family="serif")
+plot(st_geometry(map),col=cols)
+c=st_centroid(st_geometry(map))
+text(st_coordinates(c),paste0(map$sityo,"\n",df,"人"))
+legend(x=135.8,y=35,legend=labels, fill=color,title =ltitle,ncol=1,bty="n",xpd=T,cex=1.2)
+title(title,cex.main=1.5)
+# dev.off()
+```
+
+##### 人口１万人あたりの検査陽性者数(大阪府市町村別)
+
+```R
+#市町村別の年齢別人口と割合
+#http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html
+prof<- c("大阪市","堺市","岸和田市","豊中市","池田市","吹田市","泉大津市","高槻市","貝塚市","守口市","枚方市","茨木市","八尾市","泉佐野市","富田林市","寝屋川市","河内長野市","松原市","大東市","和泉市","箕面市","柏原市","羽曳野市","門真市","摂津市","高石市","藤井寺市","東大阪市","泉南市","四條畷市","交野市","大阪狭山市","阪南市","島本町","豊能町","能勢町","忠岡町","熊取町","田尻町","岬町","太子町","河南町","千早赤阪村")
+pop<- c(2691185,839310,194911,395479,103069,374468,75897,351829,88694,143042,404152,280033,268800,100966,113984,237518,106987,120750,123217,186109,133411,71112,112683,123576,85007,56529,65438,502784,62438,56075,76435,57792,54276,29983,19934,10256,17298,44435,8417,15938,13748,16126,5378)
+# 並び順が一致しているか確認
+all(prof== map$sityo)
+#
+df<- round(as.vector(tbl)/pop*10000,2)
+# legendのタイトル
+ltitle<- "人口１万人あたりの\n検査陽性者数"
+# グラフのタイトル
+title<- "人口１万人あたりの検査陽性者数(大阪府市町村別)"
+#
+##### ここ以降のRコードは共通 #####
+#
+# Jenksの自然分類法で分ける最大
+i <- length(df)
+brk <- getJenksBreaks(df,k=i+1)
+while (length(unique(brk)) != length(brk)) { 
+	brk <- getJenksBreaks(df,k=i+1)
+	i=i-1
+}
+# legendのlabelを作成
+labels<- as.vector(cut(brk[1:length(brk)-1],breaks=brk,include.lowest=T,right =F, dig.lab=5))
+# 塗りつぶしに使うカラーパレット：rev関数で　白->赤
+color<- rev(heat.colors(length(brk)-1))
+cols<-as.vector(cut(df, breaks=brk,labels =color,include.lowest=T,right =F))
+# png("osakaCmap02.png",width=800,height=800)
+par(mar=c(0,0,4,4),family="serif")
+plot(st_geometry(map),col=cols)
+c=st_centroid(st_geometry(map))
+text(st_coordinates(c),paste0(map$sityo,"\n",df,"人"))
+legend(x=135.8,y=34.8,legend=labels, fill=color,title =ltitle,ncol=1,bty="n",xpd=T,cex=1.2)
+title(title,cex.main=1.5)
+# dev.off()
+```
+
+##### 地図:国土数値情報 行政区域データから作成
+
+```R
+#国土数値情報 行政区域データ 
+#https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!
+# install.packages("sf")
+library(sf)
+options(stringsAsFactors=FALSE)
+osaka = st_read("./Osaka", options="ENCODING=CP932")
+table(osaka$N03_007)
+osaka2 = aggregate(osaka, list(osaka$N03_007), unique)
+library(rmapshaper)
+# データ量を約 1/333 に
+osaka3 = ms_simplify(osaka2, keep=0.003, keep_shapes=TRUE)
+plot(st_geometry(osaka3), graticule=TRUE, axes=TRUE)
+#
+#plot(st_geometry(osaka3))
+#Group.1 N03_001  N03_003  N03_004
+osaka = osaka3[ ,c("Group.1", "N03_003", "N03_004")]
+names(osaka) = c("code","sigun","kusityo","geometry")
+#作図しやすくするため
+osaka$code2<- c(rep(27100,24),rep(27140,7),osaka$code[32:72])
+osaka$sityo<- c(osaka$sigun[1:31],osaka$kusityo[32:72])
+osaka<- osaka[,c(1,5,2,3,6,4)]
+#osaka$sigunのNAに市名をいれる
+osaka$sigun<- c(osaka$sigun[1:31],osaka$kusityo[32:62],osaka$sigun[63:72])
+#できたデータをシェープファイル形式で保存するには
+#st_write(osaka, "osaka.shp", layer_options="ENCODING=UTF-8")
+#GeoJSON形式で保存する。
+st_write(osaka, "./Osaka/osaka.geojson")
 ```
