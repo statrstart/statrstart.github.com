@@ -128,6 +128,11 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 
 ![Australia](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Australia.png)
 
+#### 日本、韓国、オーストラリアの新型コロナによる死亡者数の推移
+７月半ばからのオーストラリアの死亡者数の伸びを見てもこの冬、日本はかなりひどい状況になるのではないでしょうか。
+
+![Ddata01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Ddata01.png)
+
 ### 日本、韓国、台湾、シンガポール、香港の面積、人口、人口密度
 
 |   country    |    area|         pop| Population.density|
