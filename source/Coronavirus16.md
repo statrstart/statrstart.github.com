@@ -1,6 +1,6 @@
 ---
 title: 検査陽性者数(チャーター便を除く国内事例)と政府の対応(新型コロナウイルス：Coronavirus)
-date: 2020-08-13
+date: 2020-08-17
 tags: ["R","jsonlite","xts","Coronavirus","新型コロナウイルス"]
 excerpt: 東洋経済オンラインのデータ
 ---
