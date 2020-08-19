@@ -14,6 +14,22 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
 地図の元データ：[国土数値情報 行政区域データ](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!)  
 市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
+月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
+
+#### 月別の陽性者の属性:年代(大阪府)
+
+![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
+
+#### 月別年代別の陽性者数と月別死亡者数
+上のグラフ（上段）プラス 東洋経済のデータから作成した月別死亡者数のグラフ（下段）
+
+![covOsaka06_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06_2.png)
+
+- 8月に入ってから70歳以上の検査陽性者が増加。
+- 死亡者数も8月に入ってから増加しているが、4、5月を見ると陽性者の増加と死亡者の増加する時期には一月ほどのずれがある。
+- 本格的に死亡者が増加するのは来月だと思われる。  
+
+＊ このまま冬をむかえるとひどい状況になるのではないでしょうか。
 
 #### 時系列
 
@@ -42,15 +58,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 #### 塗り分け地図：人口１万人あたりの検査陽性者数(大阪府市町村別)
 
 ![osakaCmap02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap02.png)
-
-#### 月別の陽性者の属性:年代(大阪府)
-
-![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
-
-#### 月別年代別の陽性者数と月別死亡者数
-上のグラフ（上段）プラス 東洋経済のデータから作成した月別死亡者数のグラフ（下段）
-
-![covOsaka06_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06_2.png)
 
 #### 年代
 
@@ -619,6 +626,40 @@ legend(x=135.8,y=34.8,legend=labels, fill=color,title =ltitle,ncol=1,bty="n",xpd
 title(title,cex.main=1.5)
 # dev.off()
 ```
+
+#### 月別年代別の陽性者数と月別死亡者数
+
+```R
+library(jsonlite)
+library(xts)
+#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
+# https://toyokeizai.net/sp/visual/tko/covid19/
+#著作権「東洋経済オンライン」
+covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
+covid19[[5]][covid19[[5]]$en=="Osaka",]
+#   code     ja    en value
+#27   27 大阪府 Osaka  6845
+# 大阪府(code:27)
+code<- 27
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+#各月ごとの死亡者の合計
+monthsum<- apply.monthly(data.xts[,1],sum)
+#
+#png("covOsaka06_2.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+mat <- matrix(c(1,1,1,1,2,2),3,2, byrow = TRUE)
+layout(mat) 
+#3月以降
+barplot(t(tab2[-c(1,2),]),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2[-c(1,2),])),"月"),
+	args.legend = list(x = "topleft",inset= 0.03))
+title("大阪府 : 月別年代別の陽性者数と月別死亡者数",cex.main=1.5)
+barplot(t(monthsum),las=1,col="red",names=paste0(3:8,"月"),ylim=c(0,max(monthsum)*1.2))
+legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
+#dev.off()
+```
+
 
 ##### 地図:国土数値情報 行政区域データから作成
 
