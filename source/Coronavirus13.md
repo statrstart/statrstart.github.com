@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-08-18
+date: 2020-08-19
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -65,45 +65,34 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 #install.packages("curl")
 library(jsonlite)
 library(knitr)
+library(TTR)
 url<- "https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/data.json"
 js<- fromJSON(url)
 names(js)
-# [1] "contacts"                  "querents"  # 相談者               
-# [3] "patients"                  "patients_summary"         
-# [5] "discharges_summary"        "inspections_summary"      
-# [7] "inspection_persons"        "inspection_status_summary"
-# [9] "lastUpdate"                "main_summary" 
 ```
 
 #### 時系列
 
 ```R
 #### 時系列
-# patients_summary
-# 検査陽性率(%): 陽性患者数/検査実施人数*100
-Pos<- round(js[[10]][[3]]$value/js[[10]][[2]]*100,2)
 # 致死率(%): 亡くなった人の数/陽性患者数*100
-Dth<- round(js[[10]][[3]][[4]][[1]][grep("死亡",js[[10]][[3]][[4]][[1]]$attr),2]/js[[10]][[3]]$value*100,2)
+Dth<- round(js[[8]][[3]][[4]][[1]][grep("死亡",js[[8]][[3]][[4]][[1]]$attr),2]/js[[8]][[3]]$value*100,2)
 #
 # 検査陽性者数
 patients<- js[[4]]$data
 patients[,1]<- substring(patients[,1],6,10)
 colnames(patients)<- c("date","patients")
-# 検査実施人数
-inspection<- data.frame(date=substring(js[[7]][[2]],6,10),
-	                inspection_persons= js[[7]][[3]]$data[[1]])
-dat<- merge(patients,inspection,by="date",all=T)
+dat<- patients
+sma7<- round(SMA(dat[,"patients"],7),2)
 # 日付を例えば、01-01を1/1 のように書き直す。
 dat[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat[,1])))
-#ritsu1<- paste("・検査陽性者率(%) :",Pos,"%")
 ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
 #png("covTokyo01.png",width=800,height=600)
 par(mar=c(3,7,4,2),family="serif")
-b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"inspection_persons"],na.rm=T)))
-lines(x=b,y=dat[,"inspection_persons"],lwd=1.2)
-points(x=b,y=dat[,"inspection_persons"],pch=16,cex=0.8)
-legend(x="topleft",inset=c(0.03,0.1),bty="n",legend="検査実施人数\n6/12以降日別のデータ公開なし",pch=16,lwd=1.2,cex=1.5)
-legend("topleft",inset=c(0,0.2),bty="n",cex=1.5,legend=c(paste0(js[[9]],"現在"),ritsu2))
+b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"patients"],na.rm=T)*1.1))
+lines(x=b,y=sma7,lwd=2.5,col="blue")
+legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
+legend("topleft",inset=c(0.03,0.15),bty="n",cex=1.5,legend=c(paste0(js[[7]],"現在"),ritsu2))
 title("陽性者の人数：時系列(東京都)",cex.main=1.5)
 #dev.off()
 ```
