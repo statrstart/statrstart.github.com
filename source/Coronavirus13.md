@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-08-19
+date: 2020-08-20
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -76,7 +76,7 @@ names(js)
 ```R
 #### 時系列
 # 致死率(%): 亡くなった人の数/陽性患者数*100
-Dth<- round(js[[8]][[3]][[4]][[1]][grep("死亡",js[[8]][[3]][[4]][[1]]$attr),2]/js[[8]][[3]]$value*100,2)
+Dth<- round(js[[8]]$children$children[[1]][grep("死亡",js[[8]]$children$children[[1]]$attr),2]/js[[8]]$children$value*100,2)
 #
 # 検査陽性者数
 patients<- js[[4]]$data
@@ -131,35 +131,37 @@ title("東京都の検査陽性者数 対数表示（日別）",cex.main=1.5)
 #dev.off()
 ```
 
-#### 年代（月別）
+#### 月別年代別の陽性者数と月別死亡者数
 
 ```R
-date<- sub("2020-","",js[[3]]$data$date)
-month<- substring(date,1,2)
-tab<- table(month,js[[3]]$data$年代)
-tab<- cbind(tab,rowSums(tab[,c("80代","90代","100歳以上")]))
-colnames(tab)[ncol(tab)]<- "80歳以上"
-tab2<- tab[,c("10歳未満","10代","20代","30代","40代","50代","60代","70代","80歳以上")]
+library(xts)
+#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
+# https://toyokeizai.net/sp/visual/tko/covid19/
+#著作権「東洋経済オンライン」
+covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
+covid19[[5]][covid19[[5]]$en=="Tokyo",]
+#   code     ja    en value
+#13   13 東京都 Tokyo 17714
+# 東京都(code:13)
+code<- 13
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+#各月ごとの死亡者の合計
+monthsum<- apply.monthly(data.xts[,1],sum)
+#2月は0なのでグラフは3月から
+monthsum<- monthsum[-1,]
+#
 #png("covTokyo03_2.png",width=800,height=600)
-par(mar=c(3,7,4,2),family="serif")
-barplot(t(tab2),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2)),"月"),
+par(mar=c(3,7,3,2),family="serif")
+mat <- matrix(c(1,1,1,1,2,2),3,2, byrow = TRUE)
+layout(mat) 
+#3月以降
+barplot(t(tab2[-c(1,2),]),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2[-c(1,2),])),"月"),
 	args.legend = list(x = "topleft",inset= 0.03))
-title("月別の陽性者の属性:年代(東京都)",cex.main=1.5)
-#dev.off()
-```
-
-#### 年代（月別）+ 推定
-
-```R
-num<- as.numeric(substring(date[length(date)],4,5))
-prediction<- (tab2[nrow(tab2),]/num)*31
-tab3<- rbind(tab2,prediction)
-#png("covTokyo03_3.png",width=800,height=600)
-par(mar=c(3,7,4,2),family="serif")
-b<- barplot(t(tab3),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=c(paste0(sub("^0","",rownames(tab2)),"月"),"7月推定"),
-	args.legend = list(x = "topleft",inset= 0.03))
-title("月別の陽性者の属性:年代(東京都) + ７月推定(現在の感染者数/経過日数)×31",cex.main=1.2)
-abline(v=(b[9,7]+b[1,8])/2,col="red",lty=2,lwd=1.5)
+title("東京都 : 月別年代別の陽性者数と月別死亡者数",cex.main=1.5)
+barplot(t(monthsum),las=1,col="red",names=paste0(3:8,"月"),ylim=c(0,max(monthsum)*1.2))
+legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
 #dev.off()
 ```
 
