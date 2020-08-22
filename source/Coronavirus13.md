@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-08-21
+date: 2020-08-22
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -160,7 +160,8 @@ layout(mat)
 barplot(t(tab2[-c(1,2),]),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2[-c(1,2),])),"月"),
 	args.legend = list(x = "topleft",inset= 0.03))
 title("東京都 : 月別年代別の陽性者数と月別死亡者数",cex.main=1.5)
-barplot(t(monthsum),las=1,col="red",names=paste0(3:8,"月"),ylim=c(0,max(monthsum)*1.2))
+b<- barplot(t(monthsum),las=1,col="red",names=paste0(3:8,"月"),ylim=c(0,max(monthsum)*1.2))
+text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=as.numeric(monthsum),cex=1.2,pos=3)
 legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
 #dev.off()
 ```
