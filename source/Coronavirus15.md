@@ -1,6 +1,6 @@
 ---
 title: 世界と東アジアの感染者の状況(新型コロナウイルス：Coronavirus)
-date: 2020-08-23
+date: 2020-08-28
 tags: ["R","TTR","Coronavirus","新型コロナウイルス"]
 excerpt: 隔離中、死亡、回復
 ---
