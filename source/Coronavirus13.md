@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-08-30
+date: 2020-09-01
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -148,9 +148,14 @@ data<- covid19[[4]]$deaths[code,]
 from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
 data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
 #各月ごとの死亡者の合計
-monthsum<- apply.monthly(data.xts[,1],sum)
+monthsum.xts<- apply.monthly(data.xts[,1],sum)
 #2月は0なのでグラフは3月から
-monthsum<- monthsum[-1,]
+monthsum.xts<- monthsum.xts[-1,]
+monthsum<- data.frame(coredata(monthsum.xts))
+rownames(monthsum)<- substring(index(monthsum.xts),6,7)
+if (rownames(monthsum)[nrow(monthsum)]!="09"){
+	monthsum= rbind(monthsum,0)
+}
 #
 #png("covTokyo03_2.png",width=800,height=600)
 par(mar=c(3,7,3,2),family="serif")
@@ -160,8 +165,8 @@ layout(mat)
 barplot(t(tab2[-c(1,2),]),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2[-c(1,2),])),"月"),
 	args.legend = list(x = "topleft",inset= 0.03))
 title("東京都 : 月別年代別の陽性者数と月別死亡者数",cex.main=1.5)
-b<- barplot(t(monthsum),las=1,col="red",names=paste0(3:8,"月"),ylim=c(0,max(monthsum)*1.2))
-text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=as.numeric(monthsum),cex=1.2,pos=3)
+b<- barplot(t(monthsum),las=1,col="red",names=paste0(3:9,"月"),ylim=c(0,max(monthsum)*1.2))
+text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
 legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
 #dev.off()
 ```
