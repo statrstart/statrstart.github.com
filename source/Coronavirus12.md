@@ -16,6 +16,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
 
+#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
+
+![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
+
 #### 月別の陽性者の属性:年代(大阪府)
 
 ![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
@@ -798,6 +802,54 @@ text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=formatC(as.numeric(mo
 legend("topleft",inset=c(0,0),xpd=T,bty="n",
 	legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
 title("大阪府 : 月別の陽性者数",cex.main=1.5)
+#dev.off()
+```
+
+##### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数
+
+```R
+library(sf)
+library(NipponMap)
+shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
+m <- sf::read_sf(shp)
+#データの順序が一致しているか確認
+covid19[[5]]$en==m$name
+all(covid19[[5]]$en==m$name)
+# 東京都
+code<-13
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+# 大阪府
+code<-27
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+tmp.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+data.xts<- merge(data.xts,tmp.xts)
+colnames(data.xts)<- c("Tokyo","Osaka")
+#
+#png("covOvsT01.png",width=800,height=600)
+par(mar=c(5,4,5,1),family="serif")
+matplot(coredata(data.xts),type="l",lwd=2.5,lty=1,las=1,xaxt="n",yaxt="n",ylim=c(0,max(data.xts,na.rm=T)*1.1),col=c("blue","red"),xlab="",ylab="",bty="n")
+box(bty="l",lwd=2)
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+#表示するx軸ラベルを指定
+# 2020- を削除。01-01 -> 1/1 
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",index(data.xts)))))
+# 毎月1日
+labelpos<- paste0(rep(1:12),"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+labelpos<- paste0(rep(1:12,each=2),"/",c(10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
+	}
+legend("topleft",inset=0.03,legend=colnames(data.xts),col=c("blue","red"),lwd=2.5,lty=1)
+title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)","データ：[東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)",line=3)
 #dev.off()
 ```
 
