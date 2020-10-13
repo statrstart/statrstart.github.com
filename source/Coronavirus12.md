@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2020-10-12
+date: 2020-10-13
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -15,6 +15,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 地図の元データ：[国土数値情報 行政区域データ](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!)  
 市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
+
+#### 人口１万人あたりの検査陽性者数(大阪府市町村別)の推移
+
+![covOsaka10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka10.png)
 
 #### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
 
@@ -400,7 +404,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-09-12 |吹田市 |40代     |男性 |○   |
 |2020-09-13 |吹田市 |60代     |男性 |○   |
 |2020-09-16 |吹田市 |50代     |男性 |○   |
-|2020-09-16 |吹田市 |70代     |女性 |○   |
+|2020-09-16 |吹田市 |70代     |女性 |     |
 |2020-09-17 |吹田市 |50代     |男性 |○   |
 |2020-09-18 |吹田市 |50代     |男性 |○   |
 |2020-09-18 |吹田市 |80代     |女性 |○   |
@@ -438,20 +442,23 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 |2020-10-04 |吹田市 |50代     |男性 |○   |
 |2020-10-04 |吹田市 |20代     |男性 |○   |
 |2020-10-04 |吹田市 |40代     |男性 |     |
-|2020-10-06 |吹田市 |40代     |男性 |     |
+|2020-10-06 |吹田市 |40代     |男性 |○   |
 |2020-10-06 |吹田市 |20代     |男性 |○   |
-|2020-10-07 |吹田市 |20代     |男性 |○   |
-|2020-10-07 |吹田市 |30代     |男性 |     |
+|2020-10-07 |吹田市 |20代     |男性 |     |
+|2020-10-07 |吹田市 |30代     |男性 |○   |
 |2020-10-07 |吹田市 |40代     |男性 |     |
 |2020-10-07 |吹田市 |30代     |女性 |     |
-|2020-10-08 |吹田市 |40代     |男性 |     |
+|2020-10-08 |吹田市 |40代     |男性 |○   |
 |2020-10-08 |吹田市 |20代     |女性 |○   |
 |2020-10-08 |吹田市 |40代     |女性 |     |
-|2020-10-09 |吹田市 |40代     |男性 |     |
+|2020-10-09 |吹田市 |40代     |男性 |○   |
 |2020-10-10 |吹田市 |50代     |男性 |     |
 |2020-10-10 |吹田市 |70代     |男性 |     |
 |2020-10-12 |吹田市 |60代     |男性 |     |
 |2020-10-12 |吹田市 |20代     |女性 |     |
+|2020-10-13 |吹田市 |30代     |男性 |○   |
+|2020-10-13 |吹田市 |50代     |男性 |     |
+|2020-10-13 |吹田市 |70代     |女性 |     |
 
 ### Rコード
 
@@ -862,6 +869,42 @@ for (i in labelpos){
 	}
 legend("topleft",inset=0.03,legend=colnames(data.xts),col=c("blue","red"),lwd=2.5,lty=1)
 title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)","データ：[東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)",line=3)
+#dev.off()
+```
+
+##### 人口１万人あたりの検査陽性者数(大阪府市町村別)の推移
+
+```R
+tbl<- table(js[[1]]$data$date,factor(js[[1]]$data$居住地, levels=map$sityo))
+tbl<- apply(tbl,2,cumsum)
+#順序を確認
+all(prof==colnames(tbl))
+tbl<- t(apply(tbl,1,function(x){10000*x/pop}))
+#
+# png("covOsaka10.png",width=800,height=600)
+par(mar=c(4,3,4,10))
+matplot(tbl,type="l",lty=1,xlab="",ylab="",xaxt="n",bty="n",las=1,col=rainbow(ncol(tbl)))
+box(bty="l",lwd=2.5)
+#表示するx軸ラベルを指定
+# 2020- を削除。01-01 -> 1/1 
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(tbl)))))
+# 毎月1日
+labelpos<- paste0(rep(1:12),"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+labelpos<- paste0(rep(1:12,each=2),"/",c(10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
+	}
+text(x=par("usr")[2],y=tbl[nrow(tbl),],labels=colnames(tbl),xpd=T)
+text(x=par("usr")[1],y=par("usr")[4],labels="(人)",pos=2,xpd=T)
+# グラフのタイトル
+title("人口１万人あたりの検査陽性者数(大阪府市町村別)の推移")
+legend=round(sort(tbl[nrow(tbl),],decreasing=T),2)
+legend("topleft",legend=paste(names(legend),legend),inset=0.03,ncol=3,bty="n")
 #dev.off()
 ```
 
