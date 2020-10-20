@@ -239,6 +239,7 @@ box(bty="l",lwd=2.5)
 labels<- dat[,1]
 labels<-gsub("^.*/","",labels)
 pos<-gsub("/.*$","",sub("/20","",dat[,1]))
+pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
 for (i in c("1","10","20")){
 	at<- grep("TRUE",is.element(labels,i))
 	axis(1,at=at,labels = rep(i,length(at)))

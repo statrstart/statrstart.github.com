@@ -767,6 +767,7 @@ box(bty="l",lwd=2.5)
 abline(h=1,lty=2,col="darkgreen",lwd=1.5)
 labels<-gsub("^.*/","",rownames(pdat))
 pos<-gsub("/.*$","",rownames(pdat))
+pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
 axis(1,at=1:nrow(pdat),labels =NA)
 #月の区切り
 #axis(1,at=cumsum(as.vector(table(pos)))+0.5, labels =NA,tck=-0.1,lty=2 ,lwd=1)
@@ -788,7 +789,7 @@ text(x=par("usr")[2]*1.08,y=1.9,labels="増加\n傾向",xpd=T)
 arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=T)
 text(x=par("usr")[2]*1.08,y=0.1,labels="減少\n傾向",xpd=T)
 title("週単位の陽性者増加比(日本、韓国)",cex.main=1.5)
-dev.off()
+#dev.off()
 ```
 
 ### 韓国のPCR検査の結果（日別）
@@ -962,6 +963,7 @@ labels<- sub("/20","",colnames(datC))
 labels<-gsub("^.*/","",labels)
 #月
 pos<-gsub("/.*$","",sub("/20","",colnames(datC)))
+pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
 axis(1,at=1:ncol(datC), labels =NA,tck= -0.01)
 for (i in c("1","10","20")){
 	at<- grep("TRUE",is.element(labels,i))
