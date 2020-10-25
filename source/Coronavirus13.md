@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-10-24
+date: 2020-10-25
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
