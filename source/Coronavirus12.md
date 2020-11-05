@@ -20,9 +20,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka10.png)
 
-#### 大阪市の月別検査陽性者数
+#### 月別検査陽性者数（大阪府:大阪市と大阪市以外で色分け）
 
-![covOosakashi](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOosakashi.png)
+![covOsaka09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09.png)
+- 大阪市は人口の割合は約３割なのに６月以降の検査陽性者数の割合は約５割をしめる。
 
 #### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
 
@@ -108,6 +109,31 @@ dat<- js[[1]][[2]][,c(8,4:7)]
 # 居住地の「大阪府」は消し、「大阪府外」だけはもとに戻す。
 dat$居住地<- gsub("大阪府","",dat$居住地)
 dat$居住地<- gsub("^外$","大阪府外",dat$居住地)
+```
+
+#### 大阪府:月別の陽性者数(大阪市と大阪市以外で色分け）
+
+```R
+m1<- table(factor(substring(dat[,1],6,7),level=c("01","02","03","04","05","06","07","08","09","10","11")))
+m2<- table(factor(substring(dat[dat$居住地=="大阪市",1],6,7),level=c("01","02","03","04","05","06","07","08","09","10","11")))
+#
+#png("covOsaka09.png",width=800,height=600)
+par(mar=c(4,6,4,8),family="serif")
+b<- barplot(m1,col="slateblue",axes=F,names="",ylim=c(0,max(m1)*1.2))
+barplot(m2,add=T,col="firebrick2",las=1,ylim=c(0,max(m1)*1.2),names=paste0(1:11,"月"))
+legend(x="topleft",inset=c(0.01,0.05),legend=c("大阪市以外","大阪市"),pch=15,col=c("slateblue","firebrick2"),bty="n")
+#
+lines(x=b,y=par("usr")[4]*(m2/m1),col="darkgreen",lwd=3)
+text(x=b[1],y=par("usr")[4],labels="大阪市の感染者の割合",pos=2,xpd=T,col="darkgreen")
+axis(4,at=par("usr")[4]*seq(0,1,0.2),labels=seq(0,100,20),las=1,col="darkgreen")
+text(x=par("usr")[2],y=par("usr")[4],labels="(%)",pos=3,xpd=T)
+#
+abline(h=par("usr")[4]*0.3045,col="darkgreen",lty=2)
+text(x=par("usr")[2],y=par("usr")[4]*0.3045,labels="大阪市の人口の\n割合:30.45%",pos=4,xpd=T,col="darkgreen")
+abline(h=par("usr")[4]*0.5,col="red",lty=2)
+text(x=par("usr")[2],y=par("usr")[4]*0.5,labels="50%ライン",pos=4,xpd=T,col="red")
+title("大阪府:月別の陽性者数(大阪市と大阪市以外で色分け）",cex.main=1.5)
+#dev.off()
 ```
 
 #### 吹田市の月別検査陽性者数
@@ -453,29 +479,6 @@ title("大阪府 : 月別年代別の陽性者数と月別死亡者数",cex.main
 b<- barplot(t(monthsum),las=1,col="red",names=paste0(3:11,"月"),ylim=c(0,max(monthsum)*1.2))
 text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
 legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
-#dev.off()
-```
-
-#### 月別の陽性者数(東洋経済オンラインのデータで作成)
-
-```R
-# 大阪府(code:27)
-code<- 27
-data<- covid19[[4]]$carriers[code,]
-from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
-data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
-#各月ごとの検査陽性者数
-monthsum<- apply.monthly(data.xts[,1],sum)
-#
-#png("covOsaka09.png",width=800,height=600)
-par(mar=c(3,7,3,2),family="serif")
-b<- barplot(t(monthsum),las=1,col="red",names=paste0(3:8,"月"),ylim=c(0,max(monthsum)*1.2),yaxt="n")
-# Add comma separator to axis labels
-axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
-text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=formatC(as.numeric(monthsum), format="d", big.mark=','),cex=1.2,pos=3)
-legend("topleft",inset=c(0,0),xpd=T,bty="n",
-	legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
-title("大阪府 : 月別の陽性者数",cex.main=1.5)
 #dev.off()
 ```
 
