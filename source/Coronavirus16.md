@@ -1,6 +1,6 @@
 ---
 title: 検査陽性者数(チャーター便を除く国内事例)と政府の対応(新型コロナウイルス：Coronavirus)
-date: 2020-10-24
+date: 2020-11-06
 tags: ["R","jsonlite","xts","Coronavirus","新型コロナウイルス"]
 excerpt: 東洋経済オンラインのデータ
 ---
@@ -29,9 +29,9 @@ excerpt: 東洋経済オンラインのデータ
 ![Jcovid04.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Jcovid04.png)
 
 #### 47都道府県の検査陽性者の推移のグラフの作成、保存の例として
-##### 福岡県
+##### 北海道
 
-![FukuokaC01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/FukuokaC01.png)
+![HokkaidoC01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/HokkaidoC01.png)
 
 ### Rコード
 
