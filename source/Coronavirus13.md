@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者の属性(新型コロナウイルス：Coronavirus)
-date: 2020-11-07
+date: 2020-11-08
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -92,7 +92,7 @@ par(mar=c(3,7,4,2),family="serif")
 b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"patients"],na.rm=T)*1.1))
 lines(x=b,y=sma7,lwd=2.5,col="blue")
 legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
-legend("topleft",inset=c(0.03,0.15),bty="n",cex=1.5,legend=c(paste0(js[[7]],"現在"),ritsu2))
+legend("topleft",inset=c(0.03,0.15),bty="n",cex=1.5,legend=c(paste0(tail(js[[3]]$data$date,1),"現在"),ritsu2))
 title("陽性者の人数：時系列(東京都)",cex.main=1.5)
 #dev.off()
 ```
