@@ -534,13 +534,24 @@ title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あ�
 
 ```R
 tbl<- table(js[[1]]$data$date,factor(js[[1]]$data$居住地, levels=map$sityo))
+#rownames(tbl)[1]
+#tail(rownames(tbl),1)
+alldate<- seq(as.Date(rownames(tbl)[1]),as.Date(tail(rownames(tbl),1)),"days")
+rname<- alldate[!is.element(alldate,as.Date(rownames(tbl)))]
+# 0行列
+mat0<- matrix(0, nrow=length(rname), ncol=ncol(tbl))
+colnames(mat0)<- colnames(tbl)
+rownames(mat0)<- as.character(rname)
+mat<- rbind(tbl,mat0)
+#日付順
+tbl<- mat[rownames(mat)[order(rownames(mat))],]
 tbl<- apply(tbl,2,cumsum)
 #順序を確認
 all(prof==colnames(tbl))
-tbl<- t(apply(tbl,1,function(x){10000*x/pop}))
+tbl<- t(apply(tbl,1,function(x){round(10000*x/pop,2)}))
 #
 # png("covOsaka10.png",width=800,height=600)
-par(mar=c(4,3,4,10))
+par(mar=c(4,3,4,4),family="serif")
 matplot(tbl,type="l",lty=1,xlab="",ylab="",xaxt="n",bty="n",las=1,col=rainbow(ncol(tbl)))
 box(bty="l",lwd=2.5)
 #表示するx軸ラベルを指定
@@ -555,14 +566,14 @@ for (i in labelpos){
 labelpos<- paste0(rep(1:12,each=2),"/",c(10,20))
 for (i in labelpos){
 	at<- match(i,labels)
-	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
+	if (!is.na(at)){ axis(1,at=at,labels = sub("^.*/","",i),tck= -0.01,cex.axis=0.8)} 
 	}
 text(x=par("usr")[2],y=tbl[nrow(tbl),],labels=colnames(tbl),xpd=T)
 text(x=par("usr")[1],y=par("usr")[4],labels="(人)",pos=2,xpd=T)
 # グラフのタイトル
 title("人口１万人あたりの検査陽性者数(大阪府市町村別)の推移")
 legend=round(sort(tbl[nrow(tbl),],decreasing=T),2)
-legend("topleft",legend=paste(names(legend),legend),inset=0.03,ncol=3,bty="n")
+legend("topleft",legend=paste(names(legend),legend),inset=0.01,ncol=3,bty="n",cex=1.2)
 #dev.off()
 ```
 
