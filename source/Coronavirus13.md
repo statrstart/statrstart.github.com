@@ -33,6 +33,10 @@ excerpt: 東京都 新型コロナウイルス感染症対策サイトのデー�
 
 ![covTokyo05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo05.png)
 
+#### 東京都 : 月別の陽性者数と月別死亡者数
+
+![covTokyo09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTokyo09_02.png)
+
 #### 検査陽性者率（%）推移（累計した数で計算)
 6/11までのグラフです。
 
@@ -223,5 +227,60 @@ text(x=par("usr")[2]*1.08,y=1.9,labels="増加\n傾向",xpd=T)
 arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=T)
 text(x=par("usr")[2]*1.08,y=0.1,labels="減少\n傾向",xpd=T)
 title("週単位の陽性者増加比(東京都)",cex.main=1.5)
+#dev.off()
+```
+
+#### 東京都 : 月別の陽性者数と月別死亡者数
+
+```R
+m<- data.frame(month=substring(js[[3]]$data$日付,6,7),小計=js[[3]]$data$小計)
+#各月ごとの検査陽性者数
+cdata<- tapply(m$小計,m$month, sum,na.rm=T) 
+#
+#png("covTokyo09_01.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(cdata,las=1,col="red",names=paste0(1:11,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b[1:nrow(cdata)], y=as.numeric(cdata),labels=formatC(as.numeric(cdata), format="d", big.mark=','),cex=1.2,pos=3)
+legend("topleft",inset=c(0,0),xpd=T,bty="n",
+	legend="データ：https://raw.githubusercontent.com/tokyo-metropolitan-gov/covid19/development/data/data.json")
+title("東京都 : 月別の陽性者数",cex.main=1.5)
+#dev.off()
+#
+library(jsonlite)
+library(xts)
+#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
+# https://toyokeizai.net/sp/visual/tko/covid19/
+#著作権「東洋経済オンライン」
+covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
+covid19[[5]][covid19[[5]]$en=="Tokyo",]
+#   code     ja    en value
+#13   13 東京都 Tokyo 36778
+# 東京都(code:13)
+code<- 13
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+#各月ごとの死亡者の合計
+monthsum.xts<- apply.monthly(data.xts[,1],sum)
+monthsum<- data.frame(coredata(monthsum.xts))
+rownames(monthsum)<- substring(index(monthsum.xts),6,7)
+if (rownames(monthsum)[nrow(monthsum)]!="11"){
+	monthsum= rbind(monthsum,0)
+}
+#
+#png("covTokyo09_02.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+mat <- matrix(c(1,1,1,1,2,2),3,2, byrow = TRUE)
+layout(mat) 
+#2月以降
+b<- barplot(cdata[-1],las=1,col="slateblue",names=paste0(2:11,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b, y=cdata[-1],labels=formatC(cdata[-1], format="d", big.mark=','),cex=1.2,pos=3)
+title("東京都 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
+b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(2:11,"月"),ylim=c(0,max(monthsum)*1.2))
+text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
+legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
 #dev.off()
 ```
