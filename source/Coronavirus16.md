@@ -45,7 +45,7 @@ library(xts)
 #著作権「東洋経済オンライン」
 covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
 save(covid19,file="toyokeizai.Rdata")
-#load("toyokeizai.Rdata")```
+#load("toyokeizai.Rdata")
 ```
 
 #### 新型コロナウイルス 検査陽性者数(チャーター便を除く国内事例)と政府の対応
