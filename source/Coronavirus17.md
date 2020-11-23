@@ -1,5 +1,5 @@
 ---
-title: 都道府県別月別検査陽性者数と死亡者数(チャーター便を除く国内事例)(新型コロナウイルス：Coronavirus)
+title: 都道府県別月別検査陽性者数と死亡者数及び重症者数の推移(新型コロナウイルス：Coronavirus)
 date: 2020-11-22
 tags: ["R","jsonlite","xts","Coronavirus","新型コロナウイルス"]
 excerpt: 東洋経済オンラインのデータ
@@ -14,27 +14,35 @@ excerpt: 東洋経済オンラインのデータ
 
 #### 北海道・東北
 
-![carriersR1.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR1.png)
+![carriersR1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR1.png)
 
 ![deathsR1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR1.png)
 
+![seriousR1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR1.png)
+
 #### 関東
 
-![carriersR2.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR2.png)
+![carriersR2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR2.png)
 
 ![deathsR2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR2.png)
 
+![seriousR2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR2.png)
+
 #### 中部
 
-![carriersR3.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR3.png)
+![carriersR3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR3.png)
 
 ![deathsR3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR3.png)
 
+![seriousR3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR3.png)
+
 #### 近畿
 
-![carriersR4.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR4.png)
+![carriersR4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR4.png)
 
 ![deathsR4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR4.png)
+
+![seriousR4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR4.png)
 
 #### 中国
 
@@ -42,17 +50,23 @@ excerpt: 東洋経済オンラインのデータ
 
 ![deathsR5](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR5.png)
 
+![seriousR5](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR5.png)
+
 #### 四国
 
 ![carriersR6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR6.png)
 
 ![deathsR6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR6.png)
 
+![seriousR6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR6.png)
+
 #### 九州・沖縄
 
 ![carriersR7](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR7.png)
 
 ![deathsR7](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR7.png)
+
+![seriousR7](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR7.png)
 
 ### Rコード
 
@@ -229,5 +243,55 @@ title("\n\n\nデータ：[東洋経済オンライン](https://raw.githubusercon
 dev.off()
 }
 par(mfrow=c(1,1))
+```
+
+#### 重症者数の推移
+
+##### pngファイルで保存
+
+```R
+name<- "seriousR"
+region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku","Shikoku","Kyushu / Okinawa")
+#
+for (r in 1:7){
+code<- as.numeric(m[grep(region[r],m$region),]$SP_ID)
+data<- covid19[[4]]$serious[code[1],]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=cumsum(data$values[[1]]),seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+#
+for (i in code[-1]){
+	data<- covid19[[4]]$serious[i,]
+	from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+	tmp.xts<- xts(x=cumsum(data$values[[1]]),seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+	data.xts<- merge(data.xts,tmp.xts)
+}
+# NA<- 0
+coredata(data.xts)[is.na(data.xts)]<- 0
+colnames(data.xts)<- covid19[[5]]$ja[code]
+#
+#plot
+png(paste0(name,r,".png"),width=800,height=600)
+par(mar=c(3,5,3,2),family="serif",mfrow=c(1,1))
+matplot(coredata(data.xts),type="l",lwd=2,lty=1,las=1,col=rainbow(ncol(data.xts),alpha=0.8),
+	xlab="",ylab="",ylim=c(0,max(data.xts)*1.2),xaxt="n",bty="n")
+box(bty="l",lwd=2.5)
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",index(data.xts)))))
+labelpos<- paste0(rep(1:12,each=3),"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+labelpos<- paste0(rep(1:12,each=3),"/",c(10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels =NA,tck= -0.01)}
+	}
+legend(x="topleft",inset=0.02,legend=paste(colnames(data.xts),tail(data.xts,1)),lwd=2,lty=1,
+	col=rainbow(ncol(data.xts),alpha=0.8),title=paste(index(tail(data.xts,1)),"現在"),cex=1.5)
+title("新型コロナウイルス重症者数の推移")
+title("\n\n\nデータ：[東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)",cex.main=0.8)
+#
+dev.off()
+}
 ```
 
