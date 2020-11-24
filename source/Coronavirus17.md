@@ -1,6 +1,6 @@
 ---
 title: 都道府県別月別検査陽性者数と死亡者数及び重症者数の推移(新型コロナウイルス：Coronavirus)
-date: 2020-11-22
+date: 2020-11-24
 tags: ["R","jsonlite","xts","Coronavirus","新型コロナウイルス"]
 excerpt: 東洋経済オンラインのデータ
 ---
@@ -286,8 +286,14 @@ for (i in labelpos){
 	at<- match(i,labels)
 	if (!is.na(at)){ axis(1,at=at,labels =NA,tck= -0.01)}
 	}
-legend(x="topleft",inset=0.02,legend=paste(colnames(data.xts),tail(data.xts,1)),lwd=2,lty=1,
-	col=rainbow(ncol(data.xts),alpha=0.8),title=paste(index(tail(data.xts,1)),"現在"),cex=1.5)
+#都道府県名が３文字の場合全角スペースを加える
+for (i in 1:ncol(data.xts)){
+if (nchar(colnames(data.xts))[i]==3){
+	colnames(data.xts)[i]<- paste0(colnames(data.xts)[i],"　")
+	}
+}
+legend(x="topleft",inset=0.02,legend=paste0(colnames(data.xts),sprintf("%5d",tail(data.xts,1))),lwd=2,lty=1,
+	col=rainbow(ncol(data.xts),alpha=0.8),title=paste(index(tail(data.xts,1)),"現在"),cex=1.5,bg=rgb(0,0,0,0))
 title("新型コロナウイルス重症者数の推移")
 title("\n\n\nデータ：[東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)",cex.main=0.8)
 #
