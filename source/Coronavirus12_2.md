@@ -16,6 +16,12 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
 
+#### 表:大阪府の状況（新型コロナウイルス）
+![covOsaka20_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20_3.png)
+![covOsaka20](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20.png)
+![covOsaka20_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20_1.png)
+![covOsaka20_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20_2.png)
+
 #### 陽性者の人数：時系列(大阪府)
 
 ![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
@@ -326,3 +332,58 @@ calendR(year = 2020,
 #dev.off()
 ```
 
+#### 表:大阪府の状況（新型コロナウイルス）
+
+#### pngファイルで保存
+
+```R
+# webshot::install_phantomjs()
+library(flextable)
+library(tibble)
+library(webshot)
+# 状況の部分を抽出
+Cs<- js[[9]][[3]][[3]][[1]]
+# 大阪府の状況（新型コロナウイルス）
+ft <- flextable(data.frame(状況=Cs$attr,人数=formatC(Cs$value, format="d", big.mark=',')))
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+#ft <- set_header_labels(ft, rowname = "状況")
+ft<- add_header_lines(ft, values = "大阪府の状況（新型コロナウイルス）")
+ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+# 'all', 'body', 'header', 'footer')
+ft <- fontsize(ft, size = 20, part = "all")
+#ft <- autofit(ft)
+ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
+#ft
+save_as_image(ft, path = "covOsaka20.png", zoom = 1, expand = 1, webshot = "webshot")
+#
+# 病状の内訳
+ft <- flextable(data.frame(状況=Cs$children[[1]]$attr,人数=formatC(Cs$children[[1]]$value, format="d", big.mark=',')))
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+ft<- add_header_lines(ft, values = "病状の内訳")
+ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+ft <- fontsize(ft, size = 20, part = "all")
+ft<- set_table_properties(ft, width = 0.35, layout = "autofit")
+save_as_image(ft, path = "covOsaka20_1.png", zoom = 1, expand = 1, webshot = "webshot")
+#
+# 入院調整中の内訳
+ft <- flextable(data.frame(状況=Cs$children[[7]]$attr,人数=formatC(Cs$children[[7]]$value, format="d", big.mark=',')))
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+ft<- add_header_lines(ft, values = "入院調整中の内訳")
+ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+ft <- fontsize(ft, size = 20, part = "all")
+ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
+save_as_image(ft, path = "covOsaka20_2.png", zoom = 1, expand = 1, webshot = "webshot")
+#
+#検査実施人数 & 陽性患者数
+ft <- flextable(data.frame(検査の状況=c("検査実施人数","陽性患者数"),人数=formatC(c(js[[9]][[2]],js[[9]]$children$value), format="d", big.mark=',')))
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+ft<- add_header_lines(ft, values = "検査実施人数 & 陽性患者数")
+ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+ft <- fontsize(ft, size = 20, part = "all")
+ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
+save_as_image(ft, path = "covOsaka20_3.png", zoom = 1, expand = 1, webshot = "webshot")
+```
