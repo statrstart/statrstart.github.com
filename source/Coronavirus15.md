@@ -7,7 +7,7 @@ excerpt: 隔離中、死亡、回復
 
 # 東アジアの感染者の状況(新型コロナウイルス：Coronavirus)
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus15)  
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus15&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 東アジアとシンガポール、東南アジアで日本より人口あたり死亡者数の多いフィリピンとインドネシアの感染者の状況。
 

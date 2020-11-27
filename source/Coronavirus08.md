@@ -6,7 +6,7 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 ---
 
 # 韓国と日本のPCR検査実施人数等比較 (新型コロナウイルス：Coronavirus)
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus08)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus08&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 (使用するデータ)  
 日本 : PCR検査実施人数は、厚生労働省の[報道発表資料](https://www.mhlw.go.jp/stf/houdou/index.html)から抜き出した。    

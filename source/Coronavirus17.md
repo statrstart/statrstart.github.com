@@ -7,7 +7,7 @@ excerpt: 東洋経済オンラインのデータ
 
 # 検査陽性者数(チャーター便を除く国内事例)と政府の対応(新型コロナウイルス：Coronavirus)
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus17)  
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus17&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 (使用するデータ)  
 [東洋経済オンライン:https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)  
