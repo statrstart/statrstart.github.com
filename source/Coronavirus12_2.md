@@ -1,6 +1,6 @@
 ---
 title: 大阪府の検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2020-11-25
+date: 2020-11-26
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -33,6 +33,9 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
+月別死亡者数のデータは「東洋経済オンライン」のデータから作成しています。  
+当たり前ですが「東洋経済オンライン」の方がデータ更新が遅いので月別死亡者数が１日もしくは２日分少なくなります。  
+そこで、１１月２６日からは「大阪市発表の死者の総数 - 東洋経済オンラインの死者の総数」を最終月のデータの数に加えるようにしました。
 
 ![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
 
@@ -175,6 +178,8 @@ title("週単位の陽性者増加比(大阪府)",cex.main=1.5)
 ```
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
+１１月２６日より  
+大阪市発表の死者の総数-東洋経済オンラインの死者の総数を最終月のデータの数に加えるように修正
 
 ```R
 m<- data.frame(month=substring(js[[2]]$data$日付,6,7),小計=js[[2]]$data$小計)
@@ -223,6 +228,10 @@ b<- barplot(cdata[-c(1:2)],las=1,col="slateblue",names=paste0(3:11,"月"),ylim=c
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x= b, y=cdata[-c(1:2)],labels=formatC(cdata[-c(1:2)], format="d", big.mark=','),cex=1.2,pos=3)
 title("大阪府 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
+# 大阪市発表の死者の総数-東洋経済オンラインの死者の総数を最終月のデータの数に加える
+sa<- js[[9]][[3]][[3]][[1]][grep("死亡",js[[9]][[3]][[3]][[1]]$attr),2]-sum(data.xts)
+monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
+#
 b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(3:11,"月"),ylim=c(0,max(monthsum)*1.2))
 text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
 legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
