@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2020-11-29
+date: 2020-11-30
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -114,7 +114,7 @@ colnames(patients)<- c("date","patients")
 patients$date<- sub("-","/",sub("-0","-",sub("^0","",patients$date)))
 #検査実施件数
 df<- data.frame(js[[4]]$data)
-inspection<- data.frame(date=js[[4]]$label,inspection=rowSums(df))
+inspection<- data.frame(date=sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",js[[4]]$label)))),inspection=rowSums(df))
 #patients$id  <- 1:nrow(patients)
 #dat<- merge(patients,inspection,by="date",all.x=T,sort=F)
 #dat<- dat[order(dat$id), ]
@@ -150,7 +150,7 @@ colnames(patients)<- c("date","patients")
 #検査実施件数
 df<- data.frame(js[[4]]$data)
 rownames(df)<- js[[4]]$label
-inspection<- data.frame(date=js[[4]]$label,inspection=rowSums(df))
+inspection<- data.frame(date=sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",js[[4]]$label)))),inspection=rowSums(df))
 #dat<- merge(patients,inspection,by="date",all=T,sort=F)
 dat<- plyr::join(patients,inspection)
 # 1週間の幅で移動平均
@@ -164,7 +164,7 @@ dat2[,4]<- round(dat2[,2]/dat2[,3]*100,2)
 #png("covTokyo02_3.png",width=800,height=600)
 par(mar=c(3,6,4,7),family="serif")
 # プロットする範囲は0%から20%とした
-plot(dat2[,4],type="o",pch=16,lwd=2,las=1,xaxt="n",xlab="",ylab="",bty="n",ylim=c(0,20))
+plot(dat2[,4],type="l",lwd=2,las=1,xaxt="n",xlab="",ylab="",bty="n",ylim=c(0,20))
 box(bty="l",lwd=2)
 # 日付を例えば、01-01を1/1 のように書き直す。
 #dat2[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat2[,1])))
