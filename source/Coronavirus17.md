@@ -14,6 +14,14 @@ excerpt: 東洋経済オンラインのデータ
 
 #### 北海道・東北
 
+##### 表
+
+![Covidtable1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable1.png)
+
+![Covidtable21](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable21.png)
+
+##### グラフ
+
 ![carriersR1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR1.png)
 
 ![deathsR1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR1.png)
@@ -21,6 +29,14 @@ excerpt: 東洋経済オンラインのデータ
 ![seriousR1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR1.png)
 
 #### 関東
+
+##### 表
+
+![Covidtable2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable2.png)
+
+![Covidtable22](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable22.png)
+
+##### グラフ
 
 ![carriersR2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR2.png)
 
@@ -30,6 +46,14 @@ excerpt: 東洋経済オンラインのデータ
 
 #### 中部
 
+##### 表
+
+![Covidtable3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable3.png)
+
+![Covidtable23](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable23.png)
+
+##### グラフ
+
 ![carriersR3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR3.png)
 
 ![deathsR3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR3.png)
@@ -38,13 +62,29 @@ excerpt: 東洋経済オンラインのデータ
 
 #### 近畿
 
+##### 表
+
+![Covidtable4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable4.png)
+
+![Covidtable24](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable24.png)
+
+##### グラフ
+
 ![carriersR4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR4.png)
 
 ![deathsR4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR4.png)
 
 ![seriousR4](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR4.png)
 
-#### 中国
+#### 中国・四国
+
+##### 表
+
+![Covidtable5](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable5.png)
+
+![Covidtable25](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable25.png)
+
+##### グラフ
 
 ![carriersR5](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR5.png)
 
@@ -52,21 +92,21 @@ excerpt: 東洋経済オンラインのデータ
 
 ![seriousR5](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR5.png)
 
-#### 四国
+#### 九州・沖縄
+
+##### 表
+
+![Covidtable6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable6.png)
+
+![Covidtable26](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Covidtable26.png)
+
+##### グラフ
 
 ![carriersR6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR6.png)
 
 ![deathsR6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR6.png)
 
 ![seriousR6](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR6.png)
-
-#### 九州・沖縄
-
-![carriersR7](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/carriersR7.png)
-
-![deathsR7](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/deathsR7.png)
-
-![seriousR7](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/seriousR7.png)
 
 ### Rコード
 
@@ -107,9 +147,9 @@ unique(m$region)
 
 ```R
 name<- "carriersR"
-region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku","Shikoku","Kyushu / Okinawa")
+region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku|Shikoku","Kyushu / Okinawa")
 #
-for (r in 1:7){
+for (r in 1:6){
 code<- as.numeric(m[grep(region[r],m$region),]$SP_ID)
 data<- covid19[[4]]$carriers[code[1],]
 from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
@@ -179,9 +219,9 @@ par(mfrow=c(1,1))
 
 ```R
 name<- "deathsR"
-region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku","Shikoku","Kyushu / Okinawa")
+region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku|Shikoku","Kyushu / Okinawa")
 #
-for (r in 1:7){
+for (r in 1:6){
 code<- as.numeric(m[grep(region[r],m$region),]$SP_ID)
 data<- covid19[[4]]$deaths[code[1],]
 from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
@@ -251,9 +291,9 @@ par(mfrow=c(1,1))
 
 ```R
 name<- "seriousR"
-region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku","Shikoku","Kyushu / Okinawa")
+region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku|Shikoku","Kyushu / Okinawa")
 #
-for (r in 1:7){
+for (r in 1:6){
 code<- as.numeric(m[grep(region[r],m$region),]$SP_ID)
 data<- covid19[[4]]$serious[code[1],]
 from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
@@ -300,4 +340,63 @@ title("\n\n\nデータ：[東洋経済オンライン](https://raw.githubusercon
 dev.off()
 }
 ```
+
+#### 表
+
+##### pngファイルで保存
+
+```R
+# webshot::install_phantomjs()
+library(flextable)
+library(tibble)
+library(webshot)
+#
+zyoukyo<- data.frame(人口=formatC(m$population,format="d",big.mark=","),
+		PCR検査数=formatC(sapply(covid19[[4]]$pcrtested$values,sum),format="d",big.mark=","),
+		検査陽性者数=formatC(sapply(covid19[[4]]$carriers$values,sum),format="d",big.mark=","),
+		退院者数=formatC(sapply(covid19[[4]]$discharged$values,sum),format="d",big.mark=","),
+		死亡者数=formatC(sapply(covid19[[4]]$deaths$values,sum),format="d",big.mark=","),
+		重症者数=formatC(sapply(covid19[[4]]$serious$values,sum),format="d",big.mark=","))
+rownames(zyoukyo)<- covid19[[5]]$ja
+#knitr::kable(zyoukyo)
+#
+zyoukyo2<- data.frame(人口=formatC(m$population,format="d",big.mark=","),
+		人口１万人あたりPCR検査数=formatC(round(sapply(covid19[[4]]$pcrtested$values,sum)/m$population*10^4,0),format="d",big.mark=","),
+		人口１万人あたり検査陽性者数=round(sapply(covid19[[4]]$carriers$values,sum)/m$population*10^4,2),
+		人口１００万人あたり死亡者数=round(sapply(covid19[[4]]$deaths$values,sum)/m$population*10^6,2))
+rownames(zyoukyo2)<- covid19[[5]]$ja
+#knitr::kable(zyoukyo2)
+#
+name<- "Covidtable"
+region<- c("Hokkaido|Tohoku","Kanto","Chubu","Kinki","Chugoku|Shikoku","Kyushu / Okinawa")
+#
+for (r in 1:6){
+code<- as.numeric(m[grep(region[r],m$region),]$SP_ID)
+ft <- flextable(rownames_to_column(zyoukyo[code,]))
+ft <- set_header_labels(ft, rowname = "都道府県名")
+ft<- align(ft, i = NULL, j = -1, align = "right",part="all")
+ft<- add_header_lines(ft, values = "新型コロナウイルスの状況")
+ft<- add_footer_lines(ft, values =covid19[[1]]$last$ja)
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+# 'all', 'body', 'header', 'footer')
+ft <- fontsize(ft, size = 20, part = "all")
+#ft <- autofit(ft)
+ft<- set_table_properties(ft, width = 1, layout = "autofit")
+#ft
+save_as_image(ft, path = paste0(name,r,".png"), zoom = 1, expand = 1, webshot = "webshot")
+#
+ft <- flextable(rownames_to_column(zyoukyo2[code,]))
+ft <- set_header_labels(ft, rowname = "都道府県名")
+ft<- align(ft, i = NULL, j = -1, align = "right",part="all")
+ft<- add_header_lines(ft, values = "新型コロナウイルスの状況(人口あたり)")
+ft<- add_footer_lines(ft, values =covid19[[1]]$last$ja)
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+ft <- fontsize(ft, size = 20, part = "all")
+#ft <- autofit(ft)
+ft<- set_table_properties(ft, width = 1, layout = "autofit")
+#ft
+save_as_image(ft, path = paste0(name,"2",r,".png"), zoom = 1, expand = 1, webshot = "webshot")
+}
+```
+
 
