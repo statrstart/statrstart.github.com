@@ -1,6 +1,6 @@
 ---
 title: 大阪府の検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2020-11-30
+date: 2020-12-01
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -22,8 +22,11 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 #### 表:大阪府の状況（新型コロナウイルス）
 ![covOsaka20_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20_3.png)
+
 ![covOsaka20](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20.png)
+
 ![covOsaka20_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20_1.png)
+
 ![covOsaka20_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20_2.png)
 
 #### 陽性者の人数：時系列(大阪府)
