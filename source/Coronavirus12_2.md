@@ -16,6 +16,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
 
+#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
+
+![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
+
 #### 表:大阪府の状況（新型コロナウイルス）
 ![covOsaka20_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20_3.png)
 ![covOsaka20](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka20.png)
@@ -234,7 +238,7 @@ b<- barplot(cdata[-c(1:2)],las=1,col="slateblue",names=paste0(3:11,"月"),ylim=c
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x= b, y=cdata[-c(1:2)],labels=formatC(cdata[-c(1:2)], format="d", big.mark=','),cex=1.2,pos=3)
 title("大阪府 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
-# 大阪市発表の死者の総数-東洋経済オンラインの死者の総数を最終月のデータの数に加える
+# 大阪府発表の死者の総数-東洋経済オンラインの死者の総数を最終月のデータの数に加える
 sa<- js[[9]][[3]][[3]][[1]][grep("死亡",js[[9]][[3]][[3]][[1]]$attr),2]-sum(data.xts)
 monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
 #
@@ -386,4 +390,52 @@ ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
 ft <- fontsize(ft, size = 20, part = "all")
 ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
 save_as_image(ft, path = "covOsaka20_3.png", zoom = 1, expand = 1, webshot = "webshot")
+```
+
+#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
+
+```R
+library(sf)
+library(NipponMap)
+shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
+m <- sf::read_sf(shp)
+#データの順序が一致しているか確認
+covid19[[5]]$en==m$name
+all(covid19[[5]]$en==m$name)
+# 東京都
+code<-13
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+# 大阪府
+code<-27
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+tmp.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+data.xts<- merge(data.xts,tmp.xts)
+colnames(data.xts)<- c("Tokyo","Osaka")
+#
+#png("covOvsT01.png",width=800,height=600)
+par(mar=c(5,4,5,1),family="serif")
+matplot(coredata(data.xts),type="l",lwd=2.5,lty=1,las=1,xaxt="n",yaxt="n",ylim=c(0,max(data.xts,na.rm=T)*1.1),col=c("blue","red"),xlab="",ylab="",bty="n")
+box(bty="l",lwd=2)
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+#表示するx軸ラベルを指定
+# 2020- を削除。01-01 -> 1/1 
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",index(data.xts)))))
+# 毎月1日
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+#labelpos<- paste0(rep(1:12,each=2),"/",c(10,20))
+#for (i in labelpos){
+#	at<- match(i,labels)
+#	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
+#	}
+legend("topleft",inset=0.03,legend=colnames(data.xts),col=c("blue","red"),lwd=2.5,lty=1)
+title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)","データ：[東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)",line=3)
+#dev.off()
 ```
