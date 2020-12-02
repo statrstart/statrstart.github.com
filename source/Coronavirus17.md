@@ -1,6 +1,6 @@
 ---
 title: 都道府県別月別検査陽性者数と死亡者数及び重症者数の推移(新型コロナウイルス：Coronavirus)
-date: 2020-12-01
+date: 2020-12-02
 tags: ["R","jsonlite","xts","Coronavirus","新型コロナウイルス"]
 excerpt: 東洋経済オンラインのデータ
 ---
@@ -374,6 +374,7 @@ for (r in 1:6){
 code<- as.numeric(m[grep(region[r],m$region),]$SP_ID)
 ft <- flextable(rownames_to_column(zyoukyo[code,]))
 ft <- set_header_labels(ft, rowname = "都道府県名")
+ft <- bg(ft, bg = "wheat", part = "header")
 ft<- align(ft, i = NULL, j = -1, align = "right",part="all")
 ft<- add_header_lines(ft, values = "新型コロナウイルスの状況")
 ft<- add_footer_lines(ft, values =covid19[[1]]$last$ja)
@@ -387,6 +388,10 @@ save_as_image(ft, path = paste0(name,r,".png"), zoom = 1, expand = 1, webshot = 
 #
 ft <- flextable(rownames_to_column(zyoukyo2[code,]))
 ft <- set_header_labels(ft, rowname = "都道府県名")
+ft <- bg(ft, bg = "wheat", part = "header")
+ft <- bg(ft, i= ~人口１００万人あたり死亡者数 > 10, bg = rgb(1,0,0,alpha=0.05), part = "body")
+ft <- bg(ft, i= ~人口１００万人あたり死亡者数 > 30, bg = rgb(1,0,0,alpha=0.1), part = "body")
+ft <- color(ft, i= ~人口１００万人あたり死亡者数 > 10, color = "black", part = "body")
 ft<- align(ft, i = NULL, j = -1, align = "right",part="all")
 ft<- add_header_lines(ft, values = "新型コロナウイルスの状況(人口あたり)")
 ft<- add_footer_lines(ft, values =covid19[[1]]$last$ja)
