@@ -84,16 +84,30 @@ names(js)
 ```R
 #date
 tbl<- data.frame(小計=js[[2]]$data$小計)
-rownames(tbl)<- substring(js[[2]]$data$日付,6,10)
+rownames(tbl)<- sub("-","/",sub("-0","-",sub("^0","",substring(js[[2]]$data$日付,6,10))))
 #元から日付順になっているのでこの部分は不要
 #tbl<- tbl[order(names(tbl))]
 sma7<- round(SMA(tbl,7),2)
-# png("covOsaka01.png",width=800,height=600)
+#png("covOsaka01.png",width=800,height=600)
 par(mar=c(3,7,4,2),family="serif")
 b<- barplot(t(tbl),las=1,ylim=c(0,max(tbl)*1.2),col="red")
 lines(x=b,y=sma7,lwd=2.5,col="blue")
 legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
 title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
+#
+labels<- rownames(tbl)
+events<- data.frame(
+	date=c("4/14","4/15","8/4","11/1"),
+	events=c("4月14日\n大坂ワクチン\n会見","4月中旬\n「雨合羽」寄付受付","8月4日\nイソジン会見",
+	"11月1日\n大阪市廃止・\n特別区設置\n住民投票"),ypos= c(350,450,450,450))
+#
+for (i in 1:nrow(events)){
+	labelpos<- events$date[i]
+	xpos<- b[match(labelpos,labels)]
+	ypos<- events$ypos[i]
+	points(x=xpos,y=ypos,pch=25,bg="red",cex=1.2,xpd=T)
+	text(x=xpos,y=ypos,labels=events$events[i],xpd=T,pos=3)
+}
 #dev.off()
 ```
 
