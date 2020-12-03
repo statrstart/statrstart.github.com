@@ -373,6 +373,8 @@ library(webshot)
 Cs<- js[[9]][[3]][[3]][[1]]
 # 大阪府の状況（新型コロナウイルス）
 ft <- flextable(data.frame(状況=Cs$attr,人数=formatC(Cs$value, format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
+ft <- color(ft, i= 3,j=2, color = "red", part = "body")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 #ft <- set_header_labels(ft, rowname = "状況")
 ft<- add_header_lines(ft, values = "大阪府の状況（新型コロナウイルス）")
@@ -387,6 +389,8 @@ save_as_image(ft, path = "covOsaka20.png", zoom = 1, expand = 1, webshot = "webs
 #
 # 病状の内訳
 ft <- flextable(data.frame(状況=Cs$children[[1]]$attr,人数=formatC(Cs$children[[1]]$value, format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
+ft <- color(ft, i= 2,j=2, color = "red", part = "body")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 ft<- add_header_lines(ft, values = "病状の内訳")
 ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
@@ -397,6 +401,7 @@ save_as_image(ft, path = "covOsaka20_1.png", zoom = 1, expand = 1, webshot = "we
 #
 # 入院調整中の内訳
 ft <- flextable(data.frame(状況=Cs$children[[7]]$attr,人数=formatC(Cs$children[[7]]$value, format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 ft<- add_header_lines(ft, values = "入院調整中の内訳")
 ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
@@ -407,6 +412,7 @@ save_as_image(ft, path = "covOsaka20_2.png", zoom = 1, expand = 1, webshot = "we
 #
 #検査実施人数 & 陽性患者数
 ft <- flextable(data.frame(検査の状況=c("検査実施人数","陽性患者数"),人数=formatC(c(js[[9]][[2]],js[[9]]$children$value), format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 ft<- add_header_lines(ft, values = "検査実施人数 & 陽性患者数")
 ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
