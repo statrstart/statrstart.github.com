@@ -1,6 +1,6 @@
 ---
 title: 大阪府の検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2020-12-02
+date: 2020-12-03
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -89,8 +89,13 @@ rownames(tbl)<- sub("-","/",sub("-0","-",sub("^0","",substring(js[[2]]$data$日�
 #tbl<- tbl[order(names(tbl))]
 sma7<- round(SMA(tbl,7),2)
 #png("covOsaka01.png",width=800,height=600)
-par(mar=c(3,7,4,2),family="serif")
-b<- barplot(t(tbl),las=1,ylim=c(0,max(tbl)*1.2),col="red")
+par(mar=c(3,4,4,2),family="serif")
+b<- barplot(t(tbl),las=1,ylim=c(0,max(tbl)*1.2),col="red",axisnames=F)
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,rownames(tbl))
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
 lines(x=b,y=sma7,lwd=2.5,col="blue")
 legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
 title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
@@ -98,8 +103,9 @@ title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
 labels<- rownames(tbl)
 events<- data.frame(
 	date=c("4/14","4/15","8/4","11/1"),
-	events=c("4月14日\n大坂ワクチン\n会見","4月中旬\n「雨合羽」寄付受付","8月4日\nイソジン会見",
-	"11月1日\n大阪市廃止・\n特別区設置\n住民投票"),ypos= c(350,450,450,450))
+	events=c("4月14日\n大阪ワクチン\n会見\n「早ければ７月にも治験を始めたい」","4月中旬\n「雨合羽」寄付受付",
+	"8月4日\nイソジン会見\n「ウソみたいなホントの話をさせて頂きたい」",	"11月1日\n大阪市廃止・\n特別区設置\n住民投票"),
+	ypos= c(350,450,450,450))
 #
 for (i in 1:nrow(events)){
 	labelpos<- events$date[i]
@@ -311,7 +317,7 @@ days
 ```R
 #png("KoumuOsakashi.png",width=800,height=600)
 par(mar=c(3,7,3,2),family="serif")
-b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="firebrick2",names=paste0(1:11,"月"))
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="firebrick2",names=paste0(1:12,"月"))
 text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3)
 legend(x="topleft",legend="市の考え方
 大阪市ホームページにおいて、「公務日程なし」と記載している時でありましても、
