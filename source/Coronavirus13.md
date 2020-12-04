@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2020-12-03
+date: 2020-12-04
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -95,8 +95,14 @@ sma7<- round(SMA(dat[,"patients"],7),2)
 dat[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat[,1])))
 ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
 #png("covTokyo01.png",width=800,height=600)
-par(mar=c(3,7,4,2),family="serif")
-b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"patients"],na.rm=T)*1.1))
+par(mar=c(5,3,4,2),family="serif")
+b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"patients"],na.rm=T)*1.1),axisnames=F)
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,dat[,1])
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
 lines(x=b,y=sma7,lwd=2.5,col="blue")
 legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
 legend("topleft",inset=c(0.03,0.15),bty="n",cex=1.5,legend=c(paste0(js[[3]]$date,"現在"),ritsu2))

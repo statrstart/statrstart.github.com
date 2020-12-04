@@ -1,6 +1,6 @@
 ---
 title: 大阪府の検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2020-12-03
+date: 2020-12-04
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -89,13 +89,14 @@ rownames(tbl)<- sub("-","/",sub("-0","-",sub("^0","",substring(js[[2]]$data$日�
 #tbl<- tbl[order(names(tbl))]
 sma7<- round(SMA(tbl,7),2)
 #png("covOsaka01.png",width=800,height=600)
-par(mar=c(3,4,4,2),family="serif")
+par(mar=c(5,4,4,2),family="serif")
 b<- barplot(t(tbl),las=1,ylim=c(0,max(tbl)*1.2),col="red",axisnames=F)
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,rownames(tbl))
 	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
 lines(x=b,y=sma7,lwd=2.5,col="blue")
 legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
 title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
