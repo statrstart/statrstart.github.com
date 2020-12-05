@@ -9,8 +9,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus12_2&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
-> ## 2020-11-16以降、陽性者の属性のデータ公開はなくなりました。
-
 (参考)[大阪府の最新感染動向](https://covid19-osaka.info/)  
 
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
