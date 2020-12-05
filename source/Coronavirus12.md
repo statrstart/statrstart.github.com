@@ -10,7 +10,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus12)  
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus12&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
-> ## 2020-11-16以降、陽性者の属性のデータ公開はなくなりましたので、陽性者の居住地、年齢、性別を用いたグラフは更新されません。
+> ## 2020-11-16以降、陽性者の属性のデータ公開はなくなりましたので、陽性者の居住地、年齢、性別を用いたグラフ及び地図は更新されません。
 
 ## 新しい記事は[大阪府の検査陽性者(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus12_2)です。  
 
@@ -20,32 +20,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 地図の元データ：[国土数値情報 行政区域データ](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!)  
 市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
-
-#### 人口１万人あたりの検査陽性者数(大阪府市町村別)の推移 「2020-11-15までのデータ」
-
-![covOsaka10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka10.png)
-
-#### 月別検査陽性者数（大阪府:大阪市と大阪市以外で色分け）「2020-11-15までのデータ」
-
-![covOsaka09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09.png)
-- 大阪市は人口の割合は約３割なのに６月以降の検査陽性者数の割合は約５割をしめる。
-
-#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
-
-![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
-
-#### 月別の陽性者の属性:年代(大阪府)「2020-11-15までのデータ」
-
-![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
-
-#### 月別年代別の陽性者数と月別死亡者数(東洋経済のデータの方が更新が遅いので死亡者数が現在値より少ない場合あり)
-上のグラフ（上段）プラス 東洋経済のデータから作成した月別死亡者数のグラフ（下段）
-
-![covOsaka06_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06_2.png)
-
-- 8月に入ってから70歳以上の検査陽性者が増加。
-- 死亡者数も8月に入ってから増加しているが、4、5月を見ると陽性者の増加と死亡者の増加する時期には一月ほどのずれがある。
-- 本格的に死亡者が増加するのは来月だと思われる。  
 
 #### 時系列
 
@@ -62,6 +36,33 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 #### 週単位の陽性者増加比
 
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
+
+#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
+
+![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
+
+#### 人口１万人あたりの検査陽性者数(大阪府市町村別)の推移 「2020-11-15までのデータ」
+
+![covOsaka10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka10.png)
+
+#### 月別検査陽性者数（大阪府:大阪市と大阪市以外で色分け）「2020-11-15までのデータ」
+
+![covOsaka09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09.png)
+- 大阪市は人口の割合は約３割なのに６月以降の検査陽性者数の割合は約５割をしめる。
+
+#### 月別の陽性者の属性:年代(大阪府)
+
+![covOsaka06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06.png)
+
+#### 月別年代別の陽性者数と月別死亡者数(東洋経済のデータの方が更新が遅いので死亡者数が現在値より少ない場合あり)
+上のグラフ（上段）プラス 東洋経済のデータから作成した月別死亡者数のグラフ（下段）
+「2020-11-15までのデータ」
+
+![covOsaka06_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka06_2.png)
+
+- 8月に入ってから70歳以上の検査陽性者が増加。
+- 死亡者数も8月に入ってから増加しているが、4、5月を見ると陽性者の増加と死亡者の増加する時期には一月ほどのずれがある。
+- 本格的に死亡者が増加するのは来月だと思われる。  
 
 #### 居住地「2020-11-15までのデータ」
 
