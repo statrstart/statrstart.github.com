@@ -56,7 +56,6 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 日本のデータでありえない箇所（検査者数がマイナス!）がある。
 
-
 ### 韓国の(報告された)陽性者数 対数表示（日別）
 対数表示にして結果判明した数に対する陽性者数の増減をわかりやすくしてみた。
 
@@ -104,6 +103,11 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 オーストラリアのグラフを見る限り、冬場は致死率がかなり上昇するようです。
 
 ![Ddata03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Ddata03.png)
+
+#### 北海道、東京、神奈川、愛知、大阪の致死率７日移動平均（データ：東洋経済オンライン）
+やはり寒さの厳しい北海道の致死率が急上昇しています。
+
+![covOsaka11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka11.png)
 
 ### 日本、韓国、台湾、シンガポール、香港の面積、人口、人口密度
 
@@ -1372,6 +1376,84 @@ title("主な地点の平年値(日本、韓国、オーストラリア)",
 #dev.off()
 ```
 
+#### 致死率　７日移動平均（Hokkaido|Tokyo|Kanagawa|Aichi|Osaka）
+
+```R
+library(jsonlite)
+library(xts)
+library(TTR)
+#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
+# https://toyokeizai.net/sp/visual/tko/covid19/
+#著作権「東洋経済オンライン」
+covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
+#
+code<- covid19[[5]][grep("Hokkaido|Tokyo|Kanagawa|Aichi|Osaka",covid19[[5]]$en),]$code
+#
+#感染者数
+# 
+Cdata<- covid19[[4]]$carriers[code[1],]
+from<- as.Date(paste0(Cdata$from[[1]][1],"-",Cdata$from[[1]][2],"-",Cdata$from[[1]][3]))
+Cdata.xts<- xts(x=Cdata$values[[1]],seq(as.Date(from),length=nrow(Cdata$values[[1]]),by="days"))
+# 
+for (i in code[-1]){
+	Cdata<- covid19[[4]]$carriers[i,]
+	from<- as.Date(paste0(Cdata$from[[1]][1],"-",Cdata$from[[1]][2],"-",Cdata$from[[1]][3]))
+	tmp.xts<- xts(x=Cdata$values[[1]],seq(as.Date(from),length=nrow(Cdata$values[[1]]),by="days"))
+	Cdata.xts<- merge(Cdata.xts,tmp.xts)
+}
+# NA<- 0
+coredata(Cdata.xts)[is.na(Cdata.xts)]<- 0
+colnames(Cdata.xts)<- paste0(covid19[[5]]$ja[code],"C")
+#
+#死者数
+# 
+Ddata<- covid19[[4]]$deaths[code[1],]
+from<- as.Date(paste0(Ddata$from[[1]][1],"-",Ddata$from[[1]][2],"-",Ddata$from[[1]][3]))
+Ddata.xts<- xts(x=Ddata$values[[1]],seq(as.Date(from),length=nrow(Ddata$values[[1]]),by="days"))
+# 
+for (i in code[-1]){
+	Ddata<- covid19[[4]]$deaths[i,]
+	from<- as.Date(paste0(Ddata$from[[1]][1],"-",Ddata$from[[1]][2],"-",Ddata$from[[1]][3]))
+	tmp.xts<- xts(x=Ddata$values[[1]],seq(as.Date(from),length=nrow(Ddata$values[[1]]),by="days"))
+	Ddata.xts<- merge(Ddata.xts,tmp.xts)
+}
+# NA<- 0
+coredata(Ddata.xts)[is.na(Ddata.xts)]<- 0
+colnames(Ddata.xts)<- paste0(covid19[[5]]$ja[code],"D")
+#
+data.xts<- merge(Cdata.xts,Ddata.xts)
+# 致死率(%)7日移動平均
+#死者数(7日間合計)/陽性者数(7日間合計)*100
+data<-  data.frame(apply(data.xts,2,runSum,7))
+rownames(data)<- as.character(index(data.xts))
+data<- data[-c(1:6),]
+#
+for (i in 1:length(code)){
+	data<- cbind(data, round(data[,(i+length(code))]/data[,i]*100,2))
+}
+#
+data2<- data[,(length(code)*2+1):(length(code)*3)]
+colnames(data2)<- covid19[[5]]$ja[code]
+#７月半ばから
+data2<- data2[-c(1:150),]
+#
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(data2)))))
+# 毎月1日
+labelpos<- paste0(1:12,"/",1)
+#png("covOsaka11.png",width=800,height=600)
+par(mar=c(5,4,5,9),family="serif")
+matplot(data2,type="l",lty=1,col=rainbow(length(code),alpha=0.8),lwd=1.5,las=1,bty="n",xlab="",ylab="",xaxt="n",xaxs="i")
+box(bty="l",lwd=2.5)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+text(x=par("usr")[1],y=par("usr")[4],labels="(%)",pos=2,xpd=T)
+text(x=par("usr")[2],y=tail(data2,1),labels=paste0(colnames(data2),":",tail(data2,1),"%"),xpd=T,pos=4)
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+title("致死率（％）７日移動平均[データ：東洋経済オンライン]")
+#dev.off()
+```
 
 (注意)  
 [新型コロナウイルス感染症の現在の状況と厚生労働省の対応について（令和２年４月21日版）](https://www.mhlw.go.jp/stf/newpage_10965.html)  
