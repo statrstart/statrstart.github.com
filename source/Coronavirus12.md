@@ -41,6 +41,12 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
 
+#### 大阪市：市長の公務ありなしのカレンダーと公務日程なしの月別日数
+- 公務時間は考慮していません。
+
+![Okoumu01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu01.png)
+![KoumuOsakashi](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/KoumuOsakashi.png)
+
 #### 人口１万人あたりの検査陽性者数(大阪府市町村別)の推移 「2020-11-15までのデータ」
 
 ![covOsaka10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka10.png)
