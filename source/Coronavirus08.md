@@ -840,9 +840,17 @@ dat<-rbind(diff(df2$感染者数),diff(df2$陰性))
 rownames(dat)<- c("陽性","陰性")
 colnames(dat)<- gsub("2020-","",rownames(df2[-1,]))
 #png("pcr08.png",width=800,height=600)
-par(mar=c(4,6,4,2),family="serif")
-barplot(dat,names=gsub("2020-","",rownames(df[-1,])),col=c("red","lightblue"),las=1,legend=T,
-	args.legend=list(x="topleft",inset=c(0.03,0.03)))
+par(mar=c(6,6,4,2),family="serif")
+b<- barplot(dat,col=c("red","lightblue"),las=1,legend=T,ylim=c(0,max(dat,na.rm=T)*1.1),
+	args.legend=list(x="topleft",inset=c(0.03,0.03)),axisnames=F)
+box(bty="l",lwd=2)
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(df[-1,])))))
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
 title("韓国のPCR検査の結果（日別）",cex.main=2)
 #dev.off()
 ```
@@ -853,9 +861,16 @@ title("韓国のPCR検査の結果（日別）",cex.main=2)
 date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
 ylim<- max(max(diff(Jdf$Confirmed),na.rm=T),max(diff(df$感染者数),na.rm=T))*1.2
 #png("pcr07.png",width=800,height=600)
-par(mar=c(4,6,4,2),family="serif")
-barplot(diff(Jdf$Confirmed),col=rgb(1,0,0,alpha=0.5),axes=F,ylim=c(0,ylim))
-barplot(diff(df$感染者数),names=date2,col=rgb(0,1,0,alpha=0.5),las=1,add=T,ylim=c(0,ylim))
+par(mar=c(6,6,4,2),family="serif")
+b<- barplot(diff(Jdf$Confirmed),col=rgb(1,0,0,alpha=0.5),axes=F,ylim=c(0,ylim))
+barplot(diff(df$感染者数),col=rgb(0,1,0,alpha=0.5),las=1,add=T,ylim=c(0,ylim))
+labels<- date2
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=c(0.03,0.08),pch=15,col=c(rgb(1,0,0,alpha=0.5),rgb(0,1,0,alpha=0.5)),legend=c("日本","韓国"),bty="n",cex=1.5)
 title("日本と韓国の検査陽性者数（日別）",cex.main=1.5)
 #dev.off()
@@ -948,13 +963,20 @@ dat[dat==0]<- NA
 dat2<- diff(df2$結果判明)
 ylim<- c(0.9,max(dat2,na.rm=T)*1.5)
 #png("pcr08_2.png",width=800,height=600)
-par(mar=c(4,5,4,2),family="serif")
-b<- barplot(rep(NA,length(dat)),names=date2,las=1,log="y",ylim=ylim)
+par(mar=c(4,5,4,3),family="serif")
+b<- barplot(rep(NA,length(dat)),las=1,log="y",ylim=ylim)
 abline(h=10^(0:4),col="darkgray",lwd=1.2,lty=3)
 for (i in 1:9){
 	abline(h=i*10^(0:4),col="darkgray",lwd=0.8,lty=3)
 }
 barplot(dat,col="red",las=1,log="y",ylim=ylim,axes=F,add=T)
+labels<- date2
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
 lines(x=b,y=dat2,lwd=2,col="darkgreen")
 points(x=b,y=dat2,pch=16,col="darkgreen")
 #text(x=par("usr")[2],y=dat2[length(dat2)],labels="結果判明",col="darkgreen",xpd=T)
@@ -973,13 +995,20 @@ dat2<- diff(Jdf$Tested)
 # 韓国のグラフにyの範囲を揃える
 ylim<- c(0.9,max(diff(df2$結果判明),na.rm=T)*1.5)
 #png("pcr08_3.png",width=800,height=600)
-par(mar=c(4,5,4,),family="serif")
-b<- barplot(rep(NA,length(dat)),names=date2,las=1,log="y",ylim=ylim)
+par(mar=c(4,5,4,3),family="serif")
+b<- barplot(rep(NA,length(dat)),las=1,log="y",ylim=ylim)
 abline(h=10^(0:4),col="darkgray",lwd=1.2,lty=3)
 for (i in 1:9){
 	abline(h=i*10^(0:4),col="darkgray",lwd=0.8,lty=3)
 }
 barplot(dat,col="red",las=1,log="y",ylim=ylim,axes=F,add=T)
+labels<- date2
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
 lines(x=b,y=dat2,lwd=2,col="darkgreen")
 points(x=b,y=dat2,pch=16,col="darkgreen")
 legend("topleft",inset=0.03,bty="n",legend="PCR検査実施人数",lwd=2,lty=1,pch=16,col="darkgreen")
