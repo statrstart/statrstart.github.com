@@ -1481,6 +1481,7 @@ for (i in labelpos){
 text(x=par("usr")[1],y=par("usr")[4],labels="(%)",pos=2,xpd=T)
 text(x=par("usr")[2],y=tail(data2,1),labels=paste0(colnames(data2),":",tail(data2,1),"%"),xpd=T,pos=4)
 mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+legend("topleft",inset=c(0.03,0.03),legend=colnames(data2),lty=1,col=rainbow(length(code),alpha=0.8),lwd=1.5,xpd=T)
 title("致死率（％）７日移動平均[データ：東洋経済オンライン]")
 #dev.off()
 ```
