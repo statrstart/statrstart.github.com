@@ -104,7 +104,7 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 
 ![Ddata03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Ddata03.png)
 
-#### 北海道、東京、神奈川、愛知、大阪の致死率７日移動平均（データ：東洋経済オンライン）
+#### 北海道、埼玉、東京、神奈川、愛知、大阪の致死率７日移動平均（データ：東洋経済オンライン）
 案の定、寒さの厳しい北海道の致死率が急上昇しています。
 
 ![covOsaka11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka11.png)
