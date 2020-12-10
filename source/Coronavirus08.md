@@ -109,6 +109,11 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 
 ![covOsaka11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka11.png)
 
+#### 北海道、埼玉、東京、神奈川、愛知、大阪の月別死者数と月別人口１００万人あたりの死者数（データ：東洋経済オンライン）
+大阪の気温は他と比べて低いわけではないのにここ数ヶ月の死者数は比較的多い。
+
+![covOsaka12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka12.png)
+
 ### 日本、韓国、台湾、シンガポール、香港の面積、人口、人口密度
 
 |   country    |    area|         pop| Population.density|
