@@ -25,6 +25,14 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
 
+#### 他の都道府県（人口規模の大きい）との比較
+##### 月別死者数と月別人口１００万人あたりの死者数（データ：東洋経済オンライン）
+北海道(約550万人)、埼玉(約719万人)、東京(約1316万人)、神奈川(約905万人)、愛知(約741万人)、大阪(約886万人)
+- １１月以降、寒さの厳しい北海道の死者数が激増。
+- 大阪の気温は他と比べて低いわけではないのに８月以降の死者数は比較的多い。
+
+![covOsaka12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka12.png)
+
 #### 時系列
 
 ![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
