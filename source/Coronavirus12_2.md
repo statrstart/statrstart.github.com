@@ -14,7 +14,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
 
-#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
+#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
 
 ![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
 
@@ -422,31 +422,30 @@ ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
 save_as_image(ft, path = "covOsaka20_3.png", zoom = 1, expand = 1, webshot = "webshot")
 ```
 
-#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)
+#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数
 
 ```R
 library(sf)
 library(NipponMap)
 shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
 m <- sf::read_sf(shp)
-#データの順序が一致しているか確認
-covid19[[5]]$en==m$name
-all(covid19[[5]]$en==m$name)
+#[NHK:新型コロナ データ一覧](https://www3.nhk.or.jp/news/special/coronavirus/data-widget/)
+nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
 # 東京都
 code<-13
-data<- covid19[[4]]$deaths[code,]
-from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
-data.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+data<- nhkC[nhkC$都道府県コード==code,c(1,7)]
+data.xts<- as.xts(read.zoo(data, format="%Y/%m/%d"))
+data.xts<- round(data.xts[,1]*1000000/m$population[code],2)
 # 大阪府
 code<-27
-data<- covid19[[4]]$deaths[code,]
-from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
-tmp.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+data<- nhkC[nhkC$都道府県コード==code,c(1,7)]
+tmp.xts<- as.xts(read.zoo(data, format="%Y/%m/%d"))
+tmp.xts<- round(tmp.xts[,1]*1000000/m$population[code],2)
 data.xts<- merge(data.xts,tmp.xts)
 colnames(data.xts)<- c("Tokyo","Osaka")
 #
 #png("covOvsT01.png",width=800,height=600)
-par(mar=c(5,4,5,1),family="serif")
+par(mar=c(5,4,5,6),family="serif")
 matplot(coredata(data.xts),type="l",lwd=2.5,lty=1,las=1,xaxt="n",yaxt="n",ylim=c(0,max(data.xts,na.rm=T)*1.1),col=c("blue","red"),xlab="",ylab="",bty="n")
 box(bty="l",lwd=2)
 # Add comma separator to axis labels
@@ -466,6 +465,9 @@ for (i in labelpos){
 #	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
 #	}
 legend("topleft",inset=0.03,legend=colnames(data.xts),col=c("blue","red"),lwd=2.5,lty=1)
-title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)","データ：[東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)",line=3)
+text(x=par("usr")[2],y=tail(data.xts,1),xpd=T,
+	labels=paste0(colnames(data.xts),"\n",tail(data.xts,1),"人"))
+title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数",
+	"データ：[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)",line=3)
 #dev.off()
 ```
