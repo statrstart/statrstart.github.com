@@ -61,7 +61,8 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![KoumuOsakashi](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/KoumuOsakashi.png)
 
 #### 塗り分け地図：PCR検査 陽性者数(大阪府市町村別)
-データ：[【12月14日】新型コロナウイルス感染症患者の発生及び死亡について [Excelファイル／56KB]](http://www.pref.osaka.lg.jp/attach/23711/00376026/1214.xlsx)
+データ：[【12月16日】新型コロナウイルス感染症患者の発生及び死亡について [Excelファイル／63KB]]
+(http://www.pref.osaka.lg.jp/attach/23711/00376026/1216.xlsx)
 
 ![osakaCmap03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap03.png)
 
