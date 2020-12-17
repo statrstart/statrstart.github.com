@@ -103,13 +103,13 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 
 ![Ddata03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Ddata03.png)
 
-#### 北海道、埼玉、東京、神奈川、愛知、大阪の致死率７日移動平均（データ：東洋経済オンライン）
+#### 北海道、埼玉、東京、神奈川、愛知、大阪の致死率７日移動平均（データ：NHK）
 北海道(約550万人)、埼玉(約719万人)、東京(約1316万人)、神奈川(約905万人)、愛知(約741万人)、大阪(約886万人)
 - 案の定、寒さの厳しい北海道の致死率が急上昇しています。
 
 ![covOsaka11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka11.png)
 
-#### 北海道、埼玉、東京、神奈川、愛知、大阪の月別死者数と月別人口１００万人あたりの死者数（データ：東洋経済オンライン）
+#### 北海道、埼玉、東京、神奈川、愛知、大阪の月別死者数と月別人口１００万人あたりの死者数（データ：NHK）
 北海道(約550万人)、埼玉(約719万人)、東京(約1316万人)、神奈川(約905万人)、愛知(約741万人)、大阪(約886万人)
 - 大阪の気温は他と比べて低いわけではないのに８月以降の死者数は比較的多い。
 (注)「人口１００万人あたり新型コロナウイルス月別死亡者」のグラフを直しました。(2020-12-12)
@@ -1422,63 +1422,54 @@ title("主な地点の平年値(日本、韓国、オーストラリア)",
 #### 致死率　７日移動平均（Hokkaido|Tokyo|Kanagawa|Aichi|Osaka）
 
 ```R
-library(jsonlite)
 library(xts)
 library(TTR)
-#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
-# https://toyokeizai.net/sp/visual/tko/covid19/
-#著作権「東洋経済オンライン」
-covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
-#
-code<- covid19[[5]][grep("Hokkaido|Tokyo|Kanagawa|Aichi|Osaka",covid19[[5]]$en),]$code
-#
+#[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
+nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
+save(nhkC,file="nhkC.Rdata")
+#load("nhkC.Rdata")
+code<- c(1, 11, 13, 14, 23, 27)
 #感染者数
 # 
-Cdata<- covid19[[4]]$carriers[code[1],]
-from<- as.Date(paste0(Cdata$from[[1]][1],"-",Cdata$from[[1]][2],"-",Cdata$from[[1]][3]))
-Cdata.xts<- xts(x=Cdata$values[[1]],seq(as.Date(from),length=nrow(Cdata$values[[1]]),by="days"))
+Cdata<- nhkC[nhkC$都道府県コード==code[1],c(1,4)]
+Cdata.xts<- as.xts(read.zoo(Cdata, format="%Y/%m/%d"))
 # 
 for (i in code[-1]){
-	Cdata<- covid19[[4]]$carriers[i,]
-	from<- as.Date(paste0(Cdata$from[[1]][1],"-",Cdata$from[[1]][2],"-",Cdata$from[[1]][3]))
-	tmp.xts<- xts(x=Cdata$values[[1]],seq(as.Date(from),length=nrow(Cdata$values[[1]]),by="days"))
+	Cdata<- nhkC[nhkC$都道府県コード== i,c(1,4)]
+	tmp.xts<- as.xts(read.zoo(Cdata, format="%Y/%m/%d"))
 	Cdata.xts<- merge(Cdata.xts,tmp.xts)
 }
 # NA<- 0
 coredata(Cdata.xts)[is.na(Cdata.xts)]<- 0
-colnames(Cdata.xts)<- paste0(covid19[[5]]$ja[code],"C")
+colnames(Cdata.xts)<- paste0(unique(nhkC[nhkC$都道府県コード==code,"都道府県名"]),"C")
 #
 #死者数
 # 
-Ddata<- covid19[[4]]$deaths[code[1],]
-from<- as.Date(paste0(Ddata$from[[1]][1],"-",Ddata$from[[1]][2],"-",Ddata$from[[1]][3]))
-Ddata.xts<- xts(x=Ddata$values[[1]],seq(as.Date(from),length=nrow(Ddata$values[[1]]),by="days"))
+Ddata<- nhkC[nhkC$都道府県コード==code[1],c(1,6)]
+Ddata.xts<- as.xts(read.zoo(Ddata, format="%Y/%m/%d"))
 # 
 for (i in code[-1]){
-	Ddata<- covid19[[4]]$deaths[i,]
-	from<- as.Date(paste0(Ddata$from[[1]][1],"-",Ddata$from[[1]][2],"-",Ddata$from[[1]][3]))
-	tmp.xts<- xts(x=Ddata$values[[1]],seq(as.Date(from),length=nrow(Ddata$values[[1]]),by="days"))
+	Ddata<- nhkC[nhkC$都道府県コード== i,c(1,6)]
+	tmp.xts<- as.xts(read.zoo(Ddata, format="%Y/%m/%d"))
 	Ddata.xts<- merge(Ddata.xts,tmp.xts)
 }
 # NA<- 0
 coredata(Ddata.xts)[is.na(Ddata.xts)]<- 0
-colnames(Ddata.xts)<- paste0(covid19[[5]]$ja[code],"D")
-#
+colnames(Ddata.xts)<- paste0(unique(nhkC[nhkC$都道府県コード==code,"都道府県名"]),"D")
 data.xts<- merge(Cdata.xts,Ddata.xts)
 # 致死率(%)7日移動平均
 #死者数(7日間合計)/陽性者数(7日間合計)*100
 data<-  data.frame(apply(data.xts,2,runSum,7))
 rownames(data)<- as.character(index(data.xts))
 data<- data[-c(1:6),]
-#
 for (i in 1:length(code)){
 	data<- cbind(data, round(data[,(i+length(code))]/data[,i]*100,2))
 }
-#
 data2<- data[,(length(code)*2+1):(length(code)*3)]
-colnames(data2)<- covid19[[5]]$ja[code]
-#７月半ばから
-data2<- data2[-c(1:150),]
+colnames(data2)<- unique(nhkC[nhkC$都道府県コード==code,"都道府県名"])
+#
+#2020-07-20から
+data2<- data2[-c(1:180),]
 #
 labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(data2)))))
 # 毎月1日
@@ -1495,7 +1486,65 @@ text(x=par("usr")[1],y=par("usr")[4],labels="(%)",pos=2,xpd=T)
 text(x=par("usr")[2],y=tail(data2,1),labels=paste0(colnames(data2),":",tail(data2,1),"%"),xpd=T,pos=4)
 mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=c(0.03,0.03),legend=colnames(data2),lty=1,col=rainbow(length(code),alpha=0.8),lwd=1.5,xpd=T)
-title("致死率（％）７日移動平均[データ：東洋経済オンライン]")
+title("致死率（％）７日移動平均","[データ：NHK https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv]")
+#dev.off()
+```
+
+#### 北海道、埼玉、東京、神奈川、愛知、大阪の月別死者数と月別人口１００万人あたりの死者数（データ：NHK）
+
+```R
+#都道府県別人口はNipponMapパッケージのデータを使う
+shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
+m <- sf::read_sf(shp)
+#
+data.xts<- Ddata.xts
+colnames(data.xts)<- unique(nhkC[nhkC$都道府県コード==code,"都道府県名"])
+#
+monthsum<- NULL
+for (i in 1:ncol(data.xts)){
+#各月ごとの死亡者の合計
+m.xts<- apply.monthly(data.xts[,i],sum)
+monthsum<- cbind(monthsum,m.xts)
+}
+#
+monthsum<- data.frame(monthsum)
+rownames(monthsum)<- paste0(sub("^0","",substring(rownames(monthsum),6,7)),"月")
+#
+#if (rownames(monthsum)[nrow(monthsum)]!="11"){
+#	monthsum= rbind(monthsum,0)
+#}
+# 最初の月の死亡者がすべての県で0なら削除
+if ( all(monthsum[1,]==0) ) {monthsum<- monthsum[-1,]}
+#plot
+#png("covOsaka12.png",width=800,height=600)
+par(mar=c(3,5,3,2),family="serif",mfrow=c(2,1))
+b<- barplot(t(monthsum),beside=T,names=rownames(monthsum),las=1,col=rainbow(ncol(monthsum)),ylim=c(0,max(monthsum)*1.2),
+	legend=T,args.legend=list(x="topleft",inset=0.02))
+box(bty="l",lwd=2.5)
+abline(h=c(100,200),lwd=0.8,lty=2,col="gray")
+#for (i in 1:ncol(monthsum)){
+#	text(x=b[i,],y=monthsum[,i],labels=monthsum[,i],pos=3)
+#}
+title("新型コロナウイルス月別死亡者")
+title("\n\n\nデータ:[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)",cex.main=0.8)
+#
+CperPop<- monthsum
+for (i in 1:ncol(CperPop)){
+	CperPop[,i]<- round(CperPop[,i]/m$population[code[i]]*10^6,0)
+}
+#
+#plot
+par(mar=c(3,5,3,2),family="serif")
+b<- barplot(t(CperPop),beside=T,names=rownames(CperPop),las=1,col=rainbow(ncol(CperPop)),ylim=c(0,max(CperPop)*1.2),
+	legend=T,args.legend=list(x="topleft",inset=0.02))
+box(bty="l",lwd=2.5)
+abline(h=c(10,20,30),lwd=0.8,lty=2,col="gray")
+#for (i in 1:ncol(CperPop)){
+#	text(x=b[i,],y=CperPop[,i],labels=CperPop[,i],pos=3)
+#}
+title("人口１００万人あたり新型コロナウイルス月別死亡者")
+title("\n\n\nデータ：[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv) & 都道府県別人口:NipponMapパッケージ",cex.main=0.8)
+#
 #dev.off()
 ```
 

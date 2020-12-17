@@ -254,25 +254,22 @@ legend("topleft",inset=c(0,0),xpd=T,bty="n",
 title("東京都 : 月別の陽性者数",cex.main=1.5)
 #dev.off()
 #
-library(jsonlite)
 library(xts)
-#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
-# https://toyokeizai.net/sp/visual/tko/covid19/
-#著作権「東洋経済オンライン」
-covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
-covid19[[5]][covid19[[5]]$en=="Tokyo",]
-#   code     ja    en value
-#13   13 東京都 Tokyo 36778
+#[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
+nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
+save(nhkC,file="nhkC.Rdata")
+#load("nhkC.Rdata")
 # 東京都(code:13)
 code<- 13
-data<- covid19[[4]]$deaths[code,]
-from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
-data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+data<- nhkC[nhkC$都道府県コード==code,c(1,6)]
+data.xts<- as.xts(read.zoo(data, format="%Y/%m/%d"))
 #各月ごとの死亡者の合計
 monthsum.xts<- apply.monthly(data.xts[,1],sum)
+#2020年2月から（1月分(0)は削除）
+monthsum.xts<- monthsum.xts[-1]
 monthsum<- data.frame(coredata(monthsum.xts))
 rownames(monthsum)<- substring(index(monthsum.xts),6,7)
-if (rownames(monthsum)[nrow(monthsum)]!="11"){
+if (rownames(monthsum)[nrow(monthsum)]!="12"){
 	monthsum= rbind(monthsum,0)
 }
 #
@@ -281,16 +278,17 @@ par(mar=c(3,7,3,2),family="serif")
 mat <- matrix(c(1,1,1,1,2,2),3,2, byrow = TRUE)
 layout(mat) 
 #2月以降
-b<- barplot(cdata[-1],las=1,col="slateblue",names=paste0(2:11,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+b<- barplot(cdata[-1],las=1,col="slateblue",names=paste0(2:12,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x= b, y=cdata[-1],labels=formatC(cdata[-1], format="d", big.mark=','),cex=1.2,pos=3)
 title("東京都 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
-# 東京都発表の死者の総数-東洋経済オンラインの死者の総数を最終月のデータの数に加える
+# 東京都発表の死者の総数-NHKの死者の総数を最終月のデータの数に加える
 sa<- js[[6]][[1]][[4]][[1]]$value[js[[6]][[1]][[4]][[1]]$attr=="死亡"]-sum(data.xts)
 monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
 #
-b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(2:11,"月"),ylim=c(0,max(monthsum)*1.2))
+b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(2:12,"月"),ylim=c(0,max(monthsum)*1.2))
 text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
-legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
+legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",
+	legend="データ：[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)")
 #dev.off()
 ```

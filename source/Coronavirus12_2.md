@@ -44,9 +44,8 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
-月別死亡者数のデータは「東洋経済オンライン」のデータから作成しています。  
-「東洋経済オンライン」の方がデータ更新が遅いので月別死亡者数が１日もしくは２日分少なくなります。  
-そこで、１１月２６日からは「大阪市発表の死者の総数 - 東洋経済オンラインの死者の総数」を最終月のデータの数に加えるようにしました。
+月別死亡者数のデータは「NHK」のデータから作成しています。  
+「大阪市発表の死者の総数 - NHKの死者の総数」を最終月のデータの数に加えるようにしました。
 
 ![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
 
@@ -211,8 +210,6 @@ title("週単位の陽性者増加比(大阪府)",cex.main=1.5)
 ```
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
-１１月２６日より  
-大阪市発表の死者の総数-東洋経済オンラインの死者の総数を最終月のデータの数に加えるように修正
 
 ```R
 m<- data.frame(month=substring(js[[2]]$data$日付,6,7),小計=js[[2]]$data$小計)
@@ -230,25 +227,22 @@ legend("topleft",inset=c(0,0),xpd=T,bty="n",
 title("大阪府 : 月別の陽性者数",cex.main=1.5)
 #dev.off()
 #
-library(jsonlite)
 library(xts)
-#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
-# https://toyokeizai.net/sp/visual/tko/covid19/
-#著作権「東洋経済オンライン」
-covid19 = fromJSON("https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json")
-covid19[[5]][covid19[[5]]$en=="Osaka",]
-#   code     ja    en value
-#27   27 大阪府 Osaka  6845
+#[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
+nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
+save(nhkC,file="nhkC.Rdata")
+#load("nhkC.Rdata")
 # 大阪府(code:27)
 code<- 27
-data<- covid19[[4]]$deaths[code,]
-from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
-data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+data<- nhkC[nhkC$都道府県コード==code,c(1,6)]
+data.xts<- as.xts(read.zoo(data, format="%Y/%m/%d"))
 #各月ごとの死亡者の合計
 monthsum.xts<- apply.monthly(data.xts[,1],sum)
+#2020年3月から（1、2月分(0)は削除）
+monthsum.xts<- monthsum.xts[-c(1:2)]
 monthsum<- data.frame(coredata(monthsum.xts))
 rownames(monthsum)<- substring(index(monthsum.xts),6,7)
-if (rownames(monthsum)[nrow(monthsum)]!="11"){
+if (rownames(monthsum)[nrow(monthsum)]!="12"){
 	monthsum= rbind(monthsum,0)
 }
 #
@@ -257,17 +251,17 @@ par(mar=c(3,7,3,2),family="serif")
 mat <- matrix(c(1,1,1,1,2,2),3,2, byrow = TRUE)
 layout(mat) 
 #3月以降
-b<- barplot(cdata[-c(1:2)],las=1,col="slateblue",names=paste0(3:11,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+b<- barplot(cdata[-c(1:2)],las=1,col="slateblue",names=paste0(3:12,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x= b, y=cdata[-c(1:2)],labels=formatC(cdata[-c(1:2)], format="d", big.mark=','),cex=1.2,pos=3)
 title("大阪府 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
-# 大阪府発表の死者の総数-東洋経済オンラインの死者の総数を最終月のデータの数に加える
+# 大阪府発表の死者の総数-NHKの死者の総数を最終月のデータの数に加える
 sa<- js[[9]][[3]][[3]][[1]][grep("死亡",js[[9]][[3]][[3]][[1]]$attr),2]-sum(data.xts)
 monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
-#
-b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(3:11,"月"),ylim=c(0,max(monthsum)*1.2))
+b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(3:12,"月"),ylim=c(0,max(monthsum)*1.2))
 text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
-legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
+legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",
+	legend="データ：[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)")
 #dev.off()
 ```
 
