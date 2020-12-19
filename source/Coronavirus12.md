@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2020-12-18
+date: 2020-12-19
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -66,9 +66,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![KoumuOsakashi](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/KoumuOsakashi.png)
 
 #### 塗り分け地図
-##### PCR検査 陽性者数(大阪府市町村別)
 データ：[【12月18日】新型コロナウイルス感染症患者の発生及び死亡について]
 (http://www.pref.osaka.lg.jp/attach/23711/00376026/1218.xlsx)
+
+##### PCR検査 陽性者数(大阪府市町村別)
 
 ![osakaCmap03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap03.png)
 
