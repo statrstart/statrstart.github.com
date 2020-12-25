@@ -1,6 +1,6 @@
 ---
 title: 都道府県別月別検査陽性者数と死亡者数及び重症者数の推移(新型コロナウイルス：Coronavirus)
-date: 2020-12-24
+date: 2020-12-25
 tags: ["R","jsonlite","xts","Coronavirus","新型コロナウイルス"]
 excerpt: 東洋経済オンラインのデータ
 ---
