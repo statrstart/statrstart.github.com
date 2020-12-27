@@ -45,7 +45,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
 月別死亡者数のデータは「NHK」のデータから作成しています。  
-「大阪市発表の死者の総数 - NHKの死者の総数」を最終月のデータの数に加えるようにしました。
+「大阪市発表の死者の総数 - NHKの死者の総数」(プラスの場合)を最終月のデータの数に加えるようにしました。
 
 ![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
 
@@ -257,6 +257,8 @@ text(x= b, y=cdata[-c(1:2)],labels=formatC(cdata[-c(1:2)], format="d", big.mark=
 title("大阪府 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
 # 大阪府発表の死者の総数-NHKの死者の総数を最終月のデータの数に加える
 sa<- js[[9]][[3]][[3]][[1]][grep("死亡",js[[9]][[3]][[3]][[1]]$attr),2]-sum(data.xts)
+# saがマイナスのときは0にする
+if (sa<0){sa=0}
 monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
 b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(3:12,"月"),ylim=c(0,max(monthsum)*1.2))
 text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
