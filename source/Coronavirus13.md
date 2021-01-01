@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2020-12-31
+date: 2021-01-01
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -96,13 +96,14 @@ dat[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat[,1])))
 ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
 #png("covTokyo01.png",width=800,height=600)
 par(mar=c(5,3,4,2),family="serif")
-b<- barplot(dat[,"patients"],names=dat[,1],col="red",las=1,ylim=c(0,max(dat[,"patients"],na.rm=T)*1.1),axisnames=F)
+b<- barplot(dat[,"patients"],col="red",las=1,ylim=c(0,max(dat[,"patients"],na.rm=T)*1.1),axisnames=F)
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,dat[,1])
 	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
 mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[344],side=1,line=2.5,cex=1.2) 
 lines(x=b,y=sma7,lwd=2.5,col="blue")
 legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
 legend("topleft",inset=c(0.03,0.15),bty="n",cex=1.5,legend=c(paste0(js[[3]]$date,"現在"),ritsu2))
@@ -131,7 +132,7 @@ dat$inspection[dat$inspection==0]<- NA
 ylim<- c(0.9,max(dat[,"inspection"],na.rm=T))
 #png("covTokyo01_1.png",width=800,height=600)
 par(mar=c(4,5,4,3),family="serif")
-b<- barplot(dat[,"patients"],names=dat[,1],las=1,log="y",ylim=ylim)
+b<- barplot(dat[,"patients"],names=NA,las=1,log="y",ylim=ylim)
 abline(h=10^(0:3),col="darkgray",lwd=1.2,lty=3)
 for (i in 1:9){
 	abline(h=i*10^(0:3),col="darkgray",lwd=0.8,lty=3)
@@ -139,6 +140,13 @@ for (i in 1:9){
 barplot(dat[,"patients"],names=NA,col="red",log="y",las=1,axes=F,ylim=ylim,add=T)
 lines(x=b,y=dat[,"inspection"],lwd=1.2,col="darkgreen")
 points(x=b,y=dat[,"inspection"],pch=16,cex=0.8,col="darkgreen")
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,dat[,1])
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[343],side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=0.03,bty="n",legend="PCR検査実施件数",lwd=2,lty=1,pch=16,col="darkgreen")
 title("東京都の検査陽性者数 対数表示（日別）",cex.main=1.5)
 #dev.off()
@@ -168,20 +176,21 @@ dat2<- dat2[7:nrow(dat2),]
 dat2[,4]<- round(dat2[,2]/dat2[,3]*100,2)
 #
 #png("covTokyo02_3.png",width=800,height=600)
-par(mar=c(3,6,4,7),family="serif")
+par(mar=c(4,6,4,7),family="serif")
 # プロットする範囲は0%から20%とした
 plot(dat2[,4],type="l",lwd=2,las=1,xaxt="n",xlab="",ylab="",bty="n",ylim=c(0,20))
 box(bty="l",lwd=2)
 # 日付を例えば、01-01を1/1 のように書き直す。
 #dat2[,1]<- sub("-","/",sub("-0","-",sub("^0","",dat2[,1])))
 #表示するx軸ラベルを指定
-axis(1,at=1:length(dat2[,1]),labels =NA,tck= -0.01)
 labels<- dat2[,1]
-labelpos<- paste0(rep(1:12,each=3),"/",c(1,10,20))
+labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,labels)
 	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
 	}
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=343,side=1,line=2.5,cex=1.2) 
 text(x=par("usr")[2],y=dat2[,4][nrow(dat2)],labels= paste0(dat2[,1][nrow(dat2)],"現在\n",dat2[,4][nrow(dat2)],"%"),
 	xpd=T,cex=1.2,col="red",pos=4)
 title("東京都のPCR検査件数陽性率(%)の推移(1週間(7日)の幅で移動平均)",cex.main=1.5)
@@ -211,21 +220,15 @@ dat<- dat[28:nrow(dat),]
 par(mar=c(4,6,4,7),family="serif")
 plot(dat[,2],type="l",lwd=2,las=1,ylim=c(0,6),xlab="",ylab="",xaxt="n",bty="n")
 box(bty="l",lwd=2.5)
-#axis(1,at=1:nrow(dat),labels=dat[,1])
+#表示するx軸ラベルを指定
 labels<- dat[,1]
-labels<-gsub("^.*/","",labels)
-pos<-gsub("/.*$","",sub("/20","",dat[,1]))
-pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
-for (i in c("1","10","20")){
-	at<- grep("TRUE",is.element(labels,i))
-	axis(1,at=at,labels = rep(i,length(at)))
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels =paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
-Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
-mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
-# 月の中央
-#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
-# 月のはじめ
-mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=344,side=1,line=2.5,cex=1.2) 
 abline(h=1,col="red",lty=2)
 text(x=par("usr")[2],y=dat[,2][nrow(dat)],labels= paste0(dat[,1][nrow(dat)],"現在\n",dat[,2][nrow(dat)]),xpd=T,cex=1.2,col="red")
 arrows(par("usr")[2]*1.08, 1.1,par("usr")[2]*1.08,1.68,length = 0.2,lwd=2.5,xpd=T)
@@ -239,13 +242,13 @@ title("週単位の陽性者増加比(東京都)",cex.main=1.5)
 #### 東京都 : 月別の陽性者数と月別死亡者数
 
 ```R
-m<- data.frame(month=substring(js[[3]]$data$日付,6,7),小計=js[[3]]$data$小計)
+m<- data.frame(month=substring(js[[3]]$data$日付,1,7),小計=js[[3]]$data$小計)
 #各月ごとの検査陽性者数
 cdata<- tapply(m$小計,m$month, sum,na.rm=T) 
 #
 #png("covTokyo09_01.png",width=800,height=600)
 par(mar=c(3,7,3,2),family="serif")
-b<- barplot(cdata,las=1,col="red",names=paste0(1:11,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+b<- barplot(cdata,las=1,col="red",names=paste0(c(1:12,1),"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
 # Add comma separator to axis labels
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x= b[1:nrow(cdata)], y=as.numeric(cdata),labels=formatC(as.numeric(cdata), format="d", big.mark=','),cex=1.2,pos=3)
@@ -268,8 +271,8 @@ monthsum.xts<- apply.monthly(data.xts[,1],sum)
 #2020年2月から（1月分(0)は削除）
 monthsum.xts<- monthsum.xts[-1]
 monthsum<- data.frame(coredata(monthsum.xts))
-rownames(monthsum)<- substring(index(monthsum.xts),6,7)
-if (rownames(monthsum)[nrow(monthsum)]!="12"){
+rownames(monthsum)<- substring(index(monthsum.xts),1,7)
+if (rownames(monthsum)[nrow(monthsum)]!="2021-01"){
 	monthsum= rbind(monthsum,0)
 }
 #
@@ -277,8 +280,8 @@ if (rownames(monthsum)[nrow(monthsum)]!="12"){
 par(mar=c(3,7,3,2),family="serif")
 mat <- matrix(c(1,1,1,1,2,2),3,2, byrow = TRUE)
 layout(mat) 
-#2月以降
-b<- barplot(cdata[-1],las=1,col="slateblue",names=paste0(2:12,"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+#2020-2月以降
+b<- barplot(cdata[-1],las=1,col="slateblue",names=paste0(c(2:12,1),"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x= b, y=cdata[-1],labels=formatC(cdata[-1], format="d", big.mark=','),cex=1.2,pos=3)
 title("東京都 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
@@ -286,7 +289,7 @@ title("東京都 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
 sa<- js[[6]][[1]][[4]][[1]]$value[js[[6]][[1]][[4]][[1]]$attr=="死亡"]-sum(data.xts)
 monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
 #
-b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(2:12,"月"),ylim=c(0,max(monthsum)*1.2))
+b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(c(2:12,1),"月"),ylim=c(0,max(monthsum)*1.2))
 text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
 legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",
 	legend="データ：[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)")
