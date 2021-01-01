@@ -1,12 +1,14 @@
 ---
 title: 韓国と日本のPCR検査実施人数等比較 (新型コロナウイルス：Coronavirus)
-date: 2020-12-31
+date: 2021-01-01
 tags: ["R", "knitr","Coronavirus","新型コロナウイルス","South Korea"]
 excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発表資料で作成
 ---
 
 # 韓国と日本のPCR検査実施人数等比較 (新型コロナウイルス：Coronavirus)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus08&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
+# 2021/1/1 PM 19:50現在　厚生労働省の[報道発表資料]の更新なし。韓国のデータのみ更新しています。
 
 (使用するデータ)  
 日本 : PCR検査実施人数は、厚生労働省の[報道発表資料](https://www.mhlw.go.jp/stf/houdou/index.html)から抜き出した。    
@@ -132,11 +134,11 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 
 |             | Confirmed| Deaths| Deaths/Confirmed (%)| Deaths/millionpeople|
 |:------------|---------:|------:|--------------------:|--------------------:|
-|Japan        |   231,271|   3243|                 1.40|                25.51|
-|Korea, South |    60,740|    900|                 1.48|                18.35|
-|Taiwan       |       797|      7|                 0.88|                 0.30|
-|Hong Kong    |     8,778|    147|                 1.67|                20.67|
-|Singapore    |    58,569|     29|                 0.05|                 5.21|
+|Japan        |   235,811|   3292|                 1.40|                25.90|
+|Korea, South |    61,769|    917|                 1.48|                18.70|
+|Taiwan       |       799|      7|                 0.88|                 0.30|
+|Hong Kong    |     8,846|    148|                 1.67|                20.81|
+|Singapore    |    58,599|     29|                 0.05|                 5.21|
 
 ### 日本、韓国、台湾、シンガポール、香港の人口100万人あたりの新型コロナウイルスによる死者数
 
@@ -498,6 +500,7 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 |2020-12-29 |        4098179|    58723|  859| 3868494| 170962|  3927217|      1.50|         1.463|
 |2020-12-30 |        4159522|    59773|  879| 3927978| 171771|  3987751|      1.50|         1.471|
 |2020-12-31 |        4213880|    60740|  900| 3982802| 170338|  4043542|      1.50|         1.482|
+|2021-01-01 |        4269318|    61769|  917| 4030622| 176927|  4092391|      1.51|         1.485|
 
 ## Rコード
 
@@ -505,7 +508,7 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 
 ```R
 library(knitr)
-date<- seq(as.Date("2020-02-01"), as.Date("2020-12-31"), by = "day")
+date<- seq(as.Date("2020-02-01"), as.Date("2021-01-01"), by = "day")
 検査を受けた人<-c(371,429,429,607,714,885,1130,1701,2340,2776,3629,5074,5797,6854,7519,7919,8171,
 	9265,10411,12161,14816,19621,22633,28615,36716,46127,57990,70940,85693,96985,109591,125851,
 	136707,146541,164740,178189,188518,196618,210144,222395,234998,	248647,261335,268212,274504,
@@ -532,7 +535,7 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-12-31"), by = "day")
 	2834362,2853843,2873443,2896746,2908890,2922135,2946399,2966405,2988046,3009562,3032003,3046910,
 	3061172,3083997,3106970,3131886,3157410,3180496,3194867,3209376,3221317,3253220,3277948,3311213,
 	3349864,3374595,3397039,3441220,3488769,3538840,3589797,3646247,3683094,3713861,3772430,3826570,
-	3882210,3939357,3969415,4006412,4038307,4098179,4159522,4213880)
+	3882210,3939357,3969415,4006412,4038307,4098179,4159522,4213880,4269318)
 感染者数<-c(12,15,15,16,18,23,24,24,25,27,28,28,28,28,28,29,30,31,46,82,156,346,556,763,893,1146,
 	1595,2022,2931,3526,4212,4812,5328,5766,6284,6767,7134,7382,7513,7755,7869,7979,8086,8162,
 	8236,8320,8413,8565,8652,8799,8897,8961,9037,9137,9241,9332,9478,9583,9661,9786,9887,9976,
@@ -554,7 +557,7 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-12-31"), by = "day")
 	28338,28546,28768,28998,29311,29654,30017,30403,30733,31004,31353,31735,32318,32871,33374,
 	33763,34201,34652,35163,35703,36332,36915,37546,38161,38746,39416,40097,40786,41736,42766,
 	43484,44364,45439,46453,47517,48568,49665,50591,51458,52548,53529,54770,55902,56872,57679,
-	58723,59773,60740)
+	58723,59773,60740,61769)
 死者<-c(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,4,7,8,11,12,13,16,17,22,28,32,35,42,44,50,51,
 	54,60,66,67,72,75,75,81,84,91,94,102,104,111,120,126,131,139,144,152,158,162,165,169,174,
 	177,183,186,192,200,204,208,211,214,217,222,225,229,230,232,234,236,237,238,240,240,240,242,
@@ -568,7 +571,7 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-12-31"), by = "day")
 	422,422,425,427,428,430,432,433,434,438,439,441,443,444,444,447,450,453,455,457,457,457,460,
 	461,462,463,464,466,468,472,474,475,476,477,478,480,485,487,487,488,492,493,494,494,496,498,
 	501,503,505,509,510,513,515,516,522,523,526,526,526,529,536,540,545,549,552,556,564,572,578,
-	580,587,600,612,634,645,659,674,698,722,739,756,773,793,808,819,859,879,900)
+	580,587,600,612,634,645,659,674,698,722,739,756,773,793,808,819,859,879,900,917)
 陰性<-c(289,327,414,462,522,693,842,1057,1355,1940,2736,4054,5099,6134,6853,7313,7733,8277,9335,10446,
 	11953,13794,16038,19127,22550,28247,35298,44167,53608,61037,71580,85484,102965,118965,136624,
 	151802,162008,171778,184179,196100,209402,222728,235615,243778,251297,261105,270888,282555,
@@ -595,7 +598,7 @@ date<- seq(as.Date("2020-02-01"), as.Date("2020-12-31"), by = "day")
 	2814998,2824128,2834676,2857277,2878832,2900367,2920054,2939835,2950318,2963606,2984453,3006653,
 	3030395,3057061,3077314,3089605,3103205,3111297,3138724,3165087,3192739,3221386,3241700,3264308,
 	3303383,3348546,3393129,3431662,3471446,3493954,3516832,3569843,3620913,3678148,3727798,3756501,
-	3782564,3810749,3868494,3927978,3982802)
+	3782564,3810749,3868494,3927978,3982802,4030622)
 検査中<- 検査を受けた人- (陰性+感染者数)
 #df<- data.frame(date,感染者数,死者,検査を受けた人_感染者除く,陰性,検査中)
 #kable(df,row.names=F)
@@ -654,7 +657,7 @@ Jpcr2<- c(603,693,778,874,913,1017,1061,1229,1380,1510,1688,1784,1855,5690,5948,
 	3212877+332210,3257166+333602,3300402+335281,3337225+337190,3375370+338931,3397683+341634,3415295+344181,3453032+346828,
 	3493092+348603,3547649+350491,3592261+352740,3646095+354630,3674298+357689,3687442+360439,3741200+363619,3787017+365743,
 	3841320+367647,3903759+370045,3960180+372008,3987229+374828,3999511+378727,4055161+383283,4086271+386156,4158529+388421,
-	4222041+391069,4282302+393373,4314979+396043,4326942+398195,4401325+400085,4426175+402065,4447244+403864)+829
+	4222041+391069,4282302+393373,4314979+396043,4326942+398195,4401325+400085,4426175+402065,4447244+403864,NA)+829
 Jpcr<- c(Jpcr1,Jpcr2)
 Confirmed<- c(rep(NA,6),25,NA,NA,26,NA,28,29,33,NA,NA,59,66,73,84,93,105,132,144,156,164,186,210,230,239,254,268,284,317,348,
 	407,454,487,513,567,619,674,714,777,809,824,868,907,943,996,1046,1089,1128,1193,1291,1387,1499,1693,1866,1953,2178,
@@ -672,7 +675,7 @@ Confirmed<- c(rep(NA,6),25,NA,NA,26,NA,28,29,33,NA,NA,59,66,73,84,93,105,132,144
 	108084,108983,110156,111711,113298,114983,116677,118136,119326,120815,122966,125267,127665,130179,132358,133929,135400,
 	137261,139491,142068,144653,146760,148694,150386,152827,155232,157674,160098,162067,163929,165840,168573,171542,174299,
 	177287,179653,181870,184042,187103,190138,193031,195880,198523,200658,203113,206139,209980,213547,217312,220236,223120,
-	226596,230304)
+	226596,230304,NA)
 Deaths<- c(rep(NA,6),0,NA,NA,0,NA,0,0,1,NA,NA,1,1,1,1,1,1,1,1,1,1,3,4,5,5,6,6,6,6,6,6,6,7,9,12,15,19,21,22,24,28,29,31,33,35,36,
 	41,42,43,45,46,49,52,54,56,57,60,63,69,70,73,80,81,85,88,94,98,102,109,119,136,148,154,161,171,186,277,287,317,334,348,
 	351,376,389,415,432,458,492,510,521,543,551,557,600,613,621,643,668,687,710,725,744,749,763,771,777,796,808,820,830,846,
@@ -684,7 +687,7 @@ Deaths<- c(rep(NA,6),0,NA,NA,0,NA,0,0,1,NA,NA,1,1,1,1,1,1,1,1,1,1,3,4,5,5,6,6,6,
 	1616,1624,1627,1629,1634,1638,1646,1650,1661,1670,1674,1676,1679,1685,1694,1706,1711,1718,1725,1730,1733,1744,1755,1766,1774,
 	1780,1786,1794,1806,1809,1812,1818,1829,1841,1851,1867,1880,1883,1885,1903,1913,1922,1943,1963,1974,1981,1989,2001,2022,2051,
 	2074,2106,2119,2139,2172,2213,2240,2283,2315,2335,2382,2420,2465,2502,2534,2562,2585,2643,2688,2739,2783,2828,2873,2900,2944,
-	2994,3050,3105,3155,3213,3252,3306,3349,3414)
+	2994,3050,3105,3155,3213,3252,3306,3349,3414,NA)
 Jdf<- data.frame(Tested=Jpcr,Confirmed,Deaths)
 kj<-paste0(round(結果判明[length(結果判明)]/max(Jpcr,na.rm=T),2),"倍")
 #
@@ -698,16 +701,17 @@ kr<- round(max(結果判明,na.rm=T)*1000000/Kpop,0)
 options(scipen=2) 
 #png("pcr04.png",width=800,height=600)
 par(mar=c(4,6,4,2),family="serif")
-b<- barplot(t(df[,c(2,4,5)]),names.arg=gsub("2020-","",rownames(df)),col=c("red","lightblue","gray80"),
+b<- barplot(t(df[,c(2,4,5)]),col=c("red","lightblue","gray80"),
 	ylim= c(0,max(Jpcr2,na.rm=T)*1.1),yaxt ="n",
 	legend=T,args.legend = list(x="topleft",inset=c(0.03,0.03)),axisnames=F)
-labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(df)))))
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",rownames(df)))))
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,labels)
 	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
 mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[336],side=1,line=2.5,cex=1.2) 
 # Add comma separator to axis labels
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1)  
 #text(x=b,y=検査を受けた人,labels= 検査を受けた人,pos=3,col="blue")
@@ -731,7 +735,6 @@ title("韓国と日本のPCR検査実施人数の推移",cex.main=2)
 Jpop<- 127103388
 Kpop<- 49039986
 #
-date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date))))
 Jpos <- Deaths
 #
 jp<- round(max(Jpos,na.rm=T)*1000000/Jpop,2)
@@ -747,8 +750,7 @@ text(x=par("usr")[1],y=par("usr")[4]*1.02,labels="(人)",pos=2,xpd=T)
 lines(Jpos,col="red",lwd=2)
 #points(Jpos,col="red",pch=16)
 #表示するx軸ラベルを指定
-#axis(1,at=1:length(date2),labels =NA,tck= -0.01)
-labels<- date2
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",date))))
 labelpos<- paste0(rep(1:12,each=1),"/",1)
 #axis(1,at=1,labels =labels[1],tick=F)
 for (i in labelpos){
@@ -763,6 +765,7 @@ text(x=c(180,299,328),y=c(1001,2001,3050),labels=c("7/29\n1001人","11/25\n2001�
 points(x=c(180,299,328),y=c(300,513,756),pch=16,col="blue")
 text(x=c(180,299,328),y=c(300,513,756),labels=c("7/29\n300人","11/25\n513人","12/24\n756人"),pos=3)
 mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=336,side=1,line=2.5,cex=1.2) 
 title("日本と韓国の新型コロナウイルスによる死亡者数推移","Data : 日本(厚生労働省の報道発表資料) 韓国(KCDC)",cex.main=2)
 #dev.off()
 ```
@@ -770,7 +773,6 @@ title("日本と韓国の新型コロナウイルスによる死亡者数推移"
 ### 日本と韓国のPCR検査の検査陽性率(%)推移(累計で計算)
 
 ```R
-date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date))))
 Jpos <- round(Confirmed/Jpcr*100,2)
 ylim<- c(0,max(c(Jpos,df2$"陽性率(%)"),na.rm=T)*1.1)
 #png("pcr05.png",width=800,height=600)
@@ -780,16 +782,17 @@ box(bty="l",lwd=2)
 lines(Jpos,col="red",lwd=2)
 #points(Jpos,col="red",pch=16)
 #表示するx軸ラベルを指定
-axis(1,at=1:length(date2),labels =NA,tck= -0.01)
-labels<- date2
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",date))))
 labelpos<- paste0(1:12,"/",1)
-axis(1,at=1,labels =labels[1],tick=F)
+#axis(1,at=1,labels =labels[1],tick=F)
 for (i in labelpos){
 	at<- match(i,labels)
-	if (!is.na(at)){ axis(1,at=at,labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	if (!is.na(at)){ axis(1,at=at,labels = paste0(sub("/1","",i),"月"),tck= -0.02)} #,hadj =0
 	}
 legend("topright",inset=0.03,lwd=2,cex=1.5,col=c("red","blue"),legend=c("日本","韓国"),bty="n")
 text(x=par("usr")[2],y=c(tail(df2$"陽性率(%)",1),tail(Jpos,1)),labels=paste0(c(tail(df2$"陽性率(%)",1),tail(Jpos,1)),"%"),xpd=T)
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=336,side=1,line=2.5,cex=1.2) 
 title("日本と韓国のPCR検査の検査陽性率(%)の推移","Data : 日本(厚生労働省の報道発表資料) 韓国(KCDC)",cex.main=2)
 #dev.off()
 ```
@@ -797,7 +800,6 @@ title("日本と韓国のPCR検査の検査陽性率(%)の推移","Data : 日本
 ### 日本と韓国のPCR検査の暫定致死率(%)推移(累計で計算)
 
 ```R
-date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date))))
 Jpos <- round(Deaths/Confirmed*100,2)
 ylim<- c(0,max(c(Jpos,df2$"暫定致死率(%)"),na.rm=T)*1.1)
 #png("pcr06.png",width=800,height=600)
@@ -807,14 +809,15 @@ box(bty="l",lwd=2)
 lines(Jpos,col="red",lwd=2)
 #points(Jpos,col="red",pch=16)
 #表示するx軸ラベルを指定
-#axis(1,at=1:length(date2),labels =NA,tck= -0.01)
-labels<- date2
-labelpos<- paste0(1:12,"/",1)
-axis(1,at=1,labels =labels[1],tick=F)
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",date))))
+labelpos<- paste0(rep(1:12,each=1),"/",1)
+#axis(1,at=1,labels =labels[1],tick=F)
 for (i in labelpos){
 	at<- match(i,labels)
 	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
 	}
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=336,side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=0.03,pch=16,lwd=2,cex=1.5,col=c("red","blue"),legend=c("日本","韓国"),bty="n")
 title("日本と韓国の暫定致死率(%)の推移","Data : 日本(厚生労働省の報道発表資料) 韓国(KCDC)",cex.main=2)
 #dev.off()
@@ -878,19 +881,20 @@ title("週単位の陽性者増加比(日本、韓国)",cex.main=1.5)
 ```R
 dat<-rbind(diff(df2$感染者数),diff(df2$陰性))
 rownames(dat)<- c("陽性","陰性")
-colnames(dat)<- gsub("2020-","",rownames(df2[-1,]))
+colnames(dat)<- rownames(df2[-1,])
 #png("pcr08.png",width=800,height=600)
 par(mar=c(6,6,4,2),family="serif")
 b<- barplot(dat,col=c("red","lightblue"),las=1,legend=T,ylim=c(0,max(dat,na.rm=T)*1.1),
 	args.legend=list(x="topleft",inset=c(0.03,0.03)),axisnames=F)
 box(bty="l",lwd=2)
-labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(df[-1,])))))
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",colnames(dat)))))
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,labels)
 	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
 mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[335],side=1,line=2.5,cex=1.2) 
 title("韓国のPCR検査の結果（日別）",cex.main=2)
 #dev.off()
 ```
@@ -898,19 +902,19 @@ title("韓国のPCR検査の結果（日別）",cex.main=2)
 ### 日本と韓国の検査陽性者数（日別）
 
 ```R
-date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
 ylim<- max(max(diff(Jdf$Confirmed),na.rm=T),max(diff(df$感染者数),na.rm=T))*1.2
 #png("pcr07.png",width=800,height=600)
 par(mar=c(6,6,4,2),family="serif")
 b<- barplot(diff(Jdf$Confirmed),col=rgb(1,0,0,alpha=0.5),axes=F,ylim=c(0,ylim))
-barplot(diff(df$感染者数),col=rgb(0,1,0,alpha=0.5),las=1,add=T,ylim=c(0,ylim))
-labels<- date2
+b<- barplot(diff(df$感染者数),col=rgb(0,1,0,alpha=0.5),las=1,add=T,ylim=c(0,ylim))
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",date[-1]))))
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,labels)
 	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
 mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[335],side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=c(0.03,0.08),pch=15,col=c(rgb(1,0,0,alpha=0.5),rgb(0,1,0,alpha=0.5)),legend=c("日本","韓国"),bty="n",cex=1.5)
 title("日本と韓国の検査陽性者数（日別）",cex.main=1.5)
 #dev.off()
@@ -919,7 +923,6 @@ title("日本と韓国の検査陽性者数（日別）",cex.main=1.5)
 ### 日本と韓国の検査者数（韓国の場合は「結果が判明した数」）（日別）
 
 ```R
-date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
 kdf<- diff(結果判明)
 jdf<- diff(Jpcr)
 ymin<- min(min(kdf,na.rm=T),min(jdf,na.rm=T))
@@ -933,8 +936,7 @@ lines(kdf,lwd=2,col="blue")
 #points(kdf,pch=16,cex=1,col="blue")
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 #表示するx軸ラベルを指定
-#axis(1,at=1:length(date2),labels =NA,tck= -0.01)
-labels<- date2
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",date[-1]))))
 labelpos<- paste0(1:12,"/",1)
 #axis(1,at=1,labels =labels[1],tick=F)
 for (i in labelpos){
@@ -947,6 +949,8 @@ for(i in 1:(length(jdf)-1)){
 for(i in 1:(length(kdf)-1)){
     polygon(c(i,i,i+1,i+1), c(0,kdf[i],kdf[i+1], 0), col = rgb(0,0,1,alpha=0.5), lty=0)
 }
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=335,side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=0.03,pch=16,lwd=2,cex=1.5,col=c("red","blue"),legend=c("日本","韓国"),bty="n")
 legend("topleft",inset=c(0.03,0.15),cex=1.2,
 	legend="日本の６月１８日の検査人数が極端に多いのは\n東京都が医療機関等の行った検査の検査人数を過去に遡って計上しているため",bty="n")
@@ -997,11 +1001,10 @@ title("日本と韓国のPCR検査の検査陽性率(%)の７日移動平均","D
 ### 韓国の(報告された)感染者数 対数表示（日別）
 
 ```R
-date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
 dat<- diff(df2$感染者数)
 dat[dat==0]<- NA
 dat2<- diff(df2$結果判明)
-ylim<- c(0.9,max(dat2,na.rm=T)*1.5)
+ylim<- c(0.9,60000)
 #png("pcr08_2.png",width=800,height=600)
 par(mar=c(4,5,4,3),family="serif")
 b<- barplot(rep(NA,length(dat)),las=1,log="y",ylim=ylim)
@@ -1010,7 +1013,7 @@ for (i in 1:9){
 	abline(h=i*10^(0:4),col="darkgray",lwd=0.8,lty=3)
 }
 barplot(dat,col="red",las=1,log="y",ylim=ylim,axes=F,add=T)
-labels<- date2
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",date[-1]))))
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,labels)
@@ -1020,6 +1023,8 @@ mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2)
 lines(x=b,y=dat2,lwd=2,col="darkgreen")
 points(x=b,y=dat2,pch=16,col="darkgreen")
 #text(x=par("usr")[2],y=dat2[length(dat2)],labels="結果判明",col="darkgreen",xpd=T)
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[335],side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=0.03,bty="n",legend="PCR検査結果判明\nConfirmed+Tested negative",lwd=2,lty=1,pch=16,col="darkgreen")
 title("韓国の検査陽性者数 対数表示（日別）",cex.main=1.5)
 #dev.off()
@@ -1028,12 +1033,11 @@ title("韓国の検査陽性者数 対数表示（日別）",cex.main=1.5)
 ### 日本の(報告された)感染者数 対数表示（日別）
 
 ```R
-date2<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",date[-1]))))
 dat<- diff(Jdf$Confirmed)
 dat[dat==0]<- NA
 dat2<- diff(Jdf$Tested)
 # 韓国のグラフにyの範囲を揃える
-ylim<- c(0.9,max(diff(df2$結果判明),na.rm=T)*1.5)
+ylim<- c(0.9,60000)
 #png("pcr08_3.png",width=800,height=600)
 par(mar=c(4,5,4,3),family="serif")
 b<- barplot(rep(NA,length(dat)),las=1,log="y",ylim=ylim)
@@ -1042,13 +1046,14 @@ for (i in 1:9){
 	abline(h=i*10^(0:4),col="darkgray",lwd=0.8,lty=3)
 }
 barplot(dat,col="red",las=1,log="y",ylim=ylim,axes=F,add=T)
-labels<- date2
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",date[-1]))))
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
 	at<- match(i,labels)
 	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
 mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[335],side=1,line=2.5,cex=1.2) 
 lines(x=b,y=dat2,lwd=2,col="darkgreen")
 points(x=b,y=dat2,pch=16,col="darkgreen")
 legend("topleft",inset=0.03,bty="n",legend="PCR検査実施人数",lwd=2,lty=1,pch=16,col="darkgreen")
@@ -1081,23 +1086,13 @@ box(bty="l",lwd=2)
 #y軸ラベル
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 #表示するx軸ラベルを指定
-labels<- sub("/20","",colnames(datC))
-#日
-labels<-gsub("^.*/","",labels)
-#月
-pos<-gsub("/.*$","",sub("/20","",colnames(datC)))
-pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
-axis(1,at=1:ncol(datC), labels =NA,tck= -0.01)
-for (i in c("1","10","20")){
-	at<- grep("TRUE",is.element(labels,i))
-	axis(1,at=at,labels = rep(i,length(at)))
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,sub("/..$","",colnames(datC)))
+	if (!is.na(at)){ axis(1,at=at,labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
-Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
-mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
-# 月の中央
-#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
-# 月のはじめ
-mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=346,side=1,line=2.5,cex=1.2) 
 text(x=par("usr")[2],y=apply(datC,1,max,na.rm=T),labels=paste(rownames(datC),":",formatC(apply(datC,1,max,na.rm=T), format="d", big.mark=',')),pos=4,xpd=T)
 title("Reported Confirmed : Japan , South Korea , Taiwan , Singapore , Hong Kong")
 #dev.off()
@@ -1136,11 +1131,19 @@ n<-nrow(DpC)
 col<- rainbow(n)
 #pch<-rep(c(0,1,2,4,5,6,15,16,17,18),3)
 #png("Coronavirus01_1_2.png",width=800,height=600)
-par(mar=c(3,5,4,10),family="serif")
+par(mar=c(4,5,4,10),family="serif")
 #40日めから
 matplot(t(DpC)[40:ncol(DpC),],type="l",lty=1,lwd=3,las=1,col=col,ylab="Reported Deaths/Reported Confirmed(%)",xaxt="n",bty="n")
 box(bty="l",lwd=2)
-axis(1,at=1:nrow(t(DpC)[40:ncol(DpC),]),labels=sub("/20","",rownames(t(DpC)[40:ncol(DpC),])))
+#axis(1,at=1:nrow(t(DpC)[40:ncol(DpC),]),labels=sub("/20","",rownames(t(DpC)[40:ncol(DpC),])))
+#表示するx軸ラベルを指定
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,sub("/..$","",rownames(t(DpC)[40:ncol(DpC),])))
+	if (!is.na(at)){ axis(1,at=at,labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=307,side=1,line=2.5,cex=1.2) 
 legend(x=par("usr")[2],y=par("usr")[4],legend=rownames(DpC),lty=1,lwd=3,col=col,bty="n",title="Country/Region",xpd=T)
 title("Reported Deaths / Reported Confirmed (%) ")
 #dev.off()
@@ -1497,7 +1500,7 @@ colnames(data2)<- unique(nhkC[nhkC$都道府県コード==code,"都道府県名"
 #2020-07-20から
 data2<- data2[-c(1:180),]
 #
-labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(data2)))))
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",rownames(data2)))))
 # 毎月1日
 labelpos<- paste0(1:12,"/",1)
 #png("covOsaka11.png",width=800,height=600)
