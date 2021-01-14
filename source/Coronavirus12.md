@@ -24,7 +24,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 #### 大阪府 vs 東京都 : 新型コロナウイルス 死亡者数の推移
 
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
-- １月中には逆転しそうな勢いです。人口：大阪約８８７万人、東京約１３１６万人
+- 2021/1/14 逆転。人口：大阪約８８７万人、東京約１３１６万人
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
 
