@@ -21,12 +21,12 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
 
-#### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 死亡者数の推移
+#### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
 
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
 - 2021/1/14 逆転。人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人
 
-#### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 人口100万人あたりの死亡者数
+#### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
 
 ![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
 - 2021/1/20 : 北海道人口１万人あたり１人の死亡者数突破。
@@ -66,11 +66,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
-#### 大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (データ：NHK 新型コロナ データ)
-
-![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
-
-#### 大阪市：市長の公務ありなしのカレンダーと公務日程なしの月別日数
+#### 大阪市：市長の公務ありなしのカレンダーと公務日程なしの月別日数(2020年)
 - 公務時間は考慮していません。
 
 ![Okoumu01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu01.png)
