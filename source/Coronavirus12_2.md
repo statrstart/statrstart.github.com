@@ -1,6 +1,6 @@
 ---
 title: 大阪府の検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2021-01-26
+date: 2021-01-27
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -81,7 +81,7 @@ names(js)
 ```R
 #date
 tbl<- data.frame(小計=js[[2]]$data$小計)
-rownames(tbl)<- sub("-","/",sub("-0","-",sub("^0","",substring(js[[2]]$data$日付,6,10))))
+rownames(tbl)<- substring(js[[2]]$data$日付,1,10)
 #元から日付順になっているのでこの部分は不要
 #tbl<- tbl[order(names(tbl))]
 sma7<- round(SMA(tbl,7),2)
@@ -90,7 +90,7 @@ par(mar=c(5,4,4,2),family="serif")
 b<- barplot(t(tbl),las=1,ylim=c(0,max(tbl)*1.2),col="red",axisnames=F)
 labelpos<- paste0(1:12,"/",1)
 for (i in labelpos){
-	at<- match(i,rownames(tbl))
+	at<- match(i,sub("-","/",sub("-0","-",sub("^0","",substring(rownames(tbl),6,10)))))
 	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
 	}
 mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
@@ -101,11 +101,11 @@ title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
 #
 labels<- rownames(tbl)
 events<- data.frame(
-	date=c("4/14","4/15","8/4","11/1","12/14"),
+	date=c("2020-04-14","2020-04-15","2020-08-04","2020-11-01","2020-12-14"),
 	events=c("4月14日\n大阪ワクチン\n会見\n「早ければ７月にも治験を始めたい」","4月中旬\n「雨合羽」寄付受付",
 	"8月4日\nイソジン会見\n「ウソみたいなホントの話をさせて頂きたい」",	"11月1日\n大阪市廃止・\n特別区設置\n住民投票",
 	"12月14日\n感染者14人死亡\n過去最多"),
-	ypos= c(350,450,450,450,500))
+	ypos= c(350,500,450,450,500))
 #
 for (i in 1:nrow(events)){
 	labelpos<- events$date[i]
@@ -114,6 +114,9 @@ for (i in 1:nrow(events)){
 	points(x=xpos,y=ypos,pch=25,bg="red",cex=1.2,xpd=T)
 	text(x=xpos,y=ypos,labels=events$events[i],xpd=T,pos=3)
 }
+#grep("2021-01-08",substring(js[[2]]$data$日付,1,10))
+points(x=b[349],y=670,pch=25,bg="red",cex=1.2,xpd=T)
+text(x=b[349],y=670,labels="2021/1/8\n感染者19人死亡\n最多更新",xpd=T,pos=3)
 #dev.off()
 ```
 
