@@ -95,7 +95,7 @@ for (i in labelpos){
 	}
 mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
 mtext(text="2021年",at=b[342],side=1,line=2.5,cex=1.2) 
-lines(x=b,y=sma7,lwd=2.5,col="blue")
+lines(x=b,y=sma7$SMA,lwd=2.5,col="blue")
 legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
 title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
 #
