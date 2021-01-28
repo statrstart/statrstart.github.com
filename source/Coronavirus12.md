@@ -30,6 +30,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
 - 2021/1/20 : 北海道人口１万人あたり１人の死亡者数突破。
+- 2021/1/28 : 大阪府人口１万人あたり１人の死亡者数突破。
 - 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
