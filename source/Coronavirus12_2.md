@@ -124,9 +124,9 @@ text(x=b[349],y=670,labels="2021/1/8\n感染者19人死亡\n最多更新",xpd=T,
 
 ```R
 # 検査陽性率(%): 陽性患者数/検査実施人数*100
-Pos<- round(js[[9]][[3]]$value/js[[9]][[2]]*100,2)
+Pos<- round(js[[10]][[3]]$value/js[[10]][[2]]*100,2)
 # 致死率(%): 亡くなった人の数/陽性患者数*100
-Dth<- round(js[[9]][[3]][[3]][[1]][grep("死亡",js[[9]][[3]][[3]][[1]]$attr),2]/js[[9]][[3]]$value*100,2)
+Dth<- round(js[[10]][[3]][[3]][[1]][grep("死亡",js[[10]][[3]][[3]][[1]]$attr),2]/js[[10]][[3]]$value*100,2)
 #
 dat<- js[[2]][[2]]
 dat<- merge(dat,js[[3]][[2]],by=1)
@@ -148,7 +148,7 @@ mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2)
 mtext(text="2021年",at=b[341],side=1,line=2.5,cex=1.2) 
 legend("topleft",inset=0.03,bty="n",pch=15,col=c("red","lightblue"),cex=1.5,
 	legend=c("陽性者数","検査実施人数-陽性者数"))
-legend("topleft",inset=c(0,0.15),bty="n",cex=1.5,legend=c(paste0(js[[8]],"現在"),ritsu1,ritsu2))
+legend("topleft",inset=c(0,0.15),bty="n",cex=1.5,legend=c(paste0(js[[9]],"現在"),ritsu1,ritsu2))
 title("検査結果(大阪府)",cex.main=1.5)
 #dev.off()
 ```
@@ -268,7 +268,7 @@ axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=',')
 text(x= b, y=cdata[-c(1:2)],labels=formatC(cdata[-c(1:2)], format="d", big.mark=','),cex=1.2,pos=3)
 title("大阪府 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
 # 大阪府発表の死者の総数-NHKの死者の総数を最終月のデータの数に加える
-sa<- js[[9]][[3]][[3]][[1]][grep("死亡",js[[9]][[3]][[3]][[1]]$attr),2]-sum(data.xts)
+sa<- js[[10]][[3]][[3]][[1]][grep("死亡",js[[10]][[3]][[3]][[1]]$attr),2]-sum(data.xts)
 # saがマイナスのときは0にする
 if (sa<0){sa=0}
 monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
@@ -378,7 +378,7 @@ library(flextable)
 library(tibble)
 library(webshot)
 # 状況の部分を抽出
-Cs<- js[[9]][[3]][[3]][[1]]
+Cs<- js[[10]][[3]][[3]][[1]]
 # 大阪府の状況（新型コロナウイルス）
 ft <- flextable(data.frame(状況=Cs$attr,人数=formatC(Cs$value, format="d", big.mark=',')))
 ft <- bg(ft, bg = "wheat", part = "header")
@@ -386,7 +386,7 @@ ft <- color(ft, i= 3,j=2, color = "red", part = "body")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 #ft <- set_header_labels(ft, rowname = "状況")
 ft<- add_header_lines(ft, values = "大阪府の状況（新型コロナウイルス）")
-ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- add_footer_lines(ft, values =paste(js[[9]],"現在"))
 ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
 # 'all', 'body', 'header', 'footer')
 ft <- fontsize(ft, size = 20, part = "all")
@@ -401,7 +401,7 @@ ft <- bg(ft, bg = "wheat", part = "header")
 ft <- color(ft, i= 2,j=2, color = "red", part = "body")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 ft<- add_header_lines(ft, values = "病状の内訳")
-ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- add_footer_lines(ft, values =paste(js[[9]],"現在"))
 ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
 ft <- fontsize(ft, size = 20, part = "all")
 ft<- set_table_properties(ft, width = 0.35, layout = "autofit")
@@ -412,18 +412,18 @@ ft <- flextable(data.frame(状況=Cs$children[[7]]$attr,人数=formatC(Cs$childr
 ft <- bg(ft, bg = "wheat", part = "header")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 ft<- add_header_lines(ft, values = "入院調整中の内訳")
-ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- add_footer_lines(ft, values =paste(js[[9]],"現在"))
 ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
 ft <- fontsize(ft, size = 20, part = "all")
 ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
 save_as_image(ft, path = "covOsaka20_2.png", zoom = 1, expand = 1, webshot = "webshot")
 #
 #検査実施人数 & 陽性患者数
-ft <- flextable(data.frame(検査の状況=c("検査実施人数","陽性患者数"),人数=formatC(c(js[[9]][[2]],js[[9]]$children$value), format="d", big.mark=',')))
+ft <- flextable(data.frame(検査の状況=c("検査実施人数","陽性患者数"),人数=formatC(c(js[[10]][[2]],js[[10]]$children$value), format="d", big.mark=',')))
 ft <- bg(ft, bg = "wheat", part = "header")
 ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
 ft<- add_header_lines(ft, values = "検査実施人数 & 陽性患者数")
-ft<- add_footer_lines(ft, values =paste(js[[8]],"現在"))
+ft<- add_footer_lines(ft, values =paste(js[[9]],"現在"))
 ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
 ft <- fontsize(ft, size = 20, part = "all")
 ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
