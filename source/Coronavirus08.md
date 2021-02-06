@@ -87,6 +87,10 @@ Rコードは、記事「東アジアの感染者の状況(新型コロナウイ
 それでも、冬場は感染者数、死亡者数、致死率ともに急上昇しました。（下の図参照）  
 よって、冬の日本のコロナの感染者数、死者数が急上昇してもなんら不思議ではありません。(韓国ですらヤバイ)
 
+#### ニュージーランド（南半球）
+
+![NewZealand](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/NewZealand.png)
+
 #### 日本、韓国、オーストラリアの検査陽性者数の推移
 
 ![Ddata04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Ddata04.png)
