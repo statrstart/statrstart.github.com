@@ -26,6 +26,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
 - 2021/1/14 大阪府、東京都を逆転。
 - 2021/2/4 東京都、大阪府を逆転。
+- 2021/2/6 東京都死亡者数1000人超え
 - 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人
 
 #### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
