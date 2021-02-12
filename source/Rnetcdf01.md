@@ -133,6 +133,10 @@ head(lon) ; tail(lon)
 # 167.5 170.0 172.5 175.0 177.5 180.0
 #
 easyinterp<- function(x,y,z){
+	if (x[1]== -180){
+		x<- c(x[-1],180)
+		z<- rbind(z[-1,],z[1,])
+	}
 	x<- c(-180,x)
 	z<- rbind(tail(z,1),z)
 	x1<- c(x,SMA(x,2)[-1])
