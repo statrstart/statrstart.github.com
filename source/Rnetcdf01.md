@@ -9,7 +9,7 @@ excerpt: Rでカラーコンターマップ(oce package)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FRnetcdf01&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-(準備)政治境界線のないFreeの世界地図を（感謝して）入手、oce オブジェクトに変換しておく。  
+(準備)政治境界線のないFreeの世界地図を入手、oce オブジェクトに変換しておく。  
 (Natural Earth : Free vector and raster map data at 1:10m, 1:50m, and 1:110m scales)[https://www.naturalearthdata.com/] の
 「ne_50m_coastline.shp」から作成したものを置いておきます。  
 [coastlineWorldNew.rda](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/coastlineWorldNew.rda)  
