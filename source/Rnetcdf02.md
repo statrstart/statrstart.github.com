@@ -81,7 +81,7 @@ aircolor <-function (n) {
         colorRampPalette(c("blue","cyan", "white", "yellow","orange", "red"))(n)
     }
 }
-temp.nc <- nc_open("/home/aki/GrADS/temp1000.nc")
+temp.nc <- nc_open("temp1000.nc")
 temp0 <- ncvar_get(temp.nc, "air")
 dim(temp0)
 #[1] 144  73  12
@@ -93,7 +93,7 @@ lon <- ncvar_get(temp.nc, "lon")
 lat <- ncvar_get(temp.nc, "lat")
 nc_close(temp.nc)
 #
-wind.nc <- nc_open("/home/aki/GrADS/wind1000.nc")
+wind.nc <- nc_open("wind1000.nc")
 u <- ncvar_get(wind.nc, "uwnd")
 v <- ncvar_get(wind.nc, "vwnd")
 wlon <- ncvar_get(wind.nc, "lon")
