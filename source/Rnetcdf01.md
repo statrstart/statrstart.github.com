@@ -152,7 +152,29 @@ interp<- easyinterp(lon,lat,temp11)
 # 2回め約縦横2倍で元データからすると、約縦横4倍で１６倍
 interp<- easyinterp(interp[[1]],interp[[2]],interp[[3]])
 lon1<- interp[[1]] ; lat1<- interp[[2]] ; temp1<- interp[[3]]
-# カラーパレットも作成
+```
+
+#### fields::interp.surface.gridで内挿する場合
+
+```R
+library(fields)
+# データによって、-177.5_180のものと、-180_177.5のものがあるみたいです。
+# いったん、-177.5_180にします。
+if (lon[1]== -180){
+	x<- c(lon[-1],180)
+	z<- rbind(temp11[-1,],temp11[1,])
+}
+x<- c(-180,x)
+z<- rbind(tail(z,1),z)
+lon1<- seq(-180,180,length.out=361) #1度きざみ
+lat1<- seq(-90,90,length.out=361)   #0.5度きざみ
+# 線形補間
+temp1<- interp.surface.grid(list(x=x, y=lat,z=z),list(x=lon1, y=lat1))$z
+```
+
+#### カラーパレットも作成
+
+```R
 aircolor <-function (n) {
     if (missing(n) || n <= 0) 
         colorRampPalette(c("blue","cyan", "gray95", "yellow","orange", "red"))
