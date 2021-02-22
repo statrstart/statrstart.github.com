@@ -49,41 +49,41 @@ wget -P ./GrADS ftp://ftp.cdc.noaa.gov/Datasets/ncep.reanalysis.derived/pressure
 
 #### A:経度固定
 
-##### GrADS
+GrADS
 
 ![airVCS01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/airVCS01.png)
 
-##### R:グラデーション(凡例なし: image+contour)
+R:グラデーション(凡例なし: image+contour)
 
 ![Rvcs01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Rvcs01.png)
 
 #### B:緯度固定
 
-##### GrADS
+GrADS
 
 ![airVCS02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/airVCS02.png)
 
-##### 塗りつぶし(凡例なし: image+contour)
+R:塗りつぶし(凡例なし: image+contour)
 
 ![Rvcs02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Rvcs02.png)
 
 #### C : 斜め(パターン１、２どちらを使っても良い)
 
-##### GrADS
+GrADS
 
 ![airVCS03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/airVCS03.png)
 
-##### 塗りつぶし(凡例あり:fields::image.plot+contour)
+R:塗りつぶし(凡例あり:fields::image.plot+contour)
 
 ![Rvcs03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Rvcs03.png)
 
 #### D : 斜め(パターン１、２どちらを使っても良い)
 
-##### GrADS
+GrADS
 
 ![airVCS04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/airVCS04.png)
 
-##### 塗りつぶし(凡例あり:fields::image.plot+contour)
+R:グラデーション(凡例あり:fields::image.plot(一箇所変更した関数)+contour)
 
 ![Rvcs04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Rvcs04.png)
 
