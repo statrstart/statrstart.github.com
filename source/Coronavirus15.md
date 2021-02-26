@@ -1,6 +1,6 @@
 ---
 title: 世界と東アジアの感染者の状況(新型コロナウイルス：Coronavirus)
-date: 2021-02-19
+date: 2021-02-26
 tags: ["R","TTR","Coronavirus","新型コロナウイルス"]
 excerpt: 隔離中、死亡、回復
 ---
@@ -33,40 +33,25 @@ excerpt: 隔離中、死亡、回復
 #### 日本
 ![Japan](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Japan.png)
 
-- 左側に「人口」「１００万人あたりの検査数」「１００万人あたりの感染者数」「感染率」「１００万人あたりの死亡者数」「致死率」を載せるようにしました。
-- 日本の「１００万人あたりの検査数」は世界でも少ない方です。「感染率」が４％ほどあるので検査数が足りているとは思えません。
-
 #### 韓国
 ![KoreaSouth](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/KoreaSouth.png)
-
-- 「感染率」は１％を切りました。
 
 #### 中国
 ![China](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/China.png)
 
-- 国としての「検査数」のデータはありませんが、ニュースをみるとかなりの数の検査をやっているようです。
-
 #### 香港
 ![HongKong](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/HongKong.png)
-
-- 「１００万人あたりの検査数」8万以上。「感染率」0.3％弱
 
 #### 台湾
 ![Taiwan](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Taiwan.png)
 
-- 先手先手の完璧な対応だったのがグラフをみてもわかります。「感染率」0.6％弱
-
 #### モンゴル
 ![Mongolia](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Mongolia.png)
-
-- 人口が少ないとはいえ、「死亡者数」が0
 
 ### 東南アジア(シンガポール、フィリピン、インドネシア)
 
 #### シンガポール
 ![Singapore](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Singapore.png)
-
-- 「１００万人あたりの検査数」9万以上でも、「感染率」9%以上というのは外国人労働者が多く、人口密度が高いからでしょうか。
 
 #### フィリピン
 ![Philippines](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Philippines.png)
