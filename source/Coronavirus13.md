@@ -1,6 +1,6 @@
 ---
 title: 東京都検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2021-03-03
+date: 2021-03-04
 tags: ["R","jsonlite","TTR","Coronavirus","東京都","新型コロナウイルス"]
 excerpt: 東京都 新型コロナウイルス感染症対策サイトのデータ
 ---
