@@ -9,9 +9,12 @@ excerpt: Rを使ってCLAMP(気候と葉の多変量解析)その１
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCLAMP01&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
+続きは [RでCLAMP(Climate Leaf Analysis Multivariate Programe)その２](https://gitpress.io/@statrstart/CLAMP02)
+
 > CLAMP(Climate Leaf Analysis Multivariate Programe) : 詳しくは[CLAMP online](http://clamp.ibcas.ac.cn/CLAMP_Home.html) 
 
-『CLAMPとは、[葉化石から推定する古気候(成田)](https://www.jstage.jst.go.jp/article/chitoka/80/0/80_37/_pdf)から抜粋すると、    
+『CLAMPとは、[葉化石から推定する古気候(成田)](https://www.jstage.jst.go.jp/article/chitoka/80/0/80_37/_pdf)から抜粋すると、 
+   
 CLAMPは広葉樹葉の葉相観を用いた古気候解析法の一つであり，現在の植生から得られた葉相観データとその地域の気候データをもとに，
 多変量解析の一手法である正準対応分析（Canonical Correspondence Analysis：CCA）を用いて化石群集の葉相観が示す過去の気候条件を
 求める手法である（Wolfe 1995； 矢部 2002）．』とのこと
