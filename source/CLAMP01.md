@@ -1,11 +1,11 @@
 ---
-title: RでCLAMP(Climate Leaf Analysis Multivariate Programe)01
-date: 2021-03-14
+title: RでCLAMP(Climate Leaf Analysis Multivariate Programe)その１
+date: 2021-03-15
 tags: ["R", "CLAMP","vegan"]
-excerpt: Rを使ってCLAMP(気候と葉の多変量解析)
+excerpt: Rを使ってCLAMP(気候と葉の多変量解析)その１
 ---
 
-# RでCLAMP(Climate Leaf Analysis Multivariate Programe)
+# RでCLAMP(Climate Leaf Analysis Multivariate Programe)その１
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCLAMP01&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
@@ -61,39 +61,18 @@ par(mfrow=c(1,1))
 # きれいにプロット（例）
 # png("clampord02.png",width=600,height=600)
 par(mar=c(4,4,2,1))
-plot(res, type = 'n')
-points(res,"sites",pch=16,col="brown3")
-points(res,"sp",pch=17,col="blue")
-bp <- scores(res, display = 'bp')
-cols <- rainbow(11)
+# 1-2
+cols<- rainbow(11)
+choice<- c(1,2)
+plot(res, type = 'n',choice=choice)
+points(res,"sites",pch=1,col="gray20",choice=choice)
+points(res,"sp",pch=4,col="red",choice=choice)
+bp <- scores(res, display = 'bp',choice=choice)
 mul <- ordiArrowMul(bp, fill = 0.75)
-arrows(0, 0, mul * bp[,1], mul * bp[,2],
-       length = 0.05, col = cols)
+arrows(0, 0, mul * bp[,1], mul * bp[,2],length = 0.05, col = cols)
 labs <- rownames(bp)
 text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
 # dev.off()
-# コードのみ
-plot(res,choice=c(1,3), type = 'n')
-points(res,"sites",pch=16,col="brown3")
-points(res,"sp",pch=17,col="blue")
-bp <- scores(res,choice=c(1,3), display = 'bp')
-cols <- rainbow(11)
-mul <- ordiArrowMul(bp, fill = 0.75)
-arrows(0, 0, mul * bp[,1], mul * bp[,2],
-       length = 0.05, col = cols)
-labs <- rownames(bp)
-text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
-#　コードのみ
-plot(res,choice=c(2,3), type = 'n')
-points(res,"sites",pch=16,col="brown3")
-points(res,"sp",pch=17,col="blue")
-bp <- scores(res,choice=c(2,3), display = 'bp')
-cols <- rainbow(11)
-mul <- ordiArrowMul(bp, fill = 0.75)
-arrows(0, 0, mul * bp[,1], mul * bp[,2],
-       length = 0.05, col = cols)
-labs <- rownames(bp)
-text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
 ```
 
 #### 作成したグラフ
