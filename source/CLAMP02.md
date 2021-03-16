@@ -1,7 +1,7 @@
 ---
 title: RでCLAMP(Climate Leaf Analysis Multivariate Programe)その２
 date: 2021-03-15
-tags: ["R", "CLAMP","vegan",""]
+tags: ["R", "CLAMP","vegan","investr"]
 excerpt: Rを使ってCLAMP(気候と葉の多変量解析)その２
 ---
 
@@ -93,6 +93,12 @@ all(rownames(leaves)==rownames(climate))
 # [1] TRUE
 # 現在の植生から得られた葉相観データとその地域の気候データを使ってCCA実行
 res <- cca(leaves~.,climate) 
+# モデルの評価 ：並べ替え検定法(Permutation test)
+anova(res)
+#Model: cca(formula = leaves ~ MAT + WMMT + CMMT + GROWSEAS + GSP + MMGSP + `3-WET` + `3-DRY` + RH + SH + ENTHAL, data = climate)
+#          Df ChiSquare     F Pr(>F)    
+#Model     11   0.23911 25.23  0.001 *** <- 有意
+#Residual 165   0.14216                 
 # 予測に必要な部分の抽出
 # Environment Biplot Scores
 EBS<- round(summary(res)[[4]][,1:4],5)
