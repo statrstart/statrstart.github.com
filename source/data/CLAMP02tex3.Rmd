@@ -1,0 +1,196 @@
+---
+title: "CLAMP(Climate Leaf Analysis Multivariate Programe)"
+author: "気候と葉の多変量解析"
+date: "`r format(Sys.time(), '%Y/%m/%d')`"
+documentclass: bxjsarticle
+classoption: xelatex
+papersize: a4paper
+fontsize: 12pt
+geometry: "top=14truemm,bottom=14truemm,left=20truemm,right=16truemm,nohead,nofoot"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+  word_document:
+    toc: false
+    toc_depth: 4
+    keep_md: true
+#    reference_docx: ./reference.docx
+  pdf_document:
+    latex_engine: xelatex
+    toc: false
+    toc_depth: 4
+    fig_caption: true
+    keep_tex: true
+    template: MyTemplate.latex
+---
+
+```{r echo=FALSE,message=FALSE,comment=NA}
+require(knitr)
+require(rmarkdown)
+knitr::opts_chunk$set(echo=FALSE,comment=NA, prompt=TRUE, message=FALSE, fig.height=12, fig.width=8)
+#library(Rcmdr)
+#library(car)
+library(RcmdrMisc)
+```
+# 調査地域
+
+```{r}
+cat(sub("\\.txt","",FossilLeaves))
+cat("\n")
+```
+
+```{r}
+library(vegan)
+library(investr)
+# 144
+#leaves<- read.csv("./Physg3brcAZ.csv",row.names=1,check.names=F)
+#climate<- read.csv("./Met3brAZ.csv",row.names=1,check.names=F)
+climate<- readXL("Met3brAZ.xls", rownames = T, header = TRUE, na = "", sheet = 1, stringsAsFactors = FALSE)
+leaves<- readXL("Physg3brcAZ.xls", rownames = T, header = TRUE, na = "", sheet = 1, stringsAsFactors = FALSE)
+colnames(climate)<- c("MAT","WMMT","CMMT","GROWSEAS","GSP","MMGSP","3-WET","3-DRY","RH","SH","ENTHAL")
+colnames(leaves)<- c("Lobed","No Teeth","Regular teeth","Close teeth","Round teeth","Acute teeth","Compound teeth","Nanophyll",
+	"Leptophyll 1","Leptophyll 2","Microphyll 1","Microphyll 2","Microphyll 3","Mesophyll 1","Mesophyll 2",
+	"Mesophyll 3","Emarginate apex","Round apex","Acute apex","Attenuate apex","Cordate base","Round base",
+	"Acute base","L:W <1:1","L:W 1-2:1","L:W 2-3:1","L:W 3-4:1","L:W >4:1","Obovate","Elliptic","Ovate")
+#
+FossilLeavesData<- data.frame(matrix(c(
+# Fossil Leaves Data
+	scan(FossilLeaves)
+#
+	),nrow=1))
+colnames(FossilLeavesData)<- colnames(leaves)
+#
+res <- cca(leaves~.,climate) 
+```
+
+```{r}
+EBS<- summary(res)[[4]][,1:4]
+SBS<- summary(res)[[2]][,1:4]
+```
+
+```{r}
+co<- NULL
+estclim<- list()
+for (num in 1:11){
+x<- NULL
+for (i in 1:nrow(SBS)){
+	x<- c(x,sum(EBS[num,]*SBS[i,])/sqrt(sum(EBS[num,]^2)))
+}
+#fm<-nls(climate[,num] ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1)) 
+df<- data.frame(x=x,y=climate[,num])
+fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+estclim[[num]]<- list(fm,x)
+co<- rbind(co,rev(coef(summary(fm))[,1]))
+}
+names(estclim)<- colnames(climate)
+```
+
+```{r} 
+Fdat<- predict(res,type="wa",newdata=FossilLeavesData)[1:4]
+names(Fdat)<- c("CCA1","CCA2","CCA3","CCA4")
+```
+
+```{r}
+pred<- NULL
+for(i in 1:11){
+	G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+	pred<- c(pred,co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23))
+}
+names(pred)<- colnames(climate)
+# precipitation : cm->mm
+predmm<- data.frame("Predicted Parameters"= round(pred*c(1,1,1,1,10,10,10,10,1,1,1),2),check.names=F)
+rownames(predmm)<- c("MAT(°C )","WMMT(°C )","CMMT(°C )","GROWSEAS(months)","GSP(mm)","MMGSP(mm)","3-WET(mm)",
+	"3-DRY(mm)","RH(%)","SH(g/Kg)","ENTHAL(kJ/Kg)") 
+#knitr::kable(predmm)
+xx<- pred
+```
+
+## ブートストラップ法による区間推定
+
+
+```{r}
+n <- nrow(leaves)
+# 回数
+M <- 1000
+predmat<- NULL
+for(MM in 1:M){
+nx <- sample(1:n, replace=TRUE)
+smpleaves<- leaves[nx,]
+smpclimate<- climate[nx,]
+res <- cca(smpleaves,smpclimate) 
+# 予測に必要な部分の抽出
+# Environment Biplot Scores
+EBS<- round(summary(res)[[4]][,1:4],5)
+# Site Biplot Scores
+SBS<- round(summary(res)[[2]][,1:4],5)
+# １１項目の回帰係数を求め係数の行列を作成
+co<- NULL
+for (num in 1:11){
+x<- NULL
+for (i in 1:nrow(SBS)){
+	x<- c(x,sum(EBS[num,]*SBS[i,])/sqrt(sum(EBS[num,]^2)))
+}
+df<- data.frame(x=x,y=smpclimate[,num])
+tryCatch({
+fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) }
+, error = function(e) {
+    		})
+co<- rbind(co,rev(coef(summary(fm))[,1]))
+}
+# Site scores (weighted averages of species scores)の推定
+Fdat<- predict(res,type="wa",newdata=FossilLeavesData)[1:4]
+pred<- NULL
+for(j in 1:11){
+	G23<- sum(EBS[j,]*Fdat)/sqrt(sum(EBS[j,]^2))
+	pred<- c(pred,co[j,3]+co[j,2]*G23+co[j,1]*(G23*G23))
+}
+predmat<- rbind(predmat,pred)
+}
+# 列名をMAT(℃),WMMT(℃),CMMT(℃),GROWSEAS(months),GSP(cm),MMGSP(cm),3-WET(cm),3-DRY(cm),RH(%),SH(g/Kg),ENTHAL(kJ/Kg)とする
+colnames(predmat)<- c("MAT( °C )","WMMT( °C )","CMMT( °C )","GROWSEAS(months)","GSP(cm)","MMGSP(cm)","3-WET(cm)",
+	"3-DRY(cm)","RH(%)","SH(g/Kg)","ENTHAL(kJ/Kg)")
+```
+
+### 表
+
+
+```{r}
+pvec<- NULL
+for(i in 1:11){
+	temp<- c(xx[i],quantile(predmat[,i], c(0.025, 0.975)))
+	pvec<- rbind(pvec,round(temp,1))
+}
+rownames(pvec)<- colnames(predmat)
+colnames(pvec)[1]<- "推定値"
+# 降水量の単位をmmにする
+pvec<- NULL
+for(i in 1:11){
+	temp<- c(xx[i],quantile(predmat[,i], c(0.025, 0.975)))
+	pvec<- rbind(pvec,round(temp,1))
+}
+rownames(pvec)<- colnames(predmat)
+pvec[5:8,]<- pvec[5:8,]*10
+rownames(pvec)[5:8]<- c("GSP(mm)","MMGSP(mm)","3-WET(mm)","3-DRY(mm)")
+colnames(pvec)[1]<- "推定値"
+knitr::kable(pvec)
+```
+
+### ヒストグラム
+
+
+```{r}
+# png("CLAMP03_2.png",width=800,height=600)
+par(mfrow=c(4,3))
+for(i in 1:11){
+	hist(predmat[,i],col="lightgray",xlab="",main=colnames(predmat)[i])
+	# 前回求めた推定値
+	abline(v=xx[i],col="red",lwd=1.5)
+	# 95％信頼区間
+	abline(v=quantile(predmat[,i], c(0.025, 0.975)),col="red",lty=2) 
+}
+par(mfrow=c(1,1))
+# dev.off()
+```
+

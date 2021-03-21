@@ -1,0 +1,357 @@
+---
+title: "CLAMP(Climate Leaf Analysis Multivariate Programe)"
+author: "気候と葉の多変量解析"
+date: "`r format(Sys.time(), '%Y/%m/%d')`"
+documentclass: bxjsarticle
+classoption: xelatex
+papersize: a4paper
+fontsize: 12pt
+geometry: "top=14truemm,bottom=14truemm,left=20truemm,right=16truemm,nohead,nofoot"
+output:
+  html_document:
+    toc: true
+    toc_depth: 4
+    number_sections: true
+  word_document:
+    toc: false
+    toc_depth: 4
+    keep_md: true
+#    reference_docx: ./reference.docx
+  pdf_document:
+    latex_engine: xelatex
+    toc: false
+    toc_depth: 4
+    fig_caption: true
+    keep_tex: true
+    template: MyTemplate.latex
+---
+
+```{r echo=FALSE,message=FALSE,comment=NA}
+require(knitr)
+require(rmarkdown)
+knitr::opts_chunk$set(echo=FALSE,comment=NA, prompt=TRUE, message=FALSE, fig.height=12, fig.width=8)
+#library(Rcmdr)
+#library(car)
+library(RcmdrMisc)
+```
+# 調査地域
+
+```{r}
+cat(sub("\\.txt","",FossilLeaves))
+cat("\n")
+```
+
+## 解析に用いた葉相観データと採集地の気候データ
+
+Physg3brcAZ , Met3brAZ
+
+
+```{r}
+library(vegan)
+library(investr)
+# 144
+#leaves<- read.csv("./Physg3brcAZ.csv",row.names=1,check.names=F)
+#climate<- read.csv("./Met3brAZ.csv",row.names=1,check.names=F)
+climate<- readXL("Met3brAZ.xls", rownames = T, header = TRUE, na = "", sheet = 1, stringsAsFactors = FALSE)
+leaves<- readXL("Physg3brcAZ.xls", rownames = T, header = TRUE, na = "", sheet = 1, stringsAsFactors = FALSE)
+colnames(climate)<- c("MAT","WMMT","CMMT","GROWSEAS","GSP","MMGSP","3-WET","3-DRY","RH","SH","ENTHAL")
+colnames(leaves)<- c("Lobed","No Teeth","Regular teeth","Close teeth","Round teeth","Acute teeth","Compound teeth","Nanophyll",
+	"Leptophyll 1","Leptophyll 2","Microphyll 1","Microphyll 2","Microphyll 3","Mesophyll 1","Mesophyll 2",
+	"Mesophyll 3","Emarginate apex","Round apex","Acute apex","Attenuate apex","Cordate base","Round base",
+	"Acute base","L:W <1:1","L:W 1-2:1","L:W 2-3:1","L:W 3-4:1","L:W >4:1","Obovate","Elliptic","Ovate")
+#
+FossilLeavesData<- data.frame(matrix(c(
+# Fossil Leaves Data
+	scan(FossilLeaves)
+#
+	),nrow=1))
+colnames(FossilLeavesData)<- colnames(leaves)
+#
+res <- cca(leaves~.,climate) 
+```
+
+```{r}
+EBS<- summary(res)[[4]][,1:4]
+SBS<- summary(res)[[2]][,1:4]
+```
+
+```{r}
+co<- NULL
+estclim<- list()
+for (num in 1:11){
+x<- NULL
+for (i in 1:nrow(SBS)){
+	x<- c(x,sum(EBS[num,]*SBS[i,])/sqrt(sum(EBS[num,]^2)))
+}
+#fm<-nls(climate[,num] ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1)) 
+df<- data.frame(x=x,y=climate[,num])
+fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+estclim[[num]]<- list(fm,x)
+co<- rbind(co,rev(coef(summary(fm))[,1]))
+}
+names(estclim)<- colnames(climate)
+```
+
+```{r} 
+Fdat<- predict(res,type="wa",newdata=FossilLeavesData)[1:4]
+names(Fdat)<- c("CCA1","CCA2","CCA3","CCA4")
+```
+
+## 解析結果 
+
+### 推測された気候
+
+
+```{r}
+pred<- NULL
+for(i in 1:11){
+	G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+	pred<- c(pred,co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23))
+}
+names(pred)<- colnames(climate)
+# precipitation : cm->mm
+predmm<- data.frame("Predicted Parameters"= round(pred*c(1,1,1,1,10,10,10,10,1,1,1),2),check.names=F)
+rownames(predmm)<- c("MAT(°C )","WMMT(°C )","CMMT(°C )","GROWSEAS(months)","GSP(mm)","MMGSP(mm)","3-WET(mm)",
+	"3-DRY(mm)","RH(%)","SH(g/Kg)","ENTHAL(kJ/Kg)") 
+knitr::kable(predmm)
+```
+
+### グラフ(CCA)
+
+
+```{r}
+par(mfcol=c(3,2),mar=c(4.5,4,2,1.5))
+cols <- c(rep("red",3),"darkgreen",rep("blue",4),"darkgreen","black","black")
+# 1-2
+choice<- c(1,2)
+#png("CLAMP02_1.png",width=600,height=600)
+plot(res, type = 'n',choice=choice)
+points(res,"sites",pch=1,col="gray20",choice=choice)
+# points(res,"sp",pch=4,col="red",choice=choice)
+bp <- scores(res, display = 'bp',choice=choice)
+mul <- ordiArrowMul(bp, fill = 0.75)
+arrows(0, 0, mul * bp[,1], mul * bp[,2],length = 0.05, col = cols)
+labs <- rownames(bp)
+#
+points(Fdat[choice[1]],Fdat[choice[2]],pch=21,bg="green",col="red",cex=2)
+text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
+#dev.off()
+# 2-3
+choice<- c(2,3)
+#png("CLAMP02_2.png",width=600,height=600)
+plot(res, type = 'n',choice=choice)
+points(res,"sites",pch=1,col="gray20",choice=choice)
+# points(res,"sp",pch=4,col="red",choice=choice)
+bp <- scores(res, display = 'bp',choice=choice)
+mul <- ordiArrowMul(bp, fill = 0.75)
+arrows(0, 0, mul * bp[,1], mul * bp[,2],length = 0.05, col = cols)
+labs <- rownames(bp)
+#
+points(Fdat[choice[1]],Fdat[choice[2]],pch=21,bg="green",col="red",cex=2)
+text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
+#dev.off()
+# 1-3
+choice<- c(1,3)
+#png("CLAMP02_3.png",width=600,height=600)
+plot(res, type = 'n',choice=choice)
+points(res,"sites",pch=1,col="gray20",choice=choice)
+# points(res,"sp",pch=4,col="red",choice=choice)
+bp <- scores(res, display = 'bp',choice=choice)
+mul <- ordiArrowMul(bp, fill = 0.75)
+arrows(0, 0, mul * bp[,1], mul * bp[,2],length = 0.05, col = cols)
+labs <- rownames(bp)
+#
+points(Fdat[choice[1]],Fdat[choice[2]],pch=21,bg="green",col="red",cex=2)
+text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
+#dev.off()
+cols <- "blue"
+# 1-2
+choice<- c(1,2)
+#png("CLAMP02_4.png",width=600,height=600)
+plot(res, type = 'n',display="species",choice=choice)
+text(res,"sp",pch=4,col="red",choice=choice)
+bp <- scores(res, display = 'bp',choice=choice)
+mul <- ordiArrowMul(bp, fill = 0.75)
+arrows(0, 0, mul * bp[,1], mul * bp[,2],length = 0.05, col = cols)
+labs <- rownames(bp)
+text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
+#dev.off()
+# 2-3
+choice<- c(2,3)
+#png("CLAMP02_5.png",width=600,height=600)
+plot(res, type = 'n',display="species",choice=choice)
+text(res,"sp",pch=4,col="red",choice=choice)
+bp <- scores(res, display = 'bp',choice=choice)
+mul <- ordiArrowMul(bp, fill = 0.75)
+arrows(0, 0, mul * bp[,1], mul * bp[,2],length = 0.05, col = cols)
+labs <- rownames(bp)
+text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
+#dev.off()
+# 1-3
+choice<- c(1,3)
+#png("CLAMP02_6.png",width=600,height=600)
+plot(res, type = 'n',display="species",choice=choice)
+text(res,"sp",pch=4,col="red",choice=choice)
+bp <- scores(res, display = 'bp',choice=choice)
+mul <- ordiArrowMul(bp, fill = 0.75)
+arrows(0, 0, mul * bp[,1], mul * bp[,2],length = 0.05, col = cols)
+labs <- rownames(bp)
+text(ordiArrowTextXY(mul * bp, labs), labs, col = cols)
+#dev.off()
+```
+
+### グラフ(Models)
+
+
+```{r}
+unit<- c("(°C )","(°C )","(°C )","(months)","(cm)","(cm)","(cm)","(cm)","(%)","(g/Kg)","(kJ/Kg)")
+par(mfrow=c(3,2),mar=c(4.5,4,2,1.5))
+i=1
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=2
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=3
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=4
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=5
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=6
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+```
+
+```{r}
+par(mfrow=c(3,2),mar=c(4.5,4,2,1.5))
+i=7
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=8
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=9
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=10
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+i=11
+df<- data.frame(x=estclim[[i]][[2]],y=climate[,i])
+#fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) 
+#png(paste0("estclimate",i,".png"),width=600,height=600)
+plotFit(estclim[[i]][[1]], data=df,interval = "both", pch = 16, shade = TRUE, 
+col.conf = "skyblue3", col.pred = "lightskyblue1",las=1,
+xlab="Predicted data",ylab="Observeed data",bty="l")  
+box(bty="l",lwd=2.5)
+G23<- sum(EBS[i,]*Fdat)/sqrt(sum(EBS[i,]^2))
+pred0<- co[i,3]+co[i,2]*G23+co[i,1]*(G23*G23)
+points(G23,pred0,col="red",pch=21,bg="green",cex=2)
+title(paste(names(estclim)[i],unit[i]))
+#dev.off()
+```
+
