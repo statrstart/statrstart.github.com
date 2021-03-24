@@ -43,34 +43,43 @@ CLAMPは広葉樹葉の葉相観を用いた古気候解析法の一つであり
 
 #### 表(ブートストラップ法を使っていますので信頼区間の値は一定ではありません)
 
-|         | 推定値|  2.5%| 97.5%|
-|:--------|------:|-----:|-----:|
-|MAT      |   25.0|  23.1|  26.9|
-|WMMT     |   27.5|  25.2|  29.2|
-|CMMT     |   21.0|  17.1|  23.6|
-|GROWSEAS |   12.3|  11.8|  12.9|
-|GSP      |  157.8| 112.4| 238.3|
-|MMGSP    |   12.9|   8.9|  20.8|
-|3-WET    |  100.4|  69.5| 146.6|
-|3-DRY    |    3.7|   1.3|  14.0|
-|RH       |   82.8|  75.4|  86.6|
-|SH       |   15.1|  13.8|  17.3|
-|ENTHAL   |   35.6|  35.0|  36.6|
+|         | ブートストラップ推定値|  2.5%| 97.5%|
+|:--------|----------------------:|-----:|-----:|
+|MAT      |                   25.0|  23.1|  26.9|
+|WMMT     |                   27.6|  25.3|  29.2|
+|CMMT     |                   20.5|  17.2|  23.7|
+|GROWSEAS |                   12.3|  11.8|  12.9|
+|GSP      |                  168.7| 112.8| 238.9|
+|MMGSP    |                   14.6|   9.0|  20.4|
+|3-WET    |                   99.5|  70.8| 148.3|
+|3-DRY    |                    5.0|   1.3|  13.7|
+|RH       |                   81.4|  75.5|  86.6|
+|SH       |                   15.3|  13.8|  17.4|
+|ENTHAL   |                   35.7|  35.0|  36.6|
 
 #### ヒストグラム(ブートストラップ法を使っていますのでグラフはその都度多少変化します）
 
 ![CLAMP03_1.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/CLAMP03_1.png)
 
+- CLAMPで求めた推定値を青線実線、CLAMP(ブートストラップ)で求めた推定値を赤線実線、2.5%と97.5%は赤線破線。
+
 ## Rcode
 
 ```R
 library(vegan)
-# urlから直接入手します。頻繁に使う場合はダウンロードして使いましょう。
+# urlから直接入手します。
 leaves0<- read.csv("http://clamp.ibcas.ac.cn/PhysgAsia2_files/PhysgAsia2.csv",row.names=1,check.names=F)
 climate0<- read.csv("http://clamp.ibcas.ac.cn/PhysgAsia2_files/HiResGridMetAsia2.csv",row.names=1,check.names=F)
 # leaves0データ、climate0データの行名が一致しているかを確認する。
 all(rownames(leaves0)==rownames(climate0))
 # [1] TRUE
+# fossil leaves data
+site<- data.frame(matrix(c(
+	0,83,9,0,5,13,3,0,0,0,2,12,19,20,23,25,15,22,12,67,20,22,57,0,59,33,6,2,0,98,3
+	),nrow=1))
+colnames(site)<- colnames(leaves0)
+rownames(site)<- "site"
+#
 # ブートストラップ法による信頼区間の構成
 n <- nrow(leaves0)
 M <- 2000
@@ -100,12 +109,6 @@ fm<-nls(y ~a+b*x+c*x^2,start=c(a=1,b=1,c=-1),data=df) }
 co<- rbind(co,rev(coef(summary(fm))[,1]))
 }
 #names(estclim)<- colnames(climate)
-# fossil leaves data
-site<- data.frame(matrix(c(
-	0,83,9,0,5,13,3,0,0,0,2,12,19,20,23,25,15,22,12,67,20,22,57,0,59,33,6,2,0,98,3
-	),nrow=1))
-colnames(site)<- colnames(leaves0)
-rownames(site)<- "site"
 # Site scores (weighted averages of species scores)の推定
 Fdat<- predict(res,type="wa",newdata=site)[1:4]
 pred<- NULL
@@ -121,11 +124,11 @@ nrow(predmat)
 #
 pvec<- NULL
 for(i in 1:11){
-	temp<- c(xx[i],quantile(predmat[,i], c(0.025, 0.975)))
+	temp<- c(mean(predmat[,i]),quantile(predmat[,i], c(0.025, 0.975)))
 	pvec<- rbind(pvec,round(temp,1))
 }
 rownames(pvec)<- colnames(climate0)
-colnames(pvec)[1]<- "推定値"
+colnames(pvec)[1]<- "ブートストラップ推定値"
 knitr::kable(pvec)
 #
 # 推定値
@@ -136,7 +139,9 @@ par(mfrow=c(3,4))
 for(i in 1:11){
 	hist(predmat[,i],col="lightgray",xlab="",main=colnames(predmat)[i])
 	# 前回求めた推定値
-	abline(v=xx[i],col="red",lwd=1.5)
+	abline(v=xx[i],col="blue",lwd=1)
+	# ブートストラップ推定値
+	abline(v=mean(predmat[,i]),col="red",lwd=1)
 	# 95％信頼区間
 	abline(v=quantile(predmat[,i], c(0.025, 0.975)),col="red",lty=2) 
 }

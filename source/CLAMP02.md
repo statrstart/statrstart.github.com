@@ -85,13 +85,28 @@ CLAMPは広葉樹葉の葉相観を用いた古気候解析法の一つであり
 ```R
 library(vegan)
 library(investr)
-# urlから直接入手します。頻繁に使う場合はダウンロードして使いましょう。
+# urlから直接入手します。
 leaves<- read.csv("http://clamp.ibcas.ac.cn/PhysgAsia2_files/PhysgAsia2.csv",row.names=1,check.names=F)
 climate<- read.csv("http://clamp.ibcas.ac.cn/PhysgAsia2_files/HiResGridMetAsia2.csv",row.names=1,check.names=F)
 # leavesデータ、climateデータの行名が一致しているかを確認する。
 all(rownames(leaves)==rownames(climate))
 # [1] TRUE
-# 現在の植生から得られた葉相観データとその地域の気候データを使ってCCA実行
+```
+
+#### 葉化石のデータを入力（コンマで区切る）
+
+```R
+# fossil leaves data
+site<- data.frame(matrix(c(
+	0,83,9,0,5,13,3,0,0,0,2,12,19,20,23,25,15,22,12,67,20,22,57,0,59,33,6,2,0,98,3	# <- ここに入力
+	),nrow=1))
+colnames(site)<- colnames(leaves)
+rownames(site)<- "site"
+```
+
+#### 現在の植生から得られた葉相観データとその地域の気候データを使ってCCA実行
+
+```R
 res <- cca(leaves~.,climate) 
 # モデルの評価 ：並べ替え検定法(Permutation test)
 anova(res)
@@ -143,15 +158,9 @@ knitr::kable(co)
 | -0.4610003|  3.461899|   9.302291|
 | -0.2720693|  1.926624|  32.630057|
 
-### 葉化石のデータを入力（コンマで区切る）して、過去の気候条件を推定します。
+### 過去の気候条件を推定します。
 
 ```R
-# fossil leaves data
-site<- data.frame(matrix(c(
-	0,83,9,0,5,13,3,0,0,0,2,12,19,20,23,25,15,22,12,67,20,22,57,0,59,33,6,2,0,98,3	# <- ここに入力
-	),nrow=1))
-colnames(site)<- colnames(leaves)
-rownames(site)<- "site"
 # Site scores (weighted averages of species scores)の推定
 Fdat<- predict(res,type="wa",newdata=site)[1:4]
 pred<- NULL
