@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2021-03-25
+date: 2021-03-26
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -24,18 +24,11 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 #### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
 
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
-- 2021/1/14 大阪府、東京都を逆転。
-- 2021/2/4 東京都、大阪府を逆転。
-- 2021/2/6 東京都死亡者数1000人超え
-- 2021/2/8 大阪府死亡者数1000人超え
 - 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人
 
 #### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
 
 ![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
-- 2021/1/20 : 北海道人口１万人あたり１人の死亡者数突破。
-- 2021/1/28 : 大阪府人口１万人あたり１人の死亡者数突破。
-- 2021/2/ 8 : 大阪府＞北海道
 - 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人
 
 #### 大阪府 : 月別の陽性者数と月別死亡者数
@@ -50,9 +43,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 #### 他の都道府県（人口規模の大きい）との比較
 ##### 月別死者数と月別人口１００万人あたりの死者数（データ：NHK）
 北海道(約550万人)、埼玉(約719万人)、東京(約1316万人)、神奈川(約905万人)、愛知(約741万人)、大阪(約886万人)、兵庫(約559万人)
-- １１月以降、寒さの厳しい北海道の死者数が激増。
-- 大阪の気温は他と比べて低いわけではないのに８月以降の死者数は比較的多い。
-(注)「人口１００万人あたり新型コロナウイルス月別死亡者」のグラフを直しました。(2020-12-12)
 
 ![covOsaka12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka12.png)
 
@@ -79,7 +69,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![KoumuOsakashi](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/KoumuOsakashi.png)
 
 #### 塗り分け地図
-データ：[【3月19日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【3月26日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 
 ##### PCR検査 陽性者数(大阪府市町村別)
