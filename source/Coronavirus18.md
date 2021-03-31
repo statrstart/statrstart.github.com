@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-03-30
+date: 2021-03-31
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -22,6 +22,14 @@ excerpt: NHKのデータ
 #### 東北の累計感染者数の推移 [ データ：ＮＨＫ ]
 
 ![covTohoku.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTohoku.png)
+
+#### 中国地方の累計感染者数の推移 [ データ：ＮＨＫ ]
+
+![covChu.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covChu.png)
+
+#### 累計感染者数１０００人以下の県の累計感染者数の推移 [ データ：ＮＨＫ ]
+
+![covU1000.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covU1000.png)
 
 #### 都道府県別の感染者数 [ データ：ＮＨＫ ]
 
