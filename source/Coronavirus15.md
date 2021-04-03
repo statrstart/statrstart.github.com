@@ -1,6 +1,6 @@
 ---
 title: 世界と東アジアの感染者の状況(新型コロナウイルス：Coronavirus)
-date: 2021-04-02
+date: 2021-04-03
 tags: ["R","TTR","Coronavirus","新型コロナウイルス"]
 excerpt: 隔離中、死亡、回復
 ---
@@ -102,7 +102,6 @@ colnames(nCoV)<- names(nCoV1)
 options(scipen=2) 
 #
 XY <- data.frame(Under_Isolation=nCoV[1,]-(nCoV[2,] + nCoV[3,]), Deaths=nCoV[2,], Recovered=nCoV[3,])
-rownames(XY)<- sub("/20","",colnames(nCoV))
 #png("Coronavirus001.png",width=800,height=600)
 par(mar=c(5,6,4,7),family="serif")
 b<- barplot(t(XY),col=c(rgb(1,1,0,0.8),rgb(1,0,0,0.8),rgb(0,1,0,0.8)),yaxt="n",ylim=c(0,max(nCoV[1,],na.rm=T)*1.1),xaxt="n",
@@ -110,18 +109,15 @@ b<- barplot(t(XY),col=c(rgb(1,1,0,0.8),rgb(1,0,0,0.8),rgb(0,1,0,0.8)),yaxt="n",y
 lines(x=b,y=nCoV[1,],lwd=3)
 #表示するx軸ラベルを指定
 #axis(1,at=b[1]:b[nrow(XY)], labels =NA,tck= -0.01)
-labels<- rownames(XY)
+labels<- substring(rownames(XY),1,nchar(rownames(XY))-3)
 #axis(1,at=b[1],labels =labels[1],tick=F)
-labelpos<- paste0(rep(1:12,each=3),"/",1)
+labelpos<- paste0(rep(1:12),"/",1)
 for (i in labelpos){
-	at<- b[match(i,labels)]
-	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	at<- which(labels== i)
+	axis(1,at=b[at],labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)	
 	}
-labelpos<- paste0(rep(1:12,each=3),"/",c(10,20))
-for (i in labelpos){
-	at<- b[match(i,labels)]
-	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
-	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[346],side=1,line=2.5,cex=1.2) 
 # Add comma separator to axis labels
 axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
 text(x=par("usr")[2],y=c(XY[nrow(XY),1]/2,XY[nrow(XY),1]+max(XY[,2],na.rm=T)/2,XY[nrow(XY),1]+max(XY[,2],na.rm=T)+max(XY[,3],na.rm=T)/2),
@@ -141,25 +137,14 @@ MR<- round(nCoV[2,]/nCoV[1,] *100,3)
 par(mar=c(5,6,3,4),family="serif")
 plot(MR,type="l",lwd=2.5,las=1,xaxt="n",ylab="Reported deaths / Reported cases",bty="l",xlab="")
 box(bty="l",lwd=2)
-labels<-sub("/20","",colnames(nCoV))
-labels<-gsub("^.*/","",labels)
-pos<-gsub("/.*$","",sub("/20","",colnames(nCoV)))
-pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
-axis(1,at=1:ncol(nCoV),labels =NA)
-#月の区切り
-#axis(1,at=cumsum(as.vector(table(pos)))+0.5, labels =NA,tck=-0.1,lty=2 ,lwd=1)
-for (i in c("1","10","20")){
-	at<- grep("TRUE",is.element(labels,i))
-	axis(1,at=at,labels = rep(i,length(at)))
+labels<- substring(names(MR),1,nchar(names(MR))-3)
+labelpos<- paste0(rep(1:12),"/",1)
+for (i in labelpos){
+	at<- which(labels== i)
+	axis(1,at=at,labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)	
 	}
-#Month<-c("January","February","March","April","May","June","July","August","September","October","November","December")
-Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
-#cut(1:12,breaks = seq(0,12),right=T, labels =Month)
-mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
-# 月の中央
-#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
-# 月のはじめ
-mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=346,side=1,line=2.5,cex=1.2) 
 text(x=par("usr")[1],y=par("usr")[4],labels="(%)",pos=2,xpd=T,font=2)
 text(x=par("usr")[2],y=MR[length(MR)],labels=paste(MR[length(MR)],"%"),xpd=T)
 title("Covid-19 : Death rates(致死率)")
@@ -171,7 +156,6 @@ title("Covid-19 : Death rates(致死率)")
 ```R
 library(TTR)
 diffC<- diff(t(nCoV["Confirmed",,drop=F]))
-rownames(diffC)<- sub("/20","",rownames(diffC))
 fun<- function(x){round(runSum(x,n=7)/(runSum(x,n=14) -runSum(x,n=7)),2)}
 diffC2<- data.frame(fun(diffC))
 rownames(diffC2)<- rownames(diffC)
@@ -182,22 +166,14 @@ par(mar=c(5,6,4,7),family="serif")
 plot(diffC2$Confirmed,type="l",lwd=2,las=1,xlab="",ylab="",bty="n",xaxt="n",ylim=c(0,4))
 box(bty="l",lwd=2.5)
 abline(h=1,lwd=1.5,col="red",lty=2)
-labels<-gsub("^.*/","",rownames(diffC2))
-pos<-gsub("/.*$","",rownames(diffC2))
-pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
-axis(1,at=1:nrow(diffC2),labels =NA)
-#月の区切り
-#axis(1,at=cumsum(as.vector(table(pos)))+0.5, labels =NA,tck=-0.1,lty=2 ,lwd=1)
-for (i in c("1","10","20")){
-	at<- grep("TRUE",is.element(labels,i))
-	axis(1,at=at,labels = rep(i,length(at)))
+labels<- substring(rownames(diffC2),1,nchar(rownames(diffC2))-3)
+labelpos<- paste0(rep(1:12),"/",1)
+for (i in labelpos){
+	at<- which(labels== i)
+	axis(1,at=at,labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)	
 	}
-Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
-mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
-# 月の中央
-#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
-# 月のはじめ
-mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=332,side=1,line=2.5,cex=1.2) 
 text(x=par("usr")[2],y=diffC2[nrow(diffC2),],labels=diffC2[nrow(diffC2),],xpd=T)
 arrows(par("usr")[2]*1.08, 1.1,par("usr")[2]*1.08,1.68,length = 0.2,lwd=2.5,xpd=T)
 text(x=par("usr")[2]*1.08,y=1.9,labels="増加\n傾向",xpd=T)
@@ -439,7 +415,6 @@ datC<- t(Ctl[grep("(Japan|China|Korea, South|Taiwan|Singapore)",rownames(Ctl)),]
 HK<- Confirmed[Confirmed$"Province/State"=="Hong Kong",5:ncol(Confirmed)]
 rownames(HK)<- "Hong Kong"
 datC<- cbind(datC,t(HK))
-rownames(datC)<- sub("/20","",rownames(datC))
 x<- apply(datC,2,diff)
 fun<- function(x){round(runSum(x,n=7)/(runSum(x,n=14) -runSum(x,n=7)),2)}
 df<- apply(x,2,fun)
@@ -459,25 +434,15 @@ matplot(pdat,type="l",lwd=2,las=1,lty=1,col=1:6,xlab="",ylab="",xaxt="n",bty="n"
 #matplot(pdat,type="l",lwd=2,las=1,lty=1,col=1:6,xlab="",ylab="",xaxt="n",bty="n",ylim=c(0,10))
 box(bty="l",lwd=2.5)
 abline(h=1,lty=2,col="darkgreen",lwd=1.5)
-labels<-gsub("^.*/","",rownames(pdat))
-pos<-gsub("/.*$","",rownames(pdat))
-pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
-axis(1,at=1:nrow(pdat),labels =NA)
-#月の区切り
-#axis(1,at=cumsum(as.vector(table(pos)))+0.5, labels =NA,tck=-0.1,lty=2 ,lwd=1)
-for (i in c("1","10","20")){
-	at<- grep("TRUE",is.element(labels,i))
-	axis(1,at=at,labels = rep(i,length(at)))
+labels<- substring(rownames(pdat),1,nchar(rownames(pdat))-3)
+#
+labelpos<- paste0(rep(1:12),"/",1)
+for (i in labelpos){
+	at<- which(labels== i)
+	axis(1,at=at,labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)	
 	}
-#Month<-c("January","February","March","April","May","June","July","August","September","October","November","December")
-Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
-#cut(1:12,breaks = seq(0,12),right=T, labels =Month)
-mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
-# 月の中央
-#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
-# 月のはじめ
-mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
-#text(x=par("usr")[2],y=pdat[nrow(pdat),],labels=colnames(pdat),xpd=T)
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=332,side=1,line=2.5,cex=1.2) 
 legend("topright",inset=c(-0.03,0.03),lty=1,lwd=2,col=1:6,legend=colnames(pdat),xpd=T)
 legend("bottomright",inset=c(-0.03,0.1),xpd=T,bty="n",
 	legend= paste(rownames(pdat)[nrow(pdat)],"現在\n",colnames(pdat)[1],num[1],"\n",colnames(pdat)[2],num[2],"\n",colnames(pdat)[3],num[3],"\n",
