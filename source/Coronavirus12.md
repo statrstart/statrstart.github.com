@@ -21,6 +21,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
 月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
 
+#### 近畿地方：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
+
+![covkinki](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
+
 #### 大阪府 vs 東京都 vs 北海道 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
 
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
