@@ -74,7 +74,9 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![osakaCmap03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap03.png)
 
-##### 人口１万人あたりの検査陽性者数(大阪府市町村別)
+##### 人口１０００人あたりの検査陽性者数(大阪府市町村別)
+
+- 人口１万人あたりから１０００人あたりに変更しました。（2021-04-07）
 
 ![osakaCmap04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap04.png)
 
