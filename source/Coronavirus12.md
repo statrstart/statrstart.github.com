@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2021-04-07
+date: 2021-04-08
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -67,7 +67,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 塗り分け地図
-データ：[【4月7日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【4月8日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 
 ##### PCR検査 陽性者数(大阪府市町村別)
@@ -372,23 +372,16 @@ df<- df[40:nrow(df),]
 par(mar=c(4,6,4,7),family="serif")
 plot(df[,2],type="l",lwd=2,las=1,ylim=c(0,11),xlab="",ylab="",xaxt="n",bty="n")
 box(bty="l",lwd=2.5)
-#axis(1,at=1:nrow(df),labels=df[,1])
-labels<- df[,1]
-labels<-gsub("^.*/","",labels)
-pos<-gsub("/.*$","",sub("/20","",df[,1]))
-pos<- factor(pos,levels=min(as.numeric(pos)):max(as.numeric(pos)))
-for (i in c("1","10","20")){
-	at<- grep("TRUE",is.element(labels,i))
-	axis(1,at=at,labels = rep(i,length(at)))
+#
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- which(i==sub("-","/",sub("-0","-",sub("^0","",substring(df[,1],6,10)))))
+	axis(1,at=at,labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)
 	}
-Month<-c("Jan.","Feb.","Mar.","Apr.","May","Jun.","Jul.","Aug.","Sep.","Oct.","Nov.","Dec.")
-mon<-cut(as.numeric(names(table(pos))),breaks = seq(0,12),right=T, labels =Month)
-# 月の中央
-#mtext(text=mon,at=cumsum(as.vector(table(pos)))-as.vector(table(pos)/2),side=1,line=2) 
-# 月のはじめ
-mtext(text=mon,at=1+cumsum(as.vector(table(pos)))-as.vector(table(pos)),side=1,line=2) 
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=303,side=1,line=2.5,cex=1.2) 
 abline(h=1,col="red",lty=2)
-text(x=par("usr")[2],y=df[,2][nrow(df)],labels= paste0(df[,1][nrow(df)],"現在\n",df[,2][nrow(df)]),xpd=T,cex=1.2,col="red")
+text(x=par("usr")[2],y=df[,2][nrow(df)],labels= paste0(df[,1][nrow(df)],"\n現在\n",df[,2][nrow(df)]),xpd=T,cex=1.2,col="red")
 arrows(par("usr")[2]*1.08, 1.1,par("usr")[2]*1.08,1.68,length = 0.2,lwd=2.5,xpd=T)
 text(x=par("usr")[2]*1.08,y=2,labels="増加\n傾向",xpd=T)
 arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=T)
