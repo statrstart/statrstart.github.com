@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2021-04-08
+date: 2021-04-09
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -67,7 +67,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 塗り分け地図
-データ：[【4月8日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【4月9日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 
 ##### PCR検査 陽性者数(大阪府市町村別)
@@ -76,7 +76,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ##### 人口１０００人あたりの検査陽性者数(大阪府市町村別)
 
-- 人口１万人あたりから１０００人あたりに変更しました。（2021-04-07）
+- 人口１万人あたりから１０００人あたりに変更しました。（2021-04-07から）
 
 ![osakaCmap04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap04.png)
 
