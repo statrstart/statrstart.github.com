@@ -652,3 +652,74 @@ osaka$sigun<- c(osaka$sigun[1:31],osaka$kusityo[32:62],osaka$sigun[63:72])
 #GeoJSON形式で保存する。
 st_write(osaka, "./Osaka/osaka.geojson")
 ```
+
+#### 市長日程２０２０年
+
+```R
+library(calendR)
+library(rvest)
+#これまでの市長日程
+p<- c("0000342310","0000346760","0000351186","0000353763","0000361763","0000361768",
+	"0000361957","0000361965","0000361978","0000361979","0000361980","0000361981")
+#
+koumu<- NULL
+for ( i in p){
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",i,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[1]]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+}
+#
+koumu<- koumu[,1 ]
+#
+#公務日程なしの日付　曜日削除
+days<- gsub("（.*）","",koumu)
+days<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",days))))
+#png("KoumuOsakashi02.png",width=800,height=600)
+mat <- matrix(c(1,1,1,1,1,1,2,2),4,2, byrow = TRUE)
+layout(mat) 
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="firebrick2",names=paste0(1:12,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3)
+legend(x="topleft",legend="市の考え方
+大阪市ホームページにおいて、「公務日程なし」と記載している時でありましても、
+行政的に随時連絡をとれる体制を整えており、市長は市政の必要に応じたマネジメント
+を行っております。
+https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000516041.html",bty="n")
+title("「公務日程なし」の月別日数（大阪市：市長日程）[2020年]")
+#
+yeardata<- sum(table(substring(days,6,7)))
+b<- barplot(matrix(c(yeardata,366-yeardata),nrow=2),horiz=T,col=c("brown3","royalblue3"))
+# x:yeardata/2=90 yeardata+(366-yeardata)/2
+text(x=c(90,273),y=b,labels=c(paste0("公務日程なし\n",yeardata,"日"),paste0("公務日程あり\n",(366-yeardata),"日")),cex=3)
+title("２０２０年「公務日程なし・あり」の日数（大阪市：市長日程）")
+#dev.off()
+#
+# 2020-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2020-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = "1 day")
+# Vector of "公務日程あり" 
+events <- rep("公務日程あり",length(dates))
+# Adding more events
+events[no_koumu] <- "公務日程なし"
+# +2 : データのある日の次の日
+#events[as.numeric(as.Date(last)-as.Date("2020-01-01")+2):length(dates)] <- NA
+# Creating the calendar
+#png("Okoumu02.png",width=800,height=600)
+calendR(year = 2020,
+        start = "S",
+        special.days = events,
+        special.col = c("lightblue","red"), # as events
+	title = "「公務日程」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = "[2020]" ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+#dev.off()
+```
