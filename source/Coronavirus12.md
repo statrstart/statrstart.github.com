@@ -16,10 +16,18 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 (参考)[大阪府の最新感染動向](https://covid19-osaka.info/)  
 
+(使用するデータ)  
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
 地図の元データ：[国土数値情報 行政区域データ](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!)  
 市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
-月別死亡者数 : [東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)
+[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
+[「東洋経済オンライン」都道府県別の発生動向](https://toyokeizai.net/sp/visual/tko/covid19/csv/prefectures.csv)  
+
+#### 大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」]
+
+![covOsaka14](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka14.png)
+
+- 重症者数 : 2021-02-28 90人
 
 #### 近畿地方：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
 
@@ -723,3 +731,24 @@ calendR(year = 2020,
 	legend.pos = c(0.1,1.15))  
 #dev.off()
 ```
+
+#### 大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」]
+
+```R
+library(xts)
+#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
+# https://toyokeizai.net/sp/visual/tko/covid19/
+#制作・運用：東洋経済オンライン編集部
+# 都道府県別の発生動向
+covid19 = read.csv("https://toyokeizai.net/sp/visual/tko/covid19/csv/prefectures.csv")
+# serious discharged
+data<- covid19[covid19$"prefectureNameJ"=="大阪府",c(1:3,9)]
+time<- as.Date(paste0(data$year,"-",data$month,"-",data$date))
+data$serious<- as.numeric(as.character((data$serious)))
+data.xts<- xts(x=data$serious,time)
+data.xts<- data.xts["2020-05-08 ::"]
+# png("covOsaka14.png",width=800,height=600)
+plot(data.xts,main="大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」]")
+# dev.off()
+```
+
