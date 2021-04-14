@@ -60,6 +60,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
 
+#### 時系列(2021年〜)
+
+![covOsaka15](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka15.png)
+
 #### 検査結果
 
 ![covOsaka05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka05.png)
