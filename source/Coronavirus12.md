@@ -31,6 +31,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covkinki](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
 
+#### 滋賀県、京都府、奈良県、和歌山県：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
+
+![covkinki02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki02.png)
+
 #### 大阪府 vs 東京都 vs 北海道 vs 神奈川県 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
 
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
