@@ -12,6 +12,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 > ## 2020-11-16以降、陽性者の属性のデータ公開はなくなりましたので、陽性者の居住地、年齢、性別を用いたグラフ及び地図は更新されません。
 
+## [大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)  
 ## 新しい記事は[大阪府の検査陽性者(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus12_2)です。  
 
 (参考)[大阪府の最新感染動向](https://covid19-osaka.info/)  
