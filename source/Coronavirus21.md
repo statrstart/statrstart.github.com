@@ -38,8 +38,12 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
 
+#### 大阪府：月別重症者数と死亡者数(2020-12::2021-04)
+
+![covid21_07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_07.png)
+
 ### Rコード
-(注意)2021-04-31から死亡に自宅・宿泊死亡という項目が加わったため「重症者」の属性がこのコードではうまく読み取れません。
+(注意)2021-04-30から死亡に自宅・宿泊死亡という項目が加わったため「重症者」の属性がこのコードではうまく読み取れません。
 訂正はしないので、読み取りの開始行と読み取る列を調整してください。
 
 #### rvestパッケージを使って、エクセルファイル名を入手。rioパッケージでエクセルファイル読み込み。
