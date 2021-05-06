@@ -1,6 +1,6 @@
 ---
 title: 大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-05-05
+date: 2021-05-06
 tags: ["R","rvest","rio","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のexcelデータ
 ---
@@ -12,29 +12,29 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 (使用するデータ)  
 [新型コロナウイルス感染症患者の発生状況（令和2年11月2日以降）](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako.html)  
 
-#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-05-05)
+#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-05-06)
 
 ![covid21_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_01.png)
 
-#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2021-05-05)
+#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2021-05-06)
 
 ![covid21_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_02.png)
 
 ### 「緊急事態宣言解除」前倒し 前と後の年代別 重症者数と死亡者数
 
-#### 大阪府：期間重症者数と死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-05])
+#### 大阪府：期間重症者数と死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-06])
 
 ![covid21_03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_03.png)
 
-#### 大阪府：年代別重症者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-05])
+#### 大阪府：年代別重症者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-06])
 
 ![covid21_04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_04.png)
 
-#### 大阪府：年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-05])
+#### 大阪府：年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-06])
 
 ![covid21_05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_05.png)
 
-#### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-05])
+#### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::2021-05-06])
 
 ![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
 
