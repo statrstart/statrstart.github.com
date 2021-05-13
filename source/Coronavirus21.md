@@ -16,6 +16,10 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_01.png)
 
+#### 大阪府：性別＆年代別重症者数と死亡者数(2020-12-01 :: 2021-05-13)
+
+![covid21_07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_07.png)
+
 #### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2021-05-13)
 
 ![covid21_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_02.png)
@@ -38,13 +42,51 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
 
-#### 大阪府：月別重症者数と死亡者数(2020-12::2021-04)
-
-![covid21_07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_07.png)
-
 ### Rコード
-(注意)2021-04-30から死亡に自宅・宿泊死亡という項目が加わったため「重症者」の属性がこのコードではうまく読み取れません。
-訂正はしないので、読み取りの開始行と読み取る列を調整してください。
+
+(追記)2021-04-30から死亡に自宅・宿泊死亡という項目が加わったため「重症者」の属性を読みとるためには、
+読み取りの開始行と読み取る列を調整する必要があります。
+
+(例) 2021-05-12のデータ
+
+```R
+new<- "/attach/23711/00376069/0512.xlsx"
+#
+# 2021-04-31から自宅・宿泊死亡という項目が加わったため変更あり
+tDdat<- NULL
+tSdat<- NULL
+for (i in new){
+tryCatch(
+{
+	url<-paste0("http://www.pref.osaka.lg.jp",i)
+	df<- rio::import(file = url,which = 2)
+#	ss<- grep("重症の状況",df[,1])+3
+	ss<- grep("重症の状況",df[,1])+4
+	ee<- grep("市町村別陽性者発生状況",df[,1])-1
+	ee<- tail(ee,1)
+	dat1<- df[ss:ee,c(1,2,4)]
+	colnames(dat1)<- c("Date","年代","性別")
+	dat1[,1]<- as.numeric(dat1[,1])
+	dat1<- dat1[ !is.na(dat1[,2]),]
+#
+#	dat2<- df[ss:ee,c(15,16,18)]
+	dat2<- df[ss:ee,c(18,19,21)]
+	colnames(dat2)<- c("Date","年代","性別")
+	dat2[,1]<- as.numeric(dat2[,1])
+	dat2<- dat2[ !is.na(dat2[,2]),]
+	Cdate<- substring(sub("\\.xlsx","",sub("^.*/","",i)),1,4)
+	if (length(dat1$Date)!=0){dat1$Date<- paste0("2021",Cdate)}
+	if (length(dat2$Date)!=0){dat2$Date<- paste0("2021",Cdate)}
+	tDdat<- rbind(tDdat,dat1)
+	tSdat<- rbind(tSdat,dat2)
+}
+ , error = function(e) {}
+)
+}
+# 確認
+tDdat ; tSdat
+nrow(tDdat) ; nrow(tSdat)
+```
 
 #### rvestパッケージを使って、エクセルファイル名を入手。rioパッケージでエクセルファイル読み込み。
 #### 重症者、死亡者の年代、性別の書いてある部分を抽出する。
@@ -186,6 +228,16 @@ b<- barplot(d,ylim=c(0,max(d)*1.2),las=1,col="brown3")
 text(x=b,y=d,labels=d,pos=3)
 title("大阪府：年代別死亡者数(2020-12-01 :: 2021-04-21)")
 par(mfrow=c(1,1))
+#dev.off()
+#
+#png("covid21_07.png",width=800,height=800)
+par(mfrow=c(2,1),mar=c(3,3,3,2))
+d<- table(factor(Sdat$性別,levels=c("男","女")),factor(Sdat$年代,levels=c("未就学児",seq(10,100,10))) )
+barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
+title("大阪府：性別＆年代別 重症者数 \n(2020-12-01 :: 2021-05-13)")
+d<- table(factor(Ddat$性別,levels=c("男","女")),factor(Ddat$年代,levels=c("未就学児",seq(10,100,10))) )
+barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
+title("大阪府：性別＆年代別  死亡者数\n(2020-12-01 :: 2021-05-13)")
 #dev.off()
 #
 #png("covid21_02.png",width=800,height=600)
