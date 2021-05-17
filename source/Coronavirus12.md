@@ -14,6 +14,12 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ## [大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)  
 
+#### 都道府県別の人口100万人あたり死亡者数 [ データ：ＮＨＫ ]
+
+![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
+
+- 大阪府の人口あたりの死亡者数は全国平均の２倍以上。
+
 #### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::])
 [大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)からひとつだけここに載せておきます。  
 
