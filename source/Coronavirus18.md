@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-05-18
+date: 2021-05-19
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -27,9 +27,9 @@ excerpt: NHKのデータ
 
 ![covChu.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covChu.png)
 
-#### 累計感染者数１０００人以下の県の累計感染者数の推移 [ データ：ＮＨＫ ]
+#### 累計感染者数2000人以下の県の累計感染者数の推移 [ データ：ＮＨＫ ]
 
-![covU1000.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covU1000.png)
+![covU2000.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covU2000.png)
 
 #### 都道府県別の感染者数 [ データ：ＮＨＫ ]
 
@@ -247,5 +247,61 @@ text(x=par("usr")[2],y=tail(data,1),labels=paste0(colnames(data),":",tail(data,1
 mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
 mtext(text="2021年",at=352,side=1,line=2.5,cex=1.2) 
 title("累計感染者数(東北)")
+# dev.off()
+```
+
+#### 感染者2000人未満
+
+```R
+code<- 1:47
+#感染者数累計
+# 
+Cdata<- nhkC[nhkC$都道府県コード==code[1],c(1,5)]
+Cdata.xts<- as.xts(read.zoo(Cdata, format="%Y/%m/%d"))
+# 
+for (i in code[-1]){
+	Cdata<- nhkC[nhkC$都道府県コード== i,c(1,5)]
+	tmp.xts<- as.xts(read.zoo(Cdata, format="%Y/%m/%d"))
+	Cdata.xts<- merge(Cdata.xts,tmp.xts)
+}
+# NA<- 0
+coredata(Cdata.xts)[is.na(Cdata.xts)]<- 0
+colnames(Cdata.xts)<- unique(nhkC[nhkC$都道府県コード==code,"都道府県コード"])
+data<- coredata(tail(Cdata.xts,1))
+#data[data<2000]
+code<- colnames(data)[data<2000]
+# 
+Cdata<- nhkC[nhkC$都道府県コード==code[1],c(1,5)]
+Cdata.xts<- as.xts(read.zoo(Cdata, format="%Y/%m/%d"))
+# 
+for (i in code[-1]){
+	Cdata<- nhkC[nhkC$都道府県コード== i,c(1,5)]
+	tmp.xts<- as.xts(read.zoo(Cdata, format="%Y/%m/%d"))
+	Cdata.xts<- merge(Cdata.xts,tmp.xts)
+}
+# NA<- 0
+coredata(Cdata.xts)[is.na(Cdata.xts)]<- 0
+colnames(Cdata.xts)<- unique(nhkC[nhkC$都道府県コード==code,"都道府県名"])
+#
+#plot(Cdata.xts)
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("^....-","",index(Cdata.xts)))))
+data<- coredata(Cdata.xts)
+data<- data[,order(-tail(data,1))]
+# 毎月1日
+labelpos<- paste0(1:12,"/",1)
+# png("covU2000.png",width=800,height=600)
+par(mar=c(5,4,5,9),family="serif")
+matplot(data,type="l",lty=1,col=rainbow(length(code),alpha=0.8),lwd=2,las=1,bty="n",xlab="",ylab="",xaxt="n",xaxs="i")
+box(bty="l",lwd=2.5)
+for (i in labelpos){
+	at<- which(labels== i)
+	axis(1,at=at,labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)	
+	}
+text(x=par("usr")[1],y=par("usr")[4],labels="(人)",pos=3,xpd=T)
+text(x=par("usr")[2],y=tail(data,1),labels=colnames(data),xpd=T,pos=4)
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=352,side=1,line=2.5,cex=1.2) 
+legend("topleft",inset=0.03,legend=paste0(colnames(data)," : ",tail(data,1),"人"),lty=1,col=rainbow(length(code),alpha=0.8),lwd=2)
+title("累計感染者数推移(累計感染者数2000人未満)")
 # dev.off()
 ```
