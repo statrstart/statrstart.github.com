@@ -1,13 +1,12 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2021-06-11
+date: 2021-06-12
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
 
 # 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
 
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus12)  
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus12&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
 > ## 2020-11-16以降、陽性者の属性のデータ公開はなくなりましたので、陽性者の居住地、年齢、性別を用いたグラフ及び地図は更新されません。
@@ -100,7 +99,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 塗り分け地図
-データ：[【6月11日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【6月12日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 
 ##### PCR検査 陽性者数(大阪府市町村別)
