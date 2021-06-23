@@ -1,6 +1,6 @@
 ---
 title: インフルエンザ報告数と新型コロナウイルス陽性者数
-date: 2021-06-22
+date: 2021-06-23
 tags: ["R","xts"]
 excerpt: IDWR速報データ & NHK:新型コロナデータ
 ---
@@ -18,48 +18,97 @@ IDWR速報データ
 
 [作成したデータセット:influ2018_202123.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_202123.csv)  
 
-NHK:新型コロナデータ  
-- https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv
+[NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
 
 ### 総数：インフルエンザ報告数と新型コロナウイルス陽性者数
 
 ![covid22_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_01.png)
 
 - インフルエンザ報告数のグラフと重ねてみると、新型コロナウイルスの感染力の強さがわかる。
-- そのうえ、デルタ株も入ってきているし、どうなっちゃうんでしょう。
 
-#### ほぼ年ごとのインフルエンザ報告数（週データを集計したものなので「ほぼ年ごと」）
+#### ほぼ年ごとのインフルエンザ報告数と新型コロナウイルス陽性者数（週データを集計したものなので年初の数日が前年に入っている場合あり）
 
-|     |       x|
-|:----|-------:|
-|2018 | 1898134|
-|2019 | 1875890|
-|2020 |  563487|
-|2021 |     711|
+|     | インフルエンザ| 新型コロナウイルス|
+|:----|--------------:|------------------:|
+|2018 |      1,898,134|                  0|
+|2019 |      1,875,890|                  0|
+|2020 |        563,487|            243,298|
+|2021 |            711|            528,681|
 
-（注意）2021年は23週(2021-06-07〜2021-06-13)までの集計  
+（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計  
 
-### 都道府県別(大阪府,東京都,北海道,沖縄県)
+### 都道府県別(大阪府,東京都,北海道,沖縄県,鳥取県)
 
-#### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数
+都市代表（大阪府,東京都）、観光地代表（北海道,沖縄県）、コロナ感染者最少（鳥取県）
+
+#### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_02.png)
 
-#### 東京都：インフルエンザ報告数と新型コロナウイルス陽性者数
+|     | インフルエンザ| 新型コロナウイルス|
+|:----|--------------:|------------------:|
+|2018 |         98,141|                  0|
+|2019 |         88,386|                  0|
+|2020 |         42,961|             30,808|
+|2021 |             62|             70,966|
+
+（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計 
+
+#### 東京都：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_03.png)
 
-#### 北海道：インフルエンザ報告数と新型コロナウイルス陽性者数
+|     | インフルエンザ| 新型コロナウイルス|
+|:----|--------------:|------------------:|
+|2018 |        137,224|                  0|
+|2019 |        148,834|                  0|
+|2020 |         33,424|             62,760|
+|2021 |             30|            103,609|
+
+（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計 
+
+#### 北海道：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_04.png)
 
-#### 沖縄県：インフルエンザ報告数と新型コロナウイルス陽性者数
+|     | インフルエンザ| 新型コロナウイルス|
+|:----|--------------:|------------------:|
+|2018 |         90,751|                  0|
+|2019 |         91,474|                  0|
+|2020 |         27,014|             13,681|
+|2021 |             50|             26,791|
+
+（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計 
+
+#### 沖縄県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_05.png)
 
+|     | インフルエンザ| 新型コロナウイルス|
+|:----|--------------:|------------------:|
+|2018 |         32,178|                  0|
+|2019 |         45,357|                  0|
+|2020 |          8,197|              5,450|
+|2021 |             13|             14,034|
+
+（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計  
+
+#### 鳥取県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_06.png)
+
+|     | インフルエンザ| 新型コロナウイルス|
+|:----|--------------:|------------------:|
+|2018 |         11,226|                  0|
+|2019 |          9,076|                  0|
+|2020 |          3,160|                127|
+|2021 |              4|                339|
+
+（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計  
+
 ### Rコード
 
-#### データ読み込み
+#### データ読み込み（linuxの場合）
 
 ```R
 library(xts)
@@ -67,6 +116,20 @@ csvdata<- "https://raw.githubusercontent.com/statrstart/statrstart.github.com/ma
 influ2018_2021<- read.csv(csvdata,fileEncoding = "CP932")
 nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
 ```
+
+#### ネット上のcsvファイルがうまく読み込めない場合
+
+「windows版のR」でNHKのコロナデータがfileEncoding="UTF-8"をつけても読み込めないとき、fread関数でもだめなとき
+
+```R
+rL<- readLines("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
+rL<- iconv(rL,"UTF-8","CP932")
+nhkC<- read.csv(text=rL,h=F,skip=1,stringsAsFactors=F)
+colnames(nhkC)<- c("日付","コード","都道府県名","1日ごとの感染者数","感染者数累計","1日ごとの死者数","死者数累計")
+```
+
+のようにreadLinesで読み込み -> iconvで文字コードを変換　-> read.csvでdata.frameとして読み込む  
+このようにしても、colnames行はなぜかNAとなってしまったので、skip=1として後にcolnamesｗ付け直しました。
 
 #### 総数のグラフ
 
@@ -104,10 +167,17 @@ title("インフルエンザ報告数と新型コロナウイルス陽性者数"
 #dev.off()
 ```
 
-#### ほぼ年ごとのインフルエンザ報告数の表
+#### ほぼ年ごとのインフルエンザ報告数と新型コロナウイルス陽性者数の表
 
 ```R
-knitr::kable(tapply(influ2018_2021$総数,influ2018_2021$年,sum))
+hyo<- influ2018_2021[,c("年","終わり","総数")]
+names(hyo)[3]<- "インフルエンザ"
+hyo$新型コロナウイルス<- NA
+hyo$新型コロナウイルス[107:(106+nrow(dfC))]<- dfC
+#
+hyo2<- cbind(year=rep(hyo$年,2),stack(hyo,select=c(インフルエンザ,新型コロナウイルス)))
+hyo2<- tapply(hyo2$values,list(hyo2$year,hyo2$ind),sum,na.rm=T)
+knitr::kable(formatC(hyo2, format="d", big.mark=','),align= rep('r',2))
 ```
 
 #### 都道府県別
@@ -142,6 +212,19 @@ legend("topright",inset=c(-0.08,-0.08),legend=c("インフルエンザ","新型�
 title(paste("インフルエンザ報告数と新型コロナウイルス陽性者数\n（",loc,"）"),
 	"データ：IDWR速報データ & NHK:新型コロナデータ",cex.main=1.5)
 #dev.off()
+```
+
+#### ほぼ年ごとのインフルエンザ報告数と新型コロナウイルス陽性者数の表(都道府県別)
+
+```R
+hyo<- influ2018_2021[,c("年","終わり",loc)]
+names(hyo)[3]<- "インフルエンザ"
+hyo$新型コロナウイルス<- NA
+hyo$新型コロナウイルス[107:(106+nrow(dfC))]<- dfC
+#
+hyo2<- cbind(year=rep(hyo$年,2),stack(hyo,select=c(インフルエンザ,新型コロナウイルス)))
+hyo2<- tapply(hyo2$values,list(hyo2$year,hyo2$ind),sum,na.rm=T)
+knitr::kable(formatC(hyo2, format="d", big.mark=','),align= rep('r',2))
 ```
 
 #### インフルエンザ報告数のデータを読み込みデータセット作成
