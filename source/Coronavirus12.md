@@ -53,12 +53,12 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covkinki02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki02.png)
 
-#### 大阪府 vs 東京都 vs 北海道 vs 神奈川県 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
+#### 死亡者数の多い地域 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
 
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
 - 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人、神奈川約９０５万人
 
-#### 大阪府 vs 東京都 vs 北海道 vs 兵庫県 vs 埼玉県 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
+#### 人口あたりの死亡者数の多い地域 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
 
 ![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
 - 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人、兵庫約５５９万人、埼玉約７１９万人
