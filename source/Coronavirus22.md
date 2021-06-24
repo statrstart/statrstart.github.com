@@ -1,6 +1,6 @@
 ---
 title: インフルエンザ報告数と新型コロナウイルス陽性者数
-date: 2021-06-23
+date: 2021-06-24
 tags: ["R","xts"]
 excerpt: IDWR速報データ & NHK:新型コロナデータ
 ---
@@ -19,6 +19,10 @@ IDWR速報データ
 [作成したデータセット:influ2018_202123.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_202123.csv)  
 
 [NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
+
+（注意）グラフは「y軸片対数グラフ」です。
+- グラフが途切れている個所は数が「0」です。
+- 新型コロナウイルス陽性者数は最新ではありません。インフルエンザ報告数のデータのある最終日に合わせています。
 
 ### 総数：インフルエンザ報告数と新型コロナウイルス陽性者数
 
@@ -95,6 +99,9 @@ IDWR速報データ
 
 #### 鳥取県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
+ 0のところに0.5を入れ、線がとぎれないように工夫してみた。  
+(注意)グラフを作成したあとで0.5のところに0を入れ直すこと。(表の数値が合わなくなります。)
+
 ![covid22_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_06.png)
 
 |     | インフルエンザ| 新型コロナウイルス|
@@ -152,18 +159,17 @@ par(mar=c(5,5,4,5),family="serif")
 ylim<- c(0.9,400000)
 plot(x= 1:nrow(influ2018_2021),y=rep(NA,nrow(influ2018_2021)),las=1,log="y",ylim=ylim,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
 box(bty="l",lwd=2)
-abline(h=10^(0:6),col="darkgray",lwd=1.2,lty=3)
-for (i in 1:9){
-	abline(h=i*10^(0:6),col="darkgray",lwd=0.8,lty=3)
-}
+abline(h=10^(0:7)%o%(2:9),lty=2,col="gray",lwd=0.8)
+abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
 lines(x= 1:nrow(influ2018_2021),y=influ2018_2021$総数,col="royalblue3",lwd=2)
 axis(1,at=which(influ2018_2021$週=="01週"),labels= 2018:2021)
-axis(2,at= 10^(0:6),labels= 10^(0:6),las=1)
+axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
+axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
 # 新型コロナのデータがあるのは107週目から
 lines(x=107:(106+nrow(dfC)),y= as.vector(coredata(dfC)),col="brown3",lwd=2)
 text(x=158,y=c(90,40000),labels=c("インフルエンザ","新型コロナウイルス"),xpd=T,pos=3)
-title("インフルエンザ報告数と新型コロナウイルス陽性者数",
-	"データ：IDWR速報データ & NHK:新型コロナデータ",cex.main=1.5)
+title("インフルエンザ報告数と新型コロナウイルス陽性者数(週合計)",
+	"データ：感染症発生動向調査 週報（IDWR）、新型コロナデータ（NHK）",cex.main=1.5)
 #dev.off()
 ```
 
@@ -184,40 +190,80 @@ knitr::kable(formatC(hyo2, format="d", big.mark=','),align= rep('r',2))
 
 ```R
 # グラフにする都道府県を指定
-loc<- "沖縄県"
-cov<- nhkC[nhkC$都道府県名==loc,c(1,4)]
+pref<- "鳥取県"
+cov<- nhkC[nhkC$都道府県名==pref,c(1,4)]
 cov.xts<- xts(cov[,2],as.Date(cov$日付))
 #2020-01-13から2020-01-15（感染者数は0）を付け足す
 cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
 # インフルエンザ報告者のある部分を取り出し週の合計を出す
 dfC<- apply.weekly(cov.xts["2020-01-13::2021-06-13"],sum)
-influ<- influ2018_2021[,loc]
+influ<- influ2018_2021[,pref]
 # Plot
 options(scipen=2)
-#png("covid22_05.png",width=800,height=600)
+#png("covid22_06.png",width=800,height=600)
 par(mar=c(5,5,4,5),family="serif")
 ylim<- c(0.9,max(max(dfC),max(influ)))
 plot(x= 1:nrow(influ2018_2021),y=rep(NA,nrow(influ2018_2021)),las=1,log="y",ylim=ylim,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
 box(bty="l",lwd=2)
-abline(h=10^(0:6),col="darkgray",lwd=1.2,lty=3)
-for (i in 1:9){
-	abline(h=i*10^(0:6),col="darkgray",lwd=0.8,lty=3)
-}
+abline(h=10^(0:7)%o%(2:9),lty=2,col="gray",lwd=0.8)
+abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
 lines(x= 1:nrow(influ2018_2021),y=influ,col="royalblue3",lwd=2)
 axis(1,at=which(influ2018_2021$週=="01週"),labels= 2018:2021)
-axis(2,at= 10^(0:6),labels= 10^(0:6),las=1)
+axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
+axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
 # 新型コロナのデータがあるのは107週目から
 lines(x=107:(106+nrow(dfC)),y= as.vector(coredata(dfC)),col="brown3",lwd=2)
-legend("topright",inset=c(-0.08,-0.08),legend=c("インフルエンザ","新型コロナウイルス"),lwd=2,col=c("royalblue3","brown3"),xpd=T)
-title(paste("インフルエンザ報告数と新型コロナウイルス陽性者数\n（",loc,"）"),
-	"データ：IDWR速報データ & NHK:新型コロナデータ",cex.main=1.5)
+legend("topright",inset=c(-0.105,-0.08),legend=c("インフルエンザ","新型コロナウイルス"),lwd=2,col=c("royalblue3","brown3"),xpd=T)
+title(paste("インフルエンザ報告数と新型コロナウイルス陽性者数(週合計)\n（",pref,"）"),
+	"データ：感染症発生動向調査 週報（IDWR）、新型コロナデータ（NHK）",cex.main=1.5)
+#dev.off()
+```
+
+#### 0のところに0.5を入れ、線がとぎれないように工夫してみた
+
+(注意)グラフ作成したら0.5のところに0を入れ直す。
+
+```R
+# 片対数グラフ
+pref<- "鳥取県"
+cov<- nhkC[nhkC$都道府県名==pref,c(1,4)]
+cov.xts<- xts(cov[,2],as.Date(cov$日付))
+#2020-01-13から2020-01-15（感染者数は0）を付け足す
+cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
+# インフルエンザ報告者のある部分を取り出し週の合計を出す
+dfC<- apply.weekly(cov.xts["2020-01-13::2021-06-13"],sum)
+influ<- influ2018_2021[,pref]
+# dfC、influの0に便宜的に0.5をいれる。<- 途切れるのを防ぐため
+dfC[dfC==0]<- 0.5
+influ[influ==0]<- 0.5
+#png("covid22_06.png",width=800,height=600)
+par(mar=c(5,5,4,5),family="serif")
+plot(influ,type="n",ylim=c(0.5,max(max(influ,na.rm=T),max(dfC,na.rm=T))*1.2),xaxt="n",yaxt="n",bty="n",xlab="",ylab="",log="y",yaxs="i")
+box(bty="l",lwd=2)
+abline(h=10^(0:7)%o%(2:9),lty=2,col="gray",lwd=0.8)
+abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
+abline(h=0.5,lty=1,col="gray20",lwd=1)
+lines(influ,lwd=2,col="royalblue3")
+lines(x=107:(106+nrow(dfC)),y=dfC,col="brown3",lwd=2)
+axis(1,at=which(influ2018_2021$週=="01週"),labels=2018:2021)
+axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
+axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
+#
+#axis(2,at= 0.5,labels="0*",las=1)
+legend("topright",inset=c(-0.105,-0.08),legend=c("インフルエンザ","新型コロナウイルス"),
+	lwd=2,col=c("royalblue3","brown3"),xpd=T)
+title(paste("インフルエンザ報告数&新型コロナウイルス感染者数(週合計)\n（",pref,"）"),cex.main=1.5)
+title("","データ：感染症発生動向調査 週報（IDWR）、新型コロナデータ（NHK）",line=2.5)
+# dfC、influの0を入れ直す。
+dfC[dfC==0.5]<- 0
+influ[influ==0.5]<- 0
 #dev.off()
 ```
 
 #### ほぼ年ごとのインフルエンザ報告数と新型コロナウイルス陽性者数の表(都道府県別)
 
 ```R
-hyo<- influ2018_2021[,c("年","終わり",loc)]
+hyo<- influ2018_2021[,c("年","終わり",pref)]
 names(hyo)[3]<- "インフルエンザ"
 hyo$新型コロナウイルス<- NA
 hyo$新型コロナウイルス[107:(106+nrow(dfC))]<- dfC
