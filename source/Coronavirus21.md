@@ -1,6 +1,6 @@
 ---
 title: 大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-06-23
+date: 2021-06-24
 tags: ["R","rvest","rio","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のexcelデータ
 ---
@@ -12,15 +12,15 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 (使用するデータ)  
 [新型コロナウイルス感染症患者の発生状況（令和2年11月2日以降）](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako.html)  
 
-#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-06-23)
+#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-06-24)
 
 ![covid21_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_01.png)
 
-#### 大阪府：性別＆年代別重症者数と死亡者数(2020-12-01 :: 2021-06-23)
+#### 大阪府：性別＆年代別重症者数と死亡者数(2020-12-01 :: 2021-06-24)
 
 ![covid21_07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_07.png)
 
-#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2021-06-23)
+#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2021-06-24)
 
 ![covid21_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_02.png)
 
@@ -28,29 +28,30 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ### 「緊急事態宣言解除」前倒し 前と後の年代別 重症者数と死亡者数
 
-#### 大阪府：期間重症者数と死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-23])
+#### 大阪府：期間重症者数と死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-24])
 
 ![covid21_03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_03.png)
 
-#### 大阪府：年代別重症者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-23])
+#### 大阪府：年代別重症者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-24])
 
 ![covid21_04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_04.png)
 
-#### 大阪府：年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-23])
+#### 大阪府：年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-24])
 
 ![covid21_05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_05.png)
 
-#### 大阪府：性別＆年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-23])
+#### 大阪府：性別＆年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-24])
 
 ![covid21_08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_08.png)
 
-- [2021-03-01::2021-06-23]は70歳代男性と80歳代男性の死亡者数が接近しています。
+- [2021-03-01::2021-06-24]は70歳代男性と80歳代男性の死亡者数が接近しています。
 
-#### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-23])
+#### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-24])
 
 ![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
 
-- 上のグラフ（第３波）と下のグラフ（第４波）を比較すると70歳代の違いが大きい。
+- 上のグラフ（第３波）と下のグラフ（第４波）ともなぜか80歳代以上は重症者数 < 死亡者数となっている。
+- 上のグラフ（第３波）では70歳代まで右肩上がりだが下のグラフ（第４波）では70歳代からガタッと下がる。
 
 ### Rコード
 
@@ -244,10 +245,10 @@ par(mfrow=c(1,1))
 par(mfrow=c(2,1),mar=c(3,3,3,2))
 d<- table(factor(Sdat$性別,levels=c("男","女")),factor(Sdat$年代,levels=c("未就学児",seq(10,100,10))) )
 barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
-title("大阪府：性別＆年代別 重症者数 \n(2020-12-01 :: 2021-06-23)")
+title("大阪府：性別＆年代別 重症者数 \n(2020-12-01 :: 2021-06-24)")
 d<- table(factor(Ddat$性別,levels=c("男","女")),factor(Ddat$年代,levels=c("未就学児",seq(10,100,10))) )
 barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
-title("大阪府：性別＆年代別  死亡者数\n(2020-12-01 :: 2021-06-23)")
+title("大阪府：性別＆年代別  死亡者数\n(2020-12-01 :: 2021-06-24)")
 #dev.off()
 #
 #png("covid21_02.png",width=800,height=600)
