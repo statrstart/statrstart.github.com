@@ -1,6 +1,6 @@
 ---
 title: 大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-06-26
+date: 2021-06-27
 tags: ["R","rvest","rio","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のexcelデータ
 ---
@@ -12,15 +12,15 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 (使用するデータ)  
 [新型コロナウイルス感染症患者の発生状況（令和2年11月2日以降）](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako.html)  
 
-#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-06-26)
+#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-06-27)
 
 ![covid21_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_01.png)
 
-#### 大阪府：性別＆年代別重症者数と死亡者数(2020-12-01 :: 2021-06-26)
+#### 大阪府：性別＆年代別重症者数と死亡者数(2020-12-01 :: 2021-06-27)
 
 ![covid21_07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_07.png)
 
-#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2021-06-26)
+#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2021-06-27)
 
 ![covid21_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_02.png)
 
@@ -28,30 +28,34 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ### 「緊急事態宣言解除」前倒し 前と後の年代別 重症者数と死亡者数
 
-#### 大阪府：期間重症者数と死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-26])
+#### 大阪府：期間重症者数と死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-27])
 
 ![covid21_03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_03.png)
 
-#### 大阪府：年代別重症者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-26])
+#### 大阪府：年代別重症者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-27])
 
 ![covid21_04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_04.png)
 
-#### 大阪府：年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-26])
+#### 大阪府：年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-27])
 
 ![covid21_05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_05.png)
 
-#### 大阪府：性別＆年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-26])
+#### 大阪府：性別＆年代別死亡者数([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-27])
 
 ![covid21_08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_08.png)
 
-- [2021-03-01::2021-06-26]は70歳代男性と80歳代男性の死亡者数が接近しています。
+- [2021-03-01::2021-06-27]は70歳代男性と80歳代男性の死亡者数が接近しています。
 
-#### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-26])
+#### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::2021-06-27])
 
 ![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
 
 - 上のグラフ（第３波）と下のグラフ（第４波）ともなぜか80歳代以上は重症者数 < 死亡者数となっている。
 - 上のグラフ（第３波）では70歳代まで右肩上がりだが下のグラフ（第４波）では70歳代からガタッと下がる。
+
+#### 大阪府：年代別（但し、未就学児,10歳代は除く）重症者数 - 死亡者数(時系列)
+
+![covid21_09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_09.png)
 
 ### Rコード
 
@@ -245,10 +249,10 @@ par(mfrow=c(1,1))
 par(mfrow=c(2,1),mar=c(3,3,3,2))
 d<- table(factor(Sdat$性別,levels=c("男","女")),factor(Sdat$年代,levels=c("未就学児",seq(10,100,10))) )
 barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
-title("大阪府：性別＆年代別 重症者数 \n(2020-12-01 :: 2021-06-26)")
+title("大阪府：性別＆年代別 重症者数 \n(2020-12-01 :: 2021-06-27)")
 d<- table(factor(Ddat$性別,levels=c("男","女")),factor(Ddat$年代,levels=c("未就学児",seq(10,100,10))) )
 barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
-title("大阪府：性別＆年代別  死亡者数\n(2020-12-01 :: 2021-06-26)")
+title("大阪府：性別＆年代別  死亡者数\n(2020-12-01 :: 2021-06-27)")
 #dev.off()
 #
 #png("covid21_02.png",width=800,height=600)
@@ -307,3 +311,40 @@ par(mfrow=c(1,1))
 #dev.off()
 ```
 
+#### 時系列
+
+```R
+require(xts)
+d<- table(as.Date(Ddat$Date,format = "%Y%m%d"),factor(Ddat$年代,levels=c("未就学児",seq(10,100,10))) )
+seq(as.Date("2020-12-01"),Sys.Date(),by="day")[!is.element(seq(as.Date("2020-12-01"),Sys.Date(),by="day"),as.Date(Ddat$Date,format = "%Y%m%d"))]
+d1<- merge(xts(NULL,seq(as.Date("2020-12-01"),Sys.Date(),by="day")),xts(d,as.Date(rownames(d))))
+colnames(d1)<- c("未就学児","10","20","30","40","50","60","70","80","90","100")
+coredata(d1)[is.na(d1)]<- 0
+#apply(d1,2,cumsum)
+#matplot(apply(d1,2,cumsum),type="l")
+#
+d<- table(as.Date(Sdat$Date,format = "%Y%m%d"),factor(Sdat$年代,levels=c("未就学児",seq(10,100,10))) )
+seq(as.Date("2020-12-01"),Sys.Date(),by="day")[!is.element(seq(as.Date("2020-12-01"),Sys.Date(),by="day"),as.Date(Sdat$Date,format = "%Y%m%d"))]
+d2<- merge(xts(NULL,seq(as.Date("2020-12-01"),Sys.Date(),by="day")),xts(d,as.Date(rownames(d))))
+colnames(d2)<- c("未就学児","10","20","30","40","50","60","70","80","90","100")
+coredata(d2)[is.na(d2)]<- 0
+#apply(d2,2,cumsum)
+#matplot(apply(d2,2,cumsum),type="l")
+#png("covid21_09.png",width=800,height=800)
+par(mar=c(5,4,4,5),family="serif")
+col<- rainbow(9)
+# "未就学児","10"は外す
+d3<- apply(d2[,-c(1,2)],2,cumsum)-apply(d1[,-c(1,2)],2,cumsum)
+matplot(d3,type="l",lty=1,lwd=2,col=col,las=1,ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2)
+axis(1,at=grep("-01$",index(d1)),labels= paste0(c(12,1:6),"月"))
+#mtext("2020年",1,at=1,line=2.5)
+mtext("2021年",1,at=32,line=2.5)
+text(x=par("usr")[2],y=coredata(tail(d3,1)),labels=paste0(colnames(d3),"歳代"),xpd=T)
+abline(v=138,col="gray20",lty=2)
+text(x=138,y=par("usr")[4],labels="2021-04-17",xpd=T)
+abline(v=171,col="gray20",lty=2)
+text(x=171,y=par("usr")[4],labels="2021-05-20",xpd=T)
+title("大阪府：年代別（但し、未就学児,10歳代は除く）重症者数 - 死亡者数(時系列)")
+#dev.off()
+```
