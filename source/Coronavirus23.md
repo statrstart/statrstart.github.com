@@ -13,9 +13,9 @@ excerpt: NHK:新型コロナデータ
 [NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
 人口のデータはNipponMapパッケージのjpn.shpより抽出
 
-> 組み合わせはいくつもありますが、選択された都道府県の人口の合計が最大になるような組み合わせを求めます。(0-1ナックサック問題)
+> 組み合わせはいくつもありますが、選択された都道府県の人口の合計が最大になるような組み合わせを求めます。(0-1ナップサック問題)
 
-0-1ナックサック問題  
+0-1ナップサック問題  
 各都道府県のコロナ死亡者のベクトルをpopulation，人口のテーブルをdeathsとする。
 大阪府のコロナ死亡者以下で，人口が最大となるような都道府県の組み合わせを求める。
 
@@ -47,7 +47,7 @@ population<-m$population     # 人口ベクトル
 # 都道府県コード
 i<- 27
 # 大阪府のコロナ死亡者 deaths[,i]
-# 0-1ナックサック問題
+# 0-1ナップサック問題
 res<- lp("max", population, deaths, "<=", deaths[,i], all.bin=T)
 res
 #
