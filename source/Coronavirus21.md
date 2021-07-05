@@ -69,6 +69,13 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 - 2021/5/ 1 : 感染者数1,262人
 - 2021/5/11 : 感染者55人死亡 最多更新
 
+#### (おまけ)大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
+（2021-07-02現在）  
+
+コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
+
+![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
+
 ### Rコード
 
 (追記)2021-04-30から死亡に自宅・宿泊死亡という項目が加わったため「重症者」の属性を読みとるためには、
