@@ -1,6 +1,6 @@
 ---
 title: インフルエンザ報告数と新型コロナウイルス陽性者数のグラフと表
-date: 2021-06-24
+date: 2021-07-06
 tags: ["R","xts"]
 excerpt: IDWR速報データ & NHK:新型コロナデータ
 ---
@@ -14,15 +14,18 @@ IDWR速報データ
 - 2018 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2018/201852/2018-52-teiten-tougai.csv
 - 2019 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2019/201952/2019-52-teiten-tougai.csv
 - 2020 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2020/202053/2020-53-teiten-tougai.csv
-- 2021(23週まで) : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202123/2021-23-teiten-tougai.csv
+- 2021(25週まで) : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202125/2021-25-teiten-tougai.csv
 
-[作成したデータセット:influ2018_202123.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_202123.csv)  
+[作成したデータセット:influ2018_2021.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2021.csv)  
+(注意)文字コードUTF-8に変更しました。
 
 [NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
 
 （注意）グラフは「y軸片対数グラフ」です。
 - グラフが途切れている個所は数が「0」です。
 - 新型コロナウイルス陽性者数は最新ではありません。インフルエンザ報告数のデータのある最終日に合わせています。
+
+> （注意）2021年はインフルエンザ、新型コロナウイルスとも25週(2021-06-21〜2021-06-27)までの集計  
 
 ### 総数：インフルエンザ報告数と新型コロナウイルス陽性者数
 
@@ -37,81 +40,34 @@ IDWR速報データ
 |2018 |      1,898,134|                  0|
 |2019 |      1,875,890|                  0|
 |2020 |        563,487|            243,298|
-|2021 |            711|            528,681|
-
-（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計  
+|2021 |            717|            549,019|
 
 ### 都道府県別(大阪府,東京都,北海道,沖縄県,鳥取県)
 
 都市代表（大阪府,東京都）、観光地代表（北海道,沖縄県）、コロナ感染者最少（鳥取県）
 
+地域のグラフは 0のところに0.5を入れ、線がとぎれないように工夫してみた。  
+(注意)グラフを作成したあとで0.5のところに0を入れ直すこと。(表の数値が合わなくなります。)
+
 #### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_02.png)
-
-|     | インフルエンザ| 新型コロナウイルス|
-|:----|--------------:|------------------:|
-|2018 |         98,141|                  0|
-|2019 |         88,386|                  0|
-|2020 |         42,961|             30,808|
-|2021 |             62|             70,966|
-
-（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計 
 
 #### 東京都：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_03.png)
 
-|     | インフルエンザ| 新型コロナウイルス|
-|:----|--------------:|------------------:|
-|2018 |        137,224|                  0|
-|2019 |        148,834|                  0|
-|2020 |         33,424|             62,760|
-|2021 |             30|            103,609|
-
-（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計 
-
 #### 北海道：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_04.png)
-
-|     | インフルエンザ| 新型コロナウイルス|
-|:----|--------------:|------------------:|
-|2018 |         90,751|                  0|
-|2019 |         91,474|                  0|
-|2020 |         27,014|             13,681|
-|2021 |             50|             26,791|
-
-（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計 
 
 #### 沖縄県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_05.png)
 
-|     | インフルエンザ| 新型コロナウイルス|
-|:----|--------------:|------------------:|
-|2018 |         32,178|                  0|
-|2019 |         45,357|                  0|
-|2020 |          8,197|              5,450|
-|2021 |             13|             14,034|
-
-（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計  
-
 #### 鳥取県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
- 0のところに0.5を入れ、線がとぎれないように工夫してみた。  
-(注意)グラフを作成したあとで0.5のところに0を入れ直すこと。(表の数値が合わなくなります。)
-
 ![covid22_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_06.png)
-
-|     | インフルエンザ| 新型コロナウイルス|
-|:----|--------------:|------------------:|
-|2018 |         11,226|                  0|
-|2019 |          9,076|                  0|
-|2020 |          3,160|                127|
-|2021 |              4|                339|
-
-（注意）2021年はインフルエンザ、新型コロナウイルスとも23週(2021-06-07〜2021-06-13)までの集計  
 
 ### Rコード
 
@@ -119,8 +75,9 @@ IDWR速報データ
 
 ```R
 library(xts)
-csvdata<- "https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_202123.csv"
-influ2018_2021<- read.csv(csvdata,fileEncoding = "CP932")
+csvdata<- "https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2021.csv"
+#influ2018_2021<- read.csv(csvdata,fileEncoding = "CP932")
+influ2018_2021<- read.csv(csvdata,fileEncoding = "UTF-8")
 nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
 ```
 
@@ -151,7 +108,8 @@ influ2018_2021[107,1:4]
 #2020-01-13から2020-01-15（感染者数は0）を付け足す
 cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
 # インフルエンザ報告者のある部分を取り出し週の合計を出す
-dfC<- apply.weekly(cov.xts["2020-01-13::2021-06-13"],sum)
+period<- paste0("2020-01-13::",tail(influ2018_2021[,4],1))
+dfC<- apply.weekly(cov.xts[period],sum)
 # Plot
 options(scipen=2)
 #png("covid22_01.png",width=800,height=600)
@@ -259,6 +217,79 @@ dfC[dfC==0.5]<- 0
 influ[influ==0.5]<- 0
 #dev.off()
 ```
+
+#### 一つのpngファイルに収める
+
+```R
+library(grid)
+library(gridBase)
+library(gridExtra)
+tt <- ttheme_default(core=list(fg_params=list(hjust=1, x=0.9)),
+                      rowhead=list(fg_params=list(hjust=1, x=0.95)))
+mat <- matrix(c(1,1,1,1,2,3),2)
+#mat
+# 片対数グラフ
+nn<- paste0("0",2:6)
+pref0<- c("大阪府","東京都","北海道","沖縄県","鳥取県")
+for (i in 1:5){
+pref<- pref0[i]
+influ<- influ2018_2021[,pref]
+xx<- nhkC[nhkC[,3]==pref,c(1,4)]
+cov.xts<- xts(xx[,2],as.Date(xx[,1]))
+#2020-01-13から2020-01-15（感染者数は0）を付け足す
+cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
+# インフルエンザの最終データの日まで
+period<- paste0("2020-01-13::",tail(influ2018_2021[,4],1))
+dfC<- apply.weekly(cov.xts[period],sum)
+# dfC、influの0に便宜的に0.5をいれる。
+dfC[dfC==0]<- 0.5
+influ[influ==0]<- 0.5
+# First base plot
+png(paste0("covid22_",nn[i],".png"),width=800,height=600)
+par(mar=c(5,4,4,2),family="serif")
+layout(mat) 
+plot(influ,type="n",ylim=c(0.5,max(max(influ,na.rm=T),max(dfC,na.rm=T))*1.25),xaxt="n",yaxt="n",bty="n",xlab="",ylab="",log="y",yaxs="i")
+box(bty="l",lwd=2)
+abline(h=10^(0:7)%o%(2:9),lty=2,col="gray",lwd=0.8)
+abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
+abline(h=0.5,lty=1,col="gray20",lwd=1)
+lines(influ,lwd=2,col="royalblue3")
+lines(x=107:(106+nrow(dfC)),y=dfC,col="brown3",lwd=2)
+axis(1,at=which(influ2018_2021$週=="01週"),labels=2018:2021)
+axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
+axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
+#
+#axis(2,at= 0.5,labels="0*",las=1)
+legend("topright",inset=c(0,-0.03),legend=c("インフルエンザ","新型コロナウイルス"),
+	lwd=2,col=c("royalblue3","brown3"),xpd=T)
+title(paste("インフルエンザ報告数&新型コロナウイルス感染者数(週合計)\n（",pref,"）"),cex.main=1.5)
+title("","データ：感染症発生動向調査 週報（IDWR）、新型コロナデータ（NHK）",line=2.5)
+# dfC、influの0を0に戻す。
+dfC[dfC==0.5]<- 0
+influ[influ==0.5]<- 0
+# second base plot 
+frame()
+# Grid regions of current base plot (ie from frame)
+vps <- baseViewports()
+pushViewport(vps$inner, vps$figure, vps$plot)
+# Table grob
+hyo<- influ2018_2021[,c("年","終わり",pref)]
+names(hyo)[3]<- "インフルエンザ"
+hyo$新型コロナウイルス<- NA
+hyo$新型コロナウイルス[107:(106+nrow(dfC))]<- dfC
+hyo2<- cbind(year=rep(hyo$年,2),stack(hyo,select=c(インフルエンザ,新型コロナウイルス)))
+hyo2<- tapply(hyo2$values,list(hyo2$year,hyo2$ind),sum,na.rm=T)
+grob <-  tableGrob(formatC(hyo2, format="d", big.mark=',') ,theme=tt)
+grid.draw(grob)
+popViewport(3)
+# third base plot
+barplot(t(hyo2),beside=T,col=c("royalblue3","brown3"),legend=T,ylim=c(0,max(hyo2,na.rm=T)*1.2),yaxt="n",
+	args.legend=list(x="topright",inset=c(0,-0.05),xpd=T))
+axis(2,at=axTicks(2),labels=formatC(axTicks(2), format="d", big.mark=','),las=1)
+dev.off()
+}
+```
+
 
 #### ほぼ年ごとのインフルエンザ報告数と新型コロナウイルス陽性者数の表(都道府県別)
 
