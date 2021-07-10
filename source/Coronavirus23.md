@@ -1,6 +1,6 @@
 ---
 title: 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-date: 2021-07-08
+date: 2021-07-11
 tags: ["R","lpSolve","NipponMap"]
 excerpt: NHK:新型コロナデータ
 ---
@@ -20,11 +20,10 @@ excerpt: NHK:新型コロナデータ
 大阪府のコロナ死亡者以下で，人口が最大となるような都道府県の組み合わせを求める。
 
 #### 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-（2021-07-07現在）
 
 ![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
 
-- 2021-07-07現在のデータでは上の地図で示した「３５の都道府県」の死亡者数の合計より4人多い。
+- 2021-07-10現在のデータでは上の地図で示した「３５の都道府県」の死亡者数の合計より7人多い。
 - 大阪府の人口約８８７万人に対して「３５の都道府県」の人口の合計は「５４８０万人」である。
 
 ### Rコード
@@ -74,6 +73,7 @@ legend2<- paste0(c(paste0(names(respref)[i],"　　　　  "),paste0(sum(respref
 formatC(c(population[i],res$objval), format="d", big.mark=','),"人")
 legend(145,42, legend=legend2,xpd=T,title="人口",title.col="red")
 title(paste0(names(respref)[i],"のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)"))
+text(x=par("usr")[1]*1.02,y=par("usr")[4],labels=paste(tail(nhkC[nhkC[,2]==i,][,1],1),"現在"),xpd=T,cex=1.5,col="red")
 #dev.off()
 ```
 
