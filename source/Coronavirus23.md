@@ -26,6 +26,11 @@ excerpt: NHK:新型コロナデータ
 - 2021-07-10現在のデータでは上の地図で示した「３５の都道府県」の死亡者数の合計より7人多い。
 - 大阪府の人口約８８７万人に対して「３５の都道府県」の人口の合計は「５４８０万人」である。
 
+#### (おまけ) 大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
+- 大阪「市」だけでも2021/7/9 現在1140人の方が亡くなっています。
+
+![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
+
 ### Rコード
 
 (注意)  
@@ -77,3 +82,51 @@ text(x=par("usr")[1]*1.02,y=par("usr")[4],labels=paste(tail(nhkC[nhkC[,2]==i,][,
 #dev.off()
 ```
 
+#### 大阪市
+
+```R
+library(sf)
+library(NipponMap)
+library(lpSolve)
+#大阪「市」を赤で塗りつぶすために大阪府の市町村マップを読み込む 
+osaka<- st_read("https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/osaka.geojson", 
+	stringsAsFactors=FALSE)
+map<- aggregate(osaka[,c("code2","sityo")], list(osaka$code2), unique)
+shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
+m <- sf::read_sf(shp)
+#[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
+nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv",stringsAsFactors = F)
+#load("nhkC.Rdata")
+# tapplyをそのまま使うと順番が変わってしまうのでfactor(,levels=)を使う。
+tmp<- tapply(nhkC[,6], factor(nhkC[,3],levels=unique(nhkC[,3])),sum,na.rm=T)
+deaths<-matrix(tmp,nrow=1)   # コロナ死亡者テーブル
+population<-m$population     # 人口ベクトル
+# 大阪「市」のコロナ死亡者
+dOsaka<- 1140
+# 大阪「市」の人口
+popOsaka<- 2691185
+res<- lp("max", population, deaths, "<=", dOsaka, all.bin=T)
+res
+respref<- res$solution
+names(respref)<- as.vector(unique(nhkC$都道府県名))
+names(respref)[respref==1]
+# 確認
+sum(deaths*respref)
+cols = rep("white", 47)
+#cols[i]<- "red"
+cols[which(respref==1)]<- "yellow"
+#png("covid23_02.png",width=800,height=600)
+par(mar=c(3,3,4,3),family="serif")
+JapanPrefMap(col=cols)
+#大阪「市」を赤で塗りつぶす
+plot(st_geometry(map[1,]),add=T,col="red")
+legend<- paste0(c(names(tmp)[which(respref==1)],"合計")," : ",c(tmp[which(respref==1)],sum(deaths*respref)),"人")
+legend(145,39, legend=legend,xpd=T,ncol=2,title=paste0("大阪「市」 : ",dOsaka,"人"),title.col="red")
+#
+legend2<- paste0(c("大阪「市」　　　  ",paste0(sum(respref),"都道府県合計")),"   ",
+formatC(c(popOsaka,res$objval), format="d", big.mark=','),"人")
+legend(145,42, legend=legend2,xpd=T,title="人口",title.col="red")
+title("大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)")
+text(x=par("usr")[1]*1.02,y=par("usr")[4],labels=paste(tail(nhkC[nhkC[,2]==i,][,1],1),"現在"),xpd=T,cex=1.5,col="red")
+#dev.off()
+```
