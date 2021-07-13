@@ -17,7 +17,7 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_11.png)
 
-- ７０歳代、８０歳代の動きに注目。
+- ７０歳代、８０歳代の動きに注目。（○○○○○でしょうか？）
 
 #### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-07-13)
 
@@ -74,6 +74,12 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
 
 ![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
+
+#### (おまけ２)大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
+
+- 大阪「市」だけでも１１００人以上の方が亡くなっている。
+
+![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
 
 ### Rコード
 
