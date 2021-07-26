@@ -23,15 +23,17 @@ excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 
 ![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
 
-- 大阪府（赤の部分）の死亡者数は「３５の都道府県」（黄色の部分）の死亡者数の合計より8人多い。
+- 大阪府（赤の部分）の死亡者数は「３５の都道府県」（黄色の部分）の死亡者数の合計より7人多い。
 - 大阪府の人口約８８７万人に対して「３５の都道府県」の人口の合計は「５４８０万人」である。
 
 #### (おまけ) 大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-- 大阪「市」だけでも2021/7/20 現在1151人の方が亡くなっています。 
+- 大阪「市」だけでも2021/7/26 現在1155人の方が亡くなっています。（人口約９０５万人の神奈川県よりも150人以上多い。） 
 
 [新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)  
 
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
+
+![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
 
 ### Rコード
 
