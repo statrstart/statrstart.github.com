@@ -1,6 +1,6 @@
 ---
 title: 大阪府の検査陽性者(新型コロナウイルス：Coronavirus)
-date: 2021-07-27
+date: 2021-07-28
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
