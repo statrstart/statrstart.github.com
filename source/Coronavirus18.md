@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-08-02
+date: 2021-08-03
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -46,6 +46,10 @@ excerpt: NHKのデータ
 #### 都道府県別の人口100万人あたり死亡者数 [ データ：ＮＨＫ ]
 
 ![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
+
+#### 都道府県別の致死率(%) [ データ：ＮＨＫ ]
+
+![nhkC05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC05.png)
 
 ### Rコード
 
