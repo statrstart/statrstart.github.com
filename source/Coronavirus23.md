@@ -1,6 +1,6 @@
 ---
 title: 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-date: 2021-08-05
+date: 2021-08-06
 tags: ["R","lpSolve","NipponMap"]
 excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 ---
@@ -24,7 +24,7 @@ excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 ![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
 
 #### (おまけ) 大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-- 大阪「市」だけでも2021/7/29 現在1155人の方が亡くなっています。（人口約９０５万人の神奈川県よりも150人以上多い。） 
+- 大阪「市」だけでも2021/8/6 現在1160人の方が亡くなっています。（人口約９０５万人の神奈川県よりも150人以上多い。） 
 
 [新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)  
 
@@ -103,7 +103,7 @@ tmp<- tapply(nhkC[,6], factor(nhkC[,3],levels=unique(nhkC[,3])),sum,na.rm=T)
 deaths<-matrix(tmp,nrow=1)   # コロナ死亡者テーブル
 population<-m$population     # 人口ベクトル
 # 大阪「市」のコロナ死亡者
-dOsaka<- 1141
+dOsaka<- 1160
 # 大阪「市」の人口
 popOsaka<- 2691185
 res<- lp("max", population, deaths, "<=", dOsaka, all.bin=T)
