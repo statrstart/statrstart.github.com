@@ -1,6 +1,6 @@
 ---
 title: 大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-08-09
+date: 2021-08-10
 tags: ["R","rvest","rio","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のexcelデータ
 ---
@@ -78,6 +78,10 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 - 大阪「市」だけでも１１００人以上の方が亡くなっている。
 
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
+
+#### 大阪府：年代別(10歳代から60歳代)重症者数累計および死亡者数累計(2020-12-01から)
+
+![covid21_12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_12.png)
 
 ### Rコード
 
@@ -441,4 +445,29 @@ par(mfrow=c(1,1))
 #dev.off()
 ```
 
+#### 大阪府：年代別(10歳代から60歳代)重症者数累計および死亡者数累計(2020-12-01から)
 
+```R
+col<- rainbow(11)
+#png("covid21_12.png",width=800,height=600)
+par(mar=c(5,3,4,3),family="serif",mfrow=c(1,2))
+ddd<- apply(d2[,2:7],2,cumsum)
+matplot(ddd,type="l",lty=1,lwd=2,col=col,las=1,ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2)
+axis(1,at=grep("-01$",index(d2)),labels= paste0(c(12,1:8),"月"))
+#mtext("2020年",1,at=1,line=2.5)
+mtext("2021年",1,at=32,line=2.5)
+text(x=par("usr")[2],y=coredata(tail(ddd,1)),labels=paste0(colnames(ddd),"歳代"),xpd=T,pos=4)
+title("大阪府：年代別(10歳代から60歳代)\n重症者数累計(2020-12-01から)")
+#
+ddd<- apply(d1[,2:7],2,cumsum)
+matplot(ddd,type="l",lty=1,lwd=2,col=col,las=1,ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2)
+axis(1,at=grep("-01$",index(d1)),labels= paste0(c(12,1:8),"月"))
+#mtext("2020年",1,at=1,line=2.5)
+mtext("2021年",1,at=32,line=2.5)
+text(x=par("usr")[2],y=coredata(tail(ddd,1)),labels=paste0(colnames(ddd),"歳代"),xpd=T,pos=4)
+title("大阪府：年代別(10歳代から60歳代)\n死亡者数累計(2020-12-01から)")
+par(mfrow=c(1,1))
+#dev.off()
+```
