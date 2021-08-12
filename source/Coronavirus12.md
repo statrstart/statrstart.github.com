@@ -37,7 +37,13 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 [NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
 [「東洋経済オンライン」都道府県別の発生動向](https://toyokeizai.net/sp/visual/tko/covid19/csv/prefectures.csv)  
 
-#### 大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」]
+#### 大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」と大阪府発表のデータ]
+
+[国の重症基準変更に伴う取扱いについて(pdf)](https://www.pref.osaka.lg.jp/attach/38215/00370237/3-3_kunikizyun.pdf)   
+
+- 大事な点は、国の重症者の定義は「患者の症状」ではなく、「入院・療養状況」だということです。
+- 「大阪府においては、今後も重症基準、及び大阪モデルの指標や病床確保計画にける重症者の定義は変更しない。」ということですからデータの連続性は保たれていることになります。
+- 基準変更以降のデータは「大阪府発表のデータ」を使っています。
 
 ![covOsaka14](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka14.png)
 

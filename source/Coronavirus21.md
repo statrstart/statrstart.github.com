@@ -10,14 +10,21 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus21&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
 (使用するデータ)  
-[新型コロナウイルス感染症患者の発生状況（令和2年11月2日以降）](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako.html)  
+[新型コロナウイルス感染症患者の発生状況（令和2年11月2日以降）](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako.html) 
+
+(参考資料)  
+[大阪府:国の重症基準変更に伴う取扱いについて(pdf)](https://www.pref.osaka.lg.jp/attach/38215/00370237/3-3_kunikizyun.pdf)   
+
+- 大事な点は、国の重症者の定義は「患者の症状」ではなく、「入院・療養状況」だということです。
+- 要するに、病状が「重症」でも、「重症」に見合った「治療」が受けることができなかったら「重症者」の数には入らないということ。
+- また「大阪府においては、今後も重症基準、及び大阪モデルの指標や病床確保計画にける重症者の定義は変更しない。」ということですからデータの連続性は保たれていることになります。
 
 #### 大阪府：年代別（但し、未就学児,10歳代は除く）重症者数累計 - 死亡者数累計(時系列) [参考]感染者数推移
 (2021-06-30現在)
 
 ![covid21_11](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_11.png)
 
-- ７０歳代、８０歳代の動きに注目。（○○○○○でしょうか？）
+- ７０歳代、８０歳代の動きに注目。
 
 #### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2021-08-12)
 
@@ -31,7 +38,8 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_02.png)
 
-- 感染者数>>>>>>>>重症者数>死亡者数になると思うのですが、80歳代以上はなぜか重症者数 < 死亡者数になっています。
+- 感染者数>>>>>>>>重症者数>死亡者数になると思うのですが、80歳代以上は重症者数 < 死亡者数になっています。
+- 重症者の定義が「患者の症状」ではなく、「入院・療養の状況」だからです。
 
 ### 2020/12/1から2021/2/28まで,2021/3/1から2021/6/20まで,2021/6/21から2021/7/29まで年代別 重症者数と死亡者数
 
