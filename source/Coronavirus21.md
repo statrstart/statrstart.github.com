@@ -90,6 +90,12 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_12.png)
 
+#### 大阪府：他府県管理※ 府外保健所への所管替事例の数(他府県における入院・宿泊・自宅療養中及び入院・療養等調整中の数）
+
+- 他府県管理の数は令和3年2月12日からエクセルファイルに載っています。（2021-08-13現在）
+
+![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
+
 ### Rコード
 
 (追記)2021-04-30から死亡に自宅・宿泊死亡という項目が加わったため「重症者」の属性を読みとるためには、
