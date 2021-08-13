@@ -96,6 +96,10 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
 
+#### 大阪府：入院、宿泊療養、自宅療養、入院.療養等調整中、他府県管理（2021年2月12日以降）
+
+![covid21_14](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_14.png)
+
 ### Rコード
 
 (追記)2021-04-30から死亡に自宅・宿泊死亡という項目が加わったため「重症者」の属性を読みとるためには、
@@ -484,3 +488,136 @@ title("大阪府：年代別(10歳代から60歳代)\n死亡者数累計(2020-12
 par(mfrow=c(1,1))
 #dev.off()
 ```
+
+#### 患者の状況
+
+##### 昨日までのデータ
+
+```R
+library(rvest)
+library(rio)
+# 他府県管理 令和3年2月12日（金曜日） [Excelファイル／90KB]
+xl<- NULL
+for (i in paste0("0",2:7)){
+source_url <- paste0("http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako-r03",i,".html")
+#
+html <- read_html(source_url)
+links <- html %>% html_nodes("a") %>% html_attr("href")
+xl<- c(xl,rev(links[grep("xlsx",links)]))
+}
+#重複urlを削除
+xl<- unique(xl)
+#
+xl<- xl[-c(1:11)]
+# 今月
+source_url <- "http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako.html"
+#
+html <- read_html(source_url)
+links <- html %>% html_nodes("a") %>% html_attr("href")
+xl<- c(xl,rev(links[grep("xlsx",links)]))
+#重複urlを削除
+xl<- unique(xl)
+#
+Today<- NULL
+Long<- NULL
+for (i in xl){
+tryCatch(
+{
+	url<-paste0("http://www.pref.osaka.lg.jp",i)
+	df<- rio::import(file = url,which = 2)
+	ss<- grep("患者の状況",df[,1])
+	dat1<- df[(ss+3),c(4,6,8,10,12,14,16,18)]
+	colnames(dat1)<- c("退院.解除","死亡","入院","重症","宿泊療養","自宅療養","入院.療養等調整中","他府県管理")
+	dat2<- df[(ss+5),c(4,6,8,10,12,14,16,18)]
+	colnames(dat2)<- c("退院.解除","死亡","入院","重症","宿泊療養","自宅療養","入院.療養等調整中","他府県管理")
+	Cdate<- substring(sub("\\.xlsx","",sub("^.*/","",i)),1,4)
+	rownames(dat1)<- paste0("2021",Cdate)
+	rownames(dat2)<- paste0("2021",Cdate)
+	Today<- rbind(Today,dat1)
+	Long<- rbind(Long,dat2)
+}
+ , error = function(e) {}
+)
+}
+d<- data.frame(lapply(Today,as.numeric))
+rownames(d)<- seq(as.Date("2021-02-12"),length.out=nrow(d),by="day")
+Today<- d
+#
+d<- data.frame(lapply(Long,as.numeric))
+rownames(d)<- seq(as.Date("2021-02-12"),length.out=nrow(d),by="day")
+Long<- d
+#
+save("Today",file="Today.rda")
+save("Long",file="Long.rda")
+```
+
+##### 今日のデータを加える
+
+```R
+library(rvest)
+library(rio)
+load("Today.rda")
+load("Long.rda")
+# 確認
+tail(Today) ; tail(Long)
+# 今日が８月１３日の場合
+xl<- "/attach/23711/00376026/0813.xlsx"
+for (i in xl){
+tryCatch(
+{
+	url<-paste0("http://www.pref.osaka.lg.jp",i)
+	df<- rio::import(file = url,which = 2)
+	ss<- grep("患者の状況",df[,1])
+	dat1<- df[(ss+3),c(4,6,8,10,12,14,16,18)]
+	colnames(dat1)<- c("退院.解除","死亡","入院","重症","宿泊療養","自宅療養","入院.療養等調整中","他府県管理")
+	dat2<- df[(ss+5),c(4,6,8,10,12,14,16,18)]
+	colnames(dat2)<- c("退院.解除","死亡","入院","重症","宿泊療養","自宅療養","入院.療養等調整中","他府県管理")
+	Cdate<- substring(sub("\\.xlsx","",sub("^.*/","",i)),1,4)
+	rownames(dat1)<- paste0("2021",Cdate)
+	rownames(dat2)<- paste0("2021",Cdate)
+}
+ , error = function(e) {}
+)
+}
+# 確認
+dat1 ; dat2
+#
+Today<- rbind(Today,dat1)
+Long<- rbind(Long,dat2)
+#
+d<- data.frame(lapply(Today,as.numeric))
+rownames(d)<- seq(as.Date("2021-02-12"),length.out=nrow(d),by="day")
+Today<- d
+#
+d<- data.frame(lapply(Long,as.numeric))
+rownames(d)<- seq(as.Date("2021-02-12"),length.out=nrow(d),by="day")
+Long<- d
+# 保存
+save("Today",file="Today.rda")
+save("Long",file="Long.rda")
+```
+
+##### 作図
+
+```R
+#png("covid21_13.png",width=800,height=600)
+par(mar=c(4,4,4,2),family="serif")
+plot(Long$"他府県管理",type="l",lwd=2,las=1,xaxt="n",bty="n",xlab="",ylab="",ylim=c(0,max(Long$"他府県管理")),yaxs="i")
+box(bty="l",lwd=2.5)
+axis(1,at=grep("01",substring(rownames(Long),9,10)),labels=paste0(3:8,"月"))
+#par(new=T) 
+#plot(Today$"他府県管理",col="red",type="h",lend=1,lwd=3,ylim=c(0,max(Long$"他府県管理")),xaxt="n",yaxt="n",bty="n",xlab="",ylab="",yaxs="i")
+title("大阪府：他府県管理\n※ 府外保健所への所管替事例の数(他府県における入院・宿泊・自宅療養中及び入院・療養等調整中の数）")
+#dev.off()
+#
+#png("covid21_14.png",width=800,height=600)
+par(mar=c(4,4,4,8),family="serif")
+plotdata<- Long[,c(3,5,6,7,8)]
+matplot(plotdata,type="l",lty=1,lwd=2,las=1,xaxt="n",bty="n",xlab="",ylab="",xaxs="i")
+box(bty="l",lwd=2.5)
+axis(1,at=grep("01",substring(rownames(Long),9,10)),labels=paste0(3:8,"月"))
+text(x=par("usr")[2],y=tail(plotdata,1),labels=colnames(plotdata),pos=4,xpd=T)
+title("大阪府：入院、宿泊療養、自宅療養、入院.療養等調整中、他府県管理\n（2021年2月12日以降）")
+#dev.off()
+```
+
