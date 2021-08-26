@@ -90,6 +90,10 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_12.png)
 
+#### 大阪府：年代別(10歳代から60歳代)(死亡者数累計/重症者数累計)×100(%)(2020-12-01から)
+
+![covid21_15](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_15.png)
+
 #### 大阪府：他府県管理※ 府外保健所への所管替事例の数(他府県における入院・宿泊・自宅療養中及び入院・療養等調整中の数）
 
 - 他府県管理の数は令和3年2月12日からエクセルファイルに載っています。（2021-08-26現在）
@@ -465,7 +469,7 @@ par(mfrow=c(1,1))
 #### 大阪府：年代別(10歳代から60歳代)重症者数累計および死亡者数累計(2020-12-01から)
 
 ```R
-col<- rainbow(11)
+col<- rainbow(6)
 #png("covid21_12.png",width=800,height=600)
 par(mar=c(5,3,4,3),family="serif",mfrow=c(1,2))
 ddd<- apply(d2[,2:7],2,cumsum)
@@ -486,6 +490,20 @@ mtext("2021年",1,at=32,line=2.5)
 text(x=par("usr")[2],y=coredata(tail(ddd,1)),labels=paste0(colnames(ddd),"歳代"),xpd=T,pos=4)
 title("大阪府：年代別(10歳代から60歳代)\n死亡者数累計(2020-12-01から)")
 par(mfrow=c(1,1))
+#dev.off()
+# 死亡者数累計/重症者数累計
+col<- rainbow(6)
+ddd<- apply(d1[,2:7],2,cumsum)/apply(d2[,2:7],2,cumsum)*100
+#png("covid21_15.png",width=800,height=600)
+par(mar=c(5,3,4,3),family="serif",mfrow=c(1,1))
+matplot(ddd,type="l",lty=1,lwd=2,col=col,las=1,ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2)
+axis(1,at=grep("-01$",index(d1)),labels= paste0(c(12,1:8),"月"))
+#mtext("2020年",1,at=1,line=2.5)
+mtext("2021年",1,at=32,line=2.5)
+abline(h=seq(5,100,5),col="gray",lty=2)
+text(x=par("usr")[2],y=coredata(tail(ddd,1)),labels=paste0(colnames(ddd),"歳代"),xpd=T)
+title("大阪府：年代別(10歳代から60歳代)\n(死亡者数累計/重症者数累計)×100(%)(2020-12-01から)")
 #dev.off()
 ```
 
