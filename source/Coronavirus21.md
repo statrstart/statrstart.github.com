@@ -82,8 +82,6 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 #### (おまけ２)大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
 
-- 大阪「市」だけでも１１００人以上の方が亡くなっている。
-
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
 
 #### 大阪府：年代別(10歳代から60歳代)重症者数累計および死亡者数累計(2020-12-01から)
