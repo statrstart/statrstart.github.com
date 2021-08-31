@@ -70,10 +70,6 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 ![covid21_09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_09.png)
 ![covid21_10](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_10.png)
 
-- 2021/4/ 5 : 大阪「まん延防止等重点措置」
-- 2021/5/ 1 : 感染者数1,262人
-- 2021/5/11 : 感染者55人死亡 最多更新
-
 #### (おまけ)大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
 
 コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
@@ -83,6 +79,15 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 #### (おまけ２)大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
 
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
+
+#### (おまけ３)大阪市長「公務日程」のカレンダーと「公務日程なし・あり」の日数(2021年版)
+
+- データは[大阪市：市長日程](https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000329708.html)の「これまでの市長日程」
+- コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
+
+![Okoumu2021_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_1.png)
+
+![Okoumu2021_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_2.png)
 
 #### 大阪府：年代別(10歳代から60歳代)重症者数累計および死亡者数累計(2020-12-01から)
 
