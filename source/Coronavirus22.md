@@ -44,7 +44,7 @@ IDWR速報データ
 
 ### 都道府県別(大阪府,東京都,北海道,沖縄県,鳥取県)
 
-都市代表（大阪府,東京都）、観光地代表（北海道,沖縄県）、コロナ感染者が少ない（鳥取県）
+都市代表（大阪府,東京都）、観光地代表（北海道,沖縄県）、コロナ感染者が少ない（鳥取県,島根県,秋田県）
 
 地域のグラフは 0のところに0.5を入れ、線がとぎれないように工夫してみた。  
 (注意)グラフを作成したあとで0.5のところに0を入れ直すこと。(表の数値が合わなくなります。)
@@ -68,6 +68,14 @@ IDWR速報データ
 #### 鳥取県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_06.png)
+
+#### 島根県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_07.png)
+
+#### 秋田県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_08.png)
 
 ### Rコード
 
@@ -229,9 +237,9 @@ tt <- ttheme_default(core=list(fg_params=list(hjust=1, x=0.9)),
 mat <- matrix(c(1,1,1,1,2,3),2)
 #mat
 # 片対数グラフ
-nn<- paste0("0",2:6)
-pref0<- c("大阪府","東京都","北海道","沖縄県","鳥取県")
-for (i in 1:5){
+nn<- paste0("0",2:8)
+pref0<- c("大阪府","東京都","北海道","沖縄県","鳥取県","島根県","秋田県")
+for (i in 1:length(pref0)){
 pref<- pref0[i]
 influ<- influ2018_2021[,pref]
 xx<- nhkC[nhkC[,3]==pref,c(1,4)]
