@@ -1,0 +1,1741 @@
+# https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000329708.html
+library(calendR)
+library(rvest)
+#これまでの市長日程
+p<- c("0000361982","0000387274","0000387276","0000387279","0000387280","0000387281","0000387282")
+#https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000387282.html
+koumu<- NULL
+for ( i in p){
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",i,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[1]]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+}
+#
+#koumu<- koumu[-c(1:14),1 ]
+koumu<- koumu[,1 ]
+#
+#公務日程なしの日付　曜日削除
+days<- gsub("（.*）","",koumu)
+days<- as.Date(paste0("2021-",gsub("日","",gsub("月","-",days))))
+
+#市長日程予定が１番目のtable。これまでの市長日程は２番めのtable
+p<-"0000329708"
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",p,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[2]]
+last<- x[1,1]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- x1[order(as.numeric(rownames(x1)),decreasing=T),1]
+koumu<- gsub("（.*）","",koumu)
+koumu<- as.Date(paste0("2021-",gsub("日","",gsub("月","-",koumu))))
+days<- c(days,koumu)
+last<- as.Date(paste0("2021-",gsub("日","",gsub("月","-",last))))
+#2021
+# 2021-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2021-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2021-01-01"), as.Date("2021-12-31"), by = "1 day")
+# Vector of "公務日程あり" 
+events <- rep("公務日程あり",length(dates))
+# Adding more events
+events[no_koumu] <- "公務日程なし"
+# +2 : データのある日の次の日
+events[as.numeric(as.Date(last)-as.Date("2021-01-01")+2):length(dates)] <- NA
+# Creating the calendar
+png("Okoumu2021_1.png",width=800,height=600)
+calendR(year = 2021,
+        start = "S",
+        special.days = events,
+        special.col = c("lightblue","red"), # as events
+	title = "「公務日程」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = "[2021]" ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+dev.off()
+
+png("Okoumu2021_2.png",width=800,height=600)
+mat <- matrix(c(1,1,1,1,1,1,2,2),4,2, byrow = TRUE)
+layout(mat) 
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="brown3",names=paste0(1:9,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3,cex=1.5)
+title(paste0("「公務日程なし」の月別日数（大阪市：市長日程）[2021-01-01〜",last,"]"),cex.main=2)
+#
+no<- sum(table(substring(days,6,7)))
+yes<- as.Date(last)-as.Date("2020-12-31")-no
+na<- as.Date("2021-12-31")-as.Date(last)
+b<- barplot(matrix(c(no,yes,na),nrow=3),horiz=T,col=c("brown3","royalblue3","lightgray"),xaxt="n")
+text(x=c(no/2,no+yes/2),y=b,labels=c(paste0("公務日程なし\n",no,"日"),paste0("公務日程あり\n",yes,"日")),cex=2.5,col="white")
+title(paste0("2021年「公務日程なし・あり」の日数（大阪市：市長日程）[2021-01-01〜",last,"]"),cex.main=2)
+dev.off()
+
+#####################################################################################################
+
+png("KoumuOsakashi02.png",width=800,height=600)
+mat <- matrix(c(1,1,1,1,1,1,2,2),4,2, byrow = TRUE)
+layout(mat) 
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="firebrick2",names=paste0(1:12,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3)
+title("「公務日程なし」の月別日数（大阪市：市長日程）[2021年]")
+#
+yeardata<- sum(table(substring(days,6,7)))
+b<- barplot(matrix(c(yeardata,366-yeardata),nrow=2),horiz=T,col=c("brown3","royalblue3"))
+# x:yeardata/2=90 yeardata+(366-yeardata)/2
+text(x=c(90,273),y=b,labels=c(paste0("公務日程なし\n",yeardata,"日"),paste0("公務日程あり\n",(366-yeardata),"日")),cex=3)
+title("２０２０年「公務日程なし・あり」の日数（大阪市：市長日程）")
+dev.off()
+
+
+# 2021-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2021-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2021-01-01"), as.Date("2021-12-31"), by = "1 day")
+# Vector of "公務日程あり" 
+events <- rep("公務日程あり",length(dates))
+# Adding more events
+events[no_koumu] <- "公務日程なし"
+# +2 : データのある日の次の日
+#events[as.numeric(as.Date(last)-as.Date("2020-01-01")+2):length(dates)] <- NA
+# Creating the calendar
+png("Okoumu02.png",width=800,height=600)
+calendR(year = 2021,
+        start = "S",
+        special.days = events,
+        special.col = c("lightblue","red"), # as events
+	title = "「公務日程」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = "[2020]" ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+dev.off()
+
+#koumu<-NULL
+#市長日程予定が１番目のtable。これまでの市長日程は２番めのtable
+p<-"0000329708"
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",p,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[2]]
+last<- x[1,1]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+koumu<- koumu[-c(1:14),1 ]
+
+#
+#公務日程なしの日付　曜日削除
+days<- gsub("（.*）","",koumu)
+days<- as.Date(paste0("2021-",gsub("日","",gsub("月","-",days))))
+last<- as.Date(paste0("2021-",gsub("日","",gsub("月","-",last))))
+#2021
+
+png("KoumuOsakashi02.png",width=800,height=600)
+mat <- matrix(c(1,1,1,1,1,1,2,2),4,2, byrow = TRUE)
+layout(mat) 
+par(mar=c(3,7,3,2),family="serif")
+
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="firebrick2",names=paste0(1:9,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3)
+title(paste0("「公務日程なし」の月別日数（大阪市：市長日程）[2020年 1月1日〜",last,"]"))
+
+#
+yeardata<- sum(table(substring(days,6,7)))
+b<- barplot(matrix(c(yeardata,366-yeardata),nrow=2),horiz=T,col=c("brown3","royalblue3"))
+# x:yeardata/2=90 yeardata+(366-yeardata)/2
+text(x=c(90,273),y=b,labels=c(paste0("公務日程なし\n",yeardata,"日"),paste0("公務日程あり\n",(366-yeardata),"日")),cex=3)
+title(paste0("2021年「公務日程なし・あり」の日数（大阪市：市長日程）[2021年 1月1日〜",last,"]"))
+dev.off()
+
+# 2021-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2021-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2021-01-01"), as.Date("2021-12-31"), by = "1 day")
+# Vector of "公務日程あり" 
+events <- rep("公務日程あり",length(dates))
+# Adding more events
+events[no_koumu] <- "公務日程なし"
+# +2 : データのある日の次の日
+#events[as.numeric(as.Date(last)-as.Date("2021-01-01")+2):length(dates)] <- NA
+# Creating the calendar
+png("Okoumu02.png",width=800,height=600)
+calendR(year = 2021,
+        start = "S",
+        special.days = events,
+        special.col = c("lightblue","red"), # as events
+	title = "「公務日程」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = "[2020]" ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+dev.off()
+
+
+
+
+
+#install.packages("jsonlite")
+#install.packages("curl")
+library(jsonlite)
+library(knitr)
+library(TTR)
+url<- "https://raw.githubusercontent.com/codeforosaka/covid19/master/data/data.json"
+js<- fromJSON(url)
+save(js,file="Osaka.Rdata")
+#load("Osaka.Rdata")
+names(js)
+#[1] "patients"                   "patients_summary"          
+#[3] "inspections_summary"     検査   
+#    "contacts1_summary"  府民向け相談窓口への相談件数   
+#[5] "contacts2_summary" 新型コロナ受診相談センターへの相談件数          
+#    "transmission_route_summary" 感染経路不明者（リンク不明者） 
+#[7] "treated_summary" 陰性確認済（退院者累計）           "lastUpdate"                
+#[9] "main_summary" 
+dat<- js[[1]][[2]][,c(8,4:7)]
+# 居住地の「大阪府」は消し、「大阪府外」だけはもとに戻す。
+dat$居住地<- gsub("大阪府","",dat$居住地)
+dat$居住地<- gsub("^外$","大阪府外",dat$居住地)
+
+#### 時系列
+
+#date
+tbl<- data.frame(小計=js[[2]]$data$小計)
+rownames(tbl)<- substring(js[[2]]$data$日付,1,10)
+#元から日付順になっているのでこの部分は不要
+#tbl<- tbl[order(names(tbl))]
+sma7<- round(SMA(tbl,7),2)
+png("covOsaka01.png",width=800,height=600)
+par(mar=c(5,4,4,2),family="serif")
+b<- barplot(t(tbl),las=1,ylim=c(0,max(tbl)*1.2),col="brown3",border="brown3",axisnames=F)
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- which(i==sub("-","/",sub("-0","-",sub("^0","",substring(rownames(tbl),6,10)))))
+	axis(1,at=b[at],labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[342],side=1,line=2.5,cex=1.2) 
+lines(x=b,y=sma7$SMA,lwd=2.5,col="blue")
+legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
+title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
+#
+labels<- rownames(tbl)
+events<- data.frame(
+	date=c("2020-04-14","2020-04-15","2020-08-04","2020-11-01","2020-12-14","2021-01-08","2021-01-27","2021-05-01","2021-05-11",
+	"2021-09-01"),
+	events=c("4月14日\n大阪ワクチン\n会見\n「早ければ７月にも治験を始めたい」","4月中旬\n「雨合羽」寄付受付",
+	"8月4日\nイソジン会見\n「ウソみたいなホントの話を\nさせて頂きたい」","11月1日\n大阪市廃止・\n特別区設置\n住民投票",
+	"12月14日\n感染者14人死亡\n過去最多","2021/1/8\n感染者19人死亡\n最多更新","2021/1/27\n感染者23人死亡\n最多更新",
+	"2021/5/1\n感染者数1,262人","2021/5/11\n感染者55人死亡\n最多更新","2021/9/1\n感染者数3,004人"),
+	ypos= c(350,650,450,450,500,670,550,1280,1400,3050))
+#
+for (i in 1:nrow(events)){
+	labelpos<- events$date[i]
+	xpos<- b[match(labelpos,labels)]
+	ypos<- events$ypos[i]
+	points(x=xpos,y=ypos,pch=25,bg="red",cex=1.2,xpd=T)
+	text(x=xpos,y=ypos,labels=events$events[i],xpd=T,pos=3)
+}
+#grep("2021-01-08",substring(js[[2]]$data$日付,1,10))
+#points(x=b[349],y=670,pch=25,bg="red",cex=1.2,xpd=T)
+#text(x=b[349],y=670,labels="2021/1/8\n感染者19人死亡\n最多更新",xpd=T,pos=3)
+dev.off()
+
+
+# 検査陽性率(%): 陽性患者数/検査実施人数*100
+Pos<- round(js[[8]][[3]]$value/js[[8]][[2]]*100,2)
+# 致死率(%): 亡くなった人の数/陽性患者数*100
+Dth<- round(js[[8]][[3]][[3]][[1]][grep("死亡",js[[8]][[3]][[3]][[1]]$attr),2]/js[[8]][[3]]$value*100,2)
+#
+dat<- js[[2]][[2]]
+dat<- merge(dat,js[[3]][[2]],by=1)
+rownames(dat)<- substring(dat[,1],1,10)
+dat<- dat[,-1]
+dat[,3]<- dat[,2]-dat[,1]
+colnames(dat)<- c("陽性者数","検査実施人数","陰性者数")
+ritsu1<- paste("・検査陽性率(%) :",Pos,"%")
+ritsu2<- paste("・致  死  率   (%) :",Dth,"%")
+ png("covOsaka05.png",width=800,height=600)
+par(mar=c(4,7,4,2),family="serif")
+barplot(t(dat[,c(1,3)]),xaxt="n",las=1,col=c("brown3","royalblue3"),border=c("brown3","royalblue3"),ylim=c(0,max(dat,na.rm=T)))
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- which(i==sub("-","/",sub("-0","-",sub("^0","",substring(rownames(dat),6,10)))))
+	axis(1,at=b[at],labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[341],side=1,line=2.5,cex=1.2) 
+legend("topleft",inset=0.03,bty="n",pch=15,col=c("brown3","royalblue3"),cex=1.5,
+	legend=c("陽性者数","検査実施人数-陽性者数"))
+legend("topleft",inset=c(0,0.15),bty="n",cex=1.5,legend=c(paste0(js[[7]],"現在"),ritsu1,ritsu2))
+title("検査結果(大阪府)",cex.main=1.5)
+dev.off()
+
+
+library(TTR)
+dat<- js[[2]][[2]]
+dat<- merge(dat,js[[3]][[2]],by=1)
+rownames(dat)<- substring(dat[,1],1,10)
+dat<- dat[,-1]
+colnames(dat)<- c("陽性者数","検査実施件数")
+# 検査陽性率(%)7日移動平均
+#陽性者数(7日間合計)/検査実施件数(7日間合計)*100
+sma<- round(runSum(dat$陽性者数,7)/runSum(dat$検査実施件数,7)*100,2)
+png("covOsaka07.png",width=800,height=600)
+par(mar=c(4,7,4,3),family="serif")
+plot(sma,type="l",lwd=2.5,las=1,xlab="",ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2.5)
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- which(i==sub("-","/",sub("-0","-",sub("^0","",substring(rownames(dat),6,10)))))
+	axis(1,at=at,labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)
+	}
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=341,side=1,line=2.5,cex=1.2) 
+text(x=par("usr")[2],y=sma[length(sma)],labels=paste0(rownames(dat)[nrow(dat)],"\n現在\n",sma[length(sma)]),xpd=T,cex=1.2)
+title("検査陽性率（％）７日移動平均（大阪府）",cex.main=1.5)
+dev.off()
+
+
+
+#週単位の陽性者増加比
+library(TTR)
+dat<- js[[2]][[2]]
+rownames(dat)<- substring(dat[,1],1,10)
+dat<- dat[,-1,drop=F]
+#
+e7<- runSum(dat,n=7)
+b7<- runSum(dat,n=14) - e7
+df<- round(e7/b7,2)
+# InfにNAを入れる
+df[df==Inf]<- NA
+df<- data.frame(date=rownames(dat),zougen= df)
+df<- df[40:nrow(df),]
+#
+png("covOsaka08.png",width=800,height=600)
+par(mar=c(4,6,4,7),family="serif")
+plot(df[,2],type="l",lwd=2,las=1,ylim=c(0,11),xlab="",ylab="",xaxt="n",bty="n")
+box(bty="l",lwd=2.5)
+#
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- which(i==sub("-","/",sub("-0","-",sub("^0","",substring(df[,1],6,10)))))
+	axis(1,at=at,labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)
+	}
+mtext(text="2020年",at=1,side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=303,side=1,line=2.5,cex=1.2) 
+abline(h=1,col="red",lty=2)
+text(x=par("usr")[2],y=df[,2][nrow(df)],labels= paste0(df[,1][nrow(df)],"\n現在\n",df[,2][nrow(df)]),xpd=T,cex=1.2,col="red")
+arrows(par("usr")[2]*1.08, 1.1,par("usr")[2]*1.08,1.68,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=2,labels="増加\n傾向",xpd=T)
+arrows(par("usr")[2]*1.08, 0.9,par("usr")[2]*1.08,0.32,length = 0.2,lwd=2.5,xpd=T)
+text(x=par("usr")[2]*1.08,y=0,labels="減少\n傾向",xpd=T)
+title("週単位の陽性者増加比(大阪府)",cex.main=1.5)
+dev.off()
+
+
+
+#### 月別検査陽性者数
+
+m<- data.frame(month=substring(js[[2]]$data$日付,1,7),小計=js[[2]]$data$小計)
+#各月ごとの検査陽性者数
+cdata<- tapply(m$小計,m$month, sum,na.rm=T) 
+#
+#png("covOsaka09_01.png",width=800,height=600)
+par(mar=c(4,5,3,2),family="serif")
+b<- barplot(cdata,las=1,col="red",names=paste0(c(1:12,1:9),"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b[1:nrow(cdata)], y=as.numeric(cdata),labels=formatC(as.numeric(cdata), format="d", big.mark=','),cex=1.2,pos=3)
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+mtext(text="2021年",at=b[13],side=1,line=2.5,cex=1.2) 
+legend("topleft",inset=c(0,0),xpd=T,bty="n",
+	legend="データ：https://raw.githubusercontent.com/codeforosaka/covid19/master/data/data.json")
+title("大阪府 : 月別の陽性者数",cex.main=1.5)
+#dev.off()
+
+
+library(xts)
+#[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
+nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
+save(nhkC,file="nhkC.Rdata")
+#load("nhkC.Rdata")
+# 大阪府(code:27)
+code<- 27
+data<- nhkC[nhkC$都道府県コード==code,c(1,6)]
+data.xts<- as.xts(read.zoo(data, format="%Y/%m/%d"))
+#各月ごとの死亡者の合計
+monthsum.xts<- apply.monthly(data.xts[,1],sum)
+#2020年3月から（1、2月分(0)は削除）
+monthsum.xts<- monthsum.xts[-c(1:2)]
+monthsum<- data.frame(coredata(monthsum.xts))
+rownames(monthsum)<- substring(index(monthsum.xts),1,7)
+if (rownames(monthsum)[nrow(monthsum)]!="2021-09"){
+	monthsum= rbind(monthsum,0)
+}
+#
+png("covOsaka09_02.png",width=800,height=600)
+par(mar=c(3.5,7,3,2),family="serif")
+mat <- matrix(c(1,1,1,1,2,2),3,2, byrow = TRUE)
+layout(mat) 
+#3月以降
+b<- barplot(cdata[-c(1:2)],las=1,col="slateblue",names=paste0(c(3:12,1:9),"月"),ylim=c(0,max(cdata)*1.2),yaxt="n")
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b, y=cdata[-c(1:2)],labels=formatC(cdata[-c(1:2)], format="d", big.mark=','),cex=1.2,pos=3)
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1) 
+mtext(text="2021年",at=b[11],side=1,line=2.5,cex=1,xpd=T) 
+title("大阪府 : 月別の陽性者数と月別死亡者数",cex.main=1.5)
+# 大阪府発表の死者の総数-NHKの死者の総数を最終月のデータの数に加える
+sa<- js[[8]][[3]][[3]][[1]][grep("死亡",js[[8]][[3]][[3]][[1]]$attr),2]-sum(data.xts)
+# saがマイナスのときは0にする
+if (sa<0){sa=0}
+monthsum[nrow(monthsum),]<- monthsum[nrow(monthsum),] + sa
+b<- barplot(t(monthsum),las=1,col="firebrick2",names=paste0(c(3:12,1:9),"月"),ylim=c(0,max(monthsum)*1.2))
+text(x= b[1:nrow(monthsum)], y=as.vector(monthsum)[,1],labels=as.vector(monthsum)[,1],cex=1.2,pos=3)
+legend("topleft",inset=c(0,-0.1),xpd=T,bty="n",
+	legend="データ：[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)")
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1,xpd=T) 
+mtext(text="2021年",at=b[11],side=1,line=2.5,cex=1,xpd=T) 
+dev.off()
+
+
+# webshot::install_phantomjs()
+library(flextable)
+library(tibble)
+library(webshot)
+# 状況の部分を抽出
+Cs<- js[[8]][[3]][[3]][[1]]
+# 大阪府の状況（新型コロナウイルス）
+ft <- flextable(data.frame(状況=Cs$attr,人数=formatC(Cs$value, format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
+ft <- color(ft, i= 3,j=2, color = "red", part = "body")
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+#ft <- set_header_labels(ft, rowname = "状況")
+ft<- add_header_lines(ft, values = "大阪府の状況（新型コロナウイルス）")
+ft<- add_footer_lines(ft, values =paste(js[[7]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+# 'all', 'body', 'header', 'footer')
+ft <- fontsize(ft, size = 20, part = "all")
+#ft <- autofit(ft)
+ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
+#ft
+save_as_image(ft, path = "covOsaka20.png", zoom = 1, expand = 1, webshot = "webshot")
+
+# 病状の内訳
+ft <- flextable(data.frame(状況=Cs$children[[1]]$attr,人数=formatC(Cs$children[[1]]$value, format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
+ft <- color(ft, i= 2,j=2, color = "red", part = "body")
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+ft<- add_header_lines(ft, values = "病状の内訳")
+ft<- add_footer_lines(ft, values =paste(js[[7]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+ft <- fontsize(ft, size = 20, part = "all")
+ft<- set_table_properties(ft, width = 0.35, layout = "autofit")
+save_as_image(ft, path = "covOsaka20_1.png", zoom = 1, expand = 1, webshot = "webshot")
+
+# 入院調整中の内訳
+ft <- flextable(data.frame(状況=Cs$children[[7]]$attr,人数=formatC(Cs$children[[7]]$value, format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+ft<- add_header_lines(ft, values = "入院調整中の内訳")
+ft<- add_footer_lines(ft, values =paste(js[[7]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+ft <- fontsize(ft, size = 20, part = "all")
+ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
+save_as_image(ft, path = "covOsaka20_2.png", zoom = 1, expand = 1, webshot = "webshot")
+
+#検査実施人数 & 陽性患者数
+ft <- flextable(data.frame(検査の状況=c("検査実施人数","陽性患者数"),人数=formatC(c(js[[8]][[2]],js[[8]]$children$value), format="d", big.mark=',')))
+ft <- bg(ft, bg = "wheat", part = "header")
+ft<- align(ft, i = NULL, j = 2, align = "right",part="all")
+ft<- add_header_lines(ft, values = "検査実施人数 & 陽性患者数")
+ft<- add_footer_lines(ft, values =paste(js[[7]],"現在"))
+ft<- align(ft, i = NULL, j = NULL, align = "right",part="footer")
+ft <- fontsize(ft, size = 20, part = "all")
+ft<- set_table_properties(ft, width = 0.45, layout = "autofit")
+save_as_image(ft, path = "covOsaka20_3.png", zoom = 1, expand = 1, webshot = "webshot")
+
+
+x<- js[[3]]$data
+b<- barplot(x[,2],yaxt="n",las=1,ylim=c(0,max(x[,2],na.rm=T)*1.05))
+sma7<- round(SMA(x[,2],7),2)
+lines(x=b,y=sma7,lwd=2,col="blue")
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+labels<- sub("-","/",sub("-0","-",sub("^0","",substring(x[,1],6,10))))
+# 毎月1日
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=b[at],labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+mtext(text="2020年",at=b[1],side=1,line=2.5,cex=1.2) 
+legend("topleft",inset=0.03,lwd=2,col="blue",legend="7日移動平均")
+title("検査数")
+
+
+tbl2021<- tbl[342:nrow(tbl),,drop=F]
+sma7<- round(SMA(tbl2021,7),2)
+png("covOsaka15.png",width=800,height=600)
+par(mar=c(5,4,4,2),family="serif")
+b<- barplot(t(tbl2021),las=1,ylim=c(0,max(tbl2021)*1.2),col="red",axisnames=F)
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- which(i==sub("-","/",sub("-0","-",sub("^0","",substring(rownames(tbl2021),6,10)))))
+	axis(1,at=b[at],labels = rep(paste0(sub("/1","",i),"月"),length(at)),tck= -0.02)
+	}
+mtext(text="2021年",at=b[1],side=1,line=2.5,cex=1.2) 
+lines(x=b,y=sma7$SMA,lwd=2.5,col="blue")
+legend("topleft",inset=0.03,lwd=2.5,col="blue",legend="7日移動平均",cex=1.2)
+title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
+#
+labels<- rownames(tbl2021)
+events<- data.frame(
+	date=c("2021-01-27","2021-02-28","2021-03-21","2021-04-05","2021-05-01","2021-05-11","2021-09-01"),
+	events=c("2021/1/27\n感染者23人死亡\n最多更新","2021/2/28\n大阪\n「緊急事態宣言解除」前倒し",
+	"2021/3/21\n首都圏1都3県\n「緊急事態宣言解除」","2021/4/5\n大阪\n「まん延防止等重点措置」",
+	"2021/5/1\n感染者数1,262人","2021/5/11\n感染者55人死亡\n最多更新","2021/9/1\n感染者数3,004人"),
+	ypos= c(550,200,400,1000,1280,1400,3050))
+#
+for (i in 1:nrow(events)){
+	labelpos<- events$date[i]
+	xpos<- b[match(labelpos,labels)]
+	ypos<- events$ypos[i]
+	points(x=xpos,y=ypos,pch=25,bg="red",cex=1.2,xpd=T)
+	text(x=xpos,y=ypos,labels=events$events[i],xpd=T,pos=3)
+}
+dev.off()
+
+
+
+library(xts)
+#「東洋経済オンライン」新型コロナウイルス 国内感染の状況
+# https://toyokeizai.net/sp/visual/tko/covid19/
+#制作・運用：東洋経済オンライン編集部
+# 都道府県別の発生動向
+covid19 = read.csv("https://toyokeizai.net/sp/visual/tko/covid19/csv/prefectures.csv")
+# serious discharged
+data<- covid19[covid19$"prefectureNameJ"=="大阪府",c(1:3,9)]
+time<- as.Date(paste0(data$year,"-",data$month,"-",data$date))
+data$serious<- as.numeric(as.character((data$serious)))
+data.xts<- xts(x=data$serious,time)
+data.xts<- data.xts["2020-05-08 ::"]
+
+ png("covOsaka14.png",width=800,height=600)
+plot(data.xts,main="大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」]")
+ dev.off()
+
+
+data.xts[383]<- 304
+data.xts[384]<- 288
+data.xts[385]<- 274
+data.xts[386]<- 268
+data.xts[387]<- 258
+data.xts[388]<- 261
+data.xts[389]<- 258
+data.xts[390]<- 230
+data.xts[391]<- 219
+data.xts[392]<- 203
+data.xts[393]<- 197
+data.xts[394]<- 193
+data.xts[395]<- 195
+data.xts[396]<- 193
+data.xts[397]<- 189
+data.xts[398]<- 181
+data.xts[399]<- 157
+data.xts[400]<- 151
+data.xts[401]<- 145
+data.xts[402]<- 144
+data.xts[403]<- 138
+data.xts[404]<- 134
+data.xts[405]<- 125
+data.xts[406]<- 122
+data.xts[407]<- 110
+data.xts[408]<- 109
+data.xts[409]<- 112
+data.xts[410]<- 112
+data.xts[411]<- 105
+data.xts[412]<- 98
+data.xts[413]<- 87
+data.xts[414]<- 82
+data.xts[415]<- 81
+data.xts[416]<- 81
+data.xts[417]<- 78
+data.xts[418]<- 64
+data.xts[419]<- 61
+data.xts[420]<- 58
+data.xts[421]<- 57
+data.xts[422]<- 58
+data.xts[423]<- 62
+data.xts[424]<- 61
+data.xts[425]<- 64
+data.xts[426]<- 60
+data.xts[427]<- 55
+data.xts[428]<- 52
+data.xts[429]<- 52
+data.xts[430]<- 51
+data.xts[431]<- 48
+data.xts[432]<- 44
+data.xts[433]<- 45
+data.xts[434]<- 44
+data.xts[435]<- 45
+data.xts[436]<- 44
+data.xts[437]<- 46
+data.xts[438]<- 46
+data.xts[439]<- 42
+data.xts[440]<- 45
+data.xts[441]<- 45
+data.xts[442]<- 49
+data.xts[443]<- 54
+data.xts[444]<- 57
+data.xts[445]<- 65
+data.xts[446]<- 62
+data.xts[447]<- 67
+data.xts[448]<- 73
+data.xts[449]<- 76
+data.xts[450]<- 76
+data.xts[451]<- 77
+data.xts[452]<- 72
+data.xts[453]<- 74
+data.xts[454]<- 83
+data.xts[455]<- 96
+data.xts[456]<- 101
+data.xts[457]<- 100
+data.xts[458]<- 108
+data.xts[459]<- 112
+data.xts[460]<- 121
+data.xts[461]<- 134
+data.xts[462]<- 129
+data.xts[463]<- 135
+data.xts[464]<- 138
+data.xts[465]<- 149
+data.xts[466]<- 152
+data.xts[467]<- 157
+data.xts[468]<- 158
+data.xts[469]<- 166
+data.xts[470]<- 173
+data.xts[471]<- 175
+data.xts[472]<- 184
+data.xts[473]<- 187
+data.xts[474]<- 195
+data.xts[475]<- 195
+data.xts[476]<- 202
+data.xts[477]<- 202
+data.xts[478]<- 210
+data.xts[479]<- 217
+data.xts[480]<- 218
+data.xts[481]<- 216
+data.xts[482]<- 230
+data.xts[483]<- 242
+data.xts[484]<- 254
+data.xts[485]<- 258
+data.xts[486]<- 265
+data.xts[487]<- 260
+data.xts[488]<- 271
+data.xts[489]<- 279
+data.xts[490]<- 286
+data.xts<- rbind(data.xts,xts(278,as.Date("2021-09-10")))
+
+#data.xts<- rbind(data.xts,xts(195,as.Date("2021-08-24")))
+#data.xts<- rbind(data.xts,xts(76,as.Date("2021-07-31")))
+#
+
+ png("covOsaka14.png",width=800,height=600)
+plot(data.xts,main="大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」]")
+ dev.off()
+
+
+
+
+
+# 他府県管理 令和3年2月12日（金曜日） [Excelファイル／90KB]
+data.xts<- rbind(data.xts,xts(406 ,as.Date("2021-05-08")))
+
+
+###################################################################################################
+185
+
+library(sf)
+library(NipponMap)
+shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
+m <- sf::read_sf(shp)
+#[NHK:新型コロナ データ一覧](https://www3.nhk.or.jp/news/special/coronavirus/data-widget/)
+nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
+# 東京都
+code<-13
+data<- nhkC[nhkC$都道府県コード==code,c(1,7)]
+data.xts<- as.xts(read.zoo(data, format="%Y/%m/%d"))
+data.xts<- round(data.xts[,1]*1000000/m$population[code],2)
+# 大阪府
+code<-27
+data<- nhkC[nhkC$都道府県コード==code,c(1,7)]
+tmp.xts<- as.xts(read.zoo(data, format="%Y/%m/%d"))
+tmp.xts<- round(tmp.xts[,1]*1000000/m$population[code],2)
+data.xts<- merge(data.xts,tmp.xts)
+colnames(data.xts)<- c("Tokyo","Osaka")
+#
+png("covOvsT01.png",width=800,height=600)
+par(mar=c(5,4,5,6),family="serif")
+matplot(coredata(data.xts),type="l",lwd=2.5,lty=1,las=1,xaxt="n",yaxt="n",ylim=c(0,max(data.xts,na.rm=T)*1.1),col=c("blue","red"),xlab="",ylab="",bty="n")
+box(bty="l",lwd=2)
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+#表示するx軸ラベルを指定
+# 2020- を削除。01-01 -> 1/1 
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",index(data.xts)))))
+# 毎月1日
+labelpos<- paste0(1:12,"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = paste0(sub("/1","",i),"月"),tck= -0.02)}
+	}
+#labelpos<- paste0(rep(1:12,each=2),"/",c(10,20))
+#for (i in labelpos){
+#	at<- match(i,labels)
+#	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
+#	}
+legend("topleft",inset=0.03,legend=colnames(data.xts),col=c("blue","red"),lwd=2.5,lty=1)
+text(x=par("usr")[2],y=tail(data.xts,1),xpd=T,
+	labels=paste0(colnames(data.xts),"\n",tail(data.xts,1),"人"))
+title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数",
+	"データ：[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)",line=3)
+dev.off()
+
+
+
+
+
+
+Cs<- js[[7]][[3]][[3]][[1]]
+#data.frame(状況=Cs$attr,人数=Cs$value)
+knitr::kable(data.frame(状況=Cs$attr,人数=Cs$value))
+#入院／入院調整中の内訳
+#Cs$children[[1]]
+knitr::kable(data.frame(状況=Cs$children[[1]]$attr,人数=Cs$children[[1]]$value))
+#入院調整中の内訳
+#Cs$children[[7]]
+knitr::kable(data.frame(状況=Cs$children[[7]]$attr,人数=Cs$children[[7]]$value))
+
+
+
+
+
+
+
+
+$ attr    : chr  "入院／入院調整中" "退院" "死亡" "自宅療養" ...
+ $ value
+
+
+covid19[[5]][covid19[[5]]$en=="Osaka",]
+#   code     ja    en value
+#27   27 大阪府 Osaka  6845
+# 大阪府(code:27)
+code<- 27
+data<- covid19[[4]]$carriers[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=data$values[[1]],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+#各月ごとの検査陽性者数
+monthsum<- apply.monthly(data.xts[,1],sum)
+#
+#png("covOsaka09.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(t(monthsum),las=1,col="red",names=paste0(3:10,"月"),ylim=c(0,max(monthsum)*1.2),yaxt="n")
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=formatC(as.numeric(monthsum), format="d", big.mark=','),cex=1.2,pos=3)
+legend("topleft",inset=c(0,0),xpd=T,bty="n",
+	legend="データ：[東洋経済オンライン]\n(https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)")
+title("大阪府 : 月別の陽性者数",cex.main=1.5)
+#dev.off()
+
+
+
+library(sf)
+library(NipponMap)
+shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
+m <- sf::read_sf(shp)
+#データの順序が一致しているか確認
+covid19[[5]]$en==m$name
+all(covid19[[5]]$en==m$name)
+# 東京都
+code<-13
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+data.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+# 大阪府
+code<-27
+data<- covid19[[4]]$deaths[code,]
+from<- as.Date(paste0(data$from[[1]][1],"-",data$from[[1]][2],"-",data$from[[1]][3]))
+tmp.xts<- xts(x=cumsum(data$values[[1]])*1000000/m$population[code],seq(as.Date(from),length=nrow(data$values[[1]]),by="days"))
+data.xts<- merge(data.xts,tmp.xts)
+colnames(data.xts)<- c("Tokyo","Osaka")
+#
+png("covOvsT01.png",width=800,height=600)
+par(mar=c(5,4,5,1),family="serif")
+matplot(coredata(data.xts),type="l",lwd=2.5,lty=1,las=1,xaxt="n",yaxt="n",ylim=c(0,max(data.xts,na.rm=T)*1.1),col=c("blue","red"),xlab="",ylab="",bty="n")
+box(bty="l",lwd=2)
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+#表示するx軸ラベルを指定
+# 2020- を削除。01-01 -> 1/1 
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",index(data.xts)))))
+# 毎月1日
+labelpos<- paste0(rep(1:12),"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+labelpos<- paste0(rep(1:12,each=2),"/",c(10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.01)}
+	}
+legend("topleft",inset=0.03,legend=colnames(data.xts),col=c("blue","red"),lwd=2.5,lty=1)
+title("大阪府 vs 東京都 : 新型コロナウイルス 人口100万人あたりの死亡者数 (チャーター便を除く国内事例)","データ：[東洋経済オンライン](https://raw.githubusercontent.com/kaz-ogiwara/covid19/master/data/data.json)",line=3)
+dev.off()
+
+sa
+
+################################################################
+
+m1<- table(factor(substring(dat[,1],6,7),level=c("01","02","03","04","05","06","07","08","09","10","11")))
+m2<- table(factor(substring(dat[dat$居住地=="大阪市",1],6,7),level=c("01","02","03","04","05","06","07","08","09","10","11")))
+#
+png("covOsaka09.png",width=800,height=600)
+par(mar=c(4,6,4,8),family="serif")
+b<- barplot(m1,col="slateblue",axes=F,names="",ylim=c(0,max(m1)*1.2))
+barplot(m2,add=T,col="firebrick2",las=1,ylim=c(0,max(m1)*1.2),names=paste0(1:11,"月"))
+legend(x="topleft",inset=c(0.01,0.05),legend=c("大阪市以外","大阪市"),pch=15,col=c("slateblue","firebrick2"),bty="n")
+#
+lines(x=b,y=par("usr")[4]*(m2/m1),col="darkgreen",lwd=3)
+text(x=b[1],y=par("usr")[4],labels="大阪市の感染者の割合",pos=2,xpd=T,col="darkgreen")
+axis(4,at=par("usr")[4]*seq(0,1,0.2),labels=seq(0,100,20),las=1,col="darkgreen")
+text(x=par("usr")[2],y=par("usr")[4],labels="(%)",pos=3,xpd=T)
+#
+abline(h=par("usr")[4]*0.3045,col="darkgreen",lty=2)
+text(x=par("usr")[2],y=par("usr")[4]*0.3045,labels="大阪市の人口の\n割合:30.45%",pos=4,xpd=T,col="darkgreen")
+abline(h=par("usr")[4]*0.5,col="red",lty=2)
+text(x=par("usr")[2],y=par("usr")[4]*0.5,labels="50%ライン",pos=4,xpd=T,col="red")
+title("大阪府:月別の陽性者数(大阪市と大阪市以外で色分け）",cex.main=1.5)
+dev.off()
+
+#### 吹田市の月別検査陽性者数
+
+#kable(dat[dat$居住地=="吹田市",],row.names=F)
+data<- dat[dat$居住地=="吹田市",]
+#各月ごとの検査陽性者数
+monthsum<- table(factor(substring(data$date,6,7),levels=c("01","02","03","04","05","06","07","08","09","10","11")))
+#
+png("covOsuita.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(monthsum,las=1,col="red",names=paste0(1:11,"月"),ylim=c(0,max(monthsum)*1.2),yaxt="n")
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=formatC(as.numeric(monthsum), format="d", big.mark=','),cex=1.2,pos=3)
+legend("topleft",inset=c(0,0),xpd=T,bty="n",
+	legend="データ：https://raw.githubusercontent.com/codeforosaka/covid19/master/data/data.json")
+title("吹田市 : 月別の陽性者数",cex.main=1.5)
+dev.off()
+
+data<- dat[dat$居住地=="大阪市",]
+#各月ごとの検査陽性者数
+monthsum<- table(factor(substring(data$date,6,7),levels=c("01","02","03","04","05","06","07","08","09","10","11")))
+#
+png("covOosakashi.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(monthsum,las=1,col="red",names=paste0(1:11,"月"),ylim=c(0,max(monthsum)*1.2),yaxt="n")
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=formatC(as.numeric(monthsum), format="d", big.mark=','),cex=1.2,pos=3)
+legend("topleft",inset=c(0,0),xpd=T,bty="n",
+	legend="データ：https://raw.githubusercontent.com/codeforosaka/covid19/master/data/data.json")
+title("大阪市 : 月別の陽性者数",cex.main=1.5)
+dev.off()
+
+
+
+#### 居住地
+
+tbl<- table(dat$居住地)
+tbl<- tbl[order(tbl)]
+ png("covOsaka02.png",width=800,height=800)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:居住地(大阪府)",cex.main=1.5)
+dev.off()
+
+#### 年代
+
+tbl<- table(dat$年代)
+tbl<- tbl[order(tbl)]
+ png("covOsaka03.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:年代(大阪府)",cex.main=1.5)
+dev.off()
+
+#### 性別
+
+dat$性別[dat$性別=="男"]<- "男性"
+dat$性別[dat$性別=="女"]<- "女性"
+tbl<- table(dat$性別)
+tbl<- tbl[order(tbl)]
+ png("covOsaka04.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:性別(大阪府)",cex.main=1.5)
+dev.off()
+
+
+
+month<- substring(js[[1]]$data$date,6,7)
+tab<- table(month,js[[1]]$data$年代)
+#"80代","90代","100代" -> "80歳以上"
+tab<- cbind(tab,rowSums(tab[,c("80代","90代","100代")]))
+colnames(tab)[ncol(tab)]<- "80歳以上"
+#"未就学児","就学児"-> "10歳未満"
+tab<- cbind(tab,rowSums(tab[,c("未就学児","就学児")]))
+colnames(tab)[ncol(tab)]<- "10歳未満"
+tab2<- tab[,c("10歳未満","10代","20代","30代","40代","50代","60代","70代","80歳以上")]
+#
+png("covOsaka06.png",width=800,height=600)
+par(mar=c(3,7,4,2),family="serif")
+barplot(t(tab2),col=rainbow(9,0.7),beside=T,las=1,legend=T,names=paste0(sub("^0","",rownames(tab2)),"月"),
+	args.legend = list(x = "topleft",inset= 0.03))
+title("月別の陽性者の属性:年代(大阪府)",cex.main=1.5)
+dev.off()
+
+
+
+
+
+library(sf)
+library(BAMMtools)
+osaka<- st_read("https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/osaka.geojson", 
+	stringsAsFactors=FALSE)
+map<- aggregate(osaka[,c("code2","sityo")], list(osaka$code2), unique)
+#plot(st_geometry(map))
+
+#load("Osaka.Rdata")
+dat<- js[[1]][[2]][,c(8,4:7)]
+#is.element(dat$居住地,as.vector(map$sityo))
+unique(dat$居住地[!is.element(dat$居住地,as.vector(map$sityo))])
+#検査陽性者のいない市町村
+map$sityo[!is.element(map$sityo,dat$居住地)]
+#ないものの数を0としてカウント:factorを使ってtable
+#"大阪府外" "調査中"は除く
+tbl<- table(factor(dat$居住地, levels=map$sityo))
+#knitr::kable(tbl)
+
+
+# 並び順が一致しているか確認
+all(names(tbl)== map$sityo)
+#
+df<- as.vector(tbl)
+# legendのタイトル
+ltitle<- "検査陽性者数"
+# グラフのタイトル
+title<- "PCR検査 陽性者数(大阪府市町村別)"
+#
+##### ここ以降のRコードは共通 #####
+#
+# Jenksの自然分類法で分ける最大
+i <- length(df)
+brk <- getJenksBreaks(df,k=i+1)
+while (length(unique(brk)) != length(brk)) { 
+	brk <- getJenksBreaks(df,k=i+1)
+	i=i-1
+}
+# legendのlabelを作成
+labels<- as.vector(cut(brk[1:length(brk)-1],breaks=brk,include.lowest=T,right =F, dig.lab=5))
+# 塗りつぶしに使うカラーパレット：rev関数で　白->赤
+color<- rev(heat.colors(length(brk)-1))
+cols<-as.vector(cut(df, breaks=brk,labels =color,include.lowest=T,right =F))
+ png("osakaCmap01.png",width=800,height=800)
+par(mar=c(0,0,4,0),family="serif")
+plot(st_geometry(map),col=cols)
+c=st_centroid(st_geometry(map))
+text(st_coordinates(c),paste0(map$sityo,"\n",df,"人"))
+legend(x=135.8,y=35,legend=labels, fill=color,title =ltitle,ncol=1,bty="n",xpd=T,cex=1.2)
+title(title,cex.main=1.5)
+ dev.off()
+
+
+#市町村別の年齢別人口と割合
+#http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html
+prof<- c("大阪市","堺市","岸和田市","豊中市","池田市","吹田市","泉大津市","高槻市","貝塚市","守口市","枚方市","茨木市","八尾市","泉佐野市","富田林市","寝屋川市","河内長野市","松原市","大東市","和泉市","箕面市","柏原市","羽曳野市","門真市","摂津市","高石市","藤井寺市","東大阪市","泉南市","四條畷市","交野市","大阪狭山市","阪南市","島本町","豊能町","能勢町","忠岡町","熊取町","田尻町","岬町","太子町","河南町","千早赤阪村")
+pop<- c(2691185,839310,194911,395479,103069,374468,75897,351829,88694,143042,404152,280033,268800,100966,113984,237518,106987,120750,123217,186109,133411,71112,112683,123576,85007,56529,65438,502784,62438,56075,76435,57792,54276,29983,19934,10256,17298,44435,8417,15938,13748,16126,5378)
+# 並び順が一致しているか確認
+all(prof== map$sityo)
+#
+df<- round(as.vector(tbl)/pop*10000,2)
+# legendのタイトル
+ltitle<- "人口１万人あたりの\n検査陽性者数"
+# グラフのタイトル
+title<- "人口１万人あたりの検査陽性者数(大阪府市町村別)"
+#
+##### ここ以降のRコードは共通 #####
+#
+# Jenksの自然分類法で分ける最大
+i <- length(df)
+brk <- getJenksBreaks(df,k=i+1)
+while (length(unique(brk)) != length(brk)) { 
+	brk <- getJenksBreaks(df,k=i+1)
+	i=i-1
+}
+# legendのlabelを作成
+labels<- as.vector(cut(brk[1:length(brk)-1],breaks=brk,include.lowest=T,right =F, dig.lab=5))
+# 塗りつぶしに使うカラーパレット：rev関数で　白->赤
+color<- rev(heat.colors(length(brk)-1))
+cols<-as.vector(cut(df, breaks=brk,labels =color,include.lowest=T,right =F))
+ png("osakaCmap02.png",width=800,height=800)
+par(mar=c(0,0,4,4),family="serif")
+plot(st_geometry(map),col=cols)
+c=st_centroid(st_geometry(map))
+text(st_coordinates(c),paste0(map$sityo,"\n",df,"人"))
+legend(x=135.8,y=35.1,legend=labels, fill=color,title =ltitle,ncol=1,bty="n",xpd=T,cex=1.2)
+title(title,cex.main=1.5)
+ dev.off()
+
+
+
+
+tbl<- table(js[[1]]$data$date,factor(js[[1]]$data$居住地, levels=map$sityo))
+#rownames(tbl)[1]
+#tail(rownames(tbl),1)
+alldate<- seq(as.Date(rownames(tbl)[1]),as.Date(tail(rownames(tbl),1)),"days")
+rname<- alldate[!is.element(alldate,as.Date(rownames(tbl)))]
+# 0行列
+mat0<- matrix(0, nrow=length(rname), ncol=ncol(tbl))
+colnames(mat0)<- colnames(tbl)
+rownames(mat0)<- as.character(rname)
+mat<- rbind(tbl,mat0)
+#日付順
+tbl<- mat[rownames(mat)[order(rownames(mat))],]
+tbl<- apply(tbl,2,cumsum)
+#順序を確認
+all(prof==colnames(tbl))
+tbl<- t(apply(tbl,1,function(x){round(10000*x/pop,2)}))
+#
+png("covOsaka10.png",width=800,height=600)
+par(mar=c(4,3,4,4),family="serif")
+matplot(tbl,type="l",lty=1,xlab="",ylab="",xaxt="n",bty="n",las=1,col=rainbow(ncol(tbl)))
+box(bty="l",lwd=2.5)
+#表示するx軸ラベルを指定
+# 2020- を削除。01-01 -> 1/1 
+labels<- sub("-","/",sub("-0","-",sub("^0","",sub("2020-","",rownames(tbl)))))
+# 毎月1日
+labelpos<- paste0(rep(1:12),"/",1)
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = i,tck= -0.02)}
+	}
+labelpos<- paste0(rep(1:12,each=2),"/",c(10,20))
+for (i in labelpos){
+	at<- match(i,labels)
+	if (!is.na(at)){ axis(1,at=at,labels = sub("^.*/","",i),tck= -0.01,cex.axis=0.8)} 
+	}
+text(x=par("usr")[2],y=tbl[nrow(tbl),],labels=colnames(tbl),xpd=T)
+text(x=par("usr")[1],y=par("usr")[4],labels="(人)",pos=2,xpd=T)
+# グラフのタイトル
+title("人口１万人あたりの検査陽性者数(大阪府市町村別)の推移")
+legend=round(sort(tbl[nrow(tbl),],decreasing=T),2)
+legend("topleft",legend=paste(names(legend),legend),inset=0.01,ncol=3,bty="n",cex=1.2)
+dev.off()
+
+population<- data.frame(prof,pop)
+#大阪市の大阪府に対する人口の割合
+round(population[prof=="大阪市",2]/sum(pop)*100,2)
+
+#大阪府:各月ごとの検査陽性者数
+monthsum1<- table(factor(substring(dat$date,6,7),levels=c("01","02","03","04","05","06","07","08","09","10","11")))
+
+data<- dat[dat$居住地=="大阪市",]
+#大阪市:各月ごとの検査陽性者数
+monthsum2<- table(factor(substring(data$date,6,7),levels=c("01","02","03","04","05","06","07","08","09","10","11")))
+
+png("covOosakashi02.png",width=800,height=600)
+plot(round(monthsum2/monthsum1*100,2),type="l",las=1,ylab="",lwd=2,bty="n")
+box(bty="l",lwd=3)
+text(x=par("usr")[1],y=par("usr")[4],labels="(%)",pos=2,xpd=T)
+abline(h=round(population[prof=="大阪市",2]/sum(pop)*100,2),col="red",lty=2)
+text(x=par("usr")[1],y=33,labels=paste("大阪市の人口の割合",round(population[prof=="大阪市",2]/sum(pop)*100,2),"%"),pos=4,col="red")
+abline(h=50,col="blue",lty=2)
+text(x=par("usr")[2],y=50,labels="50%",pos=4,col="blue",xpd=T)
+title("大阪市の大阪府全体に対する検査陽性者数の割合")
+dev.off()
+
+#################################################################################
+
+# tac:ファイルを最終行から逆順に出力する
+gawk '/公務日程なし/ {print}' /home/aki/Rwork/公務日程なし | tac > /home/aki/Rwork/koumu
+
+
+library(calendR)
+library(rvest)
+#これまでの市長日程
+p<- c("0000342310","0000346760","0000351186","0000353763","0000361763","0000361768","0000361957","0000361965","0000361978")
+#
+koumu<- NULL
+for ( i in p){
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",i,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[1]]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+}
+#
+#市長日程予定が１番目のtable。これまでの市長日程は２番めのtable
+p<-"0000329708"
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",p,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[2]]
+last<- x[1,1]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+head(koumu,2)
+#     月日（曜日）         内容
+#114 1月1日（水） 公務日程なし
+#113 1月2日（木） 公務日程なし
+#公務日程なしの日付　曜日削除
+days<- gsub("（.*）","",koumu[,1])
+days<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",days))))
+last<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",last))))
+days
+
+png("KoumuOsakashi.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="red",names=paste0(1:11,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3)
+legend(x="topleft",legend="市の考え方
+大阪市ホームページにおいて、「公務日程なし」と記載している時でありましても、
+行政的に随時連絡をとれる体制を整えており、市長は市政の必要に応じたマネジメント
+を行っております。
+https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000516041.html",bty="n")
+title(paste0("「公務日程なし」の月別日数（大阪市：市長日程）[2020年 1月1日〜",last,"]"))
+dev.off()
+
+# 2020-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2020-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = "1 day")
+# Vector of "公務日程あり" 
+events <- rep("公務日程あり",length(dates))
+# Adding more events
+events[no_koumu] <- "公務日程なし"
+# +2 : データのある日の次の日
+events[as.numeric(as.Date(last)-as.Date("2020-01-01")+2):length(dates)] <- NA
+# Creating the calendar
+png("Okoumu01.png",width=800,height=600)
+calendR(year = 2020,
+#	start_date = "2020-01-01", # Custom start date
+#        end_date = "2020-12-31",   # Custom end date
+        start = "S",
+        special.days = events,
+        special.col = c("lightblue","red"), # as events
+	title = "「公務日程」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = paste0("[2020-1-1〜",last,"]") ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+dev.off()
+
+
+#load("Osaka.Rdata")
+dat<- js[[1]][[2]][,c(8,4:7)]
+# 居住地の「大阪府」は消し、「大阪府外」だけはもとに戻す。
+dat$居住地<- gsub("大阪府","",dat$居住地)
+dat$居住地<- gsub("^外$","大阪府外",dat$居住地)
+#
+data<- dat[dat$居住地=="大阪市",]
+#各月ごとの検査陽性者数
+monthsum<- table(factor(substring(data$date,6,7),levels=c("01","02","03","04","05","06","07","08","09","10","11")))
+#
+png("KoumuOsakashi.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif",mfrow=c(2,1))
+b<- barplot(monthsum,las=1,col="red",names=paste0(1:11,"月"),ylim=c(0,max(monthsum)*1.2),yaxt="n")
+# Add comma separator to axis labels
+axis(side=2, at=axTicks(2), labels=formatC(axTicks(2), format="d", big.mark=','),las=1) 
+text(x= b[1:nrow(monthsum)], y=as.numeric(monthsum),labels=formatC(as.numeric(monthsum), format="d", big.mark=','),cex=1.2,pos=3)
+legend("topleft",inset=c(0,0),xpd=T,bty="n",
+	legend="データ：https://raw.githubusercontent.com/codeforosaka/covid19/master/data/data.json")
+text(x=par("usr")[1],y=max(monthsum)*1.2,labels="(人)",pos=3,xpd=T)
+title(paste0("大阪市:月別の陽性者数 [",js[[7]]," 時点] "),cex.main=1.5)
+#
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="red",names=paste0(1:11,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3,col="red")
+legend(x="topleft",
+legend="[市の考え方]大阪市ホームページにおいて、「公務日程なし」と記載している時でありましても、
+行政的に随時連絡をとれる体制を整えており、市長は市政の必要に応じたマネジメントを行っております。
+https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000516041.html",bty="n")
+title(paste0("「公務日程なし」の月別日数（大阪市：市長日程）[2020年 1月1日〜",last,"]"))
+text(x=par("usr")[1],y=31,labels="(日)",pos=3,xpd=T)
+dev.off()
+
+
+
+
+
+#sudo apt-get install libmagick++-dev
+# install.packages("calendR")
+library(calendR)
+library(rvest)
+#これまでの市長日程
+p<- c("0000342310","0000346760","0000351186","0000353763","0000361763","0000361768","0000361957","0000361965","0000361978")
+#
+koumu<- NULL
+for ( i in p){
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",i,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[1]]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+}
+#
+#市長日程予定が１番目のtable。これまでの市長日程は２番めのtable
+p<-"0000329708"
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",p,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[2]]
+last<- x[1,1]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+head(koumu,2)
+#     月日（曜日）         内容
+#114 1月1日（水） 公務日程なし
+#113 1月2日（木） 公務日程なし
+#公務日程なしの日付　曜日削除
+days<- gsub("（.*）","",koumu[,1])
+days<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",days))))
+last<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",last))))
+days
+
+公務日程なし  
+  [1] "2020-01-01" "2020-01-02" "2020-01-03" "2020-01-04" "2020-01-08"  
+  [6] "2020-01-09" "2020-01-11" "2020-01-12" "2020-01-19" "2020-01-26"  
+ [11] "2020-02-01" "2020-02-02" "2020-02-03" "2020-02-08" "2020-02-11"  
+ [16] "2020-02-15" "2020-02-16" "2020-02-19" "2020-02-22" "2020-02-23"  
+ [21] "2020-02-24" "2020-03-01" "2020-03-02" "2020-03-04" "2020-03-07"  
+ [26] "2020-03-08" "2020-03-10" "2020-03-13" "2020-03-14" "2020-03-15"  
+ [31] "2020-03-20" "2020-03-21" "2020-03-22" "2020-03-23" "2020-03-25"  
+ [36] "2020-03-28" "2020-03-29" "2020-04-02" "2020-04-04" "2020-04-05"  
+ [41] "2020-04-09" "2020-04-11" "2020-04-12" "2020-04-13" "2020-04-15"  
+ [46] "2020-04-18" "2020-04-19" "2020-04-20" "2020-04-22" "2020-04-24"  
+ [51] "2020-04-25" "2020-04-26" "2020-04-27" "2020-04-29" "2020-05-02"  
+ [56] "2020-05-03" "2020-05-04" "2020-05-05" "2020-05-06" "2020-05-08"  
+ [61] "2020-05-09" "2020-05-10" "2020-05-16" "2020-05-17" "2020-05-18"  
+ [66] "2020-05-20" "2020-05-23" "2020-05-24" "2020-05-25" "2020-05-27"  
+ [71] "2020-05-30" "2020-05-31" "2020-06-01" "2020-06-05" "2020-06-06"  
+ [76] "2020-06-07" "2020-06-08" "2020-06-13" "2020-06-14" "2020-06-15"  
+ [81] "2020-06-20" "2020-06-21" "2020-06-22" "2020-06-24" "2020-06-27"  
+ [86] "2020-06-28" "2020-06-29" "2020-07-03" "2020-07-04" "2020-07-06"  
+ [91] "2020-07-08" "2020-07-10" "2020-07-11" "2020-07-12" "2020-07-15"  
+ [96] "2020-07-17" "2020-07-18" "2020-07-19" "2020-07-21" "2020-07-23"  
+[101] "2020-07-24" "2020-07-26" "2020-07-27" "2020-08-01" "2020-08-02"  
+[106] "2020-08-03" "2020-08-05" "2020-08-06" "2020-08-07" "2020-08-08"  
+[111] "2020-08-09" "2020-08-10" "2020-08-12" "2020-08-13" "2020-08-15"  
+[116] "2020-08-16" "2020-08-17" "2020-08-22" "2020-08-23" "2020-08-25"  
+[121] "2020-08-29" "2020-08-30" "2020-09-02" "2020-09-05" "2020-09-06"  
+[126] "2020-09-12" "2020-09-13" "2020-09-14" "2020-09-16" "2020-09-19"  
+[131] "2020-09-20" "2020-09-21" "2020-09-22" "2020-09-28" "2020-10-05"  
+[136] "2020-10-06" "2020-10-11" "2020-10-12" "2020-10-13" "2020-10-14"  
+[141] "2020-10-16" "2020-10-17" "2020-10-18" "2020-10-19" "2020-10-20"  
+[146] "2020-10-21" "2020-10-23" "2020-10-24" "2020-10-25" "2020-10-26"  
+[151] "2020-10-27" "2020-10-28" "2020-10-30" "2020-10-31" "2020-11-01"  
+[156] "2020-11-04" "2020-11-07" "2020-11-08" "2020-11-09" 
+
+# 2020-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2020-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = "1 day")
+# Vector of NA 
+events <- rep(NA,length(dates))
+# Adding more events
+events[no_koumu] <- "no_koumu"
+# +2 : データのある日の次の日
+events[as.numeric(as.Date(last)-as.Date("2020-01-01")+2):length(dates)] <- "no_data"
+# Creating the calendar
+#png("Okoumu01.png",width=800,height=600)
+calendR(year = 2020,
+#	start_date = "2020-01-01", # Custom start date
+#        end_date = "2020-12-31",   # Custom end date
+        start = "S",
+        special.days = events,
+        special.col = c("gray","red"), # as events
+        low.col = "white",
+	title = "「公務日程なし」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = paste0("[2020-1-1〜",last,"]") ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"))  
+ # Add a subtitle # legend.pos = "bottom", # Legend position # legend.title = "" # Legend title
+#par(new=T)
+#plot(NULL,type="n",axes=F,xlab="",ylab="",xlim=c(0,1),ylim=c(0,1))
+#legend(x=par("usr")[1],y=par("usr")[4]*1.05,pch=22,pt.cex=2,pt.bg="red",legend="公務日程なし",bty="n",xpd=T)
+#dev.off()
+
+
+#########################################################################
+
+library(calendR)
+library(rvest)
+#これまでの市長日程
+p<- c("0000342310","0000346760","0000351186","0000353763","0000361763","0000361768","0000361957","0000361965","0000361978")
+#
+koumu<- NULL
+for ( i in p){
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",i,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[1]]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+}
+#
+#市長日程予定が１番目のtable。これまでの市長日程は２番めのtable
+p<-"0000329708"
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",p,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[2]]
+last<- x[1,1]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+head(koumu,2)
+#     月日（曜日）         内容
+#114 1月1日（水） 公務日程なし
+#113 1月2日（木） 公務日程なし
+#公務日程なしの日付　曜日削除
+days<- gsub("（.*）","",koumu[,1])
+days<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",days))))
+last<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",last))))
+days
+
+#png("KoumuOsakashi.png",width=800,height=600)
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="red",names=paste0(1:11,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3,col="red")
+legend(x="topleft",legend="市の考え方
+大阪市ホームページにおいて、「公務日程なし」と記載している時でありましても、
+行政的に随時連絡をとれる体制を整えており、市長は市政の必要に応じたマネジメント
+を行っております。
+https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000516041.html",bty="n")
+title(paste0("「公務日程なし」の月別日数（大阪市：市長日程）[2020年 1月1日〜",last,"]"))
+#dev.off()
+
+# 2020-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2020-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = "1 day")
+# Vector of "公務日程あり" 
+events <- rep("公務日程あり",length(dates))
+# Adding more events
+events[no_koumu] <- "公務日程なし"
+# +2 : データのある日の次の日
+events[as.numeric(as.Date(last)-as.Date("2020-01-01")+2):length(dates)] <- NA
+# Creating the calendar
+#png("Okoumu01.png",width=800,height=600)
+calendR(year = 2020,
+#	start_date = "2020-01-01", # Custom start date
+#        end_date = "2020-12-31",   # Custom end date
+        start = "S",
+        special.days = events,
+        special.col = c("lightblue","red"), # as events
+	title = "「公務日程」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = paste0("[2020-1-1〜",last,"]") ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+#dev.off()
+
+
+######################################################################################
+
+
+
+library(ggplot2)
+events<- gsub("no_koumu","公務日程なし",events)
+p<- calendR(year = 2020,
+#	start_date = "2020-01-01", # Custom start date
+#        end_date = "2020-12-31",   # Custom end date
+        start = "S",
+        special.days = events,
+        special.col = c("gray","red"), # as events
+        low.col = "white",
+	title = "「公務日程なし」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = paste0("[2020-1-1〜",last,"]") ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+
+special.col = c("gray","red") # as events
+low.col = "white"
+g<- p+
+#theme(legend.position = "top") +
+#theme(legend.position = c(0.1,1.15)) +
+scale_fill_discrete(breaks = c("公務日程なし"))
+#scale_color_discrete(breaks = c("公務日程なし"))
+
+
+
++
+scale_color_hue(name = "", labels = c(no_koumu = "公務日程なし") ) 
+
+
+calendR(year = 2020,
+        start = "S",
+        special.days = no_koumu ,  # Days to color
+        special.col = "red",            # Color of the specified days
+        low.col = "white",	# Background color of the rest of the days
+	title = "「公務日程なし」のカレンダー（大阪市：市長日程）",            # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = "[2020-1-1〜2020-11-6]",    # Add a subtitle
+        subtitle.col = 3 )                 # Color of the subtitle                   
+
+
+calendR(#year = 2020,
+	start_date = "2020-01-01", # Custom start date
+        end_date = "2020-11-30",   # Custom end date
+        start = "S",
+        special.days = no_koumu ,  # Days to color
+        special.col = "red",            # Color of the specified days
+        low.col = "white",	# Background color of the rest of the days
+	title = "My calendar",            # Change the title
+        title.size = 30,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = "Have a\nnice day",    # Add a subtitle
+        subtitle.col = 3 )                 # Color of the subtitle                   
+
+
+
+# まだ退院（死亡退院も含む）していない人
+tbl<- table(dat[grep("○", dat$退院, invert = T),1:4]$居住地)
+tbl<- tbl[order(tbl)]
+# png("covOsaka02.png",width=800,height=800)
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.5),col="red")
+text(x=tbl,y=b,labels=paste(tbl,"(",round(tbl/sum(tbl)*100,2),"%)"),pos=4)
+title("まだ退院（死亡退院も含む）していない人の居住地(大阪府)",cex.main=1.5)
+#dev.off()
+text(x=par("usr")[2]*0.6,y=par("usr")[4]*0.1,labels=paste("合計\n",sum(tbl),"人"),pos=3,cex=5,col="red")
+
+
+入院／入院調整中, 退院, 死亡, 自宅療養, 宿泊療養, 療養等調整中, 入院調整中, 府外健康観察, 
+251, 11237, 235,   105, 151, 36, 57, 17, 
+軽症・中等症, 重症, 591, 26, 
+入院待機中, 入院もしくは療養方法の調整中, 0, 57
+
+
+#検査実施人数
+js[[7]]
+$attr
+[1] "検査実施人数"
+
+$value
+[1] 20263
+
+$children
+        attr value
+1 陽性患者数  1716
+                                                                                                                               children
+1 入院／入院調整中, 退院, 死亡, 自宅療養, 宿泊療養, 療養等調整中, 入院調整中, 405, 978, 59, 88, 166, 4, 16, 軽症・中等症, 重症, 621, 58
+
+
+# 検査陽性率(%): 陽性患者数/検査実施人数*100
+round(js[[7]][[3]]$value/js[[7]][[2]]*100,2)
+# 致死率(%): 亡くなった人の数/陽性患者数*100
+round(js[[7]][[3]][[3]][[1]][grep("死亡",js[[7]][[3]][[3]][[1]]$attr),2]/js[[7]][[3]]$value*100,2)
+
+
+
+js[[7]][[3]][[3]][[1]][[1]]
+js[[7]][[3]][[3]][[1]]$attr
+
+js[[7]][[3]][[3]][[1]][[2]]
+js[[7]][[3]][[3]][[1]]$value
+
+data.frame(js[[7]][[3]][[3]][[1]]$attr,js[[7]][[3]][[3]][[1]]$value)
+
+
+js[[7]][[3]][[3]][[1]][[3]][[1]]
+
+
+
+#陽性患者数
+js[[7]]$children$value
+js[[7]]$children[2]
+#入院／入院調整中
+unlist(js[[7]]$children)[3]
+unlist(js[[7]]$children)[6]
+##入院／入院調整中の内訳
+unlist(js[[7]]$children)[9:10]
+unlist(js[[7]]$children)[11:12]
+#退院
+unlist(js[[7]]$children)[4]
+unlist(js[[7]]$children)[7]
+#死亡
+unlist(js[[7]]$children)[5]
+unlist(js[[7]]$children)[8]
+#
+#各項目の関係は以下のようになっている。
+#陽性患者数=入院／入院調整中+退院+死亡
+as.numeric(js[[7]]$children$value)
+as.numeric(unlist(js[[7]]$children)[6])+as.numeric(unlist(js[[7]]$children)[7])+as.numeric(unlist(js[[7]]$children)[8])
+#
+#入院／入院調整中=軽症・中等症+重症
+as.numeric(unlist(js[[7]]$children)[6])
+as.numeric(unlist(js[[7]]$children)[11])+as.numeric(unlist(js[[7]]$children)[12])
+#
+#致死率=死亡/陽性患者数*100を計算するには、
+as.numeric(unlist(js[[7]]$children)[8])/as.numeric(unlist(js[[7]]$children)[2])*100
+
+
+################################################################################
+
+
+dat<- js[[2]][[2]]
+date<- sub("-","/",sub("-0","-",sub("^0","",substring(dat[,1],6,10))))
+barplot(dat[,2],names=date,las=1,col="pink")
+title("陽性者数(大阪府)")
+
+dat<- js[[3]][[2]]
+date<- sub("-","/",sub("-0","-",sub("^0","",substring(dat[,1],6,10))))
+barplot(dat[,2],names=date,las=1,col="pink")
+title("検査実施件数(大阪府)")
+
+
+
+[大阪府の最新感染動向](https://covid19-osaka.info/)
+
+[大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)  
+
+#install.packages("jsonlite")
+#install.packages("curl")
+library(jsonlite)
+library(knitr)
+url<- "https://raw.githubusercontent.com/codeforosaka/covid19/development/data/data.json"
+js<- fromJSON(url)
+dat<- js[[1]][[2]][,c(8,4:7)]
+dat$居住地<- gsub("大阪府","",dat$居住地)
+dat$居住地<- gsub("^外$","大阪府外",dat$居住地)
+
+
+
+
+# 例えば、吹田市の一覧表
+#※退院とは新型コロナウイルス感染症が治癒した者
+#※退院には死亡退院を含む 
+kable(dat[dat$居住地=="吹田市",],row.names=F)
+#居住地
+tbl<- table(dat$居住地)
+tbl<- tbl[order(tbl)]
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:居住地(大阪府)",cex.main=1.5)
+#年代
+tbl<- table(dat$年代)
+tbl<- tbl[order(tbl)]
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:年代(大阪府)",cex.main=1.5)
+#性別
+tbl<- table(dat$性別)
+tbl<- tbl[order(tbl)]
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,horiz=T,xlim=c(0,max(tbl)*1.2),col="pink")
+text(x=tbl,y=b,labels=tbl,pos=4)
+title("陽性者の属性:性別(大阪府)",cex.main=1.5)
+#date
+tbl<- table(dat$date)
+names(tbl)<- gsub("2020-","",names(tbl))
+par(mar=c(3,7,4,2),family="serif")
+b<- barplot(tbl,las=1,ylim=c(0,max(tbl)*1.2),col="pink")
+title("陽性者の人数：時系列(大阪府)",cex.main=1.5)
+
+
+
+
+
+
+
+
+
+
+
+js <- url %>% 
+    read_html() %>% 
+    html_text() 
+
+
+
+library(readxl)
+
+data <- read_excel("data/disease.xlsx", sheet = 1)
+
+
+library("rjson")
+result <- fromJSON(file="sdata.txt")
+json_data_frame <- as.data.frame(result) //結果をデータフレームに格納
+output <- unlist(sapply(result, function(x){return(x$air_temperature)}))
+
+
+#install.packages("jsonlite")
+#install.packages("curl")
+library(jsonlite)
+jsonlite::fromJSON(url, flatten=T)
+
+
+path_data<- "https://raw.githubusercontent.com/codeforosaka/covid19/development/data/data.json"
+data <- ndjson::stream_in(path_data)
+js <- url %>% 
+    read_html() %>% 
+    html_text() 
+
+js <- jsonlite::fromJSON(gsub("funguild_db", "", js)) 
+
+
+
+library(rvest) 
+library(jsonlite) 
+url <- "https://raw.githubusercontent.com/codeforosaka/covid19/development/data/data.json" 
+jsonlite::read_json(url) 
+js <- url %>% 
+    read_html() %>% 
+    html_text() 
+
+
+
+
+html<-read_html(url)
+txt<- gsub("\"patients_summary.*$", "", html)
+jsonlite::read_json(txt) 
+
+
+dat <- jsonlite::fromJSON(gsub("\\"patients_summary.*$, "", js)) 
+
+ndjson::stream_in(gsub("patients_summary.*$, "", js))
+
+
+#######################################################################################
+
+
+library(calendR)
+library(rvest)
+#これまでの市長日程
+p<- c("0000342310","0000346760","0000351186","0000353763","0000361763","0000361768",
+	"0000361957","0000361965","0000361978","0000361979","0000361980")
+#
+koumu<- NULL
+for ( i in p){
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",i,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[1]]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+}
+#
+#市長日程予定が１番目のtable。これまでの市長日程は２番めのtable
+p<-"0000329708"
+page<- paste0("https://www.city.osaka.lg.jp/seisakukikakushitsu/page/",p,".html")
+# 読み込み 
+html <- read_html (page, encoding = "UTF-8")
+x<- html_table(html)[[2]]
+last<- x[1,1]
+x1<- x[x$内容=="公務日程なし",c(1,3)]
+koumu<- rbind(koumu,x1[order(as.numeric(rownames(x1)),decreasing=T),])
+head(koumu,2)
+#     月日（曜日）         内容
+#114 1月1日（水） 公務日程なし
+#113 1月2日（木） 公務日程なし
+#公務日程なしの日付　曜日削除
+days<- gsub("（.*）","",koumu[,1])
+days<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",days))))
+last<- as.Date(paste0("2020-",gsub("日","",gsub("月","-",last))))
+#2020
+days<- days[1:180]
+last<- as.Date("2020-12-31")
+
+png("KoumuOsakashi.png",width=800,height=600)
+mat <- matrix(c(1,1,1,1,1,1,2,2),4,2, byrow = TRUE)
+layout(mat) 
+par(mar=c(3,7,3,2),family="serif")
+b<- barplot(table(substring(days,6,7)),las=1,ylim=c(0,31),col="firebrick2",names=paste0(1:12,"月"))
+text(x=b,y=table(substring(days,6,7)),labels=table(substring(days,6,7)),pos=3)
+legend(x="topleft",legend="市の考え方
+大阪市ホームページにおいて、「公務日程なし」と記載している時でありましても、
+行政的に随時連絡をとれる体制を整えており、市長は市政の必要に応じたマネジメント
+を行っております。
+https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000516041.html",bty="n")
+title(paste0("「公務日程なし」の月別日数（大阪市：市長日程）[2020年 1月1日〜",last,"]"))
+#
+yeardata<- sum(table(substring(days,6,7)))
+b<- barplot(matrix(c(yeardata,366-yeardata),nrow=2),horiz=T,col=c("brown3","royalblue3"))
+# x:yeardata/2=90 yeardata+(366-yeardata)/2
+text(x=c(90,273),y=b,labels=c(paste0("公務日程なし\n",yeardata,"日"),paste0("公務日程あり\n",(366-yeardata),"日")),cex=3)
+title(paste0("２０２０年「公務日程なし・あり」の日数（大阪市：市長日程）[2020年 1月1日〜",last,"]"))
+dev.off()
+
+# 2020-01-01を１日目として何日目に当たるかを計算
+no_koumu<- as.numeric(as.Date(days)-as.Date("2020-01-01")+1)
+#
+# Vector of dates
+dates <- seq(as.Date("2020-01-01"), as.Date("2020-12-31"), by = "1 day")
+# Vector of "公務日程あり" 
+events <- rep("公務日程あり",length(dates))
+# Adding more events
+events[no_koumu] <- "公務日程なし"
+# +2 : データのある日の次の日
+#events[as.numeric(as.Date(last)-as.Date("2020-01-01")+2):length(dates)] <- NA
+# Creating the calendar
+png("Okoumu01.png",width=800,height=600)
+calendR(year = 2020,
+#	start_date = "2020-01-01", # Custom start date
+#        end_date = "2020-12-31",   # Custom end date
+        start = "S",
+        special.days = events,
+        special.col = c("lightblue","red"), # as events
+	title = "「公務日程」のカレンダー（大阪市：市長日程より作成）",  # Change the title
+        title.size = 15,                  # Font size of the title
+        title.col = 2,                    # Color of the title
+        subtitle = paste0("[2020-1-1〜",last,"]") ,
+	subtitle.size = 15,
+	weeknames = c("月","火","水","木","金","土","日"),
+	legend.pos = c(0.1,1.15))  
+dev.off()
+
+
+
+
