@@ -66,24 +66,23 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ![Ctemp01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Ctemp01.png)
 
-### 回復された方、亡くなった方、療養中(入院、隔離、自宅療養)の方の推移
-Rコードは、記事「東アジアの感染者の状況(新型コロナウイルス：Coronavirus)」にのせています。
+### 感染者数（上）、死亡者数（下）の推移(新型コロナウイルス）Data : CSSE at Johns Hopkins University
 
 #### 日本
 
-![Japan](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Japan.png)
+![Japan](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Japan2.png)
 
 #### 韓国
 
-![KoreaSouth](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/KoreaSouth.png)
+![KoreaSouth](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/KoreaSouth2.png)
 
 #### オーストラリア（南半球）
 
-![Australia](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Australia.png)
+![Australia](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Australia2.png)
 
 #### ニュージーランド（南半球）
 
-![NewZealand](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/NewZealand.png)
+![NewZealand](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/NewZealand2.png)
 
 #### 日本、韓国、オーストラリアの検査陽性者数の推移
 
