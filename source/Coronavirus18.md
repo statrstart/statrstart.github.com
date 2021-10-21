@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2021-10-20
+date: 2021-10-21
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -18,18 +18,6 @@ excerpt: NHKのデータ
 
 (使用するデータ)  
 [NHK:新型コロナ データ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
-
-#### 東北の累計感染者数の推移 [ データ：ＮＨＫ ]
-
-![covTohoku.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTohoku.png)
-
-#### 中国地方の累計感染者数の推移 [ データ：ＮＨＫ ]
-
-![covChu.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covChu.png)
-
-#### 累計感染者数2000人以下の県の累計感染者数の推移 [ データ：ＮＨＫ ]
-
-![covU2000.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covU2000.png)
 
 #### 都道府県別の感染者数 [ データ：ＮＨＫ ]
 
@@ -50,6 +38,35 @@ excerpt: NHKのデータ
 #### 都道府県別の致死率(%) [ データ：ＮＨＫ ]
 
 ![nhkC05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC05.png)
+
+#### 死亡者数の多い地域 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
+
+![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
+
+#### 人口あたりの死亡者数の多い地域 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
+
+![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
+
+##### 月別死者数と月別人口１００万人あたりの死者数（データ：NHK）
+北海道(約550万人)、埼玉(約719万人)、東京(約1316万人)、神奈川(約905万人)、愛知(約741万人)、大阪(約886万人)、兵庫(約559万人)
+
+![covOsaka12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka12.png)
+
+#### 東北の累計感染者数の推移 [ データ：ＮＨＫ ]
+
+![covTohoku.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covTohoku.png)
+
+#### 中国地方の累計感染者数の推移 [ データ：ＮＨＫ ]
+
+![covChu.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covChu.png)
+
+#### 近畿地方の累計感染者数の推移 [ データ：ＮＨＫ ]
+
+![covkinki.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
+
+#### 累計感染者数2000人以下の県の累計感染者数の推移 [ データ：ＮＨＫ ]
+
+![covU2000.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covU2000.png)
 
 ### Rコード
 
@@ -309,3 +326,4 @@ legend("topleft",inset=0.03,legend=paste0(colnames(data)," : ",tail(data,1),"人
 title("累計感染者数推移(累計感染者数2000人未満)")
 # dev.off()
 ```
+
