@@ -1,6 +1,6 @@
 ---
 title: Rでtwinspan
-date: 2021-01-16
+date: 2021-10-22
 tags: ["R", "twinspanR","vegan"]
 excerpt: Rを使ってtwinspan
 ---
@@ -74,7 +74,7 @@ twinspanR package のおもしろいところは、RからtwinspanR package付�
 
 ![tw07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/tw07.png)
 
-- Standard TWINSPAN　はlevel=2で３つに分かれた。modified TWINSPAN は３つに分けた。違う。
+- Standard TWINSPAN　はlevel=2で４つに分かれた。modified TWINSPAN は４つに分けた。違う。
 
 ## Rコード
 
