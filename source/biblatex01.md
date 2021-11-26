@@ -1,5 +1,5 @@
 ---
-title: BibLaTeXで日本語文献と英語文献の混在を扱う(2021年11月)
+title: BibLaTeXで日本語と英語の文献の混在を扱う方法(2021年11月)
 date: 2021-11-25
 tags: ["BibLaTeX", "biblatex-gb7714-2015","xpatch"]
 excerpt: biblatex-gb7714-2015（2021/09/11 v1.1a）を使ってみた。
