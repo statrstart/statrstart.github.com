@@ -289,7 +289,7 @@ OSはUBUNTU 20.04です。latexは、ライトユーザーですので詳しく�
   \setunit{\printdelim{nametitledelim}}\newblock
   \usebibmacro{title}%
   \newunit
-  \printlist{language}%
+%  \printlist{language}%
   \newunit\newblock
   \usebibmacro{byauthor}%
   \newunit\newblock
