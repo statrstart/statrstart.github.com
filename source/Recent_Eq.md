@@ -1,21 +1,28 @@
 ---
 title: 最近の地震(気象庁 震源リスト)
-date: 2020-04-25
+date: 2021-12-03
 tags: ["R", "rvest" ,"hillshade"]
 excerpt: 陰影段彩図　+「気象庁 震源リスト」
 ---
 
 # 最近の地震(気象庁 震源リスト)
-![Hits](https://hitcounter.pythonanywhere.com/count/tag.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FRecent_Eq)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FRecent_Eq&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-### 最近地震が多い気がするので地図上にプロットしてみました。
+### １２月３日、午前９時半頃結構揺れました。（2021年12月3日 9時28分ごろ. 震源地, 紀伊水道. 最大震度, 5弱. マグニチュード, 5.4. 深さ, 20km）  
+
+気象庁 震源リストに１２月１日までのデータがあったので9/1から12/1まで（約３ヶ月）のマグニチュード３以上の震源データを地図上にプロットした。
 
 「Rで陰影段彩図05」で作成した陰影段彩図に「気象庁 震源リスト」から得た震源の位置をプロットします。  
 今回は「RでWebスクレイピング01(気象庁 震源リスト)」で得たデータを陰影段彩図にプロットします。
 
 ### 最近の地震(気象庁 震源リスト)
 
-![Recent_Eq](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_Eq.png)
+![Recent_Eq2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_Eq2.png)
+
+- 青領域 : 南海地震の想定震源域
+- 赤領域 : 東南海地震の想定震源域
+- 緑領域 : 東海地震の想定震源域
+- 黄領域 : 関東地震，東海地域のアスペリティ
 
 ## Rコード（トラフ等のデータがないと完全には実行できません）
 
@@ -118,7 +125,7 @@ head(ymd,1) ; tail(ymd,1)
 #
 # 2.期間を指定する場合
 #date<-gsub("-","",seq(as.Date("2020-01-01"), len=17, by="1 day"))
-date<-gsub("-","",seq(as.Date("2020-01-01"),as.Date("2020-04-23"), by="1 day"))
+date<-gsub("-","",seq(as.Date("2021-09-01"),as.Date("2021-12-01"), by="1 day"))
 #
 eqdata<-read.table(text="",col.names=c("time", "longitude", "latitude", "depth", "mag"))
 for (i in date){
@@ -195,12 +202,13 @@ msize<-1
 cexsize=c(3,4,5,6)*msize
 maglegend = c("M=3","M=4","M=5","M=6")
 #
-library(showtext)
+#library(showtext)
 #https://fonts.google.com/
-font_add_google("Noto Serif JP", regular.wt = 400, bold.wt = 600)
+#font_add_google("Noto Serif JP", regular.wt = 400, bold.wt = 600)
 #png("Recent_Eq.png",width=1280,height=960)
-par(family="Noto Serif JP")
-showtext_begin()
+#par(family="Noto Serif JP")
+#showtext_begin()
+par(family="serif")
 par(mar=c(4,4,3,2), xaxt="n", yaxt="n")
 plotRGB(s,stretch='lin',axes=TRUE)
 par(xpd=T)
@@ -255,6 +263,6 @@ title(bquote(.(date1) ~ "～" ~ .(date2) ~
                "地震 (" * M >= .(ptmag) * ")"))
 title("","( データ：気象庁 震源リスト )",line=2)
 #
-showtext_end()
+#showtext_end()
 #dev.off()
 ```
