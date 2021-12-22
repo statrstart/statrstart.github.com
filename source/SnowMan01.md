@@ -1,6 +1,6 @@
 ---
 title: （小ネタ）Ｒで雪だるま
-date: 2021-12-21
+date: 2021-12-22
 tags: ["R","unicode","snowman"]
 excerpt: unicode キャラクターをプロット
 ---
