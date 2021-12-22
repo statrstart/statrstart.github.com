@@ -1,6 +1,6 @@
 ---
 title: インフルエンザ報告数と新型コロナウイルス陽性者数のグラフと表
-date: 2021-12-15
+date: 2021-12-21
 tags: ["R","xts"]
 excerpt: IDWR速報データ & NHK:新型コロナデータ
 ---
@@ -14,7 +14,7 @@ IDWR速報データ
 - 2018 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2018/201852/2018-52-teiten-tougai.csv
 - 2019 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2019/201952/2019-52-teiten-tougai.csv
 - 2020 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2020/202053/2020-53-teiten-tougai.csv
-- 2021(48週まで) : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202148/2021-48-teiten-tougai.csv
+- 2021(49週まで) : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202149/2021-49-teiten-tougai.csv
 
 [作成したデータセット:influ2018_2021.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2021.csv)  
 (注意)文字コードUTF-8に変更しました。
@@ -25,7 +25,7 @@ IDWR速報データ
 - グラフが途切れている個所は数が「0」です。
 - 新型コロナウイルス陽性者数は最新ではありません。インフルエンザ報告数のデータのある最終日に合わせています。
 
-> （注意）2021年はインフルエンザ、新型コロナウイルスとも48週 2021-11-29 2021-12-05までの集計  
+> （注意）2021年はインフルエンザ、新型コロナウイルスとも49週 2021-12-06 2021-12-12までの集計  
 
 ### 総数：インフルエンザ報告数と新型コロナウイルス陽性者数
 
@@ -40,7 +40,7 @@ IDWR速報データ
 |2018 |      1,898,134|                  0|
 |2019 |      1,875,890|                  0|
 |2020 |        563,487|            243,297|
-|2021 |            933|          1,479,455|
+|2021 |            968|          1,480,247|
 
 ### 都道府県別(大阪府,東京都,北海道,沖縄県,鳥取県)
 
