@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2022-01-12
+date: 2022-01-13
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -153,6 +153,12 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
 
 -----
+
+#### 大阪市長「公務日程」のカレンダーと「公務日程なし・あり」の日数(2021年版)
+- 公務時間は考慮していません。
+
+![Okoumu2021_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_1.png)
+![Okoumu2021_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_2.png)
 
 #### 大阪市：市長の公務ありなしのカレンダーと公務日程なしの月別日数(2020年)
 - 公務時間は考慮していません。
