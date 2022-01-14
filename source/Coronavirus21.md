@@ -1,6 +1,6 @@
 ---
 title: 大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2022-01-13
+date: 2022-01-14
 tags: ["R","rvest","rio","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のexcelデータ
 ---
@@ -25,15 +25,15 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 - ７０歳代、８０歳代の動きに注目。
 
-#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2022-01-12)
+#### 大阪府：年代別重症者数と死亡者数(2020-12-01 :: 2022-01-14)
 
 ![covid21_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_01.png)
 
-#### 大阪府：性別＆年代別重症者数と死亡者数(2020-12-01 :: 2022-01-12)
+#### 大阪府：性別＆年代別重症者数と死亡者数(2020-12-01 :: 2022-01-14)
 
 ![covid21_07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_07.png)
 
-#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2022-01-12)
+#### 大阪府：年代別重症者数と死亡者数との差(2020-12-01 :: 2022-01-14)
 
 ![covid21_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_02.png)
 
@@ -84,15 +84,6 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
 
-#### (おまけ３)大阪市長「公務日程」のカレンダーと「公務日程なし・あり」の日数(2021年版)
-
-- データは[大阪市：市長日程](https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000329708.html)の「これまでの市長日程」
-- コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
-
-![Okoumu2021_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_1.png)
-
-![Okoumu2021_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_2.png)
-
 #### 大阪府：年代別(10歳代から60歳代)重症者数累計および死亡者数累計(2020-12-01から)
 
 ![covid21_12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_12.png)
@@ -108,6 +99,15 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 #### 大阪府：入院、宿泊療養、自宅療養、入院.療養等調整中（2021年2月12日以降）
 
 ![covid21_14](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_14.png)
+
+#### (おまけ３)大阪市長「公務日程」のカレンダーと「公務日程なし・あり」の日数(2021年版)
+
+- データは[大阪市：市長日程](https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000329708.html)の「これまでの市長日程」
+- コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
+
+![Okoumu2021_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_1.png)
+
+![Okoumu2021_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_2.png)
 
 ### Rコード
 
@@ -301,10 +301,10 @@ par(mfrow=c(1,1))
 par(mfrow=c(2,1),mar=c(3,3,3,2))
 d<- table(factor(Sdat$性別,levels=c("男","女")),factor(Sdat$年代,levels=c("未就学児",seq(10,100,10))) )
 barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
-title("大阪府：性別＆年代別 重症者数 \n(2020-12-01 :: 2022-01-12)")
+title("大阪府：性別＆年代別 重症者数 \n(2020-12-01 :: 2022-01-14)")
 d<- table(factor(Ddat$性別,levels=c("男","女")),factor(Ddat$年代,levels=c("未就学児",seq(10,100,10))) )
 barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
-title("大阪府：性別＆年代別  死亡者数\n(2020-12-01 :: 2022-01-12)")
+title("大阪府：性別＆年代別  死亡者数\n(2020-12-01 :: 2022-01-14)")
 #dev.off()
 #
 #png("covid21_02.png",width=800,height=600)
@@ -413,13 +413,13 @@ d5p<- Ddat[Ddat$Date >= 20210621,]
 #png("covid21_03.png",width=800,height=800)
 par(mfrow=c(2,1),mar=c(3,3,3,2))
 d<- c(nrow(s3p),nrow(s4p),nrow(s5p))
-names(d)<- c("2020-12-01から\n2021-02-28まで","2021-03-01から\n2021-06-20まで","2021-06-21から\n2022-01-12まで")
+names(d)<- c("2020-12-01から\n2021-02-28まで","2021-03-01から\n2021-06-20まで","2021-06-21から\n2022-01-14まで")
 b<- barplot(d,ylim=c(0,max(d)*1.2),las=1,col="orange2")
 text(x=b,y=d,labels=d,pos=3)
 title("大阪府：期間別重症者数")
 #
 d<- c(nrow(d3p),nrow(d4p),nrow(d5p))
-names(d)<- c("2020-12-01から\n2021-02-28まで","2021-03-01から\n2021-06-20まで","2021-06-21から\n2022-01-12まで")
+names(d)<- c("2020-12-01から\n2021-02-28まで","2021-03-01から\n2021-06-20まで","2021-06-21から\n2022-01-14まで")
 b<- barplot(d,ylim=c(0,max(d)*1.2),las=1,col="brown2")
 text(x=b,y=d,labels=d,pos=3)
 title("大阪府：期間別死亡者数")
@@ -431,7 +431,7 @@ d<- table(factor(s3p$年代,levels=c("未就学児",seq(10,100,10))))
 d<- rbind(d,table(factor(s4p$年代,levels=c("未就学児",seq(10,100,10)))))
 d<- rbind(d,table(factor(s5p$年代,levels=c("未就学児",seq(10,100,10)))))
 b<-barplot(d,beside=T,legend=T,las=1,col=c("royalblue","orange","brown"),ylim=c(0,max(d)*1.2),
-	args.legend=list(x="topleft",inset=0.03,legend=c("2020-12-01から2021-02-28まで","2021-03-01から2021-06-20まで","2021-06-21から2022-01-12まで")))
+	args.legend=list(x="topleft",inset=0.03,legend=c("2020-12-01から2021-02-28まで","2021-03-01から2021-06-20まで","2021-06-21から2022-01-14まで")))
 text(x=b,y=d,labels=d,pos=3)
 title("大阪府：期間別年代別重症者数")
 #dev.off()
@@ -441,7 +441,7 @@ d<- table(factor(d3p$年代,levels=c("未就学児",seq(10,100,10))))
 d<- rbind(d,table(factor(d4p$年代,levels=c("未就学児",seq(10,100,10)))))
 d<- rbind(d,table(factor(d5p$年代,levels=c("未就学児",seq(10,100,10)))))
 b<-barplot(d,beside=T,legend=T,las=1,col=c("royalblue","orange","brown"),ylim=c(0,max(d)*1.2),
-	args.legend=list(x="topleft",inset=0.03,legend=c("2020-12-01から2021-02-28まで","2021-03-01から2021-06-20まで","2021-06-21から2022-01-12まで")))
+	args.legend=list(x="topleft",inset=0.03,legend=c("2020-12-01から2021-02-28まで","2021-03-01から2021-06-20まで","2021-06-21から2022-01-14まで")))
 text(x=b,y=d,labels=d,pos=3)
 title("大阪府：期間別年代別死亡者数")
 #dev.off()
@@ -452,7 +452,7 @@ d<- rbind(d,table(factor(s4p$年代,levels=c("未就学児",seq(10,100,10))))-ta
 d<- rbind(d,table(factor(s5p$年代,levels=c("未就学児",seq(10,100,10))))-table(factor(d5p$年代,levels=c("未就学児",seq(10,100,10)))) )
 
 b<- barplot(d,beside=T,legend=T,las=1,col=c("royalblue","orange","brown"),ylim=c(min(d)*1.2,max(d)*1.2),
-	args.legend=list(x="topleft",inset=0.03,legend=c("2020-12-01から2021-02-28まで","2021-03-01から2021-06-20まで","2021-06-21から2022-01-12まで")))
+	args.legend=list(x="topleft",inset=0.03,legend=c("2020-12-01から2021-02-28まで","2021-03-01から2021-06-20まで","2021-06-21から2022-01-14まで")))
 text(x=b,y=d,labels=d,pos=c(rep(3,23),rep(1,10)))
 title("大阪府：期間別年代別 重症者数累計 - 死亡者数累計")
 #dev.off()
@@ -466,7 +466,7 @@ barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(
 title("大阪府：性別＆年代別  死亡者数(2021-03-01から2021-06-20まで)")
 d<- table(factor(d5p$性別,levels=c("男","女")),factor(d5p$年代,levels=c("未就学児",seq(10,100,10))) )
 barplot(d ,beside=T,col=c("royalblue","brown"),las=T,legend=T,args.legend =list(x ="topleft",inset=0.03))
-title("大阪府：性別＆年代別  死亡者数(2021-06-21から2022-01-12まで)")
+title("大阪府：性別＆年代別  死亡者数(2021-06-21から2022-01-14まで)")
 par(mfrow=c(1,1))
 #dev.off()
 ```
