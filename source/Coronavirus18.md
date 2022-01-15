@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2022-01-13
+date: 2022-01-14
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -63,10 +63,6 @@ excerpt: NHKのデータ
 #### 近畿地方の累計感染者数の推移 [ データ：ＮＨＫ ]
 
 ![covkinki.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
-
-#### 累計感染者数2000人以下の県の累計感染者数の推移 [ データ：ＮＨＫ ]
-
-![covU2000.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covU2000.png)
 
 ### Rコード
 
