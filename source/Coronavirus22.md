@@ -1,6 +1,6 @@
 ---
 title: インフルエンザ報告数と新型コロナウイルス陽性者数のグラフと表
-date: 2022-01-14
+date: 2022-01-22
 tags: ["R","xts"]
 excerpt: IDWR速報データ & NHK:新型コロナデータ
 ---
@@ -15,8 +15,9 @@ IDWR速報データ
 - 2019 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2019/201952/2019-52-teiten-tougai.csv
 - 2020 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2020/202053/2020-53-teiten-tougai.csv
 - 2021 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202152/2021-52-teiten-tougai.csv
+- 2022 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2022/202201/2022-01-teiten-tougai.csv
 
-[作成したデータセット:influ2018_2021.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2021.csv)  
+[作成したデータセット:influ2018_2022.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2022.csv)  
 (注意)文字コードUTF-8に変更しました。
 
 [NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
@@ -25,7 +26,7 @@ IDWR速報データ
 - グラフが途切れている個所は数が「0」です。
 - 新型コロナウイルス陽性者数は最新ではありません。インフルエンザ報告数のデータのある最終日に合わせています。
 
-> （注意）2021年はインフルエンザ、新型コロナウイルスとも 52週 2021-12-27 2022-01-02までの集計  
+> （注意）2022年はインフルエンザ、新型コロナウイルスとも 2022 01週 2022-01-03 2022-01-09までの集計  
 
 ### 総数：インフルエンザ報告数と新型コロナウイルス陽性者数
 
@@ -41,6 +42,7 @@ IDWR速報データ
 |2019 |      1,875,890|                  0|
 |2020 |        563,487|            243,297|
 |2021 |          1,071|          1,485,457|
+|2022 |             50|             31,036|
 
 ### 都道府県別(大阪府,東京都,北海道,沖縄県,鳥取県)
 
@@ -83,9 +85,9 @@ IDWR速報データ
 
 ```R
 library(xts)
-csvdata<- "https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2021.csv"
-#influ2018_2021<- read.csv(csvdata,fileEncoding = "CP932")
-influ2018_2021<- read.csv(csvdata,fileEncoding = "UTF-8")
+csvdata<- "https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2022.csv"
+#influ2018_2022<- read.csv(csvdata,fileEncoding = "CP932")
+influ2018_2022<- read.csv(csvdata,fileEncoding = "UTF-8")
 nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv")
 ```
 
@@ -110,25 +112,25 @@ colnames(nhkC)<- c("日付","コード","都道府県名","1日ごとの感染�
 cov<- tapply(nhkC[,4], as.Date(nhkC[,1]), sum)
 cov.xts<- xts(cov,as.Date(names(cov)))
 # 2020-01-16
-influ2018_2021[107,1:4]
+influ2018_2022[107,1:4]
 #      年   週     始まり     終わり
 #219 2020 03週 2020-01-13 2020-01-19
 #2020-01-13から2020-01-15（感染者数は0）を付け足す
 cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
 # インフルエンザ報告者のある部分を取り出し週の合計を出す
-period<- paste0("2020-01-13::",tail(influ2018_2021[,4],1))
+period<- paste0("2020-01-13::",tail(influ2018_2022[,4],1))
 dfC<- apply.weekly(cov.xts[period],sum)
 # Plot
 options(scipen=2)
 #png("covid22_01.png",width=800,height=600)
 par(mar=c(5,5,4,5),family="serif")
 ylim<- c(0.9,400000)
-plot(x= 1:nrow(influ2018_2021),y=rep(NA,nrow(influ2018_2021)),las=1,log="y",ylim=ylim,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
+plot(x= 1:nrow(influ2018_2022),y=rep(NA,nrow(influ2018_2022)),las=1,log="y",ylim=ylim,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
 box(bty="l",lwd=2)
 abline(h=10^(0:7)%o%(2:9),lty=2,col="gray",lwd=0.8)
 abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
-lines(x= 1:nrow(influ2018_2021),y=influ2018_2021$総数,col="royalblue3",lwd=2)
-axis(1,at=which(influ2018_2021$週=="01週"),labels= 2018:2021)
+lines(x= 1:nrow(influ2018_2022),y=influ2018_2022$総数,col="royalblue3",lwd=2)
+axis(1,at=which(influ2018_2022$週=="01週"),labels= 2018:2022)
 axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
 axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
 # 新型コロナのデータがあるのは107週目から
@@ -142,7 +144,7 @@ title("インフルエンザ報告数と新型コロナウイルス陽性者数(
 #### ほぼ年ごとのインフルエンザ報告数と新型コロナウイルス陽性者数の表
 
 ```R
-hyo<- influ2018_2021[,c("年","終わり","総数")]
+hyo<- influ2018_2022[,c("年","終わり","総数")]
 names(hyo)[3]<- "インフルエンザ"
 hyo$新型コロナウイルス<- NA
 hyo$新型コロナウイルス[107:(106+nrow(dfC))]<- dfC
@@ -163,18 +165,18 @@ cov.xts<- xts(cov[,2],as.Date(cov$日付))
 cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
 # インフルエンザ報告者のある部分を取り出し週の合計を出す
 dfC<- apply.weekly(cov.xts["2020-01-13::2021-06-13"],sum)
-influ<- influ2018_2021[,pref]
+influ<- influ2018_2022[,pref]
 # Plot
 options(scipen=2)
 #png("covid22_06.png",width=800,height=600)
 par(mar=c(5,5,4,5),family="serif")
 ylim<- c(0.9,max(max(dfC),max(influ)))
-plot(x= 1:nrow(influ2018_2021),y=rep(NA,nrow(influ2018_2021)),las=1,log="y",ylim=ylim,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
+plot(x= 1:nrow(influ2018_2022),y=rep(NA,nrow(influ2018_2022)),las=1,log="y",ylim=ylim,xlab="",ylab="",xaxt="n",yaxt="n",bty="n")
 box(bty="l",lwd=2)
 abline(h=10^(0:7)%o%(2:9),lty=2,col="gray",lwd=0.8)
 abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
-lines(x= 1:nrow(influ2018_2021),y=influ,col="royalblue3",lwd=2)
-axis(1,at=which(influ2018_2021$週=="01週"),labels= 2018:2021)
+lines(x= 1:nrow(influ2018_2022),y=influ,col="royalblue3",lwd=2)
+axis(1,at=which(influ2018_2022$週=="01週"),labels= 2018:2022)
 axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
 axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
 # 新型コロナのデータがあるのは107週目から
@@ -198,7 +200,7 @@ cov.xts<- xts(cov[,2],as.Date(cov$日付))
 cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
 # インフルエンザ報告者のある部分を取り出し週の合計を出す
 dfC<- apply.weekly(cov.xts["2020-01-13::2021-06-13"],sum)
-influ<- influ2018_2021[,pref]
+influ<- influ2018_2022[,pref]
 # dfC、influの0に便宜的に0.5をいれる。<- 途切れるのを防ぐため
 dfC[dfC==0]<- 0.5
 influ[influ==0]<- 0.5
@@ -211,7 +213,7 @@ abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
 abline(h=0.5,lty=1,col="gray20",lwd=1)
 lines(influ,lwd=2,col="royalblue3")
 lines(x=107:(106+nrow(dfC)),y=dfC,col="brown3",lwd=2)
-axis(1,at=which(influ2018_2021$週=="01週"),labels=2018:2021)
+axis(1,at=which(influ2018_2022$週=="01週"),labels=2018:2022)
 axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
 axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
 #
@@ -241,13 +243,13 @@ nn<- paste0("0",2:8)
 pref0<- c("大阪府","東京都","北海道","沖縄県","鳥取県","島根県","秋田県")
 for (i in 1:length(pref0)){
 pref<- pref0[i]
-influ<- influ2018_2021[,pref]
+influ<- influ2018_2022[,pref]
 xx<- nhkC[nhkC[,3]==pref,c(1,4)]
 cov.xts<- xts(xx[,2],as.Date(xx[,1]))
 #2020-01-13から2020-01-15（感染者数は0）を付け足す
 cov.xts<- rbind(xts(rep(0,3),seq(as.Date("2020-01-13"), as.Date("2020-01-15"), by = "day")),cov.xts)
 # インフルエンザの最終データの日まで
-period<- paste0("2020-01-13::",tail(influ2018_2021[,4],1))
+period<- paste0("2020-01-13::",tail(influ2018_2022[,4],1))
 dfC<- apply.weekly(cov.xts[period],sum)
 # dfC、influの0に便宜的に0.5をいれる。
 dfC[dfC==0]<- 0.5
@@ -263,7 +265,7 @@ abline(h=10^(0:7),lty=2,col="gray20",lwd=1)
 abline(h=0.5,lty=1,col="gray20",lwd=1)
 lines(influ,lwd=2,col="royalblue3")
 lines(x=107:(106+nrow(dfC)),y=dfC,col="brown3",lwd=2)
-axis(1,at=which(influ2018_2021$週=="01週"),labels=2018:2021)
+axis(1,at=which(influ2018_2022$週=="01週"),labels=2018:2022)
 axis(2,at= 10^(0:7),labels=formatC(10^(0:7), format="d", big.mark=','),las=1)
 axis(2,at= 10^(0:7)*5,labels=formatC(10^(0:7)*5,format="d", big.mark=','),las=1,cex.axis=0.8,tck=-0.01)
 #
@@ -281,7 +283,7 @@ frame()
 vps <- baseViewports()
 pushViewport(vps$inner, vps$figure, vps$plot)
 # Table grob
-hyo<- influ2018_2021[,c("年","終わり",pref)]
+hyo<- influ2018_2022[,c("年","終わり",pref)]
 names(hyo)[3]<- "インフルエンザ"
 hyo$新型コロナウイルス<- NA
 hyo$新型コロナウイルス[107:(106+nrow(dfC))]<- dfC
@@ -302,7 +304,7 @@ dev.off()
 #### ほぼ年ごとのインフルエンザ報告数と新型コロナウイルス陽性者数の表(都道府県別)
 
 ```R
-hyo<- influ2018_2021[,c("年","終わり",pref)]
+hyo<- influ2018_2022[,c("年","終わり",pref)]
 names(hyo)[3]<- "インフルエンザ"
 hyo$新型コロナウイルス<- NA
 hyo$新型コロナウイルス[107:(106+nrow(dfC))]<- dfC
@@ -324,10 +326,11 @@ url<- c(
 "https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2018/201852/2018-52-teiten-tougai.csv",
 "https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2019/201952/2019-52-teiten-tougai.csv",
 "https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2020/202053/2020-53-teiten-tougai.csv",
-"https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202134/2021-34-teiten-tougai.csv")
-year<- 2018:2021
+"https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202152/2021-52-teiten-tougai.csv",
+"https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2022/202201/2022-01-teiten-tougai.csv")
+year<- 2018:2022
 #
-influ2018_2021<- NULL
+influ2018_2022<- NULL
 #
 for (ii in 1:length(url)){
 rl <- readLines(url[ii])
@@ -349,15 +352,15 @@ for (i in 2:ncol(df) ){
 #str(df)
 colnames(df)[1]<- "週"
 df$年<- rep(year[ii],nrow(df))
-influ2018_2021<- rbind(influ2018_2021,df)
+influ2018_2022<- rbind(influ2018_2022,df)
 }
-rownames(influ2018_2021)<- 1:nrow(influ2018_2021)
+rownames(influ2018_2022)<- 1:nrow(influ2018_2022)
 #
-influ2018_2021$始まり<- seq(as.Date("2018-01-01"),length.out=nrow(influ2018_2021),by = "week")
-influ2018_2021$終わり<- seq(as.Date("2018-01-07"),length.out=nrow(influ2018_2021),by = "week")
+influ2018_2022$始まり<- seq(as.Date("2018-01-01"),length.out=nrow(influ2018_2022),by = "week")
+influ2018_2022$終わり<- seq(as.Date("2018-01-07"),length.out=nrow(influ2018_2022),by = "week")
 #列並び替え
-influ2018_2021<- influ2018_2021[,c(50,1,51,52,2:49)]
+influ2018_2022<- influ2018_2022[,c(50,1,51,52,2:49)]
 #csv形式で保存
-write.csv(influ2018_2021,file="influ2018_202123.csv",row.names=F)
+write.csv(influ2018_2022,file="influ2018_202223.csv",row.names=F)
 ```
 
