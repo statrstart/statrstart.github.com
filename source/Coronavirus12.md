@@ -13,6 +13,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ## [大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)  
 
+#### 大阪府 : 患者の状況（前日24時まで）
+
+![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
+
 #### 都道府県別の人口100万人あたり死亡者数 [ データ：ＮＨＫ ]
 
 ![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
