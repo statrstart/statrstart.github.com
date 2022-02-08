@@ -55,6 +55,10 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 
 ![covid21_0502](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_0502.png)
 
+#### 大阪府：期間別 性別＆年代別重症者数
+
+![covid21_16](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_16.png)
+
 #### 大阪府：期間別 性別＆年代別死亡者数
 
 ![covid21_08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_08.png)
