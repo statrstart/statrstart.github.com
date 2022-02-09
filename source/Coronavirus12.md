@@ -36,6 +36,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
 
+#### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_02.png)
+
 #### 都道府県別の人口100万人あたり死亡者数 [ データ：ＮＨＫ ]
 
 ![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
