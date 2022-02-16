@@ -23,6 +23,10 @@ excerpt: 韓国のデータ:KCDC,日本のデータ:厚生労働省の報道発�
 
 ![pcr04_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04_2.png)
 
+### 日本の新型コロナウイルスによる１日あたり死亡者数推移
+
+![pcr04_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04_1.png)
+
 ### 韓国の新型コロナウイルスによる１日あたり死亡者数推移
 
 ![pcr04_3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/pcr04_3.png)
