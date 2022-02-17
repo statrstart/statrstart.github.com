@@ -56,12 +56,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 - 大阪府の人口あたりの死亡者数は全国平均の２倍以上。
 
-#### 大阪府：年代別重症者数と死亡者数との差([2020-12-01::2021-02-28] VS [2021-03-01::])
+#### 大阪府：年代別重症者数と死亡者数との差
 [大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)からひとつだけここに載せておきます。  
 
 ![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
-
-- 2020-12-01から2021-02-28、2021-03-01から現在までの両期間とも８０代以上は「重症者数＜死亡者数」となっている。
 
 ## 新しい記事は[大阪府の検査陽性者(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus12_2)です。  
 
