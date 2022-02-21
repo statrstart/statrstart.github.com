@@ -52,7 +52,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka16](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka16.png)
 
-- 致死率も徐々に上がっています。0.25%を越えました。感染者１万人あたり25人以上の死者が出るということです。
+- 致死率も徐々に上がっています。0.3%を越えました。感染者１万人あたり30人以上の死者が出るということです。
 
 #### 都道府県別の人口100万人あたり死亡者数 [ データ：ＮＨＫ ]
 
