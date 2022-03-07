@@ -1,6 +1,6 @@
 ---
 title: 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-date: 2022-03-05
+date: 2022-03-06
 tags: ["R","lpSolve","NipponMap"]
 excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 ---
@@ -9,9 +9,9 @@ excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus23&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
-(使用するデータ)  
+(使用するデータ)  2022/3/6より人口データを変更した。    
 [NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
-人口のデータはNipponMapパッケージのjpn.shpより抽出
+人口データ：[住民基本台帳に基づく人口、人口動態及び世帯数令和3年1月1日現在](https://www.soumu.go.jp/main_sosiki/jichi_gyousei/daityo/jinkou_jinkoudoutai-setaisuu.html)        
 
 > 組み合わせはいくつもありますが、選択された都道府県の人口の合計が最大になるような組み合わせを求めます。(0-1ナップサック問題)
 
@@ -49,14 +49,17 @@ INDEX=factor(.. ,levels=都道府県の順番)とする必要があります。
 ```R
 library(NipponMap)
 library(lpSolve)
-shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
-m <- sf::read_sf(shp)
+#shp <- system.file("shapes/jpn.shp", package = "NipponMap")[1]
+#m <- sf::read_sf(shp)
+# 人口ベクトル
+population<-  c(5228732,1260067,1221205,2282106,971604,1070017,1862777,2907678,1955402,1958185,7393849,6322897,13843525,9220245,2213353,1047713,
+	1132656,774596,821094,2072219,2016868,3686335,7558872,1800756,1418886,2530609,8839532,5523627,1344952,944750,556959,672979,
+	1893874,2812477,1356144,735070,973922,1356343,701531,5124259,818251,1336023,1758815,1141784,1087372,1617850,1485484)
 #[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)
 nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv",stringsAsFactors = F)
 # tapplyをそのまま使うと順番が変わってしまうのでfactor(,levels=)を使う。
 tmp<- tapply(nhkC[,6], factor(nhkC[,3],levels=unique(nhkC[,3])),sum,na.rm=T)
 deaths<-matrix(tmp,nrow=1)   # コロナ死亡者テーブル
-population<-m$population     # 人口ベクトル
 # 都道府県コード
 i<- 27
 # 大阪府のコロナ死亡者 deaths[,i]
@@ -109,7 +112,6 @@ nhkC<- read.csv("https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_cov
 # tapplyをそのまま使うと順番が変わってしまうのでfactor(,levels=)を使う。
 tmp<- tapply(nhkC[,6], factor(nhkC[,3],levels=unique(nhkC[,3])),sum,na.rm=T)
 deaths<-matrix(tmp,nrow=1)   # コロナ死亡者テーブル
-population<-m$population     # 人口ベクトル
 # 大阪「市」のコロナ死亡者
 dOsaka<- 1160
 # 大阪「市」の人口
