@@ -1,6 +1,6 @@
 ---
 title: 最近の地震(気象庁 震源リスト)
-date: 2021-12-03
+date: 2022-03-09
 tags: ["R", "rvest" ,"hillshade"]
 excerpt: 陰影段彩図　+「気象庁 震源リスト」
 ---
@@ -8,9 +8,7 @@ excerpt: 陰影段彩図　+「気象庁 震源リスト」
 # 最近の地震(気象庁 震源リスト)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FRecent_Eq&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-### １２月３日、午前９時半頃結構揺れました。（2021年12月3日 9時28分ごろ. 震源地, 紀伊水道. 最大震度, 5弱. マグニチュード, 5.4. 深さ, 20km）  
-
-気象庁 震源リストに１２月１日までのデータがあったので9/1から12/1まで（約３ヶ月）のマグニチュード３以上の震源データを地図上にプロットした。
+## 2021/3/8から2022/3/7(１年間) のマグニチュード３以上の地震
 
 「Rで陰影段彩図05」で作成した陰影段彩図に「気象庁 震源リスト」から得た震源の位置をプロットします。  
 今回は「RでWebスクレイピング01(気象庁 震源リスト)」で得たデータを陰影段彩図にプロットします。
@@ -125,7 +123,7 @@ head(ymd,1) ; tail(ymd,1)
 #
 # 2.期間を指定する場合
 #date<-gsub("-","",seq(as.Date("2020-01-01"), len=17, by="1 day"))
-date<-gsub("-","",seq(as.Date("2021-09-01"),as.Date("2021-12-01"), by="1 day"))
+date<-gsub("-","",seq(as.Date("2021-03-08"),as.Date("2022-03-07"), by="1 day"))
 #
 eqdata<-read.table(text="",col.names=c("time", "longitude", "latitude", "depth", "mag"))
 for (i in date){
