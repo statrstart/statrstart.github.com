@@ -1,6 +1,6 @@
 ---
 title: インフルエンザ報告数と新型コロナウイルス陽性者数のグラフと表
-date: 2022-03-02
+date: 2022-03-09
 tags: ["R","xts"]
 excerpt: IDWR速報データ & NHK:新型コロナデータ
 ---
@@ -15,7 +15,7 @@ IDWR速報データ
 - 2019 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2019/201952/2019-52-teiten-tougai.csv
 - 2020 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2020/202053/2020-53-teiten-tougai.csv
 - 2021 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202152/2021-52-teiten-tougai.csv
-- 2022 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2022/202208/2022-08-teiten-tougai.csv
+- 2022 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2022/202209/2022-09-teiten-tougai.csv
 
 [作成したデータセット:influ2018_2022.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2022.csv)  
 (注意)文字コードUTF-8に変更しました。
@@ -26,7 +26,7 @@ IDWR速報データ
 - グラフが途切れている個所は数が「0」です。
 - 新型コロナウイルス陽性者数は最新ではありません。インフルエンザ報告数のデータのある最終日に合わせています。
 
-> （注意）2022年はインフルエンザ、新型コロナウイルスとも 2022 08週 2022-02-21 2022-02-27までの集計  
+> （注意）2022年はインフルエンザ、新型コロナウイルスとも 2022 09週 2022-02-28 2022-03-06までの集計  
 
 ### 総数：インフルエンザ報告数と新型コロナウイルス陽性者数
 
@@ -41,8 +41,8 @@ IDWR速報データ
 |2018 |      1,898,134|                  0|
 |2019 |      1,875,890|                  0|
 |2020 |        563,487|            243,297|
-|2021 |          1,071|          1,485,356|
-|2022 |            366|          3,221,438|
+|2021 |          1,071|          1,485,342|
+|2022 |            386|          3,661,984|
 
 ### 都道府県別(大阪府,東京都,北海道,沖縄県,鳥取県)
 
