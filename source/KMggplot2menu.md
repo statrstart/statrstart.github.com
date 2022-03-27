@@ -382,7 +382,7 @@ windowBar <- function() {
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/barchart005.png)
 
-![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/barchart006.png)
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/barplot006.png)
 
 #### plot-gmosaic.r
 
