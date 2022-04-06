@@ -243,12 +243,9 @@ ggplot(df,aes(x=as.numeric(Var1),y=value,colour=Var2)) +
 
 ```R
 library(ggplot2)
-library(zoo)
-# zoo形式に変換(indexが欲しい)
-dat.zoo <- zoo(airquality[,1:4],seq(as.Date("1973-05-01"),by="day",length.out=nrow(airquality)))
 mat<- as.matrix(airquality[,1:4])
 # as.characterをつけて一旦文字に変換
-rownames(mat)<- as.character(index(dat.zoo))
+rownames(mat)<- as.character(seq(as.Date("1973-05-01"),by="day",length.out=nrow(airquality)))
 df <- reshape2::melt(mat)
 #
 # as.Dateで日付データに戻す
