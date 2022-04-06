@@ -115,6 +115,28 @@ Sys.setlocale("LC_TIME", lctime)
 # as.xts(USAccDeaths)
 ```
 
+### ggplot (日付データにする方法)
+
+```R
+library(ggplot2)
+mat<- as.matrix(USAccDeaths)
+date <- seq(as.Date("1973-01-01"),by="month",length.out=length(USAccDeaths))
+# as.characterをつけて一旦文字に変換
+rownames(mat)<- as.character(date)
+# 目盛位置を指定するためDateクラスのベクトル作成。
+datebreaks <- seq(date[1], tail(date,1), by="6 month")
+df <- reshape2::melt(mat)
+#
+# as.Dateで日付データに戻す
+ggplot(df,aes(x=as.Date(Var1),y=value)) + 
+	geom_line() +
+	theme_bw(12) +
+	scale_x_date(breaks = datebreaks ,date_labels = "%y/%m") +
+	scale_y_continuous(labels=scales::comma) +
+	theme(axis.text.x = element_text(angle=45, hjust=1))  +
+	labs(title="USAccDeaths",x="Date",y="")	
+```
+
 ### 日次データ(線の色はggplotにあわせてみた)
 
 #### 使うデータ：airquality(1973 年5月から9月までのニューヨークの大気状態の観測値)
@@ -224,7 +246,7 @@ title("airquality")
 
 ### ggplot2
 
-#### この方法はあまりおすすめできない
+#### 日付データにはしない方法
 
 ```R
 library(ggplot2)
@@ -239,7 +261,7 @@ ggplot(df,aes(x=as.numeric(Var1),y=value,colour=Var2)) +
 	labs(title="airquality",x="Date",y="",colour="Air")	
 ```
 
-#### この方法がおすすめ
+####  日付データにする方法
 
 ```R
 library(ggplot2)
