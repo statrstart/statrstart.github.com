@@ -1,6 +1,6 @@
 ---
 title: （99%自分用メモ）RcmdrPlugin.KMggplot2にテーマ追加
-date: 2022-03-31
+date: 2022-04-08
 tags: ["R","Rcmdr","RcmdrPlugin.KMggplot2","ggplot2"]
 excerpt: 「コンパイル」できる人だけ
 ---

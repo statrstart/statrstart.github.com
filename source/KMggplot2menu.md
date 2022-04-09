@@ -1,6 +1,6 @@
 ---
 title: （99%自分用メモ）RcmdrPlugin.KMggplot2にメニュー追加
-date: 2022-03-28
+date: 2022-04-07
 tags: ["R","Rcmdr","RcmdrPlugin.KMggplot2","ggplot2","ggmosaic"]
 excerpt: 「コンパイル」できる人だけ
 ---
