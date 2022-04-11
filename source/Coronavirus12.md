@@ -134,10 +134,10 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 塗り分け地図(大阪市のデータは遅れがある)
-データ：[【4月10日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【4月11日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 但し、「大阪市」については[新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)
-をみると、陽性者数は4月7日現在302,502人となっているのでそのデータを使用する。 
+をみると、陽性者数は4月8日現在303,872人となっているのでそのデータを使用する。 
 
 ##### PCR検査 陽性者数(大阪府市町村別)
 
