@@ -24,7 +24,7 @@ excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 ![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
 
 #### (おまけ) 大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-- 大阪「市」だけでも2022/4/6 現在1,937人の方が亡くなっています。 
+- 大阪「市」だけでも2022/4/11 現在1,984人の方が亡くなっています。 
 
 [新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)  
 
