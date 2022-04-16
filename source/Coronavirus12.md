@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2022-04-15
+date: 2022-04-16
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -75,16 +75,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 [NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
 [「東洋経済オンライン」都道府県別の発生動向](https://toyokeizai.net/sp/visual/tko/covid19/csv/prefectures.csv)  
 
-#### 大阪府の重症者数の推移 [データ：都道府県別の発生動向「東洋経済オンライン」と大阪府発表のデータ]
-
-2022-01-24より両方を表示。  
-
-[国の重症基準変更に伴う取扱いについて(pdf)](https://www.pref.osaka.lg.jp/attach/38215/00370237/3-3_kunikizyun.pdf)   
-
-- 大事な点は、国の重症者の定義は「患者の症状」ではなく、「入院・療養状況」だということです。
-
-![covOsaka14](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka14.png)
-
 #### 近畿地方：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
 
 ![covkinki](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
@@ -135,7 +125,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 塗り分け地図(大阪市のデータは遅れがある)
-データ：[【4月15日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【4月16日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 但し、「大阪市」については[新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)
 をみると、陽性者数は4月14日現在311,810人となっているのでそのデータを使用する。 
@@ -242,7 +232,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 - 2022-03-27:柏原市	2022-03-29:田尻町	2022-04-02:島本町	2022-04-03:枚方市
 - 2022-04-05:高槻市	2022-04-14:泉南市	2022-04-15:太子町
 
-検査陽性者数100人あたり8人越え	25
+検査陽性者数100人あたり8人越え	26
 - 大阪市
 - 2022-03-08:東大阪市	2022-03-17:岸和田市	2022-03-18:泉大津市	2022-03-19:四條畷市
 - 2022-03-19:守口市	2022-03-20:大東市	2022-03-20:摂津市	2022-03-20:高石市
@@ -250,6 +240,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 - 2022-03-30:和泉市	2022-04-02:交野市	2022-04-02:熊取町	2022-04-02:豊中市
 - 2022-04-06:寝屋川市	2022-04-06:藤井寺市	2022-04-07:羽曳野市	2022-04-08:吹田市
 - 2022-04-08:松原市	2022-04-10:茨木市	2022-04-13:泉佐野市	2022-04-13:堺市
+- 2022-04-16:富田林市
 
 検査陽性者数100人あたり9人越え	8
 - 大阪市
