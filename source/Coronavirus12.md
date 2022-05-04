@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2022-05-02
+date: 2022-05-04
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -125,7 +125,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
 
 #### 塗り分け地図(大阪市のデータは遅れがある)
-データ：[【5月3日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【5月4日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 但し、「大阪市」については[新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)
 をみると、陽性者数は5月2日現在328,969人となっているのでそのデータを使用する。 
