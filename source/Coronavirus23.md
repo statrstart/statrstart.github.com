@@ -1,6 +1,6 @@
 ---
 title: 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-date: 2022-05-21
+date: 2022-05-22
 tags: ["R","lpSolve","NipponMap"]
 excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 ---
@@ -30,15 +30,17 @@ excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
 
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC03.png)
+
 ![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
 
-#### (おまけ2)大阪市長「公務日程」のカレンダーと「公務日程なし・あり」の日数(2021年版)
+#### (おまけ2)大阪市長「公務日程」のカレンダーと「公務日程なし・あり」の日数(2022年版)
 
 データは[大阪市：市長日程](https://www.city.osaka.lg.jp/seisakukikakushitsu/page/0000329708.html)の「これまでの市長日程」
 
-![Okoumu2021_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_1.png)
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2022_1.png)
 
-![Okoumu2021_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2021_2.png)
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2022_2.png)
 
 ### Rコード
 
