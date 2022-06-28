@@ -9,6 +9,9 @@ excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus23&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
+> 2022/06/28 発表  
+> 大阪市保健所管内において、1～３月の死亡が新たに９２件判明しましたので、「３　患者の状況」に計上しています。  
+
 (使用するデータ)  2022/3/6より人口データを変更した。    
 [NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
 人口データ：[住民基本台帳に基づく人口、人口動態及び世帯数令和3年1月1日現在](https://www.soumu.go.jp/main_sosiki/jichi_gyousei/daityo/jinkou_jinkoudoutai-setaisuu.html)        
