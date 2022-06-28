@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2022-06-27
+date: 2022-06-28
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -8,6 +8,10 @@ excerpt: NHKのデータ
 # 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus18&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+
+> 2022/06/28 発表  
+> 大阪市保健所管内において、1～３月の死亡が新たに９２件(1月：1件,2月：56件,3月：35件)判明した。  
+> 6月(6/28)分がその分増えている。
 
 (参考)  
 [Rでグラフを描くときにY軸のタイトルを縦書きにする](https://id.fnshr.info/2017/03/13/r-plot-tategaki/)  

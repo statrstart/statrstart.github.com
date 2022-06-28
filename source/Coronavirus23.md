@@ -1,6 +1,6 @@
 ---
 title: 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-date: 2022-06-27
+date: 2022-06-28
 tags: ["R","lpSolve","NipponMap"]
 excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 ---
@@ -10,7 +10,8 @@ excerpt: 0-1ナップサック問題(NHK:新型コロナデータを使う）
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus23&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
 > 2022/06/28 発表  
-> 大阪市保健所管内において、1～３月の死亡が新たに９２件判明しましたので、「３　患者の状況」に計上しています。  
+> 大阪市保健所管内において、1～３月の死亡が新たに９２件(1月：1件,2月：56件,3月：35件)判明した。  
+> 6月(6/28)分がその分増えている。
 
 (使用するデータ)  2022/3/6より人口データを変更した。    
 [NHK:新型コロナデータ](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
