@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2022-07-02
+date: 2022-07-03
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -8,7 +8,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 # 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus12&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
-
 
 > 2022/06/28 発表  
 > 大阪市保健所管内において、1～３月の死亡が新たに９２件判明しましたので、「３　患者の状況」に計上しています。  
@@ -46,105 +45,13 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
 
-#### 大阪府 : 患者の状況（前日24時まで）
-
-![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
-
-#### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
-
-![covid22_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_02.png)
-
-- オミクロン株の感染力の強さがわかると思います。
-
-#### 大阪府：致死率７日移動平均(2022/1/1〜)
-
-![covOsaka16](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka16.png)
-
-#### 都道府県別の人口100万人あたり死亡者数 [ データ：ＮＨＫ ]
-
-![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
-![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
-
-- 大阪府の人口あたりの死亡者数は全国平均の２倍以上。
-
-#### 大阪府：年代別重症者数と死亡者数との差
-[大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)からひとつだけここに載せておきます。  
-
-![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
-
-## 新しい記事は[大阪府の検査陽性者(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus12_2)です。  
-熊取町
-(参考)[大阪府の最新感染動向](https://covid19-osaka.info/)  
-
-(使用するデータ)  
-[大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
-地図の元データ：[国土数値情報 行政区域データ](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!)  
-市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
-[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
-[「東洋経済オンライン」都道府県別の発生動向](https://toyokeizai.net/sp/visual/tko/covid19/csv/prefectures.csv)  
-
-#### 近畿地方：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
-
-![covkinki](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
-
-#### 滋賀県、京都府、奈良県、和歌山県：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
-
-![covkinki02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki02.png)
-
-#### 死亡者数の多い地域 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
-
-![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
-- 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人、神奈川約９０５万人
-
-#### 人口あたりの死亡者数の多い地域 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
-
-![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
-- 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人、兵庫約５５９万人、埼玉約７１９万人
-
-#### 大阪府：新型コロナウイルス死亡者の推移
-(注意)NHKのデータ使用（更新時間の違いのため大阪府のデータより１日分少ないことがあります。）
-
-![covOsaka13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka13.png)
-
-#### 他の都道府県（人口規模の大きい）との比較
-##### 月別死者数と月別人口１００万人あたりの死者数（データ：NHK）
-北海道(約550万人)、埼玉(約719万人)、東京(約1316万人)、神奈川(約905万人)、愛知(約741万人)、大阪(約886万人)、兵庫(約559万人)
-
-![covOsaka12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka12.png)
-
-#### 時系列
-
-![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
-
-#### 時系列(2021年〜)
-
-![covOsaka15](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka15.png)
-
-#### 検査結果
-
-![covOsaka05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka05.png)
-
-#### 検査陽性率（％）７日移動平均（大阪府）
-
-![covOsaka07](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka07.png)
-
-#### 週単位の陽性者増加比
-
-![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
-
-#### 塗り分け地図(大阪市のデータは遅れがある)
-データ：[【7月3日】新型コロナウイルス感染症患者の発生及び死亡について]  
-[大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
-但し、「大阪市」については[新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)
-と比較して、陽性者数の多い方のデータを使用する。 
-
 ##### PCR検査 陽性者数(大阪府市町村別)
 
 ![osakaCmap03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap03.png)
 
 ##### 人口１０００人あたりの検査陽性者数(大阪府市町村別)
 
-- 人口１万人あたりから１０００人あたりに変更しました。（熊取町2021-04-07から）
+- 人口１万人あたりから１０００人あたりに変更しました。（2021-04-07から）
 
 ![osakaCmap04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/osakaCmap04.png)
 
@@ -274,9 +181,9 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 - 2022-06-21:藤井寺市	2022-06-29:茨木市	2022-06-30:寝屋川市	2022-07-01:羽曳野市
 - 2022-07-02:箕面市
 
-検査陽性者数100人あたり11人越え(約9.1人に1人)	5
+検査陽性者数100人あたり11人越え(約9.1人に1人)	6
 - 2022-04-05:大阪市	2022-05-22:東大阪市	2022-05-25:岸和田市	2022-06-16:忠岡町
-- 2022-07-02:摂津市
+- 2022-07-02:摂津市	2022-07-04:高石市
 
 検査陽性者数100人あたり12.5人越え(8人に1人)	1
 - 2022-05-11:大阪市
@@ -290,6 +197,79 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 #### 大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
 
 ![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
+
+#### 大阪府 : 患者の状況（前日24時まで）
+
+![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
+
+#### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_02.png)
+
+- オミクロン株の感染力の強さがわかると思います。
+
+#### 大阪府：致死率７日移動平均(2022/1/1〜)
+
+![covOsaka16](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka16.png)
+
+#### 都道府県別の人口1万人あたり死亡者数 [ データ：ＮＨＫ ]
+
+![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
+
+#### 大阪府：年代別重症者数と死亡者数との差
+[大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)からひとつだけここに載せておきます。  
+
+![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
+
+(使用するデータ)  
+[大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
+地図の元データ：[国土数値情報 行政区域データ](https://nlftp.mlit.go.jp/ksj/gml/datalist/KsjTmplt-N03-v2_4.html#!)  
+市町村別人口：[市町村別の年齢別人口と割合](http://www.pref.osaka.lg.jp/kaigoshien/toukei/ritu.html)  
+[NHK](https://www3.nhk.or.jp/n-data/opendata/coronavirus/nhk_news_covid19_prefectures_daily_data.csv)  
+[「東洋経済オンライン」都道府県別の発生動向](https://toyokeizai.net/sp/visual/tko/covid19/csv/prefectures.csv)  
+
+#### 近畿地方：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
+
+![covkinki](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
+
+#### 滋賀県、京都府、奈良県、和歌山県：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
+
+![covkinki02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki02.png)
+
+#### 死亡者数の多い地域 : 新型コロナウイルス 死亡者数の推移(データ：NHK 新型コロナ データ)
+
+![covOvsT02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT02.png)
+- 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人、神奈川約９０５万人
+
+#### 人口あたりの死亡者数の多い地域 : 新型コロナウイルス 人口100万人あたりの死亡者数(データ：NHK 新型コロナ データ)
+
+![covOvsT01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOvsT01.png)
+- 人口：大阪約８８７万人、東京約１３１６万人、北海道約５５０万人、兵庫約５５９万人、埼玉約７１９万人
+
+#### 大阪府：新型コロナウイルス死亡者の推移
+(注意)NHKのデータ使用（更新時間の違いのため大阪府のデータより１日分少ないことがあります。）
+
+![covOsaka13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka13.png)
+
+#### 他の都道府県（人口規模の大きい）との比較
+##### 月別死者数と月別人口１００万人あたりの死者数（データ：NHK）
+北海道(約550万人)、埼玉(約719万人)、東京(約1316万人)、神奈川(約905万人)、愛知(約741万人)、大阪(約886万人)、兵庫(約559万人)
+
+![covOsaka12](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka12.png)
+
+#### 時系列
+
+![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
+
+#### 週単位の陽性者増加比
+
+![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
+
+#### 塗り分け地図(大阪市のデータは遅れがある)
+データ：[【7月4日】新型コロナウイルス感染症患者の発生及び死亡について]  
+[大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
+但し、「大阪市」については[新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)
+と比較して、陽性者数の多い方のデータを使用する。 
 
 #### 大阪市長「公務日程」のカレンダー(2022年版)
 - 公務時間は考慮していません。
