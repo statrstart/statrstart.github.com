@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2022-07-04
+date: 2022-07-05
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -34,15 +34,15 @@ excerpt: NHKのデータ
 
 ![nhkC02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC02.png)
 
-#### 都道府県別の死亡者数 [ データ：ＮＨＫ ]
+#### 都道府県別の死亡者数 [ データ：ＮＨＫ ]（降順）
 
-![nhkC03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC03.png)
+![nhkC03](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC031.png)
 
 #### 都道府県別の人口１万人あたり死亡者数 [ データ：ＮＨＫ ]（降順）
 
 ![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
 
-#### 都道府県別の致死率(%) [ データ：ＮＨＫ ]
+#### 都道府県別の致死率(%) [ データ：ＮＨＫ ]（降順）
 
 ![nhkC05](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC05.png)
 
