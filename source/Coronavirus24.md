@@ -1,6 +1,6 @@
 ---
 title: ggplotで散布図（コロナによる死亡者数等と高齢化率、人口密度）
-date: 2022-06-28
+date: 2022-07-30
 tags: ["R","ggplot2","scales","ggrepel","ggpmisc","latex2exp"]
 excerpt: 散布図作成はggplotを使うと楽
 ---
