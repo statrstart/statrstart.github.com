@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2022-08-02
+date: 2022-08-03
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -287,7 +287,8 @@ g <- g + theme(
 		panel.border = element_blank(), axis.line = element_line(),axis.text=element_text(colour = "black"),
 		legend.position=c(0.03,0.97),legend.justification=c(0,1),
 		legend.background = element_rect(fill = "white", colour = "black")
-	)
+	) +
+     guides(color=guide_legend(ncol=3))
 g <- g + geom_text_repel(data = subset(data,date== max(date)),aes(label = 都道府県名),
 		nudge_x=100,
 #		segment.curvature = 1e-20,
