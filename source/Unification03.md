@@ -125,7 +125,7 @@ pos<- data.frame(longitude=p$経度[p$都道府県=="東京都"],latitude=p$緯�
 ggplot() +
    geom_sf(data = tokyo) +
 	coord_sf(xlim = c(138.9, 139.95), ylim = c(35.35, 36), expand = FALSE) +
-	geom_point(data = pos, aes(x = longitude, y = latitude), size = 4, shape = 21, fill = rgb(1,0,0,0.8),color="royalblue4") +
+	geom_text(data = pos, aes(x = longitude, y = latitude), label= "\u26B1", color=rgb(1,0,0,0.8),size=8) +
 	labs(title="東京都の世界平和統一家庭連合（旧 世界基督教統一神霊協会）の所在地",
 		subtitle="家庭連合（旧 統一教会）の公式サイト「最寄りの家庭教会」から作成(2022年8月7日)") +
 	theme(plot.title = element_text(hjust = 0.5),plot.subtitle = element_text(hjust = 1))
