@@ -1,6 +1,6 @@
 ---
 title: 家庭連合（旧 統一教会）の所在地(地図を作成その１)
-date: 2022-08-08
+date: 2022-08-18
 tags: ["R","NipponMap","ggplot2"]
 excerpt: 最寄りの家庭教会のデータ
 ---
@@ -31,6 +31,12 @@ excerpt: 最寄りの家庭教会のデータ
 #### 都道府県別家庭教会数 その２
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap12.png)
+
+#### 都道府県別 人口１０万人あたりの家庭教会数
+
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap111.png)
+
+- 多い順の３位まで中国地方！！（1.島根県、2.鳥取県、3.山口県）
 
 ### Rコード
 
@@ -111,3 +117,44 @@ title("都道府県別家庭教会数",cex.main=1.5)
 #dev.off()
 ```
 
+#### 都道府県別 人口１０万人あたりの家庭教会数
+
+```R
+require(ggplot2)
+#  人口及び高齢化(７０歳以上)率(%)：住民基本台帳に基づく人口、人口動態及び世帯数令和3年1月1日現在 https://www.soumu.go.jp/main_sosiki/jichi_gyousei/daityo/jinkou_jinkoudoutai-setaisuu.html        
+# 散布図
+zinkou<- c(5228732,1260067,1221205,2282106,971604,1070017,1862777,2907678,1955402,1958185,7393849,6322897,13843525,9220245,2213353,1047713,
+	1132656,774596,821094,2072219,2016868,3686335,7558872,1800756,1418886,2530609,8839532,5523627,1344952,944750,556959,672979,
+	1893874,2812477,1356144,735070,973922,1356343,701531,5124259,818251,1336023,1758815,1141784,1087372,1617850,1485484)
+bpdata$pertsubo<- tab/(zinkou/100000)
+# 棒グラフの色を決める(九州地方)
+bpdata$color<- rep("royalblue3",47)
+# 北海道・東北地方
+bpdata$color[1:7]<- "darkolivegreen" 
+# 関東地方
+bpdata$color[8:14]<- "khaki3"
+# 中部地方
+bpdata$color[15:23]<- "darkslategray3"
+# 関西地方
+bpdata$color[24:30]<- "hotpink3"
+# 中国地方
+bpdata$color[31:35]<- "brown3" 
+# 四国地方
+bpdata$color[36:39]<- "orange" 
+# 棒グラフ作成
+g <- ggplot(bpdata, aes(x = reorder(tate,-pertsubo), y = pertsubo,fill=color)) 
+g <- g + geom_bar(stat = "identity")
+g <- g + theme_bw()
+g <- g + labs(title="都道府県別 人口１０万人あたりの家庭教会数",x="",y="")
+g <- g + scale_y_continuous(expand = c(0,0), limits = c(0,max(bpdata$pertsubo)*1.1))
+g <- g + theme(axis.text=element_text(colour = "black"),panel.grid.major.x = element_blank(),
+		legend.position = c(0.98,0.98), legend.justification = c(1, 1),legend.background = element_rect(fill = "white", colour = "black"),
+		legend.text=element_text(size=rel(1)),legend.title=element_text(size=12))
+g <- g + scale_fill_manual(name = "地域", 
+		values =c("darkolivegreen"="darkolivegreen","khaki3"="khaki3","darkslategray3"="darkslategray3","hotpink3"="hotpink3",
+		"brown3"="brown3","orange"="orange","royalblue3"="royalblue3"), 
+		labels = c("北海道・東北地方","関東地方","中部地方","関西地方","中国地方","四国地方","九州地方"))
+g <- g + guides(fill = guide_legend(title.hjust = 0.5))
+g
+# ggsave("Tkmap111.png",g,width=8,height=6,dpi=150)
+```
