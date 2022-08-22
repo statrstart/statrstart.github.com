@@ -1,7 +1,7 @@
 ---
 title: 家庭連合（旧 統一教会）の所在地(地図を作成その１)
-date: 2022-08-18
-tags: ["R","NipponMap","ggplot2"]
+date: 2022-08-22
+tags: ["R","NipponMap","ggplot2","emojifont"]
 excerpt: 最寄りの家庭教会のデータ
 ---
 
@@ -97,22 +97,26 @@ g
 #### 都道府県別家庭教会数 その２
 
 ```R
-png("Tkmap12.png",width=800,height=600)
+require(emojifont)
+load.emojifont('EmojiOne.ttf')
+#png("Tkmap12.png",width=800,height=600)
 par(mar=c(6,3,3,1))
 tate<- NULL
 for (i in 1:47){
 	tate[i]<- sapply(strsplit(split="",names(tab)[i]), paste, collapse="\n")
 }
-plot(NA,xlim=c(1,47),ylim=c(0,max(tab)*1.1),type="n",xaxt="n",yaxt="n",xlab="",ylab="",bty="n",yaxs="i")
+plot(NA,xlim=c(0.5,47.5),ylim=c(0,max(tab)*1.1),type="n",xaxt="n",yaxt="n",xlab="",ylab="",bty="n",yaxs="i",xaxs="i")
 box(bty="l",lwd=2.5)
 for (i in 1:47){
-	points(x=rep(i,tab[i]),y=1:tab[i],pch="\u26B1",col="red")
+#	points(x=rep(i,tab[i]),y=1:tab[i],pch="\u26B1",col="red")
+#	text(x=rep(i,tab[i]),y=1:tab[i], labels=emoji('amphora'), cex=1, col="red", family='EmojiOne')
+	text(x=rep(i,tab[i]),y=1:tab[i], labels=emoji('funeral_urn'), cex=1, col="red", family='EmojiOne')
 }
 axis(2,at=c(0,seq(5.5,35.5,5)),labels=c(0,seq(5,35,5)),las=1)
 abline(h=seq(10.5,30.5,10),lwd=0.8,col="gray50")
 abline(h=seq(5.5,35.5,10),lwd=0.5,col="gray80")
 axis(1,at=1:47,labels=F)
-text(x=1:47,y=0,labels=tate,pos=1,offset=1.5,xpd=T)
+text(x=1:47,y=0,labels=tate,pos=1,offset=1.5,cex=0.8,xpd=T)
 title("都道府県別家庭教会数",cex.main=1.5)
 #dev.off()
 ```
