@@ -1,6 +1,6 @@
 ---
 title: 家庭連合（旧 統一教会）の所在地(地図を作成その１)
-date: 2022-08-23
+date: 2022-08-24
 tags: ["R","NipponMap","ggplot2","emojifont"]
 excerpt: 最寄りの家庭教会のデータ
 ---
