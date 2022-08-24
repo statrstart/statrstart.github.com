@@ -1,6 +1,6 @@
 ---
 title: 家庭連合（旧 統一教会）の所在地(地図を作成その３:絵文字)
-date: 2022-08-11
+date: 2022-08-23
 tags: ["R","NipponMap","sf","ggplot2","emoGG"]
 excerpt: 最寄りの家庭教会のデータ
 ---
@@ -26,10 +26,11 @@ excerpt: 最寄りの家庭教会のデータ
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/mapemoG01.png)
 
-#### 都道府県別家庭教会数
+#### 都道府県別家庭教会数（つ棒グラフ２種類）
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/emoGbar01.png)
 
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/emoGbar02.png)
 
 ### Rコード
 
@@ -96,16 +97,47 @@ for (i in 1:47){
 	x=c(x,rep(i,tab[i]))
 	y=c(y,1:tab[i])
 }
-point<- data.frame(x,y)
+# y座標は 0.5を引く
+point<- data.frame(x=x,y=y-0.5)
 #
 g<- ggplot(point, aes(x,y)) +
   theme_linedraw() +
   theme(panel.border = element_blank(), axis.line = element_line(),
 		axis.text=element_text(colour = "black"),panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank()) +
-  scale_y_continuous(expand = c(0,0), limits = c(0,37),breaks=c(0,10.5,20.5,30.5),labels=c(0,10,20,30)) + 
+  scale_y_continuous(expand = c(0,0), limits = c(0,37),breaks=c(0,10,20,30),labels=c(0,10,20,30)) + 
   scale_x_continuous(expand = c(0,0), limits = c(0,48),breaks= 1:47 ,labels = bpdata$tate) +
   labs(title="都道府県別家庭教会数 ",x="",y="") +
   geom_emoji(emoji="26b1",size=0.03)
 g
 # ggsave("emoGbar01.png",g,width=8,height=6,dpi=150)
+```
+
+#### amphora(2つの持ち手あり)
+
+```R
+emoji_search("amphora")
+#           emoji             code     keyword
+#3477     amphora            1f3fa        vase
+#3478     amphora            1f3fa         jar
+#4092           a            1f170  red-square
+#4093           a            1f170    alphabet
+#4094           a            1f170      letter
+#4130           o             2b55      circle
+#4131           o             2b55       round
+#4278           m             24c2    alphabet
+#4279           m             24c2 blue-circle
+#4280           m             24c2      letter
+#4924     armenia 1f1e6\\U0001f1f2          am
+#5791 philippines 1f1f5\\U0001f1ed          ph
+#
+g<- ggplot(point, aes(x,y)) +
+  theme_linedraw() +
+  theme(panel.border = element_blank(), axis.line = element_line(),
+		axis.text=element_text(colour = "black"),panel.grid.major.x = element_blank(),panel.grid.minor.x = element_blank()) +
+  scale_y_continuous(expand = c(0,0), limits = c(0,37),breaks=c(0,10,20,30),labels=c(0,10,20,30)) + 
+  scale_x_continuous(expand = c(0,0), limits = c(0,48),breaks= 1:47 ,labels = bpdata$tate) +
+  labs(title="都道府県別家庭教会数 ",x="",y="") +
+  geom_emoji(emoji="1f3fa",size=0.03)
+g
+# ggsave("emoGbar02.png",g,width=8,height=6,dpi=150)
 ```
