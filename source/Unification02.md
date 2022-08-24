@@ -1,6 +1,6 @@
 ---
 title: 家庭連合（旧 統一教会）の所在地(地図を作成その１)
-date: 2022-08-22
+date: 2022-08-23
 tags: ["R","NipponMap","ggplot2","emojifont"]
 excerpt: 最寄りの家庭教会のデータ
 ---
@@ -28,9 +28,14 @@ excerpt: 最寄りの家庭教会のデータ
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap11.png)
 
-#### 都道府県別家庭教会数 その２
+#### 都道府県別家庭教会数 その２(壺うグラフ：emojifont パッケージを使う)
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap12.png)
+
+##### emojifont パッケージ
+- font family の設定をきちんとしないと、日本語がトウフ状態になってしまう。
+- emojifont/emoji_fonts に「NotoEmoji」を入れておくとload.emojifont関数で読み込めて使用できる。
+- カラー絵文字は使用できない。
 
 #### 都道府県別 人口１０万人あたりの家庭教会数
 
@@ -99,6 +104,8 @@ g
 ```R
 require(emojifont)
 load.emojifont('EmojiOne.ttf')
+#load.emojifont('OpenSansEmoji.ttf')
+par(family="IPAMincho")
 #png("Tkmap12.png",width=800,height=600)
 par(mar=c(6,3,3,1))
 tate<- NULL
@@ -108,13 +115,13 @@ for (i in 1:47){
 plot(NA,xlim=c(0.5,47.5),ylim=c(0,max(tab)*1.1),type="n",xaxt="n",yaxt="n",xlab="",ylab="",bty="n",yaxs="i",xaxs="i")
 box(bty="l",lwd=2.5)
 for (i in 1:47){
-#	points(x=rep(i,tab[i]),y=1:tab[i],pch="\u26B1",col="red")
-#	text(x=rep(i,tab[i]),y=1:tab[i], labels=emoji('amphora'), cex=1, col="red", family='EmojiOne')
-	text(x=rep(i,tab[i]),y=1:tab[i], labels=emoji('funeral_urn'), cex=1, col="red", family='EmojiOne')
+#	points(x=rep(i,tab[i]),y=(1:tab[i])-0.5,pch="\u26B1",col="red")
+#	text(x=rep(i,tab[i]),y=(1:tab[i])-0.5, labels=emoji('amphora'), cex=0.9, col="red", family='EmojiOne')
+	text(x=rep(i,tab[i]),y=(1:tab[i])-0.5, labels=emoji('funeral_urn'), cex=0.8, col="red", family='EmojiOne')
 }
-axis(2,at=c(0,seq(5.5,35.5,5)),labels=c(0,seq(5,35,5)),las=1)
-abline(h=seq(10.5,30.5,10),lwd=0.8,col="gray50")
-abline(h=seq(5.5,35.5,10),lwd=0.5,col="gray80")
+axis(2,at=c(0,seq(5,35,5)),labels=c(0,seq(5,35,5)),las=1)
+abline(h=seq(10,30,10),lwd=0.8,col="gray50")
+abline(h=seq(5,35,10),lwd=0.5,col="gray80")
 axis(1,at=1:47,labels=F)
 text(x=1:47,y=0,labels=tate,pos=1,offset=1.5,cex=0.8,xpd=T)
 title("都道府県別家庭教会数",cex.main=1.5)
