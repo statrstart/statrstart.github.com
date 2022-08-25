@@ -1,5 +1,5 @@
 ---
-title: 家庭連合（旧 統一教会）の所在地(地図を作成その１)
+title: 家庭連合（旧 統一教会）の所在地(地図を作成その１)+絵文字
 date: 2022-08-24
 tags: ["R","NipponMap","ggplot2","emojifont"]
 excerpt: 最寄りの家庭教会のデータ
@@ -28,9 +28,24 @@ excerpt: 最寄りの家庭教会のデータ
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap11.png)
 
-#### 都道府県別家庭教会数 その２(壺うグラフ：emojifont パッケージを使う)
+#### 都道府県別家庭教会数 その２(つ棒グラフ：emojifont パッケージを使う)
+
+##### EmojiOne.ttf
 
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap12.png)
+
+##### OpenSansEmoji.ttf
+
+- 壺の右にトウフがあって見栄えが良くない。
+- OpenSansEmoji.ttfには「amphora」は登録されていない。
+
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap12_1.png)
+
+##### NotoEmoji-Regular.ttf
+
+(注意) NotoEmoji-Regular.ttfフォントを /emojifont/emoji_fonts に入れておく必要あり。
+
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap12_2.png)
 
 ##### emojifont パッケージ
 - font family の設定をきちんとしないと、日本語がトウフ状態になってしまう。
@@ -101,11 +116,12 @@ g
 
 #### 都道府県別家庭教会数 その２
 
+(注意) OSはUBUNTUを使っています。フォントの設定の仕方はOSによって違います。
+
 ```R
 require(emojifont)
-load.emojifont('EmojiOne.ttf')
-#load.emojifont('OpenSansEmoji.ttf')
-par(family="IPAMincho")
+load.emojifont('EmojiOne.ttf') #<- フォントのload
+par(family="wqy-microhei")
 #png("Tkmap12.png",width=800,height=600)
 par(mar=c(6,3,3,1))
 tate<- NULL
@@ -116,8 +132,8 @@ plot(NA,xlim=c(0.5,47.5),ylim=c(0,max(tab)*1.1),type="n",xaxt="n",yaxt="n",xlab=
 box(bty="l",lwd=2.5)
 for (i in 1:47){
 #	points(x=rep(i,tab[i]),y=(1:tab[i])-0.5,pch="\u26B1",col="red")
-#	text(x=rep(i,tab[i]),y=(1:tab[i])-0.5, labels=emoji('amphora'), cex=0.9, col="red", family='EmojiOne')
-	text(x=rep(i,tab[i]),y=(1:tab[i])-0.5, labels=emoji('funeral_urn'), cex=0.8, col="red", family='EmojiOne')
+#	text(x=rep(i,tab[i]),y=(1:tab[i])-0.5, labels=emoji('amphora'), cex=0.9, col="red", family='EmojiOne')	#<- フォントの設定
+	text(x=rep(i,tab[i]),y=(1:tab[i])-0.5, labels=emoji('funeral_urn'), cex=0.8, col="red", family='EmojiOne') #<- フォントの設定
 }
 axis(2,at=c(0,seq(5,35,5)),labels=c(0,seq(5,35,5)),las=1)
 abline(h=seq(10,30,10),lwd=0.8,col="gray50")
@@ -127,6 +143,8 @@ text(x=1:47,y=0,labels=tate,pos=1,offset=1.5,cex=0.8,xpd=T)
 title("都道府県別家庭教会数",cex.main=1.5)
 #dev.off()
 ```
+
+> OpenSansEmoji.ttfとNotoEmoji-Regular.ttfの場合はフォントのloadと設定の部分を変えるだけなので省略します。
 
 #### 都道府県別 人口１０万人あたりの家庭教会数
 
