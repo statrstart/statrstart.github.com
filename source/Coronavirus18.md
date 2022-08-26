@@ -1,6 +1,6 @@
 ---
 title: 都道府県別検査陽性者数と死亡者数(新型コロナウイルス：Coronavirus)
-date: 2022-08-24
+date: 2022-08-25
 tags: ["R","NipponMap","Coronavirus","新型コロナウイルス"]
 excerpt: NHKのデータ
 ---
@@ -285,10 +285,10 @@ g <- g + theme_linedraw()
 g <- g + labs(title=TeX("人口１万人あたりの死者数(累計)：人口１万人あたりの死者数 \\geq 1人"),x="",y="")
 g <- g + theme(
 		panel.border = element_blank(), axis.line = element_line(),axis.text=element_text(colour = "black"),
-		legend.position=c(0.03,0.97),legend.justification=c(0,1),
+		legend.position=c(0.01,0.99),legend.justification=c(0,1),
 		legend.background = element_rect(fill = "white", colour = "black")
 	) +
-     guides(color=guide_legend(ncol=3))
+     guides(color=guide_legend(ncol=6))
 g <- g + geom_text_repel(data = subset(data,date== max(date)),aes(label = 都道府県名),
 		nudge_x=100,
 #		segment.curvature = 1e-20,
