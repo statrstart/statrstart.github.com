@@ -1,6 +1,6 @@
 ---
 title: インフルエンザ報告数と新型コロナウイルス陽性者数のグラフと表
-date: 2022-08-31
+date: 2022-09-07
 tags: ["R","xts"]
 excerpt: IDWR速報データ & NHK:新型コロナデータ
 ---
@@ -15,7 +15,7 @@ IDWR速報データ
 - 2019 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2019/201952/2019-52-teiten-tougai.csv
 - 2020 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2020/202053/2020-53-teiten-tougai.csv
 - 2021 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2021/202152/2021-52-teiten-tougai.csv
-- 2022 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2022/202234/2022-34-teiten-tougai.csv
+- 2022 : https://www.niid.go.jp/niid/images/idwr/sokuho/idwr-2022/202235/2022-35-teiten-tougai.csv
 
 [作成したデータセット:influ2018_2022.csv](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/influ2018_2022.csv)  
 (注意)文字コードUTF-8に変更しました。
@@ -26,7 +26,7 @@ IDWR速報データ
 - グラフが途切れている個所は数が「0」です。
 - 新型コロナウイルス陽性者数は最新ではありません。インフルエンザ報告数のデータのある最終日に合わせています。
 
-> （注意）2022年はインフルエンザ、新型コロナウイルスとも 2022 34週 2022-08-22 2022-08-28までの集計  
+> （注意）2022年はインフルエンザ、新型コロナウイルスとも 2022 35週 2022-08-29 2022-09-04までの集計  
 
 ### 総数：インフルエンザ報告数と新型コロナウイルス陽性者数
 
@@ -42,11 +42,11 @@ IDWR速報データ
 |2019 |      1,875,890|                  0|
 |2020 |        563,487|            243,297|
 |2021 |          1,071|          1,485,342|
-|2022 |          1,661|         16,798,528|
+|2022 |          1,802|         17,727,357|
 
 ### 都道府県別(大阪府,東京都,北海道,沖縄県,鳥取県)
 
-都市代表（大阪府,東京都）、観光地代表（北海道,沖縄県）、コロナ感染者が少ない（鳥取県,島根県,秋田県）
+都市代表（大阪府,東京都）、観光地代表（北海道,沖縄県）、コロナ感染者が少ない（鳥取県,島根県,秋田県,新潟県,福井県）
 
 地域のグラフは 0のところに0.5を入れ、線がとぎれないように工夫してみた。  
 (注意)グラフを作成したあとで0.5のところに0を入れ直すこと。(表の数値が合わなくなります。)
@@ -78,6 +78,14 @@ IDWR速報データ
 #### 秋田県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
 
 ![covid22_08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_08.png)
+
+#### 新潟県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_09](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_09.png)
+
+#### 福井県：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_010](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_010.png)
 
 ### Rコード
 
@@ -239,8 +247,8 @@ tt <- ttheme_default(core=list(fg_params=list(hjust=1, x=0.9)),
 mat <- matrix(c(1,1,1,1,2,3),2)
 #mat
 # 片対数グラフ
-nn<- paste0("0",2:8)
-pref0<- c("大阪府","東京都","北海道","沖縄県","鳥取県","島根県","秋田県")
+nn<- paste0("0",2:10)
+pref0<- c("大阪府","東京都","北海道","沖縄県","鳥取県","島根県","秋田県","新潟県","福井県")
 for (i in 1:length(pref0)){
 pref<- pref0[i]
 influ<- influ2018_2022[,pref]
