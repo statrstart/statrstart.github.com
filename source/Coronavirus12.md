@@ -52,7 +52,7 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 ![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
 
 #### 塗り分け地図(大阪市のデータは遅れがある)
-データ：[【9月7日】新型コロナウイルス感染症患者の発生及び死亡について]  
+データ：[【9月8日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 但し、「大阪市」については[新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)
 と比較して、陽性者数の多い方のデータを使用する。 
