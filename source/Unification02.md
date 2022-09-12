@@ -1,6 +1,6 @@
 ---
 title: 家庭連合（旧 統一教会）の所在地(地図を作成その１)+絵文字
-date: 2022-08-24
+date: 2022-09-12
 tags: ["R","NipponMap","ggplot2","emojifont"]
 excerpt: 最寄りの家庭教会のデータ
 ---
@@ -57,6 +57,12 @@ excerpt: 最寄りの家庭教会のデータ
 ![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap111.png)
 
 - 多い順の３位まで中国地方！！（1.島根県、2.鳥取県、3.山口県）
+
+#### 地域別 人口１０万人あたりの家庭教会数
+
+![](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Tkmap112.png)
+
+- 中国地方がトップだが、四国地方とは僅差。
 
 ### Rコード
 
@@ -186,4 +192,31 @@ g <- g + scale_fill_manual(name = "地域",
 g <- g + guides(fill = guide_legend(title.hjust = 0.5))
 g
 # ggsave("Tkmap111.png",g,width=8,height=6,dpi=150)
+```
+
+#### 地域別 人口１０万人あたりの家庭教会数
+
+```R
+bpdata2<- data.frame(地域=c("北海道・東北","関東","中部","関西","中国","四国","九州・沖縄"),
+	             家庭教会数=c(sum(tab[1:7]),sum(tab[8:14]),sum(tab[15:23]),sum(tab[24:30]),sum(tab[31:35]),sum(tab[36:39]),sum(tab[40:47])),
+                     人口=c(sum(zinkou[1:7]),sum(zinkou[8:14]),sum(zinkou[15:23]),sum(zinkou[24:30]),sum(zinkou[31:35]),sum(zinkou[36:39]),sum(zinkou[40:47])))
+bpdata2$pertsubo<- bpdata2$家庭教会数/(bpdata2$人口/100000)
+#
+bpdata2$tate<- NULL
+# 地域名縦書き
+for (i in 1:7){
+	bpdata2$tate[i]<- sapply(strsplit(split="",as.character(bpdata2$地域)[i]), paste, collapse="\n")
+}
+# tateのlevels
+bpdata2$tate<- factor(bpdata2$tate,levels=unique(bpdata2$tate))
+#
+# 棒グラフ作成
+g <- ggplot(bpdata2, aes(x = reorder(tate,-pertsubo), y = pertsubo)) 
+g <- g + geom_bar(stat = "identity",fill="brown3")
+g <- g + theme_bw()
+g <- g + labs(title="地域別 人口１０万人あたりの家庭教会数",x="",y="")
+g <- g + scale_y_continuous(expand = c(0,0), limits = c(0,max(bpdata2$pertsubo)*1.05))
+g <- g + theme(axis.text=element_text(colour = "black"),panel.grid.major.x = element_blank())
+g
+# ggsave("Tkmap112.png",g,width=8,height=6,dpi=150)
 ```
