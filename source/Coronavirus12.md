@@ -1,6 +1,6 @@
 ---
 title: 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
-date: 2022-09-25
+date: 2022-09-26
 tags: ["R","jsonlite","Coronavirus","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデータ
 ---
@@ -8,30 +8,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 # 大阪府陽性者の属性と市町村別陽性者マップ(新型コロナウイルス：Coronavirus)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus12&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
-
-> 2022/06/28 発表  
-> 大阪市保健所管内において、1～３月の死亡が新たに９２件判明しましたので、「３　患者の状況」に計上しています。  
-
-[大阪府 新型コロナウイルス感染症対策サイトデータ](https://raw.githubusercontent.com/codeforosaka/covid19/master/data/data.json)は
-以下の形状漏れも訂正されました。(2002/2/10)  
-  
-(注意)大阪市保健所による計上漏れ7,625件、2002/2/3の陽性者数に計上。  
-- 入力日 1/29　　511件
-- 入力日 1/30　　632件
-- 入力日 1/31　 2,046件
-- 入力日 2/1　　1,895件
-- 入力日 2/2　　2,541件
-(注意)大阪市保健所による計上漏れが2,921件、2002/2/4の陽性者数に計上。  
-- 入力日 2/3　　2,921件
-(注意)大阪市保健所による計上漏れが1,384件、2002/2/5の陽性者数に計上。  
-- 入力日 2/4　　1,384件
-(注意)大阪市保健所による計上漏れが770件、2002/2/6の陽性者数に計上。  
-- 入力日 2/5　　770件
-(注意)大阪市保健所による計上漏れが約9,200件、2002/2/8の陽性者数に計上。  
-- 本来公表日 2/4　　約2,300件
-- 本来公表日 2/5　　約4,700件
-- 本来公表日 2/6　  約1,500件
-- 本来公表日 2/7　　約700件
 
 (使用するデータ)  
 [大阪府 新型コロナウイルス感染症対策サイト](https://github.com/codeforosaka/covid19)にあるデータを使います。  
@@ -51,7 +27,63 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 ![covOsaka09_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka09_02.png)
 
-#### 塗り分け地図(大阪市のデータは遅れがある)
+#### 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
+
+コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
+
+![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
+
+#### 大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
+
+![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
+
+#### 大阪府 : 患者の状況（前日24時まで）
+
+![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
+
+#### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
+
+![covid22_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_02.png)
+
+#### 大阪府：致死率７日移動平均(2022/1/1〜)
+
+![covOsaka16](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka16.png)
+
+#### 都道府県別の人口1万人あたり死亡者数 [ データ：ＮＨＫ ]
+
+![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
+
+#### 大阪府：年代別重症者数と死亡者数との差
+[大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)からひとつだけここに載せておきます。  
+
+![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
+
+#### 近畿地方：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
+
+![covkinki](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
+
+#### 大阪府：新型コロナウイルス死亡者の推移
+(注意)NHKのデータ使用（更新時間の違いのため大阪府のデータより１日分少ないことがあります。）
+
+![covOsaka13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka13.png)
+
+#### 時系列
+
+![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
+
+#### 週単位の陽性者増加比
+
+![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
+
+#### 大阪市長「公務日程」のカレンダー(2022年版)
+- 公務時間は考慮していません。
+
+![Okoumu2022_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2022_1.png)
+![Okoumu2022_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2022_2.png)
+
+-----
+
+#### 塗り分け地図(2022/9/26で更新終了。2022/9/27以降発表されなくなりました。)
 データ：[【9月26日】新型コロナウイルス感染症患者の発生及び死亡について]  
 [大阪府：新型コロナウイルス感染症患者の発生状況について](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo.html)  
 但し、「大阪市」については[新型コロナウイルス感染症にかかる大阪市内の発生状況及び大阪府モニタリング指標に関する大阪市の算定値について](https://www.city.osaka.lg.jp/kenko/page/0000502869.html)
@@ -268,62 +300,6 @@ excerpt: 大阪府 新型コロナウイルス感染症対策サイトのデー�
 
 検査陽性者数100人あたり25人越え(4人に1人)	1
 - 2022-09-07:大阪市
-
-#### 大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-
-コードは[大阪府のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)](https://gitpress.io/@statrstart/Coronavirus23)  
-
-![covid23_01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_01.png)
-
-#### 大阪「市」のコロナ死の数はどれだけの都道府県のコロナ死の合計に相当するのか？(人口最大化)
-
-![covid23_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid23_02.png)
-
-#### 大阪府 : 患者の状況（前日24時まで）
-
-![covid21_13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_13.png)
-
-#### 大阪府：インフルエンザ報告数と新型コロナウイルス陽性者数（グラフと表）
-
-![covid22_02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid22_02.png)
-
-#### 大阪府：致死率７日移動平均(2022/1/1〜)
-
-![covOsaka16](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka16.png)
-
-#### 都道府県別の人口1万人あたり死亡者数 [ データ：ＮＨＫ ]
-
-![nhkC04](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/nhkC04.png)
-
-#### 大阪府：年代別重症者数と死亡者数との差
-[大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)](https://gitpress.io/@statrstart/Coronavirus21)からひとつだけここに載せておきます。  
-
-![covid21_06](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covid21_06.png)
-
-#### 近畿地方：新型コロナウイルス 累計感染者数の推移(データ：NHK 新型コロナ データ)
-
-![covkinki](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covkinki.png)
-
-#### 大阪府：新型コロナウイルス死亡者の推移
-(注意)NHKのデータ使用（更新時間の違いのため大阪府のデータより１日分少ないことがあります。）
-
-![covOsaka13](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka13.png)
-
-#### 時系列
-
-![covOsaka01](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka01.png)
-
-#### 週単位の陽性者増加比
-
-![covOsaka08](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/covOsaka08.png)
-
-#### 大阪市長「公務日程」のカレンダー(2022年版)
-- 公務時間は考慮していません。
-
-![Okoumu2022_1](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2022_1.png)
-![Okoumu2022_2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Okoumu2022_2.png)
-
------
 
 #### 大阪市長「公務日程」のカレンダーと「公務日程なし・あり」の日数(2021年版)
 - 公務時間は考慮していません。

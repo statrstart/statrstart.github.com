@@ -1,5 +1,5 @@
 ---
-title: 大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)
+title: 大阪府 年代別重症者数と死亡者数(2022/9/26で更新終わり)
 date: 2022-09-26
 tags: ["R","rvest","rio","大阪府","新型コロナウイルス"]
 excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のexcelデータ
@@ -8,6 +8,8 @@ excerpt: 大阪府 新型コロナウイルス感染症患者の発生状況のe
 # 大阪府 年代別重症者数と死亡者数(新型コロナウイルス：Coronavirus)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FCoronavirus21&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
+
+## 2022/9/27以降、excelデータの形式が変更され、且つ、発表される項目が減ったため、更新を終了します。
 
 (使用するデータ)  
 [新型コロナウイルス感染症患者の発生状況（令和2年11月2日以降）](http://www.pref.osaka.lg.jp/iryo/osakakansensho/happyo_kako.html) 
