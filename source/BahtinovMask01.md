@@ -31,7 +31,7 @@ excerpt: 透明なシートに印刷
 #### 横線、斜め線をずらしたもの
 
 ```R
-# 外枠
+# 外枠(円)
 R<- 40
 # 半径
 r=29
@@ -43,11 +43,14 @@ a=tan(theta)
 # 仕切り線
 line1<- 2
 # マスクの線
-line2<- 1.5
+line2<- 1
 # 円上の点の数を決める数
 rl<- 20
 # 副鏡の円の半径(カメラレンズは0)
 RR<- 0
+# 外円と円との間の塗りつぶし(塗りつぶさない場合は0、それ以外は塗りつぶす)
+pa<- 0
+
 #svg(file="BahtinovMask.svg", width=2*R/25.4, height=2*R/25.4)
 par(mar = rep(0,4))
 plot(x=c(-R,R),y=c(-R,R),asp=1,type="n",xaxt="n",yaxt="n",xlab="",ylab="",bty="n",yaxs="i",xaxs="i")
@@ -87,11 +90,13 @@ if (hh[i]>0 & y1[i]<=0){
 }
 # 外枠と円との間を塗りつぶす
 Z<-complex(mod=R,arg=seq(-pi,pi,length=length(h)*rl))
-lines(x=Re(Z),y=Im(Z),xpd=T,lwd=1)
-for (i in 1:(length(z)-1)){
-	polygon(x=c(Re(Z[i]),Re(z[i]),Re(Z[i+1]),Re(z[i+1]),Re(Z[i])),y=c(Im(Z[i]),Im(z[i]),Im(Z[i+1]),Im(z[i+1]),Im(Z[i])),col=1,xpd=T)
+lines(x=Re(Z),y=Im(Z),xpd=T,lwd=1,xpd=T)
+if (pa != 0){
+	for (i in 1:(length(z)-1)){
+		polygon(x=c(Re(Z[i]),Re(z[i]),Re(Z[i+1]),Re(z[i+1]),Re(Z[i])),y=c(Im(Z[i]),Im(z[i]),Im(Z[i+1]),Im(z[i+1]),Im(Z[i])),col=1,xpd=T)
+	}
+	polygon(x=c(Re(Z[length(z)]),Re(z[length(z)]),Re(Z[1])),y=c(Im(Z[length(z)]),Im(z[length(z)]),Im(Z[1])),col=1,xpd=T)
 }
-polygon(x=c(Re(Z[length(z)]),Re(z[length(z)]),Re(Z[1])),y=c(Im(Z[length(z)]),Im(z[length(z)]),Im(Z[1])),col=1,xpd=T)
 # 副鏡の円を塗りつぶす
 ZZ<-complex(mod=RR,arg=seq(-pi,pi,length=length(h)*rl))
 polygon(x=c(Re(ZZ),Re(ZZ[1])),y=c(Im(ZZ),Im(ZZ[1])),col=1)
@@ -113,11 +118,14 @@ a=tan(theta)
 # 仕切り線
 line1<- 2
 # マスクの線
-line2<- 1.5
+line2<- 1
 # 円上の点の数を決める数
 rl<- 20
 # 副鏡の円の半径(カメラレンズは0)
 RR<- 0
+# 外円と円との間の塗りつぶし(塗りつぶさない場合は0、それ以外は塗りつぶす)
+pa<- 0
+
 #svg(file="BahtinovMask1.svg", width=2*R/25.4, height=2*R/25.4)
 par(mar = rep(0,4))
 plot(x=c(-R,R),y=c(-R,R),asp=1,type="n",xaxt="n",yaxt="n",xlab="",ylab="",bty="n",yaxs="i",xaxs="i")
@@ -158,10 +166,12 @@ if (hh[i]>0 & y1[i]<=0){
 # 外枠と円との間を塗りつぶす
 Z<-complex(mod=R,arg=seq(-pi,pi,length=length(h)*rl))
 lines(x=Re(Z),y=Im(Z),xpd=T,lwd=1)
-for (i in 1:(length(z)-1)){
-	polygon(x=c(Re(Z[i]),Re(z[i]),Re(Z[i+1]),Re(z[i+1]),Re(Z[i])),y=c(Im(Z[i]),Im(z[i]),Im(Z[i+1]),Im(z[i+1]),Im(Z[i])),col=1,xpd=T)
+if (pa != 0){
+	for (i in 1:(length(z)-1)){
+		polygon(x=c(Re(Z[i]),Re(z[i]),Re(Z[i+1]),Re(z[i+1]),Re(Z[i])),y=c(Im(Z[i]),Im(z[i]),Im(Z[i+1]),Im(z[i+1]),Im(Z[i])),col=1,xpd=T)
+	}
+	polygon(x=c(Re(Z[length(z)]),Re(z[length(z)]),Re(Z[1])),y=c(Im(Z[length(z)]),Im(z[length(z)]),Im(Z[1])),col=1,xpd=T)
 }
-polygon(x=c(Re(Z[length(z)]),Re(z[length(z)]),Re(Z[1])),y=c(Im(Z[length(z)]),Im(z[length(z)]),Im(Z[1])),col=1,xpd=T)
 # 副鏡の円を塗りつぶす
 ZZ<-complex(mod=RR,arg=seq(-pi,pi,length=length(h)*rl))
 polygon(x=c(Re(ZZ),Re(ZZ[1])),y=c(Im(ZZ),Im(ZZ[1])),col=1)
