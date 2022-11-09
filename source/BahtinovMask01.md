@@ -21,12 +21,16 @@ excerpt: 透明なシートに印刷
 
 [BahtinovMask1.svg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/BahtinovMask1.svg)
 
+#### 上の２つを含むpdfファイル
+
+[BahtinovMask.pdf](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/BahtinovMask.pdf)
+
 ### Rコード
 
 #### （注意）
-
 - 直径58mm[半径29mm]のレンズにあわせたつもりです。（外枠は80mm[半径40mm]）
 - 線の太さは何ミリかは不明。（ggplotを使うとできるかもしれませんが面倒くさいのでやりません。）
+- いくつか作ってみて「gimp」で見てみるとline2の目安は 1.25*b くらいがいいかもしれません。（線の間隔が線幅の2倍位になっている）
 
 #### 横線、斜め線をずらしたもの
 
@@ -100,6 +104,7 @@ if (pa != 0){
 # 副鏡の円を塗りつぶす
 ZZ<-complex(mod=RR,arg=seq(-pi,pi,length=length(h)*rl))
 polygon(x=c(Re(ZZ),Re(ZZ[1])),y=c(Im(ZZ),Im(ZZ[1])),col=1)
+text(x=par("usr")[2]*0.8,y=par("usr")[3]*0.85,labels=paste0(R*2,";",r*2,"\n",b,";",theta*(180/pi),"\n",line1,";",line2,";Y"),cex=0.5)
 # dev.off()
 ```
 
@@ -175,5 +180,6 @@ if (pa != 0){
 # 副鏡の円を塗りつぶす
 ZZ<-complex(mod=RR,arg=seq(-pi,pi,length=length(h)*rl))
 polygon(x=c(Re(ZZ),Re(ZZ[1])),y=c(Im(ZZ),Im(ZZ[1])),col=1)
+text(x=par("usr")[2]*0.8,y=par("usr")[3]*0.85,labels=paste0(R*2,";",r*2,"\n",b,";",theta*(180/pi),"\n",line1,";",line2,";N"),cex=0.5)
 # dev.off()
 ```
