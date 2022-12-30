@@ -66,11 +66,11 @@ OS : ubuntu20.04
 
 #### celestial::radec2xy のみ
 
-![astro02N.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro02N.jpg)
+![astro02N.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro02N.png)
 
 #### celestial::radec2xy + 自作 sip補正プログラム
 
-![astro02Y.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro02Y.jpg)
+![astro02Y.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro02Y.png)
 
 ### 例２ 
 
@@ -80,15 +80,15 @@ OS : ubuntu20.04
 
 #### celestial::radec2xy のみ
 
-![astro01N.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro01N.jpg)
+![astro01N.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro01N.png)
 
 #### celestial::radec2xy + 自作 sip補正プログラム
 
-![astro01Y.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro01Y.jpg)
+![astro01Y.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro01Y.png)
 
 #### celestial::radec2xy + 自作 sip補正プログラム(銀河に楕円、日本語)
 
-![astro01YeJ.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro01YeJ.jpg)
+![astro01YeJ.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro01YeJ.png)
 
 ### Rコード
 
