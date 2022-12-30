@@ -9,8 +9,7 @@ excerpt: astrometry.netのインストールと使い方
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2Fastrometrynet01&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
-astrometry.netを使って得たwcsファイルとRを使って星野写真に星の名前や天体名を記入する方法の自分のための備忘録です。（全４回）  
-天体を楕円で囲ったりはＲ初心者のレベルを超えちゃいますのでやりません。
+astrometry.netを使って得たwcsファイルとRを使って星野写真に星の名前や天体名を記入する方法の自分のための備忘録です。  
 
 OS : ubuntu20.04
 
