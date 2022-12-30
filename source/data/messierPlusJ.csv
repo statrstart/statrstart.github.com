@@ -1,0 +1,224 @@
+Name,NGC,Object.type,Magnitude,Constellation,Distance.l.y.a.l..,RA,Dec,CommonName,CommonNameJ,Position,Size,Offset
+M1,NGC 1952,Supernova remnant,8,Tau,6500,83.633208,22.014472,Crab Nebula,かに星雲,3,1,0.5
+M2,NGC 7089,Globular Cluster,6,Aqr,55000,323.362542,-0.823306,,,3,1,0.5
+M3,NGC 5272,Globular Cluster,6,CVn,48500,205.546792,28.375444,,,3,1,0.5
+M4,NGC 6121,Globular Cluster,5,Sco,9900,245.8975,-26.525528,,,3,1,0.5
+M5,NGC 5904,Globular Cluster,5,Se1,24800,229.640625,2.082694,,,3,1,0.5
+M6,NGC 6504,Open Cluster,4,Sco,1300,265.086458,-32.254167,Butterfly Cluster,,3,1,0.5
+M7,NGC 6475,Open Cluster,3,Sco,780,268.46325,-34.792833,Ptolemy's Cluster,トレミー星団,3,1,0.5
+M8,NGC 6523,Emission Nebula,5,Sgr,4850,270.921958,-24.380167,Lagoon Nebula,干潟星雲,3,1,0.5
+M9,NGC 6333,Globular Cluster,7,Oph,25800,259.799083,-18.51625,,,3,1,0.5
+M10,NGC 6254,Globular Cluster,6,Oph,16300,254.287458,-4.099333,,,3,1,0.5
+M11,NGC 6705,Open Cluster,5,Sct,5600,282.774958,-6.270028,Wild Duck Cluster,野鴨星団,3,1,0.5
+M12,NGC 6218,Globular Cluster,6,Oph,18900,251.8105,-1.947833,Gumball Globular,,3,1,0.5
+M13,NGC 6205,Globular Cluster,5,Her,23500,250.423458,36.461306,Hercules Cluster,,3,1,0.5
+M14,NGC 6402,Globular Cluster,7,Oph,24000,264.400667,-3.245917,,,3,1,0.5
+M15,NGC 7078,Globular Cluster,6,Peg,49500,322.49325,12.166833,Great Pegasus Cluster,,3,1,0.5
+M16,NGC 6611,Emission Nebula,6,Se2,5870,274.700708,-13.807222,Eagle Nebula,わし星雲,3,1,0.5
+M17,NGC 6618,Emission Nebula,6,Sgr,5870,275.196292,-16.171528,Omega Nebula,オメガ星雲,3,1,0.5
+M18,NGC 6613,Open Cluster,6,Sgr,4900,274.993708,-17.101972,,,3,1,0.5
+M19,NGC 6273,Globular Cluster,7,Oph,22500,255.657,-26.267944,,,3,1,0.5
+M20,NGC 6514,Emission Nebula,6,Sgr,2300,270.675458,-22.971889,Trifid Nebula,三裂星雲,3,1,0.5
+M21,NGC 6531,Open Cluster,5,Sgr,4200,271.056042,-22.490056,,,3,1,0.5
+M22,NGC 6656,Globular Cluster,5,Sgr,7800,279.100833,-23.903417,Sagittarius Cluster,,3,1,0.5
+M23,NGC 6494,Open Cluster,5,Sgr,2150,269.269875,-18.985333,,,3,1,0.5
+M24,NGC 6603,Open Cluster,11,Sgr,16000,274.233833,-18.514556,Sagittarius Star Cloud,スタークラウド,3,1,0.5
+M25,IC 4725,Open Cluster,4,Sgr,2060,277.944875,-19.114944,,,3,1,0.5
+M26,NGC 6694,Open Cluster,8,Sct,5100,281.32775,-9.383611,,,3,1,0.5
+M27,NGC 6853,Planetary Nebula,8,Vul,980,299.901583,22.721028,Dumbbell Nebula,亜鈴星雲,3,1,0.5
+M28,NGC 6626,Globular Cluster,6,Sgr,19000,276.137042,-24.869833,,,3,1,0.5
+M29,NGC 6913,Open Cluster,6,Cyg,4100,305.990708,38.507667,,,3,1,0.5
+M30,NGC 7099,Globular Cluster,7,Cap,41000,325.09175,-23.179083,,,3,1,0.5
+M31,NGC 224,Galaxy,3,And,2500000,10.684792,41.269056,Andromeda Galaxy,アンドロメダ大銀河,3,1,0.5
+M32,NGC 221,Galaxy,8,And,NA,10.674292,40.865278,,,4,0.8,0.5
+M33,NGC 598,Galaxy,5,Tri,2723000,23.462042,30.660222,Triangulum Galaxy,さんかく座銀河,3,1,0.5
+M34,NGC 1039,Open Cluster,5,Per,1450,40.530833,42.746139,,,3,1,0.5
+M35,NGC 2168,Open Cluster,5,Gem,2800,92.271083,24.338639,,,3,1,0.5
+M36,NGC 1960,Open Cluster,6,Aur,3700,84.073917,34.14075,Pinwheel Cluster,,3,1,0.5
+M37,NGC 2099,Open Cluster,5,Aur,3600,88.076458,32.553,,,3,1,0.5
+M38,NGC 1912,Open Cluster,6,Aur,2750,82.177042,35.854917,Starfish Cluster,,3,1,0.5
+M39,NGC 7092,Open Cluster,4,Cyg,880,322.951333,48.438167,,,3,1,0.5
+M40,Winnecke 4,Double star,9,,NA,185.552208,58.082944,Winnecke 4,,3,1,0.5
+M41,NGC 2287,Open Cluster,4,CMa,1600,101.49975,-20.754222,,,3,1,0.5
+M42,NGC 9176,Emission Nebula,4,Ori,1500,83.818667,-5.389667,Orion Nebula,オリオン大星雲,1,1,0.5
+M43,NGC 1982,Reflection Nebula,9,Ori,1500,83.88075,-5.267472,,,3,0.8,0.5
+M44,NGC 2632,Open Cluster,3,Cnc,520,130.0925,19.672056,Beehive Cluster,プレセペ星団,3,1,0.5
+M45,,Open Cluster,1,,410,56.75,24.118056,Pleiades,プレアデス星団,3,1,0.5
+M46,NGC 2437,Open Cluster,6,Pup,3200,115.445083,-14.81,,,3,1,0.5
+M47,NGC 2422,Open Cluster,4,Pup,1750,114.145917,-14.482611,,,3,1,0.5
+M48,NGC 2548,Open Cluster,5,Hya,1500,123.429917,-5.750444,,,3,1,0.5
+M49,NGC 4472,Galaxy,8,Vir,41000000,187.444833,8.000472,,,3,1,0.5
+M50,NGC 2323,Open Cluster,5,Mon,2950,105.668625,-8.364028,Heart-Shaped Cluster,,3,1,0.5
+M51,NGC 5194,Galaxy,8,CVn,37000000,202.469625,47.195167,Whirlpool Galaxy,子持ち銀河,3,1,0.5
+M52,NGC 7654,Open Cluster,6,Cas,3000,351.201667,61.593167,,,3,1,0.5
+M53,NGC 5024,Globular Cluster,7,Com,69000,198.230125,18.169111,,,3,1,0.5
+M54,NGC 6715,Globular Cluster,7,Sgr,49000,283.763625,-30.4785,,,3,1,0.5
+M55,NGC 6809,Globular Cluster,7,Sgr,20000,294.9975,-30.962083,Summer Rose Star,,3,1,0.5
+M56,NGC 6779,Globular Cluster,8,Lyr,45600,289.147958,30.1845,,,3,1,0.5
+M57,NGC 6720,Planetary Nebula,9,Lyr,1410,283.395875,33.028583,Ring Nebula,リング星雲,3,1,0.5
+M58,NGC 4579,Galaxy,9,Vir,41000000,189.431333,11.818194,,,3,1,0.5
+M59,NGC 4621,Galaxy,9,Vir,41000000,190.509333,11.647028,,,3,1,0.5
+M60,NGC 4649,Galaxy,8,Vir,41000000,190.916583,11.552694,,,3,1,0.5
+M61,NGC 4303,Galaxy,9,Vir,41000000,185.47875,4.473639,,,3,1,0.5
+M62,NGC 6266,Globular Cluster,6,Oph,22500,255.3025,-30.112361,,,3,1,0.5
+M63,NGC 5055,Galaxy,8,CVn,23800000,198.955542,42.029278,Sunflower Galaxy,ひまわり銀河,3,1,0.5
+M64,NGC 4826,Galaxy,8,Com,11800000,194.181833,21.682972,Black Eye Galaxy,黒眼銀河,3,1,0.5
+M65,NGC 3623,Galaxy,9,Leo,29000000,169.733,13.092361,,,3,1,0.5
+M66,NGC 3627,Galaxy,9,Leo,29000000,170.062333,12.991528,,,3,1,0.5
+M67,NGC 2682,Open Cluster,6,Cnc,2600,132.833875,11.811944,King Cobra Cluster,,3,1,0.5
+M68,NGC 4590,Globular Cluster,8,Hya,36000,189.866708,-26.743028,,,3,1,0.5
+M69,NGC 6637,Globular Cluster,7,Sgr,23500,277.846792,-32.347972,,,3,1,0.5
+M70,NGC 6681,Globular Cluster,8,Sgr,65000,280.802667,-32.291889,,,3,1,0.5
+M71,NGC 6838,Globular Cluster,8,Sge,13000,298.442125,18.778389,,,3,1,0.5
+M72,NGC 6981,Globular Cluster,9,Aqr,62000,313.366292,-12.537056,,,3,1,0.5
+M73,NGC 6994,Open Cluster,9,Aqr,NA,314.733208,-12.6355,,,3,1,0.5
+M74,NGC 628,Galaxy,9,Psc,26000000,24.173958,15.783667,Phantom Galaxy,,3,1,0.5
+M75,NGC 6864,Globular Cluster,8,Sgr,78500,301.520167,-21.922222,,,3,1,0.5
+M76,NGC 650,Planetary Nebula,10,Per,8200,25.582042,51.575472,Little Dumbbell Nebula,小亜鈴星雲,3,1,0.5
+M77,NGC 1068,Galaxy,8,Cet,52000000,40.669625,-0.013278,Cetus A,,3,1,0.5
+M78,NGC 2068,Reflection Nebula,8,Ori,1630,86.690917,0.079306,,,3,1,0.5
+M79,NGC 1904,Globular Cluster,8,Lep,43400,81.044125,-24.524222,,,3,1,0.5
+M80,NGC 6093,Globular Cluster,7,Sco,36000,244.260458,-22.975111,,,3,1,0.5
+M81,NGC 3031,Galaxy,6,UMa,8500000,148.888208,69.065306,Bode’s Galaxy,ボーデの銀河,3,1,0.5
+M82,NGC 3034,Galaxy,8,UMa,8500000,148.969708,69.679389,Cigar Galaxy,葉巻銀河,3,1,0.5
+M83,NGC 5236,Galaxy,7,Hya,8500000,204.253958,-29.865417,Southern Pinwheel Galaxy,南の回転花火銀河,3,1,0.5
+M84,NGC 4374,Galaxy,9,Vir,41000000,186.265583,12.886972,,,3,1,0.5
+M85,NGC 4382,Galaxy,9,Com,41000000,186.350458,18.1915,,,3,1,0.5
+M86,NGC 4406,Galaxy,9,Vir,20000000,186.548917,12.946222,,,3,1,0.5
+M87,NGC 4486,Galaxy,8,Vir,63000000,187.705917,12.391111,Virgo A,おとめ座A,3,1,0.5
+M88,NGC 4501,Galaxy,9,Com,41000000,187.9965,14.420389,,,3,1,0.5
+M89,NGC 4552,Galaxy,9,Vir,41000000,188.915875,12.556333,,,3,1,0.5
+M90,NGC 4560,Galaxy,9,Vir,41000000,189.207458,13.162944,,,3,1,0.5
+M91,NGC 4548,Galaxy,10,Com,37000000,188.860208,14.496333,,,3,1,0.5
+M92,NGC 6341,Globular Cluster,6,Her,28400,259.280292,43.136528,,,3,1,0.5
+M93,NGC 2447,Open Cluster,6,Pup,3600,116.121792,-23.853083,,,3,1,0.5
+M94,NGC 4736,Galaxy,8,CVn,32600000,192.721083,41.120444,Cat’s Eye Galaxy,,3,1,0.5
+M95,NGC 3351,Galaxy,9,Leo,20300000,160.990417,11.703806,,,3,1,0.5
+M96,NGC 3368,Galaxy,9,Leo,29300000,161.690583,11.819944,,,3,1,0.5
+M97,NGC 3587,Planetary Nebula,11,UMa,10000,168.698792,55.019028,Owl Nebula,ふくろう星雲,3,1,0.5
+M98,NGC 4192,Galaxy,10,Com,36000000,183.451208,14.900333,,,3,1,0.5
+M99,NGC 4254,Galaxy,9,Com,41000000,184.706667,14.4165,Coma Pinwheel,,3,1,0.5
+M100,NGC 4321,Galaxy,9,Com,41000000,185.728458,15.821806,,,3,1,0.5
+M101,NGC 5457,Galaxy,7,UMa,23000000,210.80225,54.348944,Pinwheel Galaxy,回転花火銀河,3,1,0.5
+M102,NGC 5866,Galaxy,10,,23000000,226.622917,55.763222,Spindle Galaxy,紡錘銀河,3,1,0.5
+M103,NGC 581,Open Cluster,7,Cas,8500,23.340875,60.658,,,3,1,0.5
+M104,NGC 4594,Galaxy,8,Crv,40000000,189.997625,-11.623056,Sombrero Galaxy,ソンブレロ銀河,3,1,0.5
+M105,NGC 3379,Galaxy,9,Leo,21500000,161.956625,12.581611,,,3,1,0.5
+M106,NGC 4258,Galaxy,8,CVn,20000000,184.739583,47.303972,,,3,1,0.5
+M107,NGC 6171,Globular Cluster,8,Oph,19200,248.133,-13.053639,,,3,1,0.5
+M108,NGC 3556,Galaxy,10,UMa,23500000,167.879042,55.674111,Surfboard Galaxy,,3,1,0.5
+M109,NGC 3992,Galaxy,9,UMa,27000000,179.399917,53.374528,,,3,1,0.5
+M110,NGC 205,Galaxy,8,And,2250000,10.092,41.685306,,,3,0.8,0.5
+,IC 434,HII,NA,Ori,,85.253667,-2.453778,Horsehead Nebula,馬頭星雲,1,1,0.5
+,NGC 2024,Emission Nebula,NA,Ori,,85.427375,-1.856278,Flame Nebula,火炎星雲,4,1,-2
+,NGC 2237,Emission Nebula,5.5,Mon,,97.727542,5.049167,Rosette Nebula,ばら星雲,3,1,0.5
+,NGC 7000,Emission Nebula,4,Cyg,,314.821417,44.528778,North America Nebula,北アメリカ星雲,3,1,0.5
+,NGC 5139,Globular Cluster,,Cen,,201.691208,-47.476861,Omega Centauri,オメガ星団,3,1,0.5
+,NGC 7009,Planetary Nebula,8.3,Aqr,,316.044958,-11.36325,Saturn Nebula,土星状星雲,3,1,0.5
+,NGC 7293,Planetary Nebula,6.3,Aqr,,337.410708,-20.837333,Helix Nebula,らせん星雲,3,1,0.5
+,NGC 7331,Galaxy,10.2,Peg,,339.266708,34.415528,Deer Lick Group,NGC 7331銀河群,3,1,0.5
+,NGC 7635,Emission Nebula,11,Cas,,350.19,61.212361,Bubble Nebula,バブル星雲,3,1,0.5
+,NGC 281,Emission Nebula,7.4,Cas,,13.247292,56.621889,PacMan Nebula,パックマン星雲,3,1,0.5
+,NGC 40,Planetary Nebula,10.7,Cep,,3.254292,72.521944,Bow-Tie Nebula,,3,1,0.5
+,NGC 7129,Reflection Nebula,11.5,Cep,,325.745958,66.112972,Small Cluster Nebula,,3,1,0.5
+,NGC 6946,Galaxy,9.8,Cyg,,308.718,60.153917,Fireworks Galaxy,花火銀河,3,1,0.5
+,NGC 6543,Planetary Nebula,8.3,Dra,,269.639125,66.633194,Cat's Eye Nebula,キャッツアイ星雲,3,1,0.5
+,NGC 6826,Planetary Nebula,8.8,Cyg,,296.200458,50.525028,Blinking Planetary Nebula,まばたき星雲,3,1,0.5
+,NGC 457,Open Cluster,5.1,Cas,,19.886042,58.290694,ET Cluster,ふくろう星団,3,1,0.5
+,NGC 6369,Planetary Nebula,11,Oph,,262.335417,-23.759444,Little Ghost Nebula,小さな幽霊星雲,3,1,0.5
+,NGC 7662,Planetary Nebula,8.6,And,,351.474583,42.534944,Blue Snowball Nebula,青い雪だるま星雲,3,1,0.5
+,NGC 6888,HII,10,Cyg,,303.027292,38.354944,Crescent Nebula,三日月星雲,3,1,0.5
+,NGC 6992,SNR,7,Cyg,,314.079458,31.74275,Veil Nebula (East),網状星雲(E),3,1,0.5
+,NGC 6960,SNR,7,Cyg,,311.492417,30.595139,Veil Nebula (West),網状星雲(W),3,1,0.5
+,NGC 253,Galaxy,7.9,Scl,,11.888,-25.288222,Sculptor Galaxy,ちょうこくしつ座銀河,3,1,0.5
+,NGC 1931,E/RN,14,Aur,,82.865417,34.248611,,,3,1,0.5
+,NGC 1973,E/RN,7,Ori,,83.775,-4.733333,,,3,1,0.5
+,NGC 2261,E/RN,NA,Mon,,99.791667,8.75,Hubble's Variable Nebula,,3,1,0.5
+,NGC 1491,Emission Nebula,NA,Per,,60.835833,51.321389,,,3,1,0.5
+,NGC 2359,Emission Nebula,NA,CMa,,109.625,-13.233333,Thor's Helmet Nebula,,3,1,0.5
+,NGC 185,Galaxy,10.2,Cas,,9.74125,48.3375,,,3,1,0.5
+,NGC 891,Galaxy,10.9,And,,35.64,42.346111,Silver Needle Galaxy,,3,1,0.5
+,NGC 772,Galaxy,10.6,Ari,,29.833333,19.007778,,,3,1,0.5
+,NGC 936,Galaxy,11.2,Cet,,36.90625,-1.155556,,,3,1,0.5
+,NGC 1023,Galaxy,9.6,Per,,40.1,39.063333,,,3,1,0.5
+,NGC 1232,Galaxy,10.6,Eri,,47.43875,-20.580833,,,3,1,0.5
+,NGC 2403,Galaxy,8.8,Cam,,114.21125,65.6025,,,3,1,0.5
+,NGC 2655,Galaxy,11,Cam,,133.912083,78.223611,,,3,1,0.5
+,NGC 2683,Galaxy,10,Lyn,,133.171667,33.421111,UFO Galaxy,,3,1,0.5
+,NGC 2841,Galaxy,10,UMa,,140.510417,50.976389,,,3,1,0.5
+,NGC 3079,Galaxy,11.4,UMa,,150.49375,55.680556,,,3,1,0.5
+,NGC 3184,Galaxy,10.4,UMa,,154.570833,41.424444,,,3,1,0.5
+,NGC 3877,Galaxy,11.8,UMa,,176.5325,47.494722,,,3,1,0.5
+,NGC 3941,Galaxy,11.3,UMa,,178.230417,36.986389,,,3,1,0.5
+,NGC 4026,Galaxy,11.7,UMa,,179.855,50.961667,,,3,1,0.5
+,NGC 4088,Galaxy,11.3,UMa,,181.390417,50.539444,,,3,1,0.5
+,NGC 4157,Galaxy,12.1,UMa,,182.770417,50.485278,,,3,1,0.5
+,NGC 4605,Galaxy,10.8,UMa,,189.9975,61.609167,,,3,1,0.5
+,NGC 3115,Galaxy,10,Sex,,151.308333,-7.718611,Spindle Galaxy,,3,1,0.5
+,NGC 3003,Galaxy,12.2,LMi,,147.148333,33.421944,,,3,1,0.5
+,NGC 3344,Galaxy,10.5,LMi,,160.88,24.922222,,,3,1,0.5
+,NGC 3432,Galaxy,11.6,LMi,,163.12875,36.619167,,,3,1,0.5
+,NGC 2903,Galaxy,10,Leo,,143.040417,21.500833,,,3,1,0.5
+,NGC 3384,Galaxy,10.9,Leo,,162.070417,12.628611,,,3,1,0.5
+,NGC 3521,Galaxy,9.9,Leo,,166.453333,-0.035,,,3,1,0.5
+,NGC 3607,Galaxy,10.9,Leo,,169.227083,18.053056,,,3,1,0.5
+,NGC 3628,Galaxy,10,Leo,,170.070417,13.591111,,,3,1,0.5
+,NGC 4111,Galaxy,11.7,CVn,,181.763333,43.065278,,,3,1,0.5
+,NGC 4214,Galaxy,10.2,CVn,,183.912917,36.328056,,,3,1,0.5
+,NGC 4244,Galaxy,10.4,CVn,,184.372917,37.806944,Silver Needle Galaxy,,3,1,0.5
+,NGC 4449,Galaxy,9.5,CVn,,187.045417,44.0925,,,3,1,0.5
+,NGC 4490,Galaxy,9.8,CVn,,187.651667,41.643611,Cocoon Galaxy,,3,1,0.5
+,NGC 4631,Galaxy,9.5,CVn,,190.532083,32.542778,Whale Galaxy,,3,1,0.5
+,NGC 4656,Galaxy,9.7,CVn,,190.99,32.170278,Hockey Stick  Galaxy,,3,1,0.5
+,NGC 5005,Galaxy,10.5,CVn,,197.734583,37.058333,,,3,1,0.5
+,NGC 5033,Galaxy,10.7,CVn,,198.364583,36.593611,,,3,1,0.5
+,NGC 4274,Galaxy,11.3,Com,,184.960417,29.614167,,,3,1,0.5
+,NGC 4414,Galaxy,11,Com,,186.612917,31.222778,,,3,1,0.5
+,NGC 4494,Galaxy,10.7,Com,,187.85,25.775,,,3,1,0.5
+,NGC 4559,Galaxy,10.3,Com,,188.990417,27.959722,,,3,1,0.5
+,NGC 4565,Galaxy,10.1,Com,,189.086667,25.9875,Needle Galaxy,,3,1,0.5
+,NGC 4725,Galaxy,9.9,Com,,192.610833,25.500833,,,3,1,0.5
+,NGC 4038,Galaxy,10.9,Crv,,180.470417,-18.8675,The Antennae Galaxy,,3,1,0.5
+,NGC 4216,Galaxy,11,Vir,,183.97625,13.15,,,3,1,0.5
+,NGC 4388,Galaxy,11.9,Vir,,186.445,12.662222,,,3,1,0.5
+,NGC 4438,Galaxy,10.9,Vir,,186.94125,13.008889,The Eyes Galaxy,,3,1,0.5
+,NGC 4517,Galaxy,11.1,Vir,,188.19,0.115,,,3,1,0.5
+,NGC 4526,Galaxy,10.6,Vir,,188.5125,7.699167,,,3,1,0.5
+,NGC 4535,Galaxy,10.5,Vir,,188.584583,8.197778,Lost Galaxy,,3,1,0.5
+,NGC 4567,Galaxy,12.1,Vir,,189.13625,11.257778,Siamese Twins Galaxy,,3,1,0.5
+,NGC 4699,Galaxy,10.4,Vir,,192.259167,-8.664444,,,3,1,0.5
+,NGC 4762,Galaxy,11.1,Vir,,193.232917,11.230556,,,3,1,0.5
+,NGC 5746,Galaxy,11.4,Vir,,221.233333,1.954722,,,3,1,0.5
+,NGC 5907,Galaxy,11.1,Dra,,228.97375,56.328889,Splinter Galaxy,,3,1,0.5
+,NGC 6503,Galaxy,10.8,Dra,,267.360417,70.144444,,,3,1,0.5
+,NGC 5466,Globular Cluster,9.2,Boo,,211.3625,28.535,,,3,1,0.5
+,NGC 6712,Globular Cluster,8.1,Sct,,283.266667,-8.705,,,3,1,0.5
+,NGC 7789,Open Cluster,7.5,Cas,,359.35,56.708333,,,3,1,0.5
+,NGC 663,Open Cluster,6.4,Cas,,26.5375,61.235,,,3,1,0.5
+,NGC 884,Open Cluster,4.4,Per,,35.575,57.136667,Double Cluster,,3,1,0.5
+,NGC 2194,Open Cluster,10,Ori,,93.4375,12.806667,,,3,1,0.5
+,NGC 2539,Open Cluster,8,Pup,,122.654167,-12.818333,,,3,1,0.5
+,NGC 6633,Open Cluster,5.6,Oph,,276.8125,6.508333,,,3,1,0.5
+,NGC 6819,Open Cluster,9.5,Cyg,,295.325,40.186667,,,3,1,0.5
+,NGC 6520,Open Cluster,7.6,Sgr,,270.85,-27.888333,,,3,1,0.5
+,NGC 6802,Open Cluster,11.7,Vul,,292.645833,20.261667,,,3,1,0.5
+,NGC 6940,Open Cluster,7.2,Vul,,308.608333,28.283333,,,3,1,0.5
+,NGC 6939,Open Cluster,10.1,Cep,,307.875,60.661667,,,3,1,0.5
+,IC 289,Planetary Nebula,12,Cas,,47.580417,61.316944,,,3,1,0.5
+,NGC 246,Planetary Nebula,10.4,Cet,,11.76375,-11.871944,Skull Nebula,,3,1,0.5
+,NGC 1501,Planetary Nebula,12,Cam,,61.746667,60.920556,,,3,1,0.5
+,NGC 1535,Planetary Nebula,9.4,Eri,,63.565833,-12.739444,Cleopatra's Eye Nebula,,3,1,0.5
+,NGC 1514,Planetary Nebula,10.8,Tau,,62.320833,30.775833,Crystal Ball Nebula,,3,1,0.5
+,NGC 2022,Planetary Nebula,11.7,Ori,,85.525833,9.086389,,,3,1,0.5
+,NGC 2371,Planetary Nebula,11.2,Gem,,111.394583,29.490556,Gemini Nebula,,3,1,0.5
+,NGC 2392,Planetary Nebula,8.6,Gem,,112.295,20.911667,Clown Face Nebula,,3,1,0.5
+,NGC 2440,Planetary Nebula,11.5,Pup,,115.480833,-18.208611,,,3,1,0.5
+,NGC 3242,Planetary Nebula,8.6,Hya,,156.192083,-18.642222,Ghost of Jupiter Nebula,,3,1,0.5
+,NGC 4361,Planetary Nebula,10.9,Crv,,186.128333,-18.785,,,3,1,0.5
+,NGC 6210,Planetary Nebula,9.7,Her,,251.122917,23.8,Turtle Nebula,,3,1,0.5
+,NGC 6572,Planetary Nebula,8,Oph,,273.026667,6.853333,Blue Racquetball Nebula,,3,1,0.5
+,NGC 6781,Planetary Nebula,11.8,Aql,,289.617083,6.538611,,,3,1,0.5
+,NGC 7027,Planetary Nebula,9.6,Cyg,,316.757083,42.236111,Magic Carpet Nebula,,3,1,0.5
+,NGC 6445,Planetary Nebula,13,Sgr,,267.312917,-20.009444,,,3,1,0.5
+,NGC 6818,Planetary Nebula,10,Sgr,,295.990833,-14.153333,Little Gem Nebula,,3,1,0.5
+,NGC 1788,Reflection Nebula,NA,Ori,,76.725,-3.333333,,,3,1,0.5
