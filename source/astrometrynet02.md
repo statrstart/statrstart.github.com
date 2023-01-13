@@ -259,7 +259,7 @@ prn <- 1
 #### wcsファイルとラベル等表示に使うファイル４つの読み込みと必要部分の抽出
 
 ```R
-# astroパッケージのread.fitshdrでwcsを読み込み、データフレームに変換。
+# wcsを読み込む。
 hdr<- read.wcs(paste0(imagename,".wcs"))
 width=as.numeric(hdr[hdr$key=="IMAGEW",2])
 height=as.numeric(hdr[hdr$key=="IMAGEH",2])
@@ -284,8 +284,7 @@ if (B.Mag != 100){
 # 星座線
 line<- read.csv(file = "~/astrometry/constellation_lineJ.csv", header = T)
 line<- unique(rbind(inarea(line,area,RA="RA1",Dec="Dec1"),inarea(line,area,RA="RA2",Dec="Dec2")))
-
-if (Constellation=="All"){
+if ("All" %in% Constellation){
 	pline<- line
 	} else {
 	pline<- line[is.element(line$Constellation,Constellation),]

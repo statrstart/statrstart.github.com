@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR（番外編：星座線）
-date: 2022-12-27
+date: 2023-01-11
 tags: ["R","celestial","stellarium"]
 excerpt: 星座線いろいろ
 ---
@@ -8,6 +8,8 @@ excerpt: 星座線いろいろ
 # astrometry.netとR（番外編：星座線）
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FConstellation01&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
+
+## (注意)星の配置、星座線の形は、「天球の外から見た天球の状況（現実に見るものと左右が反対）」です。
 
 作図するときに使う星や星座線や天体のデータを検索している際に以下の文章が目に止まりました。    
  

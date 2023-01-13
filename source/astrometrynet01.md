@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR その１（準備編）
-date: 2022-12-14
+date: 2023-01-10
 tags: ["astrometry.net"]
 excerpt: astrometry.netのインストールと使い方
 ---
