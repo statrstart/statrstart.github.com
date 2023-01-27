@@ -131,19 +131,19 @@ plotann.py --no-grid --no-ngc --no-bright -t "M 31" image001.wcs image001.jpg im
 
 [銘匠光学 TTArtisan 17mm F1.4 APS-C Correction File:https://ttartisan.com/static/upload/file/20220601/1654070780198089.rar](https://ttartisan.com/static/upload/file/20220601/1654070780198089.rar)
 
-#### 補正前
+#### 補正前の画像で作成
 
 ![before001.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/before001.jpg)
 
 - アンドロメダ大銀河あたりは完全にずれています。アンドロメダ大銀河と位置を示す円は全く一致していません。
 
-#### 補正後
+#### 補正後の画像で作成
 
 ![after001.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/after001.jpg)
 
 - アンドロメダ大銀河が位置を示す円の中にきちんと収まっています。星座線のずれもさほど気になりません。
 
-#### おまけ(補正後のデータを使ってRの自作プログラムで作成した画像)
+#### おまけ(補正後の画像とastrometry.netの出力（wcsファイル）を使ってRの自作プログラムで作成した画像)
 
 星座の名前はめんどくさいので書いていません。
 
