@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR その3
-date: 2023-01-13
+date: 2023-01-27
 tags: ["R","sf","celestial","showtext","astrometry.net"]
 excerpt: 撮影範囲とその周辺
 ---
@@ -91,9 +91,9 @@ inarea<- function(data,area,RA="RA",Dec="Dec"){
 	# RAは -180<=RA<=180に変換(元のデータは書き換えないこと)
 	temp <- data
 	temp[temp[,RA]>180,RA] <- temp[temp[,RA]>180,RA]-360
-	df<-st_as_sf(data.frame(type=1:nrow(temp),RA=temp[,RA],Dec=temp[,Dec]),coords=c("RA","Dec"))
+	df<-st_as_sfc(st_as_sf(data.frame(RA=temp[,RA],Dec=temp[,Dec]),coords=c("RA","Dec"),crs=4326))
 	# polygon
-	s <- st_polygon(list(area)) 
+	s <- st_as_sfc(st_as_binary(st_sfc(st_polygon(list(area))))[[1]] ,crs=4326)
 	indata <- st_intersects(df,s,sparse = FALSE)
 	# RAは変換前の値をかえす。
 	return(data[indata,])

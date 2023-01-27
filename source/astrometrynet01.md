@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR その１（準備編）
-date: 2023-01-10
+date: 2023-01-27
 tags: ["astrometry.net"]
 excerpt: astrometry.netのインストールと使い方
 ---
@@ -9,7 +9,9 @@ excerpt: astrometry.netのインストールと使い方
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2Fastrometrynet01&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
-astrometry.netを使って得たwcsファイルとRを使って星野写真に星の名前や天体名を記入する方法の自分のための備忘録です。  
+astrometry.netを使って得たwcsファイルとRを使って星野写真に星の名前や天体名を記入する方法の自分のための備忘録です。 
+
+## 2023-01-27 : 例４追加 
 
 OS : ubuntu20.04
 
@@ -120,4 +122,31 @@ plotann.py --no-grid --no-ngc --no-bright -t "M 31" image001.wcs image001.jpg im
 ![image003.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/image003.jpg)
 
 ![imageann003.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/imageann003.jpg)
+
+### 例４: Nex-5 + 銘匠光学(TTArtisan) 17mm F1.4
+
+銘匠光学(TTArtisan) 17mm F1.4 のレンズプロファイルが公開されています。補正は「Raw Therapee」を使って行いました。
+
+[TTArtisan:DownloadCenter](https://ttartisan.com/?DownloadCenter/)
+
+[銘匠光学 TTArtisan 17mm F1.4 APS-C Correction File:https://ttartisan.com/static/upload/file/20220601/1654070780198089.rar](https://ttartisan.com/static/upload/file/20220601/1654070780198089.rar)
+
+#### 補正前
+
+![before001.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/before001.jpg)
+
+- アンドロメダ大銀河あたりは完全にずれています。アンドロメダ大銀河と位置を示す円は全く一致していません。
+
+#### 補正後
+
+![after001.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/after001.jpg)
+
+- アンドロメダ大銀河が位置を示す円の中にきちんと収まっています。星座線のずれもさほど気になりません。
+
+#### おまけ(補正後のデータを使ってRの自作プログラムで作成した画像)
+
+星座の名前はめんどくさいので書いていません。
+
+![astro06.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro06.png)
+
 

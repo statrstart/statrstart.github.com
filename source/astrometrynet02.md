@@ -1,6 +1,6 @@
 ---
-title: astrometry.netとR その２
-date: 2023-01-12
+title: astrometry.netとR その２(更新)
+date: 2023-01-27
 tags: ["R","sf","celestial","showtext","astrometry.net"]
 excerpt: Rを使って星野写真に星の名前や天体名を記入する
 ---
@@ -10,6 +10,7 @@ excerpt: Rを使って星野写真に星の名前や天体名を記入する
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2Fastrometrynet02&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
 ## (2023-01-12)inarea 関数訂正。`RA`とすべきところを`"RA"`としていました。
+## (2023-01-27)inarea 関数訂正。
 
 astrometry.netを使って得たwcsファイルとRを使って星野写真に星の名前や天体名を記入する方法の自分のための備忘録です。  
 こちらのpythonプログラム[Galaxy Annotator v0.9](https://github.com/rnanba/GalaxyAnnotator#readme)を見て、Rでもやってみました。 
@@ -145,9 +146,9 @@ inarea<- function(data,area,RA="RA",Dec="Dec"){
 	# RAは -180<=RA<=180に変換(元のデータは書き換えないこと)
 	temp <- data
 	temp[temp[,RA]>180,RA] <- temp[temp[,RA]>180,RA]-360
-	df<-st_as_sf(data.frame(type=1:nrow(temp),RA=temp[,RA],Dec=temp[,Dec]),coords=c("RA","Dec"))
+	df<-st_as_sfc(st_as_sf(data.frame(RA=temp[,RA],Dec=temp[,Dec]),coords=c("RA","Dec"),crs=4326))
 	# polygon
-	s <- st_polygon(list(area)) 
+	s <- st_as_sfc(st_as_binary(st_sfc(st_polygon(list(area))))[[1]] ,crs=4326)
 	indata <- st_intersects(df,s,sparse = FALSE)
 	# RAは変換前の値をかえす。
 	return(data[indata,])
