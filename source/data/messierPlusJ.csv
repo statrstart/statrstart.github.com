@@ -40,7 +40,7 @@ M38,NGC 1912,Open Cluster,6,Aur,2750,82.177042,35.854917,Starfish Cluster,,3,1,0
 M39,NGC 7092,Open Cluster,4,Cyg,880,322.951333,48.438167,,,3,1,0.5
 M40,Winnecke 4,Double star,9,,NA,185.552208,58.082944,Winnecke 4,,3,1,0.5
 M41,NGC 2287,Open Cluster,4,CMa,1600,101.49975,-20.754222,,,3,1,0.5
-M42,NGC 9176,Emission Nebula,4,Ori,1500,83.818667,-5.389667,Orion Nebula,オリオン大星雲,1,1,0.5
+M42,NGC 1976,Emission Nebula,4,Ori,1500,83.818667,-5.389667,Orion Nebula,オリオン大星雲,1,1,0.5
 M43,NGC 1982,Reflection Nebula,9,Ori,1500,83.88075,-5.267472,,,3,0.8,0.5
 M44,NGC 2632,Open Cluster,3,Cnc,520,130.0925,19.672056,Beehive Cluster,プレセペ星団,3,1,0.5
 M45,,Open Cluster,1,,410,56.75,24.118056,Pleiades,プレアデス星団,3,1,0.5
@@ -132,7 +132,6 @@ M110,NGC 205,Galaxy,8,And,2250000,10.092,41.685306,,,3,0.8,0.5
 ,NGC 6960,SNR,7,Cyg,,311.492417,30.595139,Veil Nebula (West),網状星雲(W),3,1,0.5
 ,NGC 253,Galaxy,7.9,Scl,,11.888,-25.288222,Sculptor Galaxy,ちょうこくしつ座銀河,3,1,0.5
 ,NGC 1931,E/RN,14,Aur,,82.865417,34.248611,,,3,1,0.5
-,NGC 1973,E/RN,7,Ori,,83.775,-4.733333,,,3,1,0.5
 ,NGC 2261,E/RN,NA,Mon,,99.791667,8.75,Hubble's Variable Nebula,,3,1,0.5
 ,NGC 1491,Emission Nebula,NA,Per,,60.835833,51.321389,,,3,1,0.5
 ,NGC 2359,Emission Nebula,NA,CMa,,109.625,-13.233333,Thor's Helmet Nebula,,3,1,0.5
@@ -222,3 +221,10 @@ M110,NGC 205,Galaxy,8,And,2250000,10.092,41.685306,,,3,0.8,0.5
 ,NGC 6445,Planetary Nebula,13,Sgr,,267.312917,-20.009444,,,3,1,0.5
 ,NGC 6818,Planetary Nebula,10,Sgr,,295.990833,-14.153333,Little Gem Nebula,,3,1,0.5
 ,NGC 1788,Reflection Nebula,NA,Ori,,76.725,-3.333333,,,3,1,0.5
+,NGC 2071,Reflection Nebula,8,Ori,,86.78025,0.29425,,,3,1,0.5
+,NGC 2064,Reflection Nebula,NA,Ori,,86.576625,0.005944,,,3,0.8,0.5
+,NGC 2067,Reflection Nebula,NA,Ori,,86.632833,0.13125,,,3,0.8,0.5
+,NGC 2112,Open Cluster,NA,Ori,,88.438375,0.410806,,,3,1,0.5
+,NGC 1973,Neb,7,Ori,,83.775,-4.733333,,,3,0.8,0.5
+,NGC 1975,Neb,7,Ori,,83.8245,-4.685222,,,3,0.8,0.5
+,NGC 1977,Cl+N,NA,Ori,,83.815833,-4.844333,Running Man Nebula,ランニングマン星雲,3,1,0.5
