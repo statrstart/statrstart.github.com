@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR その２(更新)
-date: 2023-01-27
+date: 2023-02-01
 tags: ["R","sf","celestial","showtext","astrometry.net"]
 excerpt: Rを使って星野写真に星の名前や天体名を記入する
 ---
@@ -55,11 +55,15 @@ OS : ubuntu20.04
 （サンプル画像について）  
 - カメラ : PENTAX K-S1 + アストロトレーサー2  
 - レンズ : RICOH XR RIKENON 50mm F2 S (35mm換算 : 75mm)  
+- レンズ : SMC PENTAX-M 135mm F3.5 (35mm換算 : 203mm)
 - 使用したソフト : Siril , Raw Therapee で処理 -> 800 * 534 にリサイズ  
 
 （注意）  
 35mm換算:75mmより広角になると、当然、ラベル等のズレが大きくなります。  
-実際、Nex-5 で17mmレンズを使った写真ではかなりのズレがでました。  
+実際、Nex-5 で17mmレンズを使った写真ではかなりのズレがでました。(レンズプロファイルを使うことで改善されることもある。) 
+
+改善された例：astrometry.netとR その１（準備編）にサンプルを載せました。  
+銘匠光学(TTArtisan) 17mm F1.4 のレンズプロファイル[TTArtisan:DownloadCenter](https://ttartisan.com/?DownloadCenter/)  
 
 ### 例１ 
 
