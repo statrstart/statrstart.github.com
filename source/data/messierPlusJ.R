@@ -1,4 +1,5 @@
-Name,NGC,Object.type,Magnitude,Constellation,Distance,RA,Dec,CommonName,CommonNameJ,Position,Size,Offset
+messierPlusJ<-read.csv(text=
+"Name,NGC,Object.type,Magnitude,Constellation,Distance,RA,Dec,CommonName,CommonNameJ,Position,Size,Offset
 M1,NGC 1952,Supernova remnant,8,Tau,6500,83.633208,22.014472,Crab Nebula,かに星雲,3,1,0.5
 M2,NGC 7089,Globular Cluster,6,Aqr,55000,323.362542,-0.823306,,,3,1,0.5
 M3,NGC 5272,Globular Cluster,6,CVn,48500,205.546792,28.375444,,,3,1,0.5
@@ -229,4 +230,5 @@ M110,NGC 205,Galaxy,8,And,2250000,10.092,41.685306,,,3,0.8,0.5
 ,NGC 1975,Neb,7,Ori,,83.8245,-4.685222,,,3,0.8,0.5
 ,NGC 1977,Cl+N,NA,Ori,,83.815833,-4.844333,Running Man Nebula,ランニングマン星雲,3,1,0.5
 ,IC 2118,Dup,NA,Eri,,76.231,-7.265639,Witch Head Nebula,魔女の横顔星雲,3,1,0.5
-,NGC 7023,Neb,7.2,Cep,,315.398417,68.169556,Iris Nebula,アイリス星雲,3,1,0.5
+,NGC 7023,Neb,7.2,Cep,,315.398417,68.169556,Iris Nebula,アイリス星雲,3,1,0.5"
+)

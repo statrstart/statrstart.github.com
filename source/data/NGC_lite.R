@@ -1,4 +1,5 @@
-Name,NGC,IC,Type,RA,Dec,Const,MajAx,MinAx,PosAng,B.Mag
+NGC_lite<-read.csv(text=
+"Name,NGC,IC,Type,RA,Dec,Const,MajAx,MinAx,PosAng,B.Mag
 IC 2,,,G,2.753667,-12.822861,Cet,0.98,0.32,142,15.46
 IC 3,,,G,3.025375,-0.415222,Psc,0.93,0.67,53,15.1
 IC 7,,,G,4.7215,10.594694,Psc,0.9,0.63,174,14.7
@@ -13946,4 +13947,6 @@ NGC 4559C,,IC 3550,HII,188.967167,27.932083,Com,,,,
 NGC 7607,,IC 1480,**,349.746833,11.341722,Peg,,,,
 ,NGC 7607,,Dup,349.746833,11.341722,Peg,,,,
 NGC 7613,(NGC 7614),,Other,349.965667,0.198861,Psc,,,,
-,,,Other,349.965667,0.198861,Psc,,,,
+,,,Other,349.965667,0.198861,Psc,,,,"
+)
+
