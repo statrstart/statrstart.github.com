@@ -242,7 +242,7 @@ posN<- rdsip2xy(RA=ngc$RA,Dec=ngc$Dec, header=hdr)
 posH<- rdsip2xy(RA=hip$RA,Dec=hip$Dec, header=hdr)
 posZ<- matrix(c(rdsip2xy(RA=pline$RA1,Dec=pline$Dec1, header=hdr),rdsip2xy(RA=pline$RA2,Dec=pline$Dec2, header=hdr)),nrow=nrow(pline))
 #
-img <- readJPEG(paste0(image,".jpg")) 
+img <- readJPEG(paste0(image,".jpg"),native=TRUE) 
 #################### プロット ####################
 
 # png("astro%02d.png",width=width,height=height,type = "cairo")
@@ -432,7 +432,7 @@ posN<- rdsip2xy(RA=ngc$RA,Dec=ngc$Dec, header=hdr)
 posH<- rdsip2xy(RA=hip$RA,Dec=hip$Dec, header=hdr)
 posZ<- matrix(c(rdsip2xy(RA=pline$RA1,Dec=pline$Dec1, header=hdr),rdsip2xy(RA=pline$RA2,Dec=pline$Dec2, header=hdr)),nrow=nrow(pline))
 #
-img <- readJPEG(paste0(image,".jpg")) 
+img <- readJPEG(paste0(image,".jpg"),native=TRUE) 
 #################### プロット ####################
 # png("astro%02d.png",width=width,height=height,type = "cairo")
 par(mfrow=c(1,1),mar=rep(0,4)) # 余白なしの設定
