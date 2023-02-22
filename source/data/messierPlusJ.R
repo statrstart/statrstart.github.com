@@ -44,7 +44,7 @@ M41,NGC 2287,Open Cluster,4,CMa,1600,101.49975,-20.754222,,,3,1,0.5
 M42,NGC 1976,Emission Nebula,4,Ori,1500,83.818667,-5.389667,Orion Nebula,オリオン大星雲,1,1,0.5
 M43,NGC 1982,Reflection Nebula,9,Ori,1500,83.88075,-5.267472,,,3,0.8,0.5
 M44,NGC 2632,Open Cluster,3,Cnc,520,130.0925,19.672056,Beehive Cluster,プレセペ星団,3,1,0.5
-M45,,Open Cluster,1,,410,56.75,24.118056,Pleiades,プレアデス星団,3,1,0.5
+M45,,Open Cluster,1,Tau,410,56.75,24.118056,Pleiades,プレアデス星団,3,1,0.5
 M46,NGC 2437,Open Cluster,6,Pup,3200,115.445083,-14.81,,,3,1,0.5
 M47,NGC 2422,Open Cluster,4,Pup,1750,114.145917,-14.482611,,,3,1,0.5
 M48,NGC 2548,Open Cluster,5,Hya,1500,123.429917,-5.750444,,,3,1,0.5
@@ -230,5 +230,6 @@ M110,NGC 205,Galaxy,8,And,2250000,10.092,41.685306,,,3,0.8,0.5
 ,NGC 1975,Neb,7,Ori,,83.8245,-4.685222,,,3,0.8,0.5
 ,NGC 1977,Cl+N,NA,Ori,,83.815833,-4.844333,Running Man Nebula,ランニングマン星雲,3,1,0.5
 ,IC 2118,Dup,NA,Eri,,76.231,-7.265639,Witch Head Nebula,魔女の横顔星雲,3,1,0.5
-,NGC 7023,Neb,7.2,Cep,,315.398417,68.169556,Iris Nebula,アイリス星雲,3,1,0.5"
+,NGC 7023,Neb,7.2,Cep,,315.398417,68.169556,Iris Nebula,アイリス星雲,3,1,0.5
+,,Open Cluster,NA,Tau,,66.725,15.86667,Hyades Cluster,ヒアデス星団,3,1,0.5"
 )
