@@ -1,6 +1,6 @@
 ---
-title: astrometry.netとR その４
-date: 2023-02-22
+title: astrometry.netとR その４(更新)
+date: 2023-03-11
 tags: ["R","sf","jpeg","showtext","astrometry.net"]
 excerpt: Rを使って星野写真に星の名前や天体名を記入する(関数化)
 ---
@@ -10,6 +10,8 @@ excerpt: Rを使って星野写真に星の名前や天体名を記入する(関
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2Fastrometrynet04&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
  
 （作成したデータ）source関数で読み込むようにしました。 
+
+2023-03-11 : サンプルデータを３つ追加(赤緯によって精度がどう変化するか？)
  
 1. ステラリウムのwesternをもとに作成した星座線データ。線の総数６７６本。  
 [constellation_lineJ.R](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/constellation_lineJ.R)
@@ -41,7 +43,7 @@ R version 4.2.2 Patched (2022-11-10 r83330)
 (使用したカメラとレンズ)  
 
 (カメラ) Nex-5   
-(レンズ) 銘匠光学(TTArtisan) 17mm F1.4  (公開されたレンズプロファイルで補正[Raw Therapee使用])
+(レンズ) 銘匠光学(TTArtisan) 17mm F1.4  (公開されたレンズプロファイルで補正[RawTherapee使用])
 - [TTArtisan:DownloadCenter](https://ttartisan.com/?DownloadCenter/)
 - [銘匠光学 TTArtisan 17mm F1.4 APS-C Correction File:https://ttartisan.com/static/upload/file/20220601/1654070780198089.rar](https://ttartisan.com/static/upload/file/20220601/1654070780198089.rar)
 
@@ -90,6 +92,24 @@ source(paste0(url,"hip_majorJ.R"))
 source(paste0(url,"messierPlusJ.R"))
 source(paste0(url,"boundaryline.R"))
 source(paste0(url,"NGC_lite.R"))
+```
+
+#### write.csv で保存しておくと、データの追加、削除、変更がしやすい。
+
+```R
+# write.csv(hip_majorJ,file="hip_majorJ.csv",row.names=F)
+# write.csv(messierPlusJ,file="messierPlusJ.csv",row.names=F)
+# write.csv(NGC_lite,file="NGC_lite.csv",row.names=F)
+# write.csv(constellation_lineJ,file="constellation_lineJ.csv",row.names=F)
+# write.csv(constellation_lineJF,file="constellation_lineJF.csv",row.names=F)
+# write.csv(boundaryline,file="boundaryline.csv",row.names=F)
+######################## 必要なデータの読み込み(write.csv で保存した場合) ########################
+#messierPlusJ<- read.csv(file = "messierPlusJ.csv")
+#hip_majorJ<- read.csv(file = "hip_majorJ.csv")
+#NGC_lite <- read.csv(file = "NGC_lite.csv")
+#constellation_lineJ <- read.csv(file = "constellation_lineJ.csv")
+#constellation_lineJF <- read.csv(file = "constellation_lineJF.csv")
+#boundaryline<- read.csv(file = "boundaryline.csv")
 ```
 
 #### プログラム本体 (plotAstro.R)
@@ -180,3 +200,77 @@ showtext_end()
 
 ![astro094.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/astro094.png)
 
+#### image17_1.jpg、image17_1.wcs, image17_2.jpg、image17_2.wcs, image17_3.jpg、image17_3.wcsを作業ディレクトリにダウンロード
+（注意）同じ名前のデータがあったら上書きします。
+
+#### astrometry.netのsolve-field
+
+（注意） `-9 --uniformize 0` オプションを付けると速いが、最適なカタログが選択されない場合がある。
+
+```
+solve-field -u 'focalmm' -H 25 -z 2 -O image17_1.jpg
+```
+
+```R
+download.file(paste0(url,"image17_1.jpg"),"image17_1.jpg",mode = "wb")
+download.file(paste0(url,"image17_1.wcs"),"image17_1.wcs")
+download.file(paste0(url,"image17_2.jpg"),"image17_2.jpg",mode = "wb")
+download.file(paste0(url,"image17_2.wcs"),"image17_2.wcs")
+download.file(paste0(url,"image17_3.jpg"),"image17_3.jpg",mode = "wb")
+download.file(paste0(url,"image17_3.wcs"),"image17_3.wcs")
+```
+
+#### 元画像
+![image17_1.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/image17_1.jpg)
+
+![image17_2.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/image17_2.jpg)
+
+![image17_3.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/image17_3.jpg)
+
+```R
+file="image17_1"
+#
+# showtext パッケージ
+require(showtext)
+## system font
+font_add("NotoJ", "NotoSerifCJK-Bold.ttc")
+# png("astro%02d.png",width=1150,height=766)
+par(family="NotoJ")
+showtext_begin()
+plotAstroJ(file,starM=4,ngcM=0,el=7,condata=TRUE,boundary=TRUE,Const="")
+#「冬の大三角」
+# オリオン座のベテルギウス（Betelgeuse)
+# おおいぬ座のシリウス（Sirius）
+# こいぬ座のプロキオン（Procyon）
+# を線で結ぶ。
+hdr=read.wcs(paste0(file,".wcs"))
+star1=hip_majorJ[hip_majorJ$Name=="Betelgeuse",]
+pos1=rdsip2xy(RA=star1$RA,Dec=star1$Dec,header=hdr)
+star2=hip_majorJ[hip_majorJ$Name=="Sirius",]
+pos2=rdsip2xy(RA=star2$RA,Dec=star2$Dec,header=hdr)
+star3=hip_majorJ[hip_majorJ$Name=="Procyon",]
+pos3=rdsip2xy(RA=star3$RA,Dec=star3$Dec,header=hdr)
+polygon(x=c(pos1[,1],pos2[,1],pos3[,1]),y=c(pos1[,2],pos2[,2],pos3[,2]),border="orange",lwd=2)
+# locator2(3)
+# [1] "237.76,192.05,789.33"
+# [1] "210.02,694.98,430.18"
+text(x=c(237.76,192.05,789.33),y=c(210.02,694.98,430.18),labels=paste0(c("こいぬ","おおいぬ","オリオン"),"座"),col="red")
+showtext_end()
+# dev.off()
+#
+# file="image17_2"
+# file="image17_3"
+# font_add("NotoJ", "NotoSerifCJK-Bold.ttc")
+# png("astro%02d.png",width=1150,height=766)
+# par(family="NotoJ")
+# showtext_begin()
+# plotAstroJ(file,starM=4,ngcM=0,el=7,condata=TRUE,boundary=TRUE)
+# showtext_end()
+# dev.off()
+```
+
+![astro17_1.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/astro17_1.png)
+
+![astro17_2.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/astro17_2.png)
+
+![astro17_3.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/astro17_3.png)
