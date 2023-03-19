@@ -242,7 +242,8 @@ posN<- rdsip2xy(RA=ngc$RA,Dec=ngc$Dec, header=hdr)
 posH<- rdsip2xy(RA=hip$RA,Dec=hip$Dec, header=hdr)
 posZ<- matrix(c(rdsip2xy(RA=pline$RA1,Dec=pline$Dec1, header=hdr),rdsip2xy(RA=pline$RA2,Dec=pline$Dec2, header=hdr)),nrow=nrow(pline))
 #
-img <- readJPEG(paste0(image,".jpg"),native=TRUE) 
+#img <- readJPEG(paste0(image,".jpg")) 
+img <- readJPEG(paste0(image,".jpg") ,native = TRUE)
 #################### プロット ####################
 
 # png("astro%02d.png",width=width,height=height,type = "cairo")
@@ -432,7 +433,8 @@ posN<- rdsip2xy(RA=ngc$RA,Dec=ngc$Dec, header=hdr)
 posH<- rdsip2xy(RA=hip$RA,Dec=hip$Dec, header=hdr)
 posZ<- matrix(c(rdsip2xy(RA=pline$RA1,Dec=pline$Dec1, header=hdr),rdsip2xy(RA=pline$RA2,Dec=pline$Dec2, header=hdr)),nrow=nrow(pline))
 #
-img <- readJPEG(paste0(image,".jpg"),native=TRUE) 
+#img <- readJPEG(paste0(image,".jpg")) 
+img <- readJPEG(paste0(image,".jpg") ,native = TRUE)
 #################### プロット ####################
 # png("astro%02d.png",width=width,height=height,type = "cairo")
 par(mfrow=c(1,1),mar=rep(0,4)) # 余白なしの設定
@@ -551,3 +553,183 @@ if (nrow(posBD) >= 1){
     }
   }
 }
+
+ConName<-read.csv(text=
+"No,Constellation,Name,NameJ
+1,And,Andromeda,アンドロメダ
+2,Ant,Antlia,ポンプ
+3,Aps,Apus,ふうちょう
+4,Aql,Aquila ,わし
+5,Aqr,Aquarius ,みずがめ
+6,Ara,Ara,さいだん
+7,Ari,Aries,おひつじ
+8,Aur,Auriga,ぎょしゃ
+9,Boo,Bootes ,うしかい
+10,Cae,Caelum,ちょうこくぐ
+11,Cam,Camelopardalis,きりん
+12,Cap,Capricornus,やぎ
+13,Car,Carina,りゅうこつ
+14,Cas,Cassiopeia,カシオペヤ
+15,Cen,Centaurus,ケンタウルス
+16,Cep,Cepheus,ケフェウス
+17,Cet,Cetus,くじら
+18,Cha,Chamaeleon,カメレオン
+19,Cir,Circinus,コンパス
+20,CMa,Canis Major,おおいぬ
+21,CMi,Canis Minor,こいぬ
+22,Cnc,Cancer,かに
+23,Col,Columba,はと
+24,Com,Coma Berenices,かみのけ
+25,CrA,Corona Australis,みなみのかんむり
+26,CrB,Corona Borealis,かんむり
+27,Crt,Crater,コップ
+28,Cru,Crux,みなみじゅうじ
+29,Crv,Corvus,からす
+30,CVn,Canes Venatici,りょうけん
+31,Cyg,Cygnus,はくちょう
+32,Del,Delphinus,いるか
+33,Dor,Dorado,かじき
+34,Dra,Draco,りゅう
+35,Equ,Equuleus,こうま
+36,Eri,Eridanus,エリダヌス
+37,For,Fornax,ろ
+38,Gem,Gemini,ふたご
+39,Gru,Grus,つる
+40,Her,Hercules,ヘルクレス
+41,Hor,Horologium,とけい
+42,Hya,Hydra,うみへび
+43,Hyi,Hydrus,みずへび
+44,Ind,Indus,インディアン
+45,Lac,Lacerta,とかげ
+46,Leo,Leo,しし
+47,Lep,Lepus,うさぎ
+48,Lib,Libra,てんびん
+49,LMi,Leo Minor,こじし
+50,Lup,Lupus,おおかみ
+51,Lyn,Lynx,やまねこ
+52,Lyr,Lyra,こと
+53,Men,Mensa,テーブルさん
+54,Mic,Microscopium,けんびきょう
+55,Mon,Monoceros,いっかくじゅう
+56,Mus,Musca,はえ
+57,Nor,Norma,じょうぎ
+58,Oct,Octans,はちぶんぎ
+59,Oph,Ophiuchus,へびつかい
+60,Ori,Orion,オリオン
+61,Pav,Pavo,くじゃく
+62,Peg,Pegasus,ペガスス
+63,Per,Perseus,ペルセウス
+64,Phe,Phoenix,ほうおう
+65,Pic,Pictor,がか
+66,PsA,Piscis Austrinus,みなみのうお
+67,Psc,Pisces,うお
+68,Pup,Puppis,とも
+69,Pyx,Pyxis,らしんばん
+70,Ret,Reticulum,レチクル
+71,Scl,Sculptor,ちょうこくしつ
+72,Sco,Scorpius,さそり
+73,Sct,Scutum,たて
+74,Ser,Serpens ,へび
+75,Sex,Sextans,ろくぶんぎ
+76,Sge,Sagitta,や
+77,Sgr,Sagittarius,いて
+78,Tau,Taurus,おうし
+79,Tel,Telescopium,ぼうえんきょう
+80,TrA,Triangulum Australe,みなみのさんかく
+81,Tri,Triangulum,さんかく
+82,Tuc,Tucana,きょしちょう
+83,UMa,Ursa Major,おおぐま
+84,UMi,Ursa Minor,こぐま
+85,Vel,Vela,ほ
+86,Vir,Virgo,おとめ
+87,Vol,Volans,とびうお
+88,Vul,Vulpecula,こぎつね"
+)
+
+haru3=function(file,col="orange",lwd=2){
+	hdr=read.wcs(paste0(file,".wcs"))
+	star1=hip_majorJ[hip_majorJ$Name=="Arcturus",]
+	pos1=rdsip2xy(RA=star1$RA,Dec=star1$Dec,header=hdr)
+	star2=hip_majorJ[hip_majorJ$Name=="Spica",]
+	pos2=rdsip2xy(RA=star2$RA,Dec=star2$Dec,header=hdr)
+	star3=hip_majorJ[hip_majorJ$Name=="Denebola",]
+	pos3=rdsip2xy(RA=star3$RA,Dec=star3$Dec,header=hdr)
+	polygon(x=c(pos1[,1],pos2[,1],pos3[,1]),y=c(pos1[,2],pos2[,2],pos3[,2]),border=col,lwd=lwd)
+}
+
+natsu3=function(file,col="orange",lwd=2){
+	hdr=read.wcs(paste0(file,".wcs"))
+	star1=hip_majorJ[hip_majorJ$Name=="Altair",]
+	pos1=rdsip2xy(RA=star1$RA,Dec=star1$Dec,header=hdr)
+	star2=hip_majorJ[hip_majorJ$Name=="Deneb",]
+	pos2=rdsip2xy(RA=star2$RA,Dec=star2$Dec,header=hdr)
+	star3=hip_majorJ[hip_majorJ$Name=="Vega",]
+	pos3=rdsip2xy(RA=star3$RA,Dec=star3$Dec,header=hdr)
+	polygon(x=c(pos1[,1],pos2[,1],pos3[,1]),y=c(pos1[,2],pos2[,2],pos3[,2]),border=col,lwd=lwd)
+}
+
+huyu3=function(file,col="orange",lwd=2){
+	hdr=read.wcs(paste0(file,".wcs"))
+	star1=hip_majorJ[hip_majorJ$Name=="Betelgeuse",]
+	pos1=rdsip2xy(RA=star1$RA,Dec=star1$Dec,header=hdr)
+	star2=hip_majorJ[hip_majorJ$Name=="Sirius",]
+	pos2=rdsip2xy(RA=star2$RA,Dec=star2$Dec,header=hdr)
+	star3=hip_majorJ[hip_majorJ$Name=="Procyon",]
+	pos3=rdsip2xy(RA=star3$RA,Dec=star3$Dec,header=hdr)
+	polygon(x=c(pos1[,1],pos2[,1],pos3[,1]),y=c(pos1[,2],pos2[,2],pos3[,2]),border=col,lwd=lwd)
+}
+
+huyu6=function(file,col="orange",lwd=2){
+	hdr=read.wcs(paste0(file,".wcs"))
+	star1=hip_majorJ[hip_majorJ$Name=="Sirius",]
+	pos1=rdsip2xy(RA=star1$RA,Dec=star1$Dec,header=hdr)
+	star2=hip_majorJ[hip_majorJ$Name=="Procyon",]
+	pos2=rdsip2xy(RA=star2$RA,Dec=star2$Dec,header=hdr)
+	star3=hip_majorJ[hip_majorJ$Name=="Pollux",]
+	pos3=rdsip2xy(RA=star3$RA,Dec=star3$Dec,header=hdr)
+	star4=hip_majorJ[hip_majorJ$Name=="Capella",]
+	pos4=rdsip2xy(RA=star4$RA,Dec=star4$Dec,header=hdr)
+	star5=hip_majorJ[hip_majorJ$Name=="Aldebaran",]
+	pos5=rdsip2xy(RA=star5$RA,Dec=star5$Dec,header=hdr)
+	star6=hip_majorJ[hip_majorJ$Name=="Rigel",]
+	pos6=rdsip2xy(RA=star6$RA,Dec=star6$Dec,header=hdr)
+	polygon(x=c(pos1[,1],pos2[,1],pos3[,1],pos4[,1],pos5[,1],pos6[,1]),
+		y=c(pos1[,2],pos2[,2],pos3[,2],pos4[,2],pos5[,2],pos6[,2]),border=col,lwd=lwd)
+}
+
+hokuto7=function(file,col="orange",lwd=2){
+	hdr=read.wcs(paste0(file,".wcs"))
+	star1=hip_majorJ[hip_majorJ$Name=="Dubhe",]
+	pos1=rdsip2xy(RA=star1$RA,Dec=star1$Dec,header=hdr)
+	star2=hip_majorJ[hip_majorJ$Name=="Merak",]
+	pos2=rdsip2xy(RA=star2$RA,Dec=star2$Dec,header=hdr)
+	star3=hip_majorJ[hip_majorJ$Name=="Phecda",]
+	pos3=rdsip2xy(RA=star3$RA,Dec=star3$Dec,header=hdr)
+	star4=hip_majorJ[hip_majorJ$Name=="Megrez",]
+	pos4=rdsip2xy(RA=star4$RA,Dec=star4$Dec,header=hdr)
+	star5=hip_majorJ[hip_majorJ$Name=="Alioth",]
+	pos5=rdsip2xy(RA=star5$RA,Dec=star5$Dec,header=hdr)
+	star6=hip_majorJ[hip_majorJ$Name=="Mizar",]
+	pos6=rdsip2xy(RA=star6$RA,Dec=star6$Dec,header=hdr)
+	star7=hip_majorJ[hip_majorJ$Name=="Alkaid",]
+	pos7=rdsip2xy(RA=star7$RA,Dec=star7$Dec,header=hdr)
+	lines(x=c(pos1[,1],pos2[,1],pos3[,1],pos4[,1],pos5[,1],pos6[,1],pos7[,1]),
+		y=c(pos1[,2],pos2[,2],pos3[,2],pos4[,2],pos5[,2],pos6[,2],pos7[,2]),col=col,lwd=lwd)
+}
+
+seiza=function(ryaku){
+	Namae<- NULL
+	for (i in ryaku){
+		Namae=c(Namae,ConName[grep(i,ConName$Constellation),"Name"])
+	}
+	return(Namae)
+}
+
+seizaJ=function(ryaku){
+	Namae<- NULL
+	for (i in ryaku){
+		Namae=c(Namae,ConName[grep(i,ConName$Constellation),"NameJ"])
+	}
+	return(Namae)
+}
+

@@ -112,7 +112,7 @@ M109,NGC 3992,Galaxy,9,UMa,27000000,179.399917,53.374528,,,3,1,0.5
 M110,NGC 205,Galaxy,8,And,2250000,10.092,41.685306,,,3,0.8,0.5
 ,IC 434,HII,NA,Ori,,85.253667,-2.453778,Horsehead Nebula,馬頭星雲,1,1,0.5
 ,NGC 2024,Emission Nebula,NA,Ori,,85.427375,-1.856278,Flame Nebula,火炎星雲,4,1,-2
-,NGC 2237,Emission Nebula,5.5,Mon,,97.727542,5.049167,Rosette Nebula,ばら星雲,3,1,0.5
+,NGC 2238,Emission Nebula,5.5,Mon,,97.727542,5.049167,Rosette Nebula,ばら星雲,3,1,0.5
 ,NGC 7000,Emission Nebula,4,Cyg,,314.821417,44.528778,North America Nebula,北アメリカ星雲,3,1,0.5
 ,NGC 5139,Globular Cluster,,Cen,,201.691208,-47.476861,Omega Centauri,オメガ星団,3,1,0.5
 ,NGC 7009,Planetary Nebula,8.3,Aqr,,316.044958,-11.36325,Saturn Nebula,土星状星雲,3,1,0.5
