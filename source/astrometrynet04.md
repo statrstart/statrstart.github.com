@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR その４(更新)
-date: 2023-03-11
+date: 2023-03-19
 tags: ["R","sf","jpeg","showtext","astrometry.net"]
 excerpt: Rを使って星野写真に星の名前や天体名を記入する(関数化)
 ---
@@ -12,6 +12,8 @@ excerpt: Rを使って星野写真に星の名前や天体名を記入する(関
 （作成したデータ）source関数で読み込むようにしました。 
 
 2023-03-11 : サンプルデータを３つ追加(赤緯によって精度がどう変化するか？)
+
+2023-03-19 : plotAstro.Rに春、夏、冬の大三角形を描く簡単な関数等を追加。 
  
 1. ステラリウムのwesternをもとに作成した星座線データ。線の総数６７６本。  
 [constellation_lineJ.R](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/constellation_lineJ.R)
@@ -243,14 +245,7 @@ plotAstroJ(file,starM=4,ngcM=0,el=7,condata=TRUE,boundary=TRUE,Const="")
 # おおいぬ座のシリウス（Sirius）
 # こいぬ座のプロキオン（Procyon）
 # を線で結ぶ。
-hdr=read.wcs(paste0(file,".wcs"))
-star1=hip_majorJ[hip_majorJ$Name=="Betelgeuse",]
-pos1=rdsip2xy(RA=star1$RA,Dec=star1$Dec,header=hdr)
-star2=hip_majorJ[hip_majorJ$Name=="Sirius",]
-pos2=rdsip2xy(RA=star2$RA,Dec=star2$Dec,header=hdr)
-star3=hip_majorJ[hip_majorJ$Name=="Procyon",]
-pos3=rdsip2xy(RA=star3$RA,Dec=star3$Dec,header=hdr)
-polygon(x=c(pos1[,1],pos2[,1],pos3[,1]),y=c(pos1[,2],pos2[,2],pos3[,2]),border="orange",lwd=2)
+huyu3(file)
 # locator2(3)
 # [1] "237.76,192.05,789.33"
 # [1] "210.02,694.98,430.18"
@@ -274,3 +269,17 @@ showtext_end()
 ![astro17_2.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/astro17_2.png)
 
 ![astro17_3.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/astro17_3.png)
+
+### 星景
+
+#### 元画像
+
+![image17_6.jpg](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/image17_6.jpg)
+
+#### プログラム実行後の出力画像の余分な線、文字をGimpを使って「黒」で消した画像
+
+![astro17_6G.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/astro17_6G.png)
+
+#### ２つの画像を比較明合成（Sirilを使った）
+
+![astro17_6_2.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/astro17_6_2.png)
