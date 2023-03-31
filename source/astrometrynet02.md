@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR その２(更新)
-date: 2023-02-01
+date: 2023-03-31
 tags: ["R","sf","celestial","showtext","astrometry.net"]
 excerpt: Rを使って星野写真に星の名前や天体名を記入する
 ---
@@ -11,6 +11,30 @@ excerpt: Rを使って星野写真に星の名前や天体名を記入する
 
 ## (2023-01-12)inarea 関数訂正。`RA`とすべきところを`"RA"`としていました。
 ## (2023-01-27)inarea 関数訂正。
+## (2023-01-27)楕円を描く部分訂正。出力した図の訂正はいたしません。
+
+```R
+# 2次元の回転行列
+theta=60
+theta= theta*(pi/180)
+matrix(c("cos(theta)","sin(theta)","-sin(theta)","cos(theta)"),nrow=2)
+rot=matrix(c(cos(theta),sin(theta),-sin(theta),cos(theta)),nrow=2)
+# 原点を中心とした横幅2a、縦幅2bの楕円
+a=2 ; b=1
+t = seq(-pi,pi,length=200)
+x = a * cos(t)
+y = b * sin(t)
+plot(x=x,y=y,type="l",asp=1,xlim=c(-5,5),ylim=c(-5,5))
+# thetaだけ回転（x,y別に計算）
+xr=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)
+yr=a*sin(theta)*cos(t)+b*cos(theta)*sin(t)
+plot(x=xr,y=yr,type="l",asp=1,xlim=c(-5,5),ylim=c(-5,5))
+# thetaだけ回転（行列で計算）
+res=rot %*% matrix(c(x,y),nrow=2,byrow =TRUE) # byrow =TRUEを忘れないように！
+xr=res[1,]
+yr=res[2,]
+plot(xr,yr,type="l",asp=1,xlim=c(-5,5),ylim=c(-5,5))
+```
 
 astrometry.netを使って得たwcsファイルとRを使って星野写真に星の名前や天体名を記入する方法の自分のための備忘録です。  
 こちらのpythonプログラム[Galaxy Annotator v0.9](https://github.com/rnanba/GalaxyAnnotator#readme)を見て、Rでもやってみました。 
@@ -526,8 +550,8 @@ if (nrow(plNGC)!=0){
 		a= plNGC$MajAx[i]/60	# MajAx
 		b= plNGC$MinAx[i]/60	# MinAx
 		t= plNGC$PosAng[i]*(pi/180)	# PosAng
-		x=a*cos(theta)*cos(t)-b*sin(theta)+cx
-		y=a*cos(theta)*sin(t)+b*cos(theta)+cy
+		x=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)+cx
+		y=a*cos(theta)*sin(t)+b*sin(theta)*cos(t)+cy
 		ellipse<- sip(radec2xy(RA=x,Dec=y, header=hdr),header=hdr)
 		lines(x=ellipse[,1],y=ellipse[,2],col="white")
 	}

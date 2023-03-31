@@ -1,6 +1,6 @@
 ---
 title: astrometry.netとR その４(更新)
-date: 2023-03-19
+date: 2023-03-31
 tags: ["R","sf","jpeg","showtext","astrometry.net"]
 excerpt: Rを使って星野写真に星の名前や天体名を記入する(関数化)
 ---
@@ -11,9 +11,9 @@ excerpt: Rを使って星野写真に星の名前や天体名を記入する(関
  
 （作成したデータ）source関数で読み込むようにしました。 
 
-2023-03-11 : サンプルデータを３つ追加(赤緯によって精度がどう変化するか？)
-
-2023-03-19 : plotAstro.Rに春、夏、冬の大三角形を描く簡単な関数等を追加。 
+2023-03-11 : サンプルデータを３つ追加(赤緯によって精度がどう変化するか？)  
+2023-03-19 : plotAstro.Rに春、夏、冬の大三角形を描く簡単な関数等を追加。  
+2023-03-31 : plotAstro.Rの楕円を描く部分の訂正。いくつか関数を追加。。出力した図の訂正はいたしません。  
  
 1. ステラリウムのwesternをもとに作成した星座線データ。線の総数６７６本。  
 [constellation_lineJ.R](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/constellation_lineJ.R)
