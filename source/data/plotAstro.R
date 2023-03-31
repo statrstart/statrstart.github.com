@@ -176,9 +176,13 @@ locator2<- function(n=1){
 #	condata=TRUE : 日本風
 #   星座名はlocator関数もしくは上で定義したlocator2関数を使って座標をした位置に書く。
 #
-plotAstro <- function(image,starM=4,ngcM=14,Const="All",prn=1,el=12,boundary=FALSE,condata=FALSE){
+plotAstro <- function(image,starM=4,ngcM=14,Const="All",prn=1,el=12,boundary=FALSE,condata=FALSE,size=1){
 require(sf)
 require(jpeg) 
+
+messier=NULL;ngc=NULL;hip=NULL;
+posM=NULL;posN=NULL;posH=NULL;posZ=NULL;posBD=NULL;plNGC=NULL
+
 ######################## 必要なデータの読み込み(csvファイルをダウンロードした場合) ########################
 # メシエ天体と比較的見やすい天体のデータ
 #messierPlusJ<- read.csv(file = "messierPlusJ.csv", header = T)
@@ -208,8 +212,9 @@ hip <- hip[hip$Mag<=starM | !is.na(hip$Prn) ,]
 # NGC
 ngc<- inarea(NGC_lite,area)
 if (ngcM != 100){
-	ngc <- ngc[!is.na(ngc[,9]),]
-	ngc <- ngc[ngc$B.Mag<=ngcM,]
+	ngc <- ngc[!is.na(ngc$RA),]
+	ngc <- ngc[!is.na(ngc$B.Mag) & ngc$B.Mag<=ngcM ,]
+#	ngc <- ngc[!is.na(ngc$Name),]
 }
 # 星座線
 if (!condata){
@@ -226,9 +231,10 @@ if ("All" %in% Const){
 # 楕円を描く天体
 # 中心部が画像上にないものは表示しない
 plNGC<- inarea(NGC_lite,area)
-plNGC<- plNGC[!is.na(plNGC[,6]),]
-plNGC<- plNGC[!is.na(plNGC[,9]),]
-plNGC <- plNGC[plNGC$B.Mag<=el,]
+plNGC<- plNGC[!is.na(plNGC[,"RA"]),]
+plNGC<- plNGC[!is.na(plNGC[,"MinAx"]),]
+plNGC <- plNGC[!is.na(plNGC$B.Mag) & plNGC$B.Mag<=el ,]
+# plNGC <- plNGC[!is.na(plNGC$Name),]
 # 星座境界線
 if (boundary){
 # http://astro.starfree.jp/commons/constellation/boundary.html
@@ -260,12 +266,12 @@ for (i in 1:nrow(messier)){
 		# 通称（common name ）ありの場合
 		if (messier$CommonName[i]!=""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonName[i],"  ",messier$Name[i],"(",messier$NGC[i],")"),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 		}
 		# 通称（common name ）なしの場合
 		if (messier$CommonName[i]==""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$Name[i],"(",messier$NGC[i],")"),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 			}
 		}
 	if (prn == 2){
@@ -274,37 +280,37 @@ for (i in 1:nrow(messier)){
 			# メシエ番号あり
 			if (messier$Name[i]!=""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonName[i],"  ",messier$Name[i]),
-					col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+					col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			# メシエ番号なし
 			if (messier$Name[i]==""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonName[i],"(",messier$NGC[i],")"),
-					col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+					col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			}
 		# 通称（common name ）なしの場合
 		if (messier$CommonName[i]==""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$Name[i],"(",messier$NGC[i],")"),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 			}
 		}
 	if (prn == 1){
 		# 通称（common name ）ありの場合
 		if (messier$CommonName[i]!=""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonName[i]),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 			}
 		# 通称（common name ）なしの場合
 		if (messier$CommonName[i]==""){
 			# メシエ番号あり
 			if (messier$Name[i]!=""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$Name[i]),
-					col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+					col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			# メシエ番号なし
 			if (messier$Name[i]==""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$NGC[i]),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			}
 		}
@@ -312,65 +318,55 @@ for (i in 1:nrow(messier)){
   }
 #### 星座線
 if (nrow(posZ) >= 1){
-for (i in 1:nrow(posZ)){
-	segments(x0=posZ[i,1], y0=posZ[i,2], x1 =posZ[i,3], y1=posZ[i,4], col = "cyan",lwd=2)
-  }
- }
-#### NGC,IC
-if (nrow(ngc) >= 1){
-for (i in 1:nrow(ngc)){
-	# messier表示した天体との２重表示を防ぐ
-	if (!is.element(ngc$Name[i],messier$NGC)){
-		text(x=posN[i,1],y=posN[i,2],labels=ngc$Name[i],col="green",pos=3,offset=0.5,cex=0.8)
-	}
-    }
-  }
+	segments(x0=posZ[,1], y0=posZ[,2], x1 = posZ[,3], y1 = posZ[,4],col="cyan",lwd=2)
+}
 #### 星(hip)
-if (nrow(hip) >= 1){
-for (i in 1:nrow(hip)){
-	# 星の通称ありの場合
-	if (hip$Name[i] != ""){
-		text(x=posH[i,1],y=posH[i,2],labels=hip$Name[i],col="yellow",pos=3,offset=0.5,cex=0.8)
-		}
-	# 星の通称なしの場合
-	if (hip$Name[i] == ""){
-		text(x=posH[i,1],y=posH[i,2],labels=paste(hip$Num[i],hip$Constellation[i]),col="yellow",pos=3,offset=0.5,cex=0.8)
-		}
+names1=ifelse(hip$Name!="" ,hip$Name,paste(hip$Num,hip$Constellation))
+if(length(names1) != 0){
+	text(x=posH[,1],y=posH[,2],labels=names1,col="yellow",pos=3,offset=0.5,cex=0.8*size)
+}
+#### NGC,IC
+# messierと重なる場合、names3には何も入れない。結果、何も書かれなくなる。
+	names3=ifelse(!(ngc$Name %in% messier$NGC),ngc$Name,"")
+	if(length(names3) != 0){
+		text(x=posN[,1],y=posN[,2],labels=names3,col="green",pos=3,offset=0.5,cex=0.8*size)
 	}
-  }
 #### 楕円
-# postAngがNAの場合も描きたい場合0を代入
-# plNGC$PosAng[is.na(plNGC$PosAng)] <- 0	# NAのときには描かない場合はコメントアウトする
 if (nrow(plNGC)!=0){
-	theta=seq(-pi,pi,length=200)
+# t : 媒介変数
+	t = seq(-pi,pi,length=200)
 	for (i in 1:nrow(plNGC)){
 		cx=plNGC$RA[i]
 		cy=plNGC$Dec[i]	
 		a= plNGC$MajAx[i]/60	# MajAx
 		b= plNGC$MinAx[i]/60	# MinAx
-		t= plNGC$PosAng[i]*(pi/180)	# PosAng
-		x=a*cos(theta)*cos(t)-b*sin(theta)+cx
-		y=a*cos(theta)*sin(t)+b*cos(theta)+cy
+		theta= plNGC$PosAng[i]*(pi/180)	# PosAng
+		x=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)+cx
+		y=a*sin(theta)*cos(t)+b*cos(theta)*sin(t)+cy
 		ellipse<- rdsip2xy(RA=x,Dec=y, header=hdr)
-		lines(x=ellipse[,1],y=ellipse[,2],col="white")
+		lines(x=ellipse[,1],y=ellipse[,2],col=rgb(0.75,0.75,0.75))
 	}
 }
 #### 星座境界線
 if (boundary){
 if (nrow(posBD) >= 1){
-	for (i in 1:nrow(posBD)){
-		segments(x0=posBD[i,1], y0=posBD[i,2], x1 =posBD[i,3], y1=posBD[i,4], col = "red",lwd=1,lty=2)
-	}
+	segments(x0=posBD[,1], y0=posBD[,2], x1 = posBD[,3], y1 = posBD[,4],col="red",lwd=1,lty=2)
     }
   }
+return( list(image=image,size=c(width,height),area=area,messier=cbind(messier,posM),
+	ngc=cbind(ngc,posN),hip=cbind(hip,posH),cline=posZ,boundary=posBD,plNGC=plNGC  ) ) 
 }
 
-#
-# plotAstroの表示に日本語（NameJ列）を使うようにした関数
-#
-plotAstroJ <- function(image,starM=4,ngcM=14,Const="All",prn=1,el=12,boundary=FALSE,condata=FALSE){
+############################################################
+# plotAstroの表示に日本語（NameJ列）を使うようにした関数 #
+############################################################
+plotAstroJ <- function(image,starM=4,ngcM=14,Const="All",prn=1,el=12,boundary=FALSE,condata=FALSE,size=1){
 require(sf)
 require(jpeg) 
+
+messier=NULL;ngc=NULL;hip=NULL;
+posM=NULL;posN=NULL;posH=NULL;posZ=NULL;posBD=NULL;plNGC=NULL
+
 ######################## 必要なデータの読み込み(csvファイルをダウンロードした場合) ########################
 # メシエ天体と比較的見やすい天体のデータ
 #messierPlusJ<- read.csv(file = "messierPlusJ.csv", header = T)
@@ -400,8 +396,9 @@ hip <- hip[hip$Mag<=starM | !is.na(hip$Prn) ,]
 # NGC
 ngc<- inarea(NGC_lite,area)
 if (ngcM != 100){
-	ngc <- ngc[!is.na(ngc[,9]),]
-	ngc <- ngc[ngc$B.Mag<=ngcM,]
+	ngc <- ngc[!is.na(ngc$RA),]
+	ngc <- ngc[!is.na(ngc$B.Mag) & ngc$B.Mag<=ngcM ,]
+#	ngc <- ngc[!is.na(ngc$Name),]
 }
 # 星座線
 if (!condata){
@@ -418,9 +415,10 @@ if ("All" %in% Const){
 # 楕円を描く天体
 # 中心部が画像上にないものは表示しない
 plNGC<- inarea(NGC_lite,area)
-plNGC<- plNGC[!is.na(plNGC[,6]),]
-plNGC<- plNGC[!is.na(plNGC[,9]),]
-plNGC <- plNGC[plNGC$B.Mag<=el,]
+plNGC<- plNGC[!is.na(plNGC[,"RA"]),]
+plNGC<- plNGC[!is.na(plNGC[,"MinAx"]),]
+plNGC <- plNGC[!is.na(plNGC$B.Mag) & plNGC$B.Mag<=el ,]
+# plNGC <- plNGC[!is.na(plNGC$Name),]
 # 星座境界線
 if (boundary){
 # http://astro.starfree.jp/commons/constellation/boundary.html
@@ -449,12 +447,12 @@ for (i in 1:nrow(messier)){
 		# 通称（common name ）ありの場合
 		if (messier$CommonNameJ[i]!=""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonNameJ[i],"  ",messier$Name[i],"(",messier$NGC[i],")"),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 		}
 		# 通称（common name ）なしの場合
 		if (messier$CommonNameJ[i]==""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$Name[i],"(",messier$NGC[i],")"),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 			}
 		}
 	if (prn == 2){
@@ -463,37 +461,37 @@ for (i in 1:nrow(messier)){
 			# メシエ番号あり
 			if (messier$Name[i]!=""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonNameJ[i],"  ",messier$Name[i]),
-					col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+					col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			# メシエ番号なし
 			if (messier$Name[i]==""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonNameJ[i],"(",messier$NGC[i],")"),
-					col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+					col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			}
 		# 通称（common name ）なしの場合
 		if (messier$CommonNameJ[i]==""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$Name[i],"(",messier$NGC[i],")"),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 			}
 		}
 	if (prn == 1){
 		# 通称（common name ）ありの場合
 		if (messier$CommonNameJ[i]!=""){
 			text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$CommonNameJ[i]),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 			}
 		# 通称（common name ）なしの場合
 		if (messier$CommonNameJ[i]==""){
 			# メシエ番号あり
 			if (messier$Name[i]!=""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$Name[i]),
-					col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+					col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			# メシエ番号なし
 			if (messier$Name[i]==""){
 				text(x=posM[i,1],y=posM[i,2],labels=paste0(messier$NGC[i]),
-				col="green",cex=messier$Size[i],pos=messier$Position[i],offset=messier$Offset[i])
+				col="green",cex=messier$Size[i]*size,pos=messier$Position[i],offset=messier$Offset[i])
 				}
 			}
 		}
@@ -501,58 +499,158 @@ for (i in 1:nrow(messier)){
 }
 #### 星座線
 if (nrow(posZ) >= 1){
-for (i in 1:nrow(posZ)){
-	segments(x0=posZ[i,1], y0=posZ[i,2], x1 =posZ[i,3], y1=posZ[i,4], col = "cyan",lwd=2)
-  }
-}
-#### NGC,IC
-if (nrow(ngc) >= 1){
-for (i in 1:nrow(ngc)){
-# messier表示した天体との２重表示を防ぐ
-	if (!is.element(ngc$Name[i],messier$NGC)){
-		text(x=posN[i,1],y=posN[i,2],labels=ngc$Name[i],col="green",pos=3,offset=0.5,cex=0.8)
-	}
-  }
+	segments(x0=posZ[,1], y0=posZ[,2], x1 = posZ[,3], y1 = posZ[,4],col="cyan",lwd=2)
 }
 #### 星(hip)
-if (nrow(hip) >= 1){
-for (i in 1:nrow(hip)){
-# 星の通称ありの場合
-	if (hip$NameJ[i] != ""){
-		text(x=posH[i,1],y=posH[i,2],labels=hip$NameJ[i],col="yellow",pos=3,offset=0.5,cex=0.8)
-		}
-# 星の通称なしの場合
-	if (hip$NameJ[i] == ""){
-		text(x=posH[i,1],y=posH[i,2],labels=paste(hip$Num[i],hip$Constellation[i]),col="yellow",pos=3,offset=0.5,cex=0.8)
-		}
-  }
+names1=ifelse(hip$NameJ!="" ,hip$NameJ,paste(hip$Num,hip$Constellation))
+if(length(names1) != 0){
+	text(x=posH[,1],y=posH[,2],labels=names1,col="yellow",pos=3,offset=0.5,cex=0.8*size)
 }
+#### NGC,IC
+# messierと重なる場合、names3には何も入れない。結果、何も書かれなくなる。
+	names3=ifelse(!(ngc$Name %in% messier$NGC),ngc$Name,"")
+	if(length(names3) != 0){
+		text(x=posN[,1],y=posN[,2],labels=names3,col="green",pos=3,offset=0.5,cex=0.8*size)
+	}
 #### 楕円
-# postAngがNAの場合も描きたい場合0を代入
-# plNGC$PosAng[is.na(plNGC$PosAng)] <- 0	# NAのときには描かない場合はコメントアウトする
 if (nrow(plNGC)!=0){
-	theta=seq(-pi,pi,length=200)
+# t : 媒介変数
+	t = seq(-pi,pi,length=200)
 	for (i in 1:nrow(plNGC)){
 		cx=plNGC$RA[i]
 		cy=plNGC$Dec[i]	
 		a= plNGC$MajAx[i]/60	# MajAx
 		b= plNGC$MinAx[i]/60	# MinAx
-		t= plNGC$PosAng[i]*(pi/180)	# PosAng
-		x=a*cos(theta)*cos(t)-b*sin(theta)+cx
-		y=a*cos(theta)*sin(t)+b*cos(theta)+cy
+		theta= plNGC$PosAng[i]*(pi/180)	# PosAng
+		x=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)+cx
+		y=a*sin(theta)*cos(t)+b*cos(theta)*sin(t)+cy
 		ellipse<- rdsip2xy(RA=x,Dec=y, header=hdr)
-		lines(x=ellipse[,1],y=ellipse[,2],col="white")
+		lines(x=ellipse[,1],y=ellipse[,2],col=rgb(0.75,0.75,0.75))
 	}
 }
 #### 星座境界線
 if (boundary){
 if (nrow(posBD) >= 1){
-	for (i in 1:nrow(posBD)){
-		segments(x0=posBD[i,1], y0=posBD[i,2], x1 =posBD[i,3], y1=posBD[i,4], col = "red",lwd=1,lty=2)
-	}
+	segments(x0=posBD[,1], y0=posBD[,2], x1 = posBD[,3], y1 = posBD[,4],col="red",lwd=1,lty=2)
     }
   }
+return( list(image=image,size=c(width,height),area=area,messier=cbind(messier,posM),
+	ngc=cbind(ngc,posN),hip=cbind(hip,posH),cline=posZ,boundary=posBD,plNGC=plNGC  ) ) 
 }
+
+			
+plotResultJ=function(result,size=1){
+	img <- readJPEG(paste0(res$image,".jpg")) 
+	par(mar=rep(0,4),mfrow=c(1,1)) # 余白なしの設定
+	plot( 0,0, xlim=c(0,res$size[1]), ylim=c(res$size[2],0), type="n", asp=1,axes=F,xlab="",ylab="",xaxs="i",yaxs="i")
+	rasterImage(img, xleft=0, ybottom=res$size[2], xright=res$size[1], ytop=0)
+	if (nrow(res$cline) != 0){
+		segments(x0=res$cline[,1], y0=res$cline[,2], x1 = res$cline[,3], y1 = res$cline[,4],col="cyan",lwd=2)
+	}
+	if(!is.null(res$boundary)){
+		segments(x0=res$boundary[,1], y0=res$boundary[,2], x1 = res$boundary[,3], y1 = res$boundary[,4],col="red",lwd=1,lty=2)
+	}
+	names1=ifelse(res$hip$NameJ!="" ,res$hip$NameJ,paste(res$hip$Num,res$hip$Constellation))
+	if(length(names1) != 0){
+		text(x=res$hip$x,y=res$hip$y,labels=names1,col="yellow",pos=3,offset=0.5,cex=0.8*size)
+	}
+	names2=ifelse(res$messier$CommonNameJ=="" ,res$messier$NGC,res$messier$CommonNameJ)
+	if(length(names2) != 0){
+		text(x=res$messier$x,y=res$messier$y,labels=names2,col="green",cex=res$messier$Size*size,pos=res$messier$Position,offset=res$messier$Offset)
+	}
+# messierと重なる場合、names3には何も入れない。結果、何も書かれなくなる。
+	names3=ifelse(!(res$ngc$Name %in% res$messier$NGC),res$ngc$Name,"")
+	if(length(names3) != 0){
+		text(x=res$ngc$x,y=res$ngc$y,labels=names3,col="green",pos=3,offset=0.5,cex=0.8*size)
+	}
+# NGC:楕円を描く(PosAngがNAの場合は円にする)
+	hdr=read.wcs(paste0(res$image,".wcs"))
+	if (nrow(res$plNGC)!=0){
+# t : 媒介変数
+		t = seq(-pi,pi,length=200)
+		for (i in 1:nrow(res$plNGC)){
+			if (!is.na(res$plNGC$PosAng[i])){
+				cx=res$plNGC$RA[i]
+				cy=res$plNGC$Dec[i]	
+				a= res$plNGC$MajAx[i]/60	# MajAx
+				b= res$plNGC$MinAx[i]/60	# MinAx
+				theta= res$plNGC$PosAng[i]*(pi/180)	# PosAng
+				x=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)+cx
+				y=a*sin(theta)*cos(t)+b*cos(theta)*sin(t)+cy
+				ellipse<- rdsip2xy(RA=x,Dec=y, header=hdr)
+				lines(x=ellipse[,1],y=ellipse[,2],col=rgb(0.75,0.75,0.75))
+				} else {
+# PosAngがNAの場合:PosAng=0とする
+				cx=res$plNGC$RA[i]
+				cy=res$plNGC$Dec[i]	
+				a=res$plNGC$MajAx[i]/60	# MajAx
+				b= res$plNGC$MinAx[i]/60	# MinAx
+				theta=0
+				x=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)+cx
+				y=a*sin(theta)*cos(t)+b*cos(theta)*sin(t)+cy
+				ellipse<- rdsip2xy(RA=x,Dec=y, header=hdr)
+				lines(x=ellipse[,1],y=ellipse[,2],col="gold")
+			}
+		}
+	}
+}
+
+plotResult=function(result,size=1){
+	img <- readJPEG(paste0(res$image,".jpg")) 
+	par(mar=rep(0,4),mfrow=c(1,1)) # 余白なしの設定
+	plot( 0,0, xlim=c(0,res$size[1]), ylim=c(res$size[2],0), type="n", asp=1,axes=F,xlab="",ylab="",xaxs="i",yaxs="i")
+	rasterImage(img, xleft=0, ybottom=res$size[2], xright=res$size[1], ytop=0)
+	if (nrow(res$cline) != 0){
+		segments(x0=res$cline[,1], y0=res$cline[,2], x1 = res$cline[,3], y1 = res$cline[,4],col="cyan",lwd=2)
+	}
+	if(!is.null(res$boundary)){
+		segments(x0=res$boundary[,1], y0=res$boundary[,2], x1 = res$boundary[,3], y1 = res$boundary[,4],col="red",lwd=1,lty=2)
+	}
+	names1=ifelse(res$hip$Name!="" ,res$hip$Name,paste(res$hip$Num,res$hip$Constellation))
+	if(length(names1) != 0){
+		text(x=res$hip$x,y=res$hip$y,labels=names1,col="yellow",pos=3,offset=0.5,cex=0.8*size)
+	}
+	names2=ifelse(res$messier$CommonName=="" ,res$messier$NGC,res$messier$CommonName)
+	if(length(names2) != 0){
+		text(x=res$messier$x,y=res$messier$y,labels=names2,col="green",cex=res$messier$Size*size,pos=res$messier$Position,offset=res$messier$Offset)
+	}
+# messierと重なる場合、names3には何も入れない。結果、何も書かれなくなる。
+	names3=ifelse(!(res$ngc$Name %in% res$messier$NGC),res$ngc$Name,"")
+	if(length(names3) != 0){
+		text(x=res$ngc$x,y=res$ngc$y,labels=names3,col="green",pos=3,offset=0.5,cex=0.8*size)
+	}
+# NGC:楕円を描く(PosAngがNAの場合は円にする)
+	hdr=read.wcs(paste0(res$image,".wcs"))
+	if (nrow(res$plNGC)!=0){
+# t : 媒介変数
+		t = seq(-pi,pi,length=200)
+		for (i in 1:nrow(res$plNGC)){
+			if (!is.na(res$plNGC$PosAng[i])){
+				cx=res$plNGC$RA[i]
+				cy=res$plNGC$Dec[i]	
+				a= res$plNGC$MajAx[i]/60	# MajAx
+				b= res$plNGC$MinAx[i]/60	# MinAx
+				theta= res$plNGC$PosAng[i]*(pi/180)	# PosAng
+				x=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)+cx
+				y=a*sin(theta)*cos(t)+b*cos(theta)*sin(t)+cy
+				ellipse<- rdsip2xy(RA=x,Dec=y, header=hdr)
+				lines(x=ellipse[,1],y=ellipse[,2],col=rgb(0.75,0.75,0.75))
+				} else {
+# PosAngがNAの場合:PosAng=0とする
+				cx=res$plNGC$RA[i]
+				cy=res$plNGC$Dec[i]	
+				a=res$plNGC$MajAx[i]/60	# MajAx
+				b= res$plNGC$MinAx[i]/60	# MinAx
+				theta=0
+				x=a*cos(theta)*cos(t)-b*sin(theta)*sin(t)+cx
+				y=a*sin(theta)*cos(t)+b*cos(theta)*sin(t)+cy
+				ellipse<- rdsip2xy(RA=x,Dec=y, header=hdr)
+				lines(x=ellipse[,1],y=ellipse[,2],col="gold")
+			}
+		}
+	}
+}
+
 
 ConName<-read.csv(text=
 "No,Constellation,Name,NameJ
@@ -732,4 +830,47 @@ seizaJ=function(ryaku){
 	}
 	return(Namae)
 }
+
+kensaku=function(list,x){
+if(length(list)==1){tmp=x[grep(unlist(list),x)]}
+if(length(list)>=2){
+	fun1=function(y){x[grep(y,x)]}
+	y=lapply(list,fun1)
+	tmp=y[[1]]
+	for (i in 1:(length(y)-1)){
+		tmp=tmp[ tmp %in% y[[(i+1)]] ]
+		}
+	}
+return(tmp)
+}
+
+# kensaku(list("CJK","Black","Serif"),font_files()$file )
+# kensaku(list("(t|T)akao","(m|M)incho"),font_files()$file )
+
+#和集合
+# union(x, y)
+#積集合、共通
+# intersect(x, y)
+#差集合
+# setdiff(x, y)
+
+andgrep=function(list,x){
+if(length(list)==1){tmp=grep(unlist(list),x)}
+if(length(list)>=2){
+	fun1=function(y){grep(y,x)}
+	y=lapply(list,fun1)
+	tmp=y[[1]]
+	for (i in 1:(length(y)-1)){
+		tmp= intersect(tmp, y[[(i+1)]])
+		}
+	}
+return(tmp)
+}
+
+# andgrep(list("CJK","Black","Serif"),font_files()$file )
+# font_files()$file[andgrep(list("CJK","Black","Serif"),font_files()$file )]
+
+# OR
+# grep("CJK|Black",font_files()$file )
+
 
