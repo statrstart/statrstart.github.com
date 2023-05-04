@@ -91,8 +91,6 @@ ggplot(dat, aes(x= year, y = value,color=country))+
 
 ![TXG_FOB_USD02](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/TXG_FOB_USD02.png)
 
-これが現実。
-
 - アメリカは中国から多く輸入している。
 
 - 日本はアメリカより中国のほうが輸入、輸出とも多い。但し、中国への輸出額は2022年は大きく減った。
