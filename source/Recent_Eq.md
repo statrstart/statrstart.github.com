@@ -1,6 +1,6 @@
 ---
 title: 最近の地震(気象庁 震源リスト)
-date: 2023-05-04
+date: 2023-05-06
 tags: ["R", "rvest" ,"hillshade"]
 excerpt: 陰影段彩図　+「気象庁 震源リスト」
 ---
@@ -14,6 +14,10 @@ excerpt: 陰影段彩図　+「気象庁 震源リスト」
 今回は「RでWebスクレイピング01(気象庁 震源リスト)」で得たデータを陰影段彩図にプロットします。
 
 ### 最近の地震(気象庁 震源リスト)
+
+#### 2022/5/5 〜　2022/5/4 (５月５日の地震の前日までの１年間)
+
+![Recent_EqNoto](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_EqNoto.png)
 
 #### 2022/5/5 〜　2022/5/4
 
