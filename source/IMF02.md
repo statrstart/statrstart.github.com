@@ -1,11 +1,13 @@
 ---
 title: Rで国際通貨基金(IMF)のデータを取得する(その２)
-date: 2023-05-04
+date: 2023-05-06
 tags: ["R", "imfr","tidyverse"]
 excerpt: IMFのデータを取得し、グラフを作成。
 ---
 
 # Rで国際通貨基金(IMF)のデータを取得する(その２)
+
+2023-05-06: `WEOcountry.R`データを手直し。それにより、Rコードの少し変更しました。
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FIMF02&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
@@ -33,7 +35,9 @@ Archived on 2022-07-09 for policy violation.
 
 - CoordinateCleaner::countryref <- 国の位置情報
 
-- [menu.rda: https://github.com/mitsuoxv/imf-weo/tree/master/data](https://github.com/mitsuoxv/imf-weo/tree/master/data) <- データの中に、imf(WEO)コードも含む
+- [World Economic Outlook Database:2023 April](https://www.imf.org/en/Publications/WEO/weo-database/2023/April/download-entire-database)
+
+	- SDMX Data Structure Definition -> `weoapr2023-sdmx-dsd.xlsx` の `REF_AREA` シート
 
 これらを共通するコードにより、merge。RとlibreOffice Calcを使って編集。
 
@@ -65,6 +69,9 @@ Archived on 2022-07-09 for policy violation.
 #source("WEOcountry.R")
 url="https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/data/"
 source(paste0(url,"WEOcountry.R"))
+#
+# WEO(imf)コードが欠損しているデータを取り除く
+WEOcountry <- WEOcountry[!is.na(WEOcountry$WEO) , ] 
 # 
 # remotes::install_github("christophergandrud/imfr")
 require(imfr)
@@ -75,24 +82,24 @@ require(knitr)
 kable( head(WEOcountry) )
 ```
 
-|Name                 |iso2c |iso3c |WEO |continent |region                     | destination_lon| destination_lat| capital.lon| capital.lat|
-|:--------------------|:-----|:-----|:---|:---------|:--------------------------|---------------:|---------------:|-----------:|-----------:|
-|Andorra              |AD    |AND   |171 |Europe    |Europe & Central Asia      |            1.50|          42.500|        1.52|       42.50|
-|United Arab Emirates |AE    |ARE   |466 |Asia      |Middle East & North Africa |           54.00|          24.000|       54.37|       24.47|
-|Afghanistan          |AF    |AFG   |512 |Asia      |South Asia                 |           65.00|          33.000|       69.18|       34.52|
-|Antigua & Barbuda    |AG    |ATG   |311 |Americas  |Latin America & Caribbean  |          -61.80|          17.050|      -61.85|       17.12|
-|Anguilla             |AI    |AIA   |312 |Americas  |Latin America & Caribbean  |          -63.05|          18.217|      -63.05|       18.22|
-|Albania              |AL    |ALB   |914 |Europe    |Europe & Central Asia      |           20.00|          41.000|       19.82|       41.32|
+|Name                 |iso2c |iso3c |WEO |continent | destination_lon| destination_lat| capital.lon| capital.lat|
+|:--------------------|:-----|:-----|:---|:---------|---------------:|---------------:|-----------:|-----------:|
+|Andorra              |AD    |AND   |171 |Europe    |            1.50|          42.500|        1.52|       42.50|
+|United Arab Emirates |AE    |ARE   |466 |Asia      |           54.00|          24.000|       54.37|       24.47|
+|Afghanistan          |AF    |AFG   |512 |Asia      |           65.00|          33.000|       69.18|       34.52|
+|Antigua & Barbuda    |AG    |ATG   |311 |Americas  |          -61.80|          17.050|      -61.85|       17.12|
+|Anguilla             |AI    |AIA   |312 |Americas  |          -63.05|          18.217|      -63.05|       18.22|
+|Albania              |AL    |ALB   |914 |Europe    |           20.00|          41.000|       19.82|       41.32|
 
 ```R
 # 輸入国（アフリカの国）
-Africa_ISO2<- WEOcountry$iso2c[WEOcountry$continent=="Africa"]
-# 欠損値を取り除く
-( Africa_ISO2<- Africa_ISO2[!is.na(Africa_ISO2)] )
+( Africa_ISO2<- WEOcountry$iso2c[WEOcountry$continent=="Africa"] )
+#
 # [1] "AO" "BF" "BI" "BJ" "BW" "CD" "CF" "CG" "CI" "CM" "CV" "DJ" "DZ" "EG" "ER"
 #[16] "ET" "GA" "GH" "GM" "GN" "GQ" "GW" "KE" "KM" "LR" "LS" "LY" "MA" "MG" "ML"
 #[31] "MR" "MU" "MW" "MZ" "NA" "NE" "NG" "RW" "SC" "SD" "SH" "SL" "SN" "SO" "SS"
 #[46] "ST" "SZ" "TD" "TG" "TN" "TZ" "UG" "ZA" "ZM" "ZW" "RE"
+#
 # 輸出国（今回は、日本、中国、アメリカを調べる）
 ISO2<- c("JP","CN","US")
 WEOcountry[WEOcountry$iso2c %in% ISO2 ,c("Name", "iso2c", "destination_lon", "destination_lat") ]
