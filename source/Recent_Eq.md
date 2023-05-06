@@ -1,6 +1,6 @@
 ---
 title: 最近の地震(気象庁 震源リスト)
-date: 2022-03-09
+date: 2023-05-04
 tags: ["R", "rvest" ,"hillshade"]
 excerpt: 陰影段彩図　+「気象庁 震源リスト」
 ---
@@ -8,12 +8,18 @@ excerpt: 陰影段彩図　+「気象庁 震源リスト」
 # 最近の地震(気象庁 震源リスト)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FRecent_Eq&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
-## 2021/3/8から2022/3/7(１年間) のマグニチュード３以上の地震
+## 2022/5/5 〜　2022/5/4(１年間) のマグニチュード３以上の地震
 
 「Rで陰影段彩図05」で作成した陰影段彩図に「気象庁 震源リスト」から得た震源の位置をプロットします。  
 今回は「RでWebスクレイピング01(気象庁 震源リスト)」で得たデータを陰影段彩図にプロットします。
 
 ### 最近の地震(気象庁 震源リスト)
+
+#### 2022/5/5 〜　2022/5/4
+
+![Recent_Eq3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_Eq3.png)
+
+#### (比較のため)2021/3/8 〜　2022/3/7
 
 ![Recent_Eq2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_Eq2.png)
 
@@ -123,7 +129,7 @@ head(ymd,1) ; tail(ymd,1)
 #
 # 2.期間を指定する場合
 #date<-gsub("-","",seq(as.Date("2020-01-01"), len=17, by="1 day"))
-date<-gsub("-","",seq(as.Date("2021-03-08"),as.Date("2022-03-07"), by="1 day"))
+date<-gsub("-","",seq(as.Date("2022-05-05"),as.Date("2023-05-04"), by="1 day"))
 #
 eqdata<-read.table(text="",col.names=c("time", "longitude", "latitude", "depth", "mag"))
 for (i in date){
