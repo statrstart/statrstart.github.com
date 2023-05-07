@@ -1,14 +1,12 @@
 ---
 title: 最近の地震(気象庁 震源リスト)
-date: 2023-05-06
+date: 2023-05-07
 tags: ["R", "rvest" ,"hillshade"]
 excerpt: 陰影段彩図　+「気象庁 震源リスト」
 ---
 
 # 最近の地震(気象庁 震源リスト)
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2FRecent_Eq&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
-
-## 2022/5/5 〜　2022/5/4(１年間) のマグニチュード３以上の地震
 
 「Rで陰影段彩図05」で作成した陰影段彩図に「気象庁 震源リスト」から得た震源の位置をプロットします。  
 今回は「RでWebスクレイピング01(気象庁 震源リスト)」で得たデータを陰影段彩図にプロットします。
@@ -24,6 +22,14 @@ excerpt: 陰影段彩図　+「気象庁 震源リスト」
 - rayshader パッケージを使って陰影を付けると海中の地形がよりよくわかります。
 
 ![Recent_EqNoto2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_EqNoto2.png)
+
+#### rayshader パッケージによる3D画像のスナップショット
+
+データ：[SRTM30_PLUS: SRTM30, COASTAL & RIDGE MULTIBEAM, ESTIMATED TOPOGRAPHY](https://topex.ucsd.edu/WWW_html/srtm30_plus.html)
+
+作り方は、[rayshader:https://github.com/tylermorganwall/rayshader](https://github.com/tylermorganwall/rayshader)を参考に。
+
+![Noto3d](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Noto3d.png)
 
 #### 2022/5/5 〜　2022/5/4
 
