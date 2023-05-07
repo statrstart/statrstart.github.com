@@ -19,6 +19,12 @@ excerpt: 陰影段彩図　+「気象庁 震源リスト」
 
 ![Recent_EqNoto](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_EqNoto.png)
 
+#### 2022/5/5 〜　2022/5/4 (５月５日の地震の前日までの１年間)
+
+- rayshader パッケージを使って陰影を付けると海中の地形がよりよくわかります。
+
+![Recent_EqNoto2](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_EqNoto2.png)
+
 #### 2022/5/5 〜　2022/5/4
 
 ![Recent_Eq3](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/Recent_Eq3.png)
