@@ -225,9 +225,9 @@ Yemen,YE,YEM,474,Asia,47.5,15.5,44.2,15.35
 South Africa,ZA,ZAF,199,Africa,23.121,-30.558,28.22,-25.7
 Zambia,ZM,ZMB,754,Africa,28.5,-14.333,28.28,-15.42
 Zimbabwe,ZW,ZWE,698,Africa,30.732,-20.129,31.03,-17.82
-Kosovo,XK,,967,Europe,21,42.57,,
-West Bank and Gaza,PS,,487,Asia,35.4,32,,
-Macao SAR,MO,,546,Asia,113.54,22.2,,
+Kosovo,XK,XXK,967,Europe,21,42.57,,
+West Bank and Gaza,PS,PSE,487,Asia,35.4,32,,
+Macao SAR,MO,MAC,546,Asia,113.54,22.2,,
 Curacao,CW,CUW,354,Americas,-68.955,12.1558,,
 French Guiana,GF,GUF,333,Americas,-53.241,3.924,,
 Guadeloupe,GP,GLP,329,Americas,-61.441,16.286,,
