@@ -144,21 +144,21 @@ table(d$unit)
 
 #### unitについて
 
-code  |  Description                                         |
-------|------------------------------------------------------|-----------
-B     |  Index                                               |
-C     |  Index                                               |   2000=100
-E     |  National currency                                   |
-F     |  National currency per current international dollar  |
-G     |  Percent                                             |
-H     |  Percent change                                      |
-K     |  Percent of GDP                                      |
-L     |  Percent of potential GDP                            |
-M     |  Percent of total labor force                        |
-N     |  Persons                                             |
-P     |  U.S. dollars                                        |
-S     |  Purchasing power parity; 2017 international dollar  |
-T     |  Purchasing power parity; international dollars      |
+|code  |  Description                                         |	|
+|------|------------------------------------------------------|-----------|
+|B     |  Index                                               ||
+|C     |  Index                                               |   2000=100|
+|E     |  National currency                                   ||
+|F     |  National currency per current international dollar  ||
+|G     |  Percent                                             ||
+|H     |  Percent change                                      ||
+|K     |  Percent of GDP                                      ||
+|L     |  Percent of potential GDP                            ||
+|M     |  Percent of total labor force                        ||
+|N     |  Persons                                             ||
+|P     |  U.S. dollars                                        ||
+|S     |  Purchasing power parity; 2017 international dollar  ||
+|T     |  Purchasing power parity; international dollars      ||
 
 
 #### conceptについて(`weo-database-guideline.pdf` で探したpdfファイルをみて、対応付けした。)
@@ -171,56 +171,56 @@ T     |  Purchasing power parity; international dollars      |
 
 `NGDPRPPPPC` -> `NGDPR`(実質GDP) + `PPP`(購買力平価換算) + `PC`(一人当たり)
 
-     コード      |            経済指標       |単位
-------------------|---------------------------|-----------------
-国民経済計算          |                           |
-1. NGDP_R         |  国内総生産（実質）                |  各国通貨
-2. NGDP_RPCH      |  国内総生産（実質）                |  変化率（％）
-3. NGDP           |  国内総生産（名目）                |  各国通貨
-4. NGDPD          |  国内総生産（名目）                |  U.S.ドル
-5. PPPGDP         |  国内総生産（名目）（購買力平価換算）       |  購買力平価国際ドル
-6. NGDP_D         |  GDPデフレーター                |
-7. NGDPRPC        |  一人当たり国内総生産（実質）           |  各国通貨
-8. NGDPRPPPPC     |  一人当たり国内総生産（実質）（購買力平価換算）  |  購買力平価国際ドル(2011)
-9. NGDPPC         |  一人当たり国内総生産（名目）           |  各国通貨
-10. NGDPDPC       |  一人当たり国内総生産（名目）           |  U.S.ドル
-11. PPPPC         |  一人当たり国内総生産（名目）（購買力平価換算）  |  購買力平価国際ドル
-12. NGAP_NPGDP    |  産出量ギャップ                  |  対潜在GDP比（％）
-13. PPPSH         |  GDP対世界比（購買力平価換算）         |  総GDP比(%)
-14. PPPEX         |  購買力平価（対ドル評価）             |  各国通貨/ドル
-15. NID_NGDP      |  投資                       |  対GDP比（％）
-16. NGSD_NGDP     |  国民総貯蓄                    |  対GDP比（％）
-金融              |                           |
-1. PCPI           |  消費者物価指数（年平均値）            |
-2. PCPIPCH        |  インフレ率（消費者物価指数年平均値）　      |  変化率（％）
-3. PCPIE          |  消費者物価指数（期末値）             |
-4. PCPIEPCH       |  インフレ率（消費者物価指数期末値）        |  変化率（％）
-貿易              |                           |
-1. TM_RPCH        |  財サービス輸入量                 |  変化率（％）
-2. TMG_RPCH       |  財輸入量                     |  変化率（％）
-3. TX_RPCH        |  財サービス輸出量                 |  変化率（％）
-4. TXG_RPCH       |  財輸出量                     |  変化率（％）
-人口              |                           |
-1. LUR            |  失業率                      |  対労働力人口比（％）
-2. LE             |  就業者数                     |  人
-3. LP             |  総人口                      |  人
-財政              |                           |
-1. GGR            |  財政収入額                    |  各国通貨
-2. GGR_NGDP       |  財政収入額                    |  対GDP比（％）
-3. GGX            |  財政支出額                    |  各国通貨
-4. GGX_NGDP       |  財政支出額                    |  対GDP比（％）
-5. GGXCNL         |  財政収支額                    |  各国通貨
-6. GGXCNL_NGDP    |  財政収支額                    |  対GDP比（％）
-7. GGSB           |  構造的財政収支                  |  各国通貨
-8. GGSB_NPGDP     |  構造的財政収支                  |  対潜在GDP比（％）
-9. GGXONLB        |  基礎的財政収支                  |  各国通貨
-10. GGXONLB_NGDP  |  基礎的財政収支                  |  対GDP比（％）
-11. GGXWDN        |  政府純債務額                   |  各国通貨
-12. GGXWDN_NGDP   |  政府純債務額                   |  対GDP比（％）
-13. GGXWDG        |  政府総債務額                   |  各国通貨
-14. GGXWDG_NGDP   |  政府総債務額                   |  対GDP比（％）
-15. NGDP_FY       |  会計年度別国内総生産（名目）           |  各国通貨
-国際収支            |                           |
-1. BCA            |  経常収支                     |  U.S.ドル
-2. BCA_NGDPD      |  経常収支額                    |  対GDP比（％）
+|     コード      |            経済指標       |単位|
+|------------------|---------------------------|-----------------|
+|国民経済計算          |                           ||
+|1. NGDP_R         |  国内総生産（実質）                |  各国通貨|
+|2. NGDP_RPCH      |  国内総生産（実質）                |  変化率（％）|
+|3. NGDP           |  国内総生産（名目）                |  各国通貨|
+|4. NGDPD          |  国内総生産（名目）                |  U.S.ドル|
+|5. PPPGDP         |  国内総生産（名目）（購買力平価換算）       |  購買力平価国際ドル|
+|6. NGDP_D         |  GDPデフレーター                ||
+|7. NGDPRPC        |  一人当たり国内総生産（実質）           |  各国通貨|
+|8. NGDPRPPPPC     |  一人当たり国内総生産（実質）（購買力平価換算）  |  購買力平価国際ドル(2011)|
+|9. NGDPPC         |  一人当たり国内総生産（名目）           |  各国通貨|
+|10. NGDPDPC       |  一人当たり国内総生産（名目）           |  U.S.ドル|
+|11. PPPPC         |  一人当たり国内総生産（名目）（購買力平価換算）  |  購買力平価国際ドル|
+|12. NGAP_NPGDP    |  産出量ギャップ                  |  対潜在GDP比（％）|
+|13. PPPSH         |  GDP対世界比（購買力平価換算）         |  総GDP比(%)|
+|14. PPPEX         |  購買力平価（対ドル評価）             |  各国通貨/ドル|
+|15. NID_NGDP      |  投資                       |  対GDP比（％）|
+|16. NGSD_NGDP     |  国民総貯蓄                    |  対GDP比（％）|
+|金融              |                           ||
+|1. PCPI           |  消費者物価指数（年平均値）            ||
+|2. PCPIPCH        |  インフレ率（消費者物価指数年平均値）　      |  変化率（％）|
+|3. PCPIE          |  消費者物価指数（期末値）             ||
+|4. PCPIEPCH       |  インフレ率（消費者物価指数期末値）        |  変化率（％）|
+|貿易              |                           ||
+|1. TM_RPCH        |  財サービス輸入量                 |  変化率（％）|
+|2. TMG_RPCH       |  財輸入量                     |  変化率（％）|
+|3. TX_RPCH        |  財サービス輸出量                 |  変化率（％）|
+|4. TXG_RPCH       |  財輸出量                     |  変化率（％）|
+|人口              |                           ||
+|1. LUR            |  失業率                      |  対労働力人口比（％）|
+|2. LE             |  就業者数                     |  人|
+|3. LP             |  総人口                      |  人|
+|財政              |                           ||
+|1. GGR            |  財政収入額                    |  各国通貨|
+|2. GGR_NGDP       |  財政収入額                    |  対GDP比（％）|
+|3. GGX            |  財政支出額                    |  各国通貨|
+|4. GGX_NGDP       |  財政支出額                    |  対GDP比（％）|
+|5. GGXCNL         |  財政収支額                    |  各国通貨|
+|6. GGXCNL_NGDP    |  財政収支額                    |  対GDP比（％）|
+|7. GGSB           |  構造的財政収支                  |  各国通貨|
+|8. GGSB_NPGDP     |  構造的財政収支                  |  対潜在GDP比（％）|
+|9. GGXONLB        |  基礎的財政収支                  |  各国通貨|
+|10. GGXONLB_NGDP  |  基礎的財政収支                  |  対GDP比（％）|
+|11. GGXWDN        |  政府純債務額                   |  各国通貨|
+|12. GGXWDN_NGDP   |  政府純債務額                   |  対GDP比（％）|
+|13. GGXWDG        |  政府総債務額                   |  各国通貨|
+|14. GGXWDG_NGDP   |  政府総債務額                   |  対GDP比（％）|
+|15. NGDP_FY       |  会計年度別国内総生産（名目）           |  各国通貨|
+|国際収支            |                           ||
+|1. BCA            |  経常収支                     |  U.S.ドル|
+|2. BCA_NGDPD      |  経常収支額                    |  対GDP比（％）|
 
