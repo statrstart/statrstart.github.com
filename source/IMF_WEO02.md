@@ -1,6 +1,6 @@
 ---
 title: RでIMFの世界経済見通し(WEO)データを扱う(その２)
-date: 2023-05-13
+date: 2023-05-15
 tags: ["R", "ggplot2","cowplot","scales"]
 excerpt: 名目GPDのグラフ
 ---
@@ -17,19 +17,35 @@ excerpt: 名目GPDのグラフ
 
 [長期経済統計から見た21世紀の世界経済 : 1950～2100年の長期展望と経済・社会の課題](https://www.jstage.jst.go.jp/article/peq/51/1/51_KJ00009847643/_pdf/-char/ja)
 
-（注意）G7、BRICsの国で、lastactualdateを調べると、 FranceとRussiaは、2021。他の国は、2022。
-
 ### 世界の名目GDPの推移: (単位: 10億ドル) と (購買力平価換算)
 
 ![imfweo01_1.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/imfweo01_1.png)
 
 ### G7のGDP/世界全体GDP　BRICsのGDP 対世界GDP比: (単位: 10億ドル) と (購買力平価換算)
 
+（注意）G7、BRICsの国で、lastactualdateを調べると、 FranceとRussiaは、2021。他の国は、2022。
+
 ![imfweo01_2.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/imfweo01_2.png)
 
 ### G7、BRICs 各国GDP: (単位: 10億ドル) と (購買力平価換算)
 
+（注意）G7、BRICsの国で、lastactualdateを調べると、 FranceとRussiaは、2021。他の国は、2022。
+
 ![imfweo01_3.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/imfweo01_3.png)
+
+### G7、BRICs 各国一人当たりGDP: (単位: 1ドル) と (購買力平価換算)
+
+（注意）G7、BRICsの国で、lastactualdateを調べると、 
+
+- 2022: Germany, Canada,  China
+
+- 2021: United States, France, Italy, Japan, Russia 
+
+- 2020: United Kingdom, Brazil
+
+- 2013: India
+
+![imfweo01_4.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/imfweo01_4.png)
 
 ### Rコード
 
@@ -63,7 +79,6 @@ ngdpd<-data_2304[data_2304$concept=="NGDPD",c("ref_area","year","value","scale",
 # 単位: ngdpd$scale== 1e+09 <--- 10億ドル
 # scaleは削除
 ngdpd<- ngdpd[,c("ref_area","year","value","lastactualdate")]
-
 # GDP: data_2304$concept=="PPPGDP"
 PPPGDP<-data_2304[data_2304$concept=="PPPGDP",c("ref_area","year","value","scale","lastactualdate")]
 # 単位: PPPGDP$scale== 1e+09 <--- 10億ドル
@@ -75,6 +90,21 @@ ngdpdC<-merge(ngdpd,WEOcountry,by.x="ref_area",by.y="WEO")
 #
 # PPPGDPの国データを抽出、WEOcountryとマージ
 PPPGDPC<-merge(PPPGDP,WEOcountry,by.x="ref_area",by.y="WEO")
+#
+# 一人当たりGDP(ドル): data_2304$concept=="NGDPDPC"
+NGDPDPC<-data_2304[data_2304$concept=="NGDPDPC",c("ref_area","year","value","scale","lastactualdate")]
+# 単位: all(NGDPDPC$scale== 1)   1ドル
+# scaleは削除
+NGDPDPC<- NGDPDPC[,c("ref_area","year","value","lastactualdate")]
+# 一人当たりGDP (購買力平価換算): data_2304$concept=="PPPPC"
+PPPPC<-data_2304[data_2304$concept=="PPPPC",c("ref_area","year","value","scale","lastactualdate")]
+# scaleは削除
+PPPPC<- PPPPC[,c("ref_area","year","value","lastactualdate")]
+# NGDPDPCの国データを抽出、WEOcountryとマージ
+NGDPDPC_C<-merge(NGDPDPC,WEOcountry,by.x="ref_area",by.y="WEO")
+#
+# PPPPCの国データを抽出、WEOcountryとマージ
+PPPPC_C<-merge(PPPPC,WEOcountry,by.x="ref_area",by.y="WEO")
 ```
 
 #### 世界の名目GDPの推移: (単位: 10億ドル) と (購買力平価換算)
@@ -208,4 +238,54 @@ g2<-ggplot(G7BRICs,aes(x=year,y=value,color=Name))+
 
 g <- plot_grid(g1, g2, labels="auto", align="h") 
 ggsave("imfweo01_3.png", width = 16, height = 8)
+```
+
+#### G7、BRICs 各国一人当たりGDP: (単位: 1ドル) と (購買力平価換算)
+
+```R
+G7BRICs<-NGDPDPC_C[grep("CAN|JPN|USA|FRA|ITA|GBR|DEU|BRA|RUS|IND|CHN",NGDPDPC_C$iso3c),]
+id<- G7BRICs[G7BRICs$year=="2028",c("Name","value")]
+G7BRICs$Name<- factor(G7BRICs$Name,levels=id[order(-id$value),]$Name)
+g1<- ggplot(G7BRICs,aes(x=year,y=value,color=Name))+
+	geom_line()+
+	labs(x=NULL,y=NULL,title="G7, BRICs: 一人当たり名目GDP(単位: 1ドル)",color="Country") +
+	scale_y_continuous(labels = comma)+
+	theme_cowplot(14) +
+	theme(
+	    legend.position = c(.02, .98),
+	    legend.justification = c("left", "top"),
+	    legend.box.just = "left",
+	    legend.margin = margin(6,6,6,6)
+	    )
+#table(G7BRICs$lastactualdate)
+#2013 2020 2021 2022 
+#  49   98  245  147 
+#unique(G7BRICs[G7BRICs$lastactualdate==2022,"Name"])
+#[1] Germany Canada  China
+#unique(G7BRICs[G7BRICs$lastactualdate==2021,"Name"])
+#[1] United States France        Italy         Japan         Russia 
+#unique(G7BRICs[G7BRICs$lastactualdate==2020,"Name"])
+#[1] United Kingdom Brazil 
+#unique(G7BRICs[G7BRICs$lastactualdate==2013,"Name"])
+#[1] India
+#
+G7BRICs<-PPPPC_C[grep("CAN|JPN|USA|FRA|ITA|GBR|DEU|BRA|RUS|IND|CHN",PPPPC_C$iso3c),]
+id<- G7BRICs[G7BRICs$year=="2028",c("Name","value")]
+G7BRICs$Name<- factor(G7BRICs$Name,levels=id[order(-id$value),]$Name)
+g2<-ggplot(G7BRICs,aes(x=year,y=value,color=Name))+
+	geom_line()+
+	labs(x=NULL,y=NULL,title="G7, BRICs: 一人当たり名目GDP(購買力平価換算)",color="Country") +
+	scale_y_continuous(labels = comma)+
+	theme_cowplot(14) +
+	theme(
+	    legend.position = c(.02, .98),
+	    legend.justification = c("left", "top"),
+	    legend.box.just = "left",
+	    legend.margin = margin(6,6,6,6)
+	    )
+#table(G7BRICs$lastactualdate)
+#2013 2020 2021 2022 
+#  49   98  245  147 
+g <- plot_grid(g1, g2, labels="auto", align="h") 
+ggsave("imfweo01_4.png", width = 16, height = 8)
 ```
