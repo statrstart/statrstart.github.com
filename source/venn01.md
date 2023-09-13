@@ -191,7 +191,7 @@ text(x=8.4,y=5.5,labels=kaigyo(vec),pos=1,xpd=T,col="black")
 # dev.off()
 ```
 
-#### 「OPECプラス＋上海協力機構＋BRICSプラス」相関図１
+#### 「OPECプラス＋上海協力機構＋BRICSプラス」相関図２
 
 ```R
 require(ggplot2)
