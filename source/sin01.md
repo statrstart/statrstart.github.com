@@ -86,7 +86,7 @@ ymin= -1.2
 ymax= 1.2
 font_add(family = "cmunti", regular = "cmunti.ttf")
 showtext_auto()
-par(mar=c(3,3,3,1))
+par(mar=c(3,3,3,1),family = "cmunti")
 plot(NA, xlim=c(xmin,xmax),ylim=c(ymin,ymax),axes=FALSE,xlab="",ylab="",bty="n",las=1,xaxs="i")
 axis(2,labels=FALSE,tck= -0.015)
 axis(2,tick= FALSE,las=1,line= -0.4,cex.axis=0.8)
@@ -125,7 +125,7 @@ ymax= 1.2
 xaxt<- pilabel(s=0,e=12,by=1,bottom=6)
 font_add(family = "cmunti", regular = "cmunti.ttf")
 showtext_auto()
-par(mar=c(3,3,3,1))
+par(mar=c(3,3,3,1),family = "cmunti")
 plot(NA, xlim=c(xmin,xmax),ylim=c(ymin,ymax),axes=FALSE,xlab="",ylab="",bty="n",las=1,xaxs="i")
 axis(2,labels=FALSE,tck= -0.015)
 axis(2,tick= FALSE,las=1,line= -0.4,cex.axis=0.8)
@@ -156,8 +156,7 @@ xaxt<- pilabel(s=-2,e=8,by=2,bottom=4)
 require(showtext)
 font_add(family = "cmunti", regular = "cmunti.ttf")
 showtext_auto()
-#cairo_pdf("out_cairo.pdf", width=4.5, height=3,family="cmunti")
-par(mar=c(0,1,2,1.5))
+par(mar=c(0,1,2,1.5),family = "cmunti")
 plot(NA, xlim=c(xmin,xmax),ylim=c(ymin,ymax),axes=FALSE,xlab="",ylab="",bty="n",asp=1)
 arrows(x0=xmin-0.3, y0=0, x1=xmax+0.3, y1=0,lwd=1,angle=20,length=0.08,xpd=TRUE)
 arrows(x0=0,y0=ymin,x1=0,y1=ymax,lwd=1,angle=20,length=0.08,xpd=TRUE)
@@ -183,5 +182,3 @@ segments(x0=xaxt[6 ,1],y=0,x1=xaxt[6 ,1] ,y1=1,lty=2,col="royalblue3")
 showtext_auto(FALSE)
 # dev.off()
 ```
-
-
