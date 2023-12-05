@@ -1,21 +1,25 @@
 ---
-title: Quartoで日本語PDFファイルを作成する（その１）
-date: 2023-11-30
+title: Quartoで日本語PDFファイルを作成する（その１）更新
+date: 2023-12-05
 tags: ["quarto", "xelatex","lualatex","xelatexja"]
 excerpt: pdf-engine と documentclass の組み合わせを検証
 ---
 
 # pdf-engine と documentclass の組み合わせを検証
 
-検証した日：2023/11/28　「tlmgr update --self --all」　を実行してから検証を始めた。
+## Quartoのyamlから「lang: ja」を削除したら、結果が全く違った！！
+
+BXjscls パッケージ（BXJS 文書クラス集）ユーザマニュアルによると、Pandocモードについて、
+
+「入力文書が言語指定を含む場合（lang: ja とする）には Babel パッケージが読み込まれるが、この際に発生する可能性がある不整合」を回避する。
+
+yamlから「lang: ja」は削除したほうがいいようです。
+
+検証した日：2023/12/05　「tlmgr update --self --all」　を実行してから検証を始めた。
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2Fquarto01&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
 
 **Quartoで日本語PDFファイルを作成**するときに使う`pdf-engine`と`documentclass`の組み合わせを検証してみました。
-
-もちろん使うフォント、パッケージによって結果は異なると思うので、あくまで参考にすぎません。
-
-**Quarto**は、defaultでいろんなパッケージを読み込みます。documentclassによって相性の良し悪しがあってなかなかおもしろい結果となりました。
 
 ### `pdf-engine`と`documentclass`の組み合わせ
 
@@ -54,16 +58,6 @@ xelatexjaは、[日本語 LaTeX の新常識 2021 最終更新日 2021年06月21
 ### 5. （左）xelatex + bxjsarticle + ja=xelatexja と （右）Quarto + xelatex + bxjsarticle + ja=xelatexja
 
 ![xelatex_xelatexja01.png](https://raw.githubusercontent.com/statrstart/statrstart.github.com/master/source/images/xelatex_xelatexja01.png)
-
-あくまで、このサンプルだけの結果ですが次のことは言えると思います。
-
-- jlreqはQuartoとの相性が悪い。
-
-- Quartoを通すと、lualatexの小書き仮名で禁則が効かなくなる。(jlreq,ltjsarticle,bxjsarticle)
-
-- Quartoを通して、出力した結果が良好だったのは[xelatexja](https://github.com/h20y6m/xelatexja)を使用したもの
-
-最後に、検証に使ったtexコードとqmdコードを載せときます。
 
 なお、使用した例文はここからお借りしました。感謝です。
 
@@ -126,6 +120,8 @@ pdf-engine と documentclass の組み合わせによってコメントアウト
 
 pdf-engine と documentclass の組み合わせによってコメントアウトしたりしなかったりしています。
 
+＊yamlから「lang: ja」は削除したほうがいいようです。lualatexを使ったときの結果が良くなりました。
+
 ```
 ---
 format:
@@ -146,7 +142,6 @@ format:
     keep-tex: false
     linestretch: 1.0
     indent: true
-    lang: ja
     include-in-header:
       - text: |
            % QuartoでbxjsarticleのPandocモードを使わない場合の余白等変更
