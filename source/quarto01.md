@@ -7,6 +7,8 @@ excerpt: pdf-engine と documentclass の組み合わせを検証
 
 # pdf-engine と documentclass の組み合わせを検証
 
+Quarto 1.3.450
+
 ## Quartoのyamlから「lang: ja」を削除したら、結果が全く違った！！
 
 BXjscls パッケージ（BXJS 文書クラス集）ユーザマニュアルによると、Pandocモードについて、
