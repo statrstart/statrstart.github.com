@@ -2,7 +2,7 @@
 title: Quartoで日本語PDFファイルを作成する（その２）
 date: 2023-12-06
 tags: ["quarto", "lualatex","ltjsarticle"]
-excerpt: Quartoのpdf option 「lang: ja」
+excerpt: Quartoのpdf option 「lang ja」
 ---
 
 # Quartoのpdf option 「lang: ja」
