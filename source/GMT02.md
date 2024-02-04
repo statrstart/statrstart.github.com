@@ -2,7 +2,7 @@
 title: GMT(Version  6.4.0)で陰影段彩図
 date: 2024-02-04
 tags: ["GMT", "GMT6","Ghostscript 10.0.0","dALLOWPSTRANSPARENCY"]
-excerpt: GMT6を使って陰影段彩図と鳥瞰図を描きます。
+excerpt: GMT6を使って陰影段彩図を描きます。
 ---
 
 # GMT(Version  6.4.0)で陰影段彩図
