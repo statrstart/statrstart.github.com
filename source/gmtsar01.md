@@ -30,6 +30,7 @@ gmtsarによって得られた phasefilt_ll.grd (Gaussian ﬁlter+Goldstein と 
 |Obs date(1) |Obs date(2) |Path |Frame|data|
 |-------:|------:|-------:|-------:|------:|
 |2024/01/02|2023/06/06 |26|2830|L1.1(CEOS) |
+|2024/01/03|2023/12/06 |127|730|L1.1(CEOS) |
 
 #### dem
 
@@ -150,6 +151,8 @@ Envisat（エンビサット）とかヨーロッパリモートセンシング�
 ```
 
 これをgmtのカラーパレットに追加する。例えば、debian12の場合、/usr/share/gmt/cpt/gmt に追加した。
+
+認識しない場合は、`gmt makecpt -T-3.15/3.15/0.42 -C/usr/share/gmt/cpt/gmt/SAR.cpt  -Z` とする。
 
 (参考)
 
@@ -289,11 +292,7 @@ p2p_processing.csh ALOS2 IMG-HH-ALOS2487932830-230606-UBSL1.1__D IMG-HH-ALOS2518
 
 threshold_snaphu 等の設定については、[Theory and prac-ce of phase unwrapping](https://igppweb.ucsd.edu/~fialko/insar/unwrapping.pdf)が参考になる。
 
-（注意）defaultの数値(SLC_factor = 0.02)ではエラーが出ることがある。(2024/1/3 のデータ)
-
-```gmtsar
-p2p_processing.csh ALOS2 IMG-HH-ALOS2515060730-231206-UBSR1.1__A IMG-HH-ALOS2519200730-240103-UBSR1.1__A
-```
+（注意）defaultの数値(SLC_factor = 0.02)ではエラーが出ることがある。
 
 エラーメッセージを読むと、
 
@@ -304,6 +303,121 @@ config.ALOS2.txt の SLC_factor = 0.02 を SLC_factor = 0.045　に変更する�
 
 後ろに使用する「configファイル名をつけて」再実行（付け忘れると、config.ALOS2.txtが上書きされる。）
 
-```gmtsar
-p2p_processing.csh ALOS2 IMG-HH-ALOS2515060730-231206-UBSR1.1__A IMG-HH-ALOS2519200730-240103-UBSR1.1__A config.ALOS2.txt
+### 2023年12月6日（地震前）と2024年1月3日（地震後）の観測データを用いた差分干渉画像
+
+![noto0103_730](images/noto0103_730.png)
+
+### 位相アンラッピング:位相(phase) --> 変位(displacement )
+
+![LOS_displacement](images/LOS_displacement730.png)
+
+#### ファイル命名規則
+
+|衛星・センサ種別|シーン中心の通算周回番号|シーン中心のフレーム番号|シーン中心の観測年月日|観測モード|左右観測|処理レベル|昇降ノード|
+|---:|---:|---:|---:|---:|---:|---:|---:|
+|ALOS2|51920|0730|240103|UBS|R|1.1|A|
+
+観測対象はA(北上する方向)からみてR(右側)にある ----> 西側を通った
+
+#### 「シーン中心におけるビーム中心方向[度]」をRで（バイナリデータを）読む
+
+```R
+conn <- file("/media/aki/603B2C957AE78DAC/GMTSAR/noto20240103_1/raw/LED-ALOS2519200730-240103-UBSR1.1__A", "rb")
+# ファイルディスクリプタ（読み飛ばすバイト数）
+offset = 720
+# 全部で「offset+1814」バイトを読み飛ばす
+seek(conn, where = offset+1814, origin = "start")
+# タイプ: F16.7だから n=16
+a1<- readBin(conn, what=raw(), n = 16, size = 1)
+rawToChar(a1)
+close(conn)
+# [1] "      80.5203021"
+# psxy -Sv で使う角度に直す。
+# Look
+( Look=90- 80.5203021)
+# [1] 9.479698
+#
+# Flight
+( Flight = Look + 90 )
+# [1] 99.4797
+```
+
+#### 作図
+
+```gmt
+gmt grdcut dem.grd  -R136.2/137.8/36.5/37.6 -Gsar.nc
+gmt set FONT_TITLE  14p,32,black
+gmt set FONT_SUBTITLE  12p,32,black
+gmt set FONT_LABEL 12p,26,black
+# 地図スケールの高さを 5p -> 10p
+gmt set MAP_SCALE_HEIGHT  10p
+gmt begin noto0103_730_0 png C-dALLOWPSTRANSPARENCY
+gmt basemap -JM12 -R136.2/137.8/36.5/37.6 -Bafg -BWsNe+t"2024 Noto Peninsula Earthquake(Frame:730)"
+gmt makecpt -Cgeo -T0/3000/200 -Z
+gmt grdgradient sar.nc -Ggrad.grd -A45 -Ne0.8
+gmt grdimage sar.nc -Igrad.grd -C
+### カラーパレットを作る ###
+gmt makecpt -T-3.15/3.15/0.42 -C/usr/share/gmt/cpt/gmt/SAR.cpt  -Z
+gmt grdimage phasefilt_ll.grd -C -Q
+gmt colorbar -DJBR+jTR+o0/1+w5/0.2+h -Ba1.57f1.57+l"phase"
+gmt coast -Slightblue -Df -W0.25 -LJBL+jTL+c35+w50k+f+o0/1+l
+# directional rose
+gmt psbasemap -TdjRT+w1.5c+f2+l,,,N+o0.5c/0.5c
+echo "137.2705 37.4962 震央 2024/1/1 16:10 M7.6" | nkf -e | gmt text -F+jMC+a0+f7p,37,black -G -D0/0.5 -N
+# 北上、右に対象物があるので、西側を通過
+# Flight
+gmt psxy -Sv0.05/0.2/0.1 -Gblack <<EOF
+136.4 37.3 99.4797 1.8
+EOF
+# Look
+gmt psxy -Sv0.05/0.2/0.1 -Gblack <<EOF
+136.4 37.3 9.479698 1.2
+EOF
+gmt meca -Sa0.3 -Gred  <<EOF
+137.2705 37.4962 15.86 213 41 79 7.6
+EOF
+echo 136.4 37.3 BL 99.4797 9p,9,black "Flight" | gmt pstext -F+j+a+f -D-0.2/0.2
+echo 136.4 37.3 BL 9.479698 9p,9,black "Look" | gmt pstext -F+j+a+f -D0.2/0.25
+gmt end
+```
+
+
+```gmt
+gmt grdcut dem.grd  -R136.2/137.8/36.5/37.6 -Gsar.nc
+gmt set FONT_TITLE  14p,32,black
+gmt set FONT_SUBTITLE  12p,32,black
+gmt set FONT_LABEL 12p,26,black
+# 地図スケールの高さを 5p -> 10p
+gmt set MAP_SCALE_HEIGHT  10p
+U=$(gmt grdinfo -C -L2 los_ll.grd  | awk '{printf("%5.1f", $12+$13*2)}')
+L=$(gmt grdinfo -C -L2 los_ll.grd  | awk '{printf("%5.1f", $12-$13*2)}')
+# gmt makecpt -Cpolar -T$L/$U/1 -Z -D > los.cpt
+# makecpt に -Dオプションをつける : z > 1 は z = 1 の色の「赤」で，z < -1 は z = -1 の色の「青」でぬる．
+gmt begin LOS_displacement png C-dALLOWPSTRANSPARENCY
+gmt basemap -JM12 -R136.2/137.8/36.5/37.6 -Bafg -BWsNe+t"2024 Noto Peninsula Earthquake(Frame:730)"
+gmt makecpt -Cgeo -T0/3000/200 -Z
+gmt grdgradient sar.nc -Ggrad.grd -A45 -Ne0.8
+gmt grdimage sar.nc -Igrad.grd -C
+gmt makecpt -Cpolar -T$L/$U/1 -Z -D
+gmt grdimage los_ll.grd -C -Q
+gmt colorbar -DJBR+jTR+o0/1+w5/0.2+h -Baf+l"LOS displacement [range decrease @~\256@~]" -By+lmm
+gmt coast -Slightblue -Df -W0.25 -LJBL+jTL+c35+w50k+f+o0/1+l
+# directional rose
+gmt psbasemap -TdjRT+w1.5c+f2+l,,,N+o0.5c/0.5c
+echo "137.2705 37.4962 震央 2024/1/1 16:10 M7.6" | nkf -e | gmt text -F+jMC+a0+f7p,37,black -G -D0/0.5 -N
+# 北上、右に対象物があるので、西側を通過
+# Flight
+gmt psxy -Sv0.05/0.2/0.1 -Gblack <<EOF
+136.4 37.3 99.4797 1.8
+EOF
+# Look
+gmt psxy -Sv0.05/0.2/0.1 -Gblack <<EOF
+136.4 37.3 9.479698 1.2
+EOF
+gmt meca -Sa0.3 -Gred  <<EOF
+137.2705 37.4962 15.86 213 41 79 7.6
+EOF
+echo 136.4 37.3 BL 99.4797 9p,9,black "Flight" | gmt pstext -F+j+a+f -D-0.2/0.2
+echo 136.4 37.3 BL 9.479698 9p,9,black "Look" | gmt pstext -F+j+a+f -D0.2/0.25
+gmt end
 ```
