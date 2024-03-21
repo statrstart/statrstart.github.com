@@ -1,6 +1,6 @@
 ---
 title: GMTSARでピクセルオフセット法（プログラムの作成 その２）
-date: 2024-03-13
+date: 2024-03-21
 tags: ["GMTSAR","GMT","pixel offset", "ALOS-2","PALSAR-2"]
 excerpt: 2024能登半島地震のALOS-2/PALSAR-2の無償公開データ
 ---
@@ -8,6 +8,8 @@ excerpt: 2024能登半島地震のALOS-2/PALSAR-2の無償公開データ
 # GMTSARでピクセルオフセット法（プログラムの作成 その２）
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgitpress.io%2F%40statrstart%2Fgmtsar04&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com) 
+
+2024/3/21: プログラムの地図を描く部分一部変更
 
 ** 「この記事に使用したデータは、JAXAの無償公開データを利用しました。」 **
 
@@ -254,9 +256,9 @@ set y2 = `gmt grdinfo azi_offset_ll.grd -C |awk '{print $5 }'`
 gmt grdlandmask -Gmask.grd -R$x1/$x2/$y1/$y2 -I0.002 -Df -NNaN/0
 gmt grd2xyz mask.grd | gmt xyz2grd -Razi_offset_ll.grd -Gtmp.grd
 gmt grdmath azi_offset_ll.grd tmp.grd OR = azipot.grd
-set L = `gmt grdinfo -C azipot.grd  | awk '{printf $6}'`
+set L = `gmt grdinfo -C azipot.grd  | awk '{printf -1*$6}'`
 set U = `gmt grdinfo -C azipot.grd  | awk '{printf $7}'`
-set U2 = `printf "-$L\n$U\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
+set U2 = `printf "$L\n$U\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
 set L2 = `echo -$U2`
 #
 set xlim = `echo $x2 $x1|awk '{print $1-$2}'`
@@ -341,18 +343,11 @@ set y2 = `gmt grdinfo rng_offset_ll.grd -C |awk '{print $5 }'`
 gmt grdlandmask -Gmask.grd -R$x1/$x2/$y1/$y2 -I0.002 -Df -NNaN/0
 gmt grd2xyz mask.grd | gmt xyz2grd -Rrng_offset_ll.grd -Gtmp.grd
 gmt grdmath rng_offset_ll.grd tmp.grd OR = rngpot.grd
-set L1 = `gmt grdinfo -C rngpot.grd  | awk '{printf $6}'`
+set L1 = `gmt grdinfo -C rngpot.grd  | awk '{printf -1*$6}'`
 set U1 = `gmt grdinfo -C rngpot.grd  | awk '{printf $7}'`
-set U3 = `printf "-$L1\n$U1\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
+set U3 = `printf "$L1\n$U1\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
 set L3 = `echo -$U3`
 # 
-#gmt grd2xyz rngpot.grd | awk '$3 != "NaN"{print $3}' > rnghist.dat
-#set L1 = `gmt math rnghist.dat 0.05 PQUANT NEG -S =`
-#set U1 = `gmt math rnghist.dat 99.95 PQUANT -S = `
-#set U3 = `/usr/bin/echo -e "$L1\n$U1" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END{print max}' `
-#set U3 = `printf "$L1\n$U1\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
-#set L3 = `echo -$U3`
-#
 set xlim = `echo $x2 $x1|awk '{print $1-$2}'`
 set ylim = `echo $y2 $y1|awk '{print $1-$2}'`
 #
@@ -397,6 +392,7 @@ rm -f tmp.grd aoff_ll.grd aoff.grd aoff.llo  dem_grd.grd grey_tmp.cpt ps2rast* r
 #col 4 : azimuth offset
 #col 5 : SNR
 #
+
 if ($#argv != 6) then
    echo ""
    echo "Usage: easy_pot.csh PRM nx ny azi rng snr"
@@ -413,6 +409,7 @@ endif
 echo "east_pot.csh" $1 $2 $3 $4 $5 $6
 #
 cd intf/*/azi_offset
+
 set PRM = $1
 set nx = $2
 set ny = $3
@@ -497,9 +494,9 @@ set y2 = `gmt grdinfo azi_offset_ll.grd -C |awk '{print $5 }'`
 gmt grdlandmask -Gmask.grd -R$x1/$x2/$y1/$y2 -I0.002 -Df -NNaN/0
 gmt grd2xyz mask.grd | gmt xyz2grd -Razi_offset_ll.grd -Gtmp.grd
 gmt grdmath azi_offset_ll.grd tmp.grd OR = azipot.grd
-set L = `gmt grdinfo -C azipot.grd  | awk '{printf $6}'`
+set L = `gmt grdinfo -C azipot.grd  | awk '{printf -1*$6}'`
 set U = `gmt grdinfo -C azipot.grd  | awk '{printf $7}'`
-set U2 = `printf "-$L\n$U\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
+set U2 = `printf "$L\n$U\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
 set L2 = `echo -$U2`
 #
 set xlim = `echo $x2 $x1|awk '{print $1-$2}'`
@@ -523,7 +520,7 @@ gmt set FONT_LABEL 12p,26,black
 gmt begin azioff_ll png  C-dALLOWPSTRANSPARENCY
 gmt basemap -Baf -BWSne+t"Azimuth/Offset map" -Jm$scl"c" $bounds
 gmt grdimage dem_grd.grd -Ctopo.cpt -Q
-gmt makecpt -Cvik -T$L2/$U2/0.5 -Z -D
+gmt makecpt -Cvik -T$L2/$U2/0.5 -D -Ic
 gmt grdimage azi_offset_ll.grd -C -Q
 gmt coast -Df -W0.25 -Slightblue
 gmt colorbar -DJBC+w8c/0.35c+e+o0/1 -C -Bxaf -By+lm
@@ -584,9 +581,9 @@ set y2 = `gmt grdinfo rng_offset_ll.grd -C |awk '{print $5 }'`
 gmt grdlandmask -Gmask.grd -R$x1/$x2/$y1/$y2 -I0.002 -Df -NNaN/0
 gmt grd2xyz mask.grd | gmt xyz2grd -Rrng_offset_ll.grd -Gtmp.grd
 gmt grdmath rng_offset_ll.grd tmp.grd OR = rngpot.grd
-set L1 = `gmt grdinfo -C rngpot.grd  | awk '{printf $6}'`
+set L1 = `gmt grdinfo -C rngpot.grd  | awk '{printf -1*$6}'`
 set U1 = `gmt grdinfo -C rngpot.grd  | awk '{printf $7}'`
-set U3 = `printf "-$L1\n$U1\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
+set U3 = `printf "$L1\n$U1\n" | awk 'NR==1 {max=$1} {if($1>max) max=$1} END {print max}'`
 set L3 = `echo -$U3`
 # 
 set xlim = `echo $x2 $x1|awk '{print $1-$2}'`
@@ -601,7 +598,7 @@ set bounds = `gmt grdinfo -I- rng_offset_ll.grd`
 gmt begin rngoff_ll png  C-dALLOWPSTRANSPARENCY
 gmt basemap -Baf -BWSne+t"Range/Offset map" -Jm$scl"c" $bounds
 gmt grdimage dem_grd.grd -Ctopo.cpt  -Q 
-gmt makecpt -Cvik -T$L3/$U3/0.5 -Z -D
+gmt makecpt -Cvik -T$L3/$U3/0.5 -D -Ic
 gmt grdimage rng_offset_ll.grd -C -Q
 gmt coast -Df -W0.25 -Slightblue
 gmt colorbar -DJBC+w8c/0.35c+e+o0/1 -C -Bxaf -By+lm
@@ -633,15 +630,12 @@ gmt set FONT_SUBTITLE  12p,32,black
 gmt set FONT_LABEL 12p,26,black
 # 地図スケールの高さを 5p -> 10p
 gmt set MAP_SCALE_HEIGHT  10p
-
-#U=$(gmt grdinfo -C -L2 pot.grd  | awk '{printf $7}')
-#L=$(gmt grdinfo -C -L2 pot.grd  | awk '{printf $6}')
+#
 gmt begin rngoffset png C-dALLOWPSTRANSPARENCY
 gmt basemap -JM12 -R136.2/137.8/36.5/37.6 -Bafg -BWsNe+t"2024 Noto Peninsula Earthquake(Frame:2830)"
 gmt makecpt -Cgeo -T0/3000/200 -Z
 gmt grdgradient sar.nc -Ggrad.grd -A45 -Ne0.8
 gmt grdimage sar.nc -Igrad.grd -C
-#gmt makecpt -Cvik -T$L/$U/0.5 -D
 gmt makecpt -Cvik -T-3/3/0.25 -D -Ic
 gmt grdimage rng_offset_ll.grd -C -Q
 gmt colorbar -DJBR+jTR+o0/1+w5/0.2+h -Baf+l"meters in slant range" -By+lm
