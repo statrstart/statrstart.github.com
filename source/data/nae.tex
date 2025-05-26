@@ -1,0 +1,38 @@
+# https://tikz.jp/examples/
+
+\documentclass[border=10pt]{standalone}
+\usepackage{luatexja}
+\usepackage{tikz}
+\begin{document}
+\begin{tikzpicture}[
+  scale=2.5,
+  level 1/.style={sibling distance=18mm},
+  level 2/.style={sibling distance=10mm},
+  D/.style={rectangle,draw},
+  C/.style={circle,draw}
+]
+\node (myexpr) [D] {$D_1$}[grow'=right]
+  child { node[C] {$C_1$}
+    child { node[] {$1000$} }
+    child { node[] {$300$} }
+  }
+  child { node[C] {$C_2$}
+    child { node[] {$1000$} }
+    child { node[] {$300$} }
+  };
+\draw (myexpr) node[above=3.5em,right=1.5em,black] {接木苗};
+\draw (myexpr) node[above=1.2em,right=2.0em,black] {$-280$};
+\draw (myexpr) node[below=0.5em,right=1.5em,black] {白根苗};
+\draw (myexpr) node[below=3.0em,right=2.0em,black] {$-80$};
+\draw (myexpr-1) node[above=3.7em,right=0.5em,black] {青枯病に};
+\draw (myexpr-1) node[above=2.5em,right=1.5em,black] {かからない};
+\draw (myexpr-1) node[above=0.7em,right=3.5em,black] {$0.9$};
+\draw (myexpr-1) node[below=0.5em,right=2.5em,black] {かかる};
+\draw (myexpr-1) node[below=2.5em,right=3.5em,black] {$0.1$};
+\draw (myexpr-2) node[above=3.7em,right=0.5em,black] {青枯病に};
+\draw (myexpr-2) node[above=2.5em,right=1.5em,black] {かからない};
+\draw (myexpr-2) node[above=0.7em,right=3.5em,black] {$0.5$};
+\draw (myexpr-2) node[below=0.5em,right=2.5em,black] {かかる};
+\draw (myexpr-2) node[below=2.5em,right=3.5em,black] {$0.5$};
+\end{tikzpicture}
+\end{document}
